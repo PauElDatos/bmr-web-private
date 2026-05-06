@@ -23,7 +23,7 @@ export async function renderRoute() {
   const handler = routes[route] || routes['/'];
   try {
     const cfg = authConfig();
-    if (cfg.enabled && route !== '/auth') {
+    if (cfg.authRequired && route !== '/auth') {
       const session = await loadSession();
       if (!session.authenticated) {
         const content = await AuthPage();

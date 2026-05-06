@@ -14,10 +14,13 @@ import { fetchFromStaticOrigin, getPrivateDataObject } from './r2.js';
 export default {
   async fetch(request, env) {
     try {
+      if (request.method === 'OPTIONS') {
+        return corsResponse(new Response(null, { status: 204 }), request, env);
+      }
       return await handleRequest(request, env);
     } catch (err) {
       console.error(err);
-      return jsonResponse({ ok: false, error: String(err?.message || err) }, 500);
+      return corsResponse(jsonResponse({ ok: false, error: String(err?.message || err) }, 500), request, env);
     }
   }
 };
@@ -26,26 +29,26 @@ async function handleRequest(request, env) {
   const url = new URL(request.url);
   const pathname = url.pathname;
 
-  if (pathname === '/auth/login') return handleLogin(request, env);
-  if (pathname === '/auth/callback') return handleCallback(request, env);
-  if (pathname === '/auth/logout') return handleLogout(env);
-  if (pathname === '/api/me') return handleMe(request, env);
-  if (pathname === '/auth/denied') return deniedPage(url.searchParams.get('reason') || 'access_denied');
+  if (pathname === '/auth/login') return corsResponse(await handleLogin(request, env), request, env);
+  if (pathname === '/auth/callback') return corsResponse(await handleCallback(request, env), request, env);
+  if (pathname === '/auth/logout') return corsResponse(handleLogout(env), request, env);
+  if (pathname === '/api/me') return corsResponse(await handleMe(request, env), request, env);
+  if (pathname === '/auth/denied') return corsResponse(deniedPage(url.searchParams.get('reason') || 'access_denied'), request, env);
 
   const session = await getSession(request, env);
 
   if (pathname.startsWith('/data/')) {
-    if (!session) return jsonResponse({ ok: false, error: 'auth_required' }, 401);
-    return serveData(request, env, pathname);
+    if (!session) return corsResponse(jsonResponse({ ok: false, error: 'auth_required' }, 401), request, env);
+    return corsResponse(await serveData(request, env, pathname), request, env);
   }
 
   const gateStatic = String(env.GATE_STATIC_SITE || 'true').toLowerCase() !== 'false';
   if (gateStatic && !session) {
-    if (wantsHtml(request)) return loginPage(env);
-    return jsonResponse({ ok: false, error: 'auth_required' }, 401);
+    if (wantsHtml(request)) return corsResponse(loginPage(env), request, env);
+    return corsResponse(jsonResponse({ ok: false, error: 'auth_required' }, 401), request, env);
   }
 
-  return serveStatic(request, env, pathname);
+  return corsResponse(await serveStatic(request, env, pathname), request, env);
 }
 
 async function handleLogin(request, env) {
@@ -56,7 +59,7 @@ async function handleLogin(request, env) {
   headers.append('set-cookie', buildCookie(env.STATE_COOKIE_NAME || 'bmr_oauth_state', state, {
     maxAge: 600,
     path: '/',
-    sameSite: 'Lax'
+    sameSite: 'None'
   }));
   return new Response(null, { status: 302, headers });
 }
@@ -99,7 +102,7 @@ async function handleCallback(request, env) {
   headers.append('set-cookie', buildCookie(env.SESSION_COOKIE_NAME || 'bmr_session', sessionToken, {
     maxAge: ttl,
     path: '/',
-    sameSite: 'Lax'
+    sameSite: 'None'
   }));
   return new Response(null, { status: 302, headers });
 }
@@ -155,6 +158,23 @@ function withSecurityHeaders(response) {
   headers.set('referrer-policy', 'strict-origin-when-cross-origin');
   headers.set('permissions-policy', 'camera=(), microphone=(), geolocation=()');
   if (!headers.has('cache-control')) headers.set('cache-control', 'private, max-age=60');
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
+function corsResponse(response, request, env) {
+  const headers = new Headers(response.headers);
+  const origin = request.headers.get('Origin') || '';
+  const allowedOrigins = [
+    'https://paueldatos.github.io',
+    'https://paueldatos.github.io/'
+  ];
+  if (allowedOrigins.includes(origin)) {
+    headers.set('Access-Control-Allow-Origin', origin.replace(/\/$/, ''));
+    headers.set('Access-Control-Allow-Credentials', 'true');
+    headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    headers.set('Access-Control-Allow-Headers', 'content-type');
+    headers.append('Vary', 'Origin');
+  }
   return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 }
 

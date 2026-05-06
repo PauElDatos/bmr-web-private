@@ -29,7 +29,7 @@ export async function renderLayout(route, content) {
       <div class="sidebar-footer">
         <span class="status-dot"></span>
         Snapshot: ${escapeHtml(manifest?.snapshot_date || 'mock')}
-        ${authConfig().enabled ? `<a class="logout-link" href="${logoutUrl()}">Salir</a>` : ''}
+        ${authConfig().authRequired ? `<a class="logout-link" href="${logoutUrl()}">Salir</a>` : ''}
       </div>
     </aside>
     <main class="main">

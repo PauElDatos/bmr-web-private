@@ -7,11 +7,12 @@ const cache = new Map();
 export async function loadJson(path) {
   const normalized = path.startsWith('/') ? path.slice(1) : path;
   const cfg = authConfig();
-  const url = cfg.enabled && cfg.protectedData
-    ? `${(cfg.authBase || '').replace(/\/$/, '')}/data/${normalized}`
+  const baseUrl = cfg.dataBaseUrl || cfg.apiBaseUrl || '';
+  const url = baseUrl
+    ? `${baseUrl.replace(/\/$/, '')}/${normalized}`
     : `${BASE}/${normalized}`;
   if (cache.has(url)) return cache.get(url);
-  const promise = fetch(url, { cache: 'no-cache', credentials: cfg.enabled ? 'include' : 'same-origin' }).then(async (res) => {
+  const promise = fetch(url, { cache: 'no-cache', credentials: baseUrl ? 'include' : 'same-origin' }).then(async (res) => {
     if (!res.ok) {
       throw new Error(`No se pudo cargar ${url}: HTTP ${res.status}`);
     }

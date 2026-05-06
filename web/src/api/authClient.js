@@ -1,14 +1,13 @@
 const defaultConfig = {
-  enabled: false,
-  authBase: '',
+  authRequired: false,
+  apiBaseUrl: '',
   loginPath: '/auth/login',
   logoutPath: '/auth/logout',
-  mePath: '/api/me',
-  protectedData: false
+  mePath: '/api/me'
 };
 
 export function authConfig() {
-  return { ...defaultConfig, ...(window.BMR_AUTH || {}) };
+  return { ...defaultConfig, ...(window.BMR_AUTH_CONFIG || window.BMR_AUTH || {}) };
 }
 
 function joinBase(base, path) {
@@ -18,18 +17,18 @@ function joinBase(base, path) {
 
 export function loginUrl() {
   const cfg = authConfig();
-  return joinBase(cfg.authBase, cfg.loginPath);
+  return joinBase(cfg.apiBaseUrl, cfg.loginPath);
 }
 
 export function logoutUrl() {
   const cfg = authConfig();
-  return joinBase(cfg.authBase, cfg.logoutPath);
+  return joinBase(cfg.apiBaseUrl, cfg.logoutPath);
 }
 
 export async function loadSession() {
   const cfg = authConfig();
-  if (!cfg.enabled) return { authenticated: true, local_mock_mode: true };
-  const res = await fetch(joinBase(cfg.authBase, cfg.mePath), {
+  if (!cfg.authRequired) return { authenticated: true, local_mock_mode: true };
+  const res = await fetch(joinBase(cfg.apiBaseUrl, cfg.mePath), {
     credentials: 'include',
     cache: 'no-store'
   });
