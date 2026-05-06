@@ -8,7 +8,7 @@ PREFIX="${BMR_R2_PREFIX:-data}"
 DRY_RUN="${DRY_RUN:-0}"
 
 if ! command -v npx >/dev/null 2>&1; then
-  echo "ERROR: npx no está disponible. Instala Node.js/npm." >&2
+  echo "ERROR: npx no esta disponible. Instala Node.js/npm." >&2
   exit 1
 fi
 
@@ -23,9 +23,9 @@ while IFS= read -r -d '' file; do
   key="$PREFIX/$rel"
   count=$((count + 1))
   if [ "$DRY_RUN" = "1" ]; then
-    echo "DRY_RUN wrangler r2 object put $BUCKET/$key --file $file"
+    echo "DRY_RUN wrangler r2 object put $BUCKET/$key --file $file --remote"
   else
-    npx wrangler r2 object put "$BUCKET/$key" --file "$file"
+    npx wrangler r2 object put "$BUCKET/$key" --file "$file" --remote
   fi
 done < <(find "$DATA_DIR" -type f -name '*.json' -print0 | sort -z)
 

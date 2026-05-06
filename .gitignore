@@ -1,6 +1,7 @@
 .venv/
 .venv-exporter/
 node_modules/
+.wrangler/
 __pycache__/
 *.pyc
 .env

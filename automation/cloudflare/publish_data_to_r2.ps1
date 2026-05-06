@@ -13,10 +13,10 @@ foreach ($file in $files) {
   $rel = $file.FullName.Substring((Resolve-Path $DataDir).Path.Length).TrimStart('\','/') -replace '\\','/'
   $key = "$Prefix/$rel"
   if ($DryRun) {
-    Write-Host "DRY_RUN npx wrangler r2 object put $Bucket/$key --file $($file.FullName)"
+    Write-Host "DRY_RUN npx wrangler r2 object put $Bucket/$key --file $($file.FullName) --remote"
   } else {
-    npx wrangler r2 object put "$Bucket/$key" --file "$($file.FullName)"
-    if ($LASTEXITCODE -ne 0) { throw "Falló subida R2: $key" }
+    npx wrangler r2 object put "$Bucket/$key" --file "$($file.FullName)" --remote
+    if ($LASTEXITCODE -ne 0) { throw "Fallo subida R2: $key" }
   }
 }
 Write-Host "R2 publish terminado. Archivos procesados: $($files.Count)"
