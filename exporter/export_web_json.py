@@ -162,13 +162,13 @@ def write_json(path: Path, payload: Any) -> None:
 
 def fetch_all(conn, sql: str, params: Sequence[Any] = ()) -> List[Dict[str, Any]]:
     with conn.cursor() as cur:
-        cur.execute(sql, params)
+        cur.execute(sql, params) if params else cur.execute(sql)
         return list(cur.fetchall())
 
 
 def fetch_one(conn, sql: str, params: Sequence[Any] = ()) -> Optional[Dict[str, Any]]:
     with conn.cursor() as cur:
-        cur.execute(sql, params)
+        cur.execute(sql, params) if params else cur.execute(sql)
         return cur.fetchone()
 
 
@@ -642,7 +642,7 @@ def export_market_runs(conn, out_dir: Path, args, warnings: List[str]) -> List[D
         runs = fetch_all(conn, """
             SELECT run_id, hypothesis_code, data_from, data_to, notes, created_at
             FROM ml_runs
-            WHERE hypothesis_code LIKE 'M%' OR hypothesis_code LIKE 'MARKET%'
+            WHERE hypothesis_code LIKE 'M%%' OR hypothesis_code LIKE 'MARKET%%'
             ORDER BY created_at DESC, run_id DESC
             LIMIT %s
         """, (args.max_runs,))

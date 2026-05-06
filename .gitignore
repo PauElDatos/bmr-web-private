@@ -1,9 +1,12 @@
 .venv/
 .venv-exporter/
+node_modules/
 __pycache__/
 *.pyc
 .env
 *.env.local
+.dev.vars
+auth/worker/.dev.vars
 exporter/.env.local
 automation/env/daily-export.env
 automation/logs/*.log

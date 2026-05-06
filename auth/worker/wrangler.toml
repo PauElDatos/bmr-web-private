@@ -1,0 +1,29 @@
+name = "bmr-auth-gateway"
+main = "src/index.js"
+compatibility_date = "2025-10-01"
+account_id = "539f45c0482a12c564890d0f881fdeac"
+workers_dev = true
+preview_urls = false
+
+[vars]
+STATIC_ORIGIN = "https://paueldatos.github.io/bmr-web-private"
+PUBLIC_SITE_NAME = "BMR Market Intelligence"
+PUBLIC_LOGIN_REDIRECT = "/#/"
+SESSION_COOKIE_NAME = "bmr_session"
+STATE_COOKIE_NAME = "bmr_oauth_state"
+SESSION_TTL_SECONDS = "259200"
+PATREON_AUTHORIZE_URL = "https://www.patreon.com/oauth2/authorize"
+PATREON_TOKEN_URL = "https://www.patreon.com/api/oauth2/token"
+PATREON_IDENTITY_URL = "https://www.patreon.com/api/oauth2/v2/identity"
+PATREON_SCOPES = "identity identity[email] identity.memberships"
+PATREON_ALLOWED_TIER_IDS = "26695595,26698210,26698256,26698281"
+PATREON_ALLOWED_CAMPAIGN_IDS = "14714223"
+PATREON_REQUIRE_ACTIVE_STATUS = "true"
+GATE_STATIC_SITE = "true"
+DATA_PREFIX = "data/"
+
+# R2 esta pendiente de activarse en la cuenta Cloudflare.
+# Cuando este habilitado, reactivar:
+# [[r2_buckets]]
+# binding = "BMR_DATA"
+# bucket_name = "bmr-private-data"

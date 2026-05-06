@@ -19,9 +19,10 @@ export function contentTypeFor(pathname) {
 }
 
 export async function getPrivateDataObject(env, key) {
-  if (!env.PRIVATE_DATA_BUCKET) return null;
+  const bucket = env.BMR_DATA || env.PRIVATE_DATA_BUCKET;
+  if (!bucket) return null;
   const normalized = key.replace(/^\/+/, '');
-  const object = await env.PRIVATE_DATA_BUCKET.get(normalized);
+  const object = await bucket.get(normalized);
   if (!object) return null;
   const headers = new Headers();
   object.writeHttpMetadata(headers);

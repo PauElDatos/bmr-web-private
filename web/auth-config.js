@@ -1,10 +1,9 @@
-// Fase 6: por defecto la web sigue funcionando en modo local/mock sin auth.
-// En producción, cambia enabled/protectedData a true o usa auth-config.example.js como guía.
+// Produccion: el Worker sirve /api/me y /data/* en el mismo origen.
 window.BMR_AUTH = {
-  enabled: false,
+  enabled: true,
   authBase: '',
   loginPath: '/auth/login',
   logoutPath: '/auth/logout',
   mePath: '/api/me',
-  protectedData: false
+  protectedData: true
 };
