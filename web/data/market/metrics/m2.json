@@ -1,0 +1,36 @@
+{
+  "module_code": "M2",
+  "run_id": 1102,
+  "items": [
+    {
+      "metric_code": "n_observations",
+      "metric_value": 384,
+      "details_json": "{\"source\":\"mock_phase3\"}",
+      "created_at": "2026-05-05T00:00:00Z"
+    },
+    {
+      "metric_code": "hit_rate_12m",
+      "metric_value": 0.574,
+      "details_json": "{\"horizon\":\"12m\"}",
+      "created_at": "2026-05-05T00:00:00Z"
+    },
+    {
+      "metric_code": "avg_forward_return_12m",
+      "metric_value": 6.1,
+      "details_json": "{\"unit\":\"pct\"}",
+      "created_at": "2026-05-05T00:00:00Z"
+    },
+    {
+      "metric_code": "max_drawdown_alerts",
+      "metric_value": -20.4,
+      "details_json": "{\"unit\":\"pct\"}",
+      "created_at": "2026-05-05T00:00:00Z"
+    },
+    {
+      "metric_code": "coverage_ratio",
+      "metric_value": 0.85,
+      "details_json": "{\"source\":\"ml_run_metrics_mock\"}",
+      "created_at": "2026-05-05T00:00:00Z"
+    }
+  ]
+}

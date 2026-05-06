@@ -1,0 +1,10 @@
+{
+  "out_dir": "web/data",
+  "max_points": 8000,
+  "max_indicators": 0,
+  "max_assets": 500,
+  "max_series": 0,
+  "max_crypto": 100,
+  "max_runs": 150,
+  "notes": "Este fichero es documentación/config de referencia. En Fase 2 el CLI usa argumentos; puedes crear tu wrapper leyendo estos valores."
+}

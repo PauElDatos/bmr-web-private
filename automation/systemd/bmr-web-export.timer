@@ -1,0 +1,13 @@
+[Unit]
+Description=Run BMR Web JSON export every morning
+Documentation=file:/opt/bmr-web-private/docs/PHASE5_AUTOMATION_DAILY.md
+
+[Timer]
+# 07:15 hora local de la VM BMR. Ajusta según cuándo terminen ETL/ML.
+OnCalendar=*-*-* 07:15:00
+Persistent=true
+RandomizedDelaySec=5min
+Unit=bmr-web-export.service
+
+[Install]
+WantedBy=timers.target

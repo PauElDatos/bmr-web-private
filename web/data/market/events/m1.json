@@ -1,0 +1,85 @@
+{
+  "module_code": "M1",
+  "run_id": 1101,
+  "source": "mock_phase3",
+  "items": [
+    {
+      "hypothesis_code": "H1_M1_MOCK",
+      "run_id": 1101,
+      "signal_code": "MI_POSITION",
+      "direction": "BUY",
+      "event_dt_effective": "2000-01-28",
+      "entry_close": 1021.5,
+      "exit_close_12m": 1068.8,
+      "end_ret_12m_pct": -5.0,
+      "max_dd_12m_pct": -9.0,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H2_M1_MOCK",
+      "run_id": 1101,
+      "signal_code": "M1_CONFIDENCE",
+      "direction": "SELL",
+      "event_dt_effective": "2007-02-28",
+      "entry_close": 1341.5,
+      "exit_close_12m": 1398.8,
+      "end_ret_12m_pct": -1.6,
+      "max_dd_12m_pct": -11.5,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H3_M1_MOCK",
+      "run_id": 1101,
+      "signal_code": "M1_RISK_PULSE",
+      "direction": "BUY",
+      "event_dt_effective": "2011-03-28",
+      "entry_close": 1661.5,
+      "exit_close_12m": 1728.8,
+      "end_ret_12m_pct": 1.8,
+      "max_dd_12m_pct": -14.0,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H4_M1_MOCK",
+      "run_id": 1101,
+      "signal_code": "MI_POSITION",
+      "direction": "SELL",
+      "event_dt_effective": "2018-04-28",
+      "entry_close": 1981.5,
+      "exit_close_12m": 2058.8,
+      "end_ret_12m_pct": 5.2,
+      "max_dd_12m_pct": -16.5,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H5_M1_MOCK",
+      "run_id": 1101,
+      "signal_code": "M1_CONFIDENCE",
+      "direction": "BUY",
+      "event_dt_effective": "2020-05-28",
+      "entry_close": 2301.5,
+      "exit_close_12m": 2388.8,
+      "end_ret_12m_pct": 8.6,
+      "max_dd_12m_pct": -19.0,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H6_M1_MOCK",
+      "run_id": 1101,
+      "signal_code": "M1_RISK_PULSE",
+      "direction": "SELL",
+      "event_dt_effective": "2022-06-28",
+      "entry_close": 2621.5,
+      "exit_close_12m": 2718.8,
+      "end_ret_12m_pct": 12.0,
+      "max_dd_12m_pct": -21.5,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    }
+  ]
+}

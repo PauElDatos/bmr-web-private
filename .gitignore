@@ -1,0 +1,10 @@
+.venv/
+.venv-exporter/
+__pycache__/
+*.pyc
+.env
+*.env.local
+exporter/.env.local
+automation/env/daily-export.env
+automation/logs/*.log
+.DS_Store

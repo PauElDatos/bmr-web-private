@@ -1,0 +1,63 @@
+{
+  "module_code": "M5",
+  "weights_available": true,
+  "weights_source": "mock_phase3_ml_signal_scores_shape",
+  "items": [
+    {
+      "hypothesis_code": "H1_M5_MOCK",
+      "signal_code": "H1_S_SELL",
+      "direction": "SELL",
+      "weight": 0.2817,
+      "score": 0.7782,
+      "n_events": 21,
+      "avg_end_ret_12m_pct": 13.25,
+      "explanation": "Mock: contribución de H1 al módulo M5. Contrato ya compatible con ml_signal_scores/ml_run_inputs.",
+      "weight_source": "mock_phase3"
+    },
+    {
+      "hypothesis_code": "H2_M5_MOCK",
+      "signal_code": "H2_S_SELL",
+      "direction": "SELL",
+      "weight": 0.1732,
+      "score": 0.8188,
+      "n_events": 16,
+      "avg_end_ret_12m_pct": -5.94,
+      "explanation": "Mock: contribución de H2 al módulo M5. Contrato ya compatible con ml_signal_scores/ml_run_inputs.",
+      "weight_source": "mock_phase3"
+    },
+    {
+      "hypothesis_code": "H3_M5_MOCK",
+      "signal_code": "H3_S_SELL",
+      "direction": "SELL",
+      "weight": 0.1085,
+      "score": 0.1837,
+      "n_events": 32,
+      "avg_end_ret_12m_pct": 2.86,
+      "explanation": "Mock: contribución de H3 al módulo M5. Contrato ya compatible con ml_signal_scores/ml_run_inputs.",
+      "weight_source": "mock_phase3"
+    },
+    {
+      "hypothesis_code": "H4_M5_MOCK",
+      "signal_code": "H4_S_SELL",
+      "direction": "SELL",
+      "weight": 0.2976,
+      "score": 0.6991,
+      "n_events": 39,
+      "avg_end_ret_12m_pct": 7.68,
+      "explanation": "Mock: contribución de H4 al módulo M5. Contrato ya compatible con ml_signal_scores/ml_run_inputs.",
+      "weight_source": "mock_phase3"
+    },
+    {
+      "hypothesis_code": "H5_M5_MOCK",
+      "signal_code": "H5_S_SELL",
+      "direction": "SELL",
+      "weight": 0.1434,
+      "score": 0.1961,
+      "n_events": 44,
+      "avg_end_ret_12m_pct": -3.61,
+      "explanation": "Mock: contribución de H5 al módulo M5. Contrato ya compatible con ml_signal_scores/ml_run_inputs.",
+      "weight_source": "mock_phase3"
+    }
+  ],
+  "run_id": 1105
+}

@@ -1,0 +1,9 @@
+{
+  "asof_dt": "2026-05-05",
+  "regime": "RISK_OFF",
+  "confidence": 68.5,
+  "primary_driver": "M5_RULES_M2M3M4",
+  "primary_driver_reason": "Debilidad macro y probabilidad BearRisk elevada en mock data",
+  "buy_pulse": 0.22,
+  "sell_pulse": 0.71
+}

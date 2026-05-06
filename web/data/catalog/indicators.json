@@ -1,0 +1,123 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "code": "FEDFUNDS",
+      "name": "Federal Funds Effective Rate",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Percent",
+      "notes": "Tipo de referencia de la Fed",
+      "explanation": "Subidas rápidas de tipos suelen tensionar valoración, crédito y liquidez.",
+      "signal_notes": [
+        "Nivel alto y giro descendente pueden marcar transición de ciclo.",
+        "Combinado con curva invertida aumenta lectura defensiva."
+      ]
+    },
+    {
+      "id": 2,
+      "code": "CPIAUCSL",
+      "name": "Consumer Price Index",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Index",
+      "notes": "Inflación CPI USA",
+      "explanation": "Mide presión inflacionista. La aceleración persistente condiciona tipos y múltiplos.",
+      "signal_notes": [
+        "Inflación elevada reduce margen para políticas expansivas.",
+        "Desaceleración puede apoyar activos de riesgo si no viene con recesión."
+      ]
+    },
+    {
+      "id": 3,
+      "code": "UNRATE",
+      "name": "Unemployment Rate",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Percent",
+      "notes": "Tasa de paro USA",
+      "explanation": "Indicador laboral retardado pero crítico para régimen de recesión.",
+      "signal_notes": [
+        "Subidas desde mínimos suelen aparecer cerca de deterioro macro."
+      ]
+    },
+    {
+      "id": 4,
+      "code": "USREC",
+      "name": "NBER Recession Indicator",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Binary",
+      "notes": "Bandas de recesión USA",
+      "explanation": "Sirve como overlay histórico y variable de validación macro.",
+      "signal_notes": [
+        "No es predictivo en tiempo real; útil como referencia histórica."
+      ]
+    },
+    {
+      "id": 5,
+      "code": "T10Y3M",
+      "name": "10Y Treasury minus 3M Treasury",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Percent",
+      "notes": "Pendiente de curva",
+      "explanation": "La inversión de curva es uno de los inputs clásicos de alerta de recesión.",
+      "signal_notes": [
+        "Valor negativo prolongado suele aumentar riesgo a 6-18 meses."
+      ]
+    },
+    {
+      "id": 6,
+      "code": "SP500",
+      "name": "S&P 500",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Index",
+      "notes": "Índice amplio USA",
+      "explanation": "Proxy de mercado utilizado como benchmark y serie de validación.",
+      "signal_notes": [
+        "Cruces y drawdowns sirven para evaluar señales BUY/SELL."
+      ]
+    },
+    {
+      "id": 7,
+      "code": "WSHOSHO",
+      "name": "Fed Total Assets",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Million USD",
+      "notes": "Balance Fed",
+      "explanation": "Aproxima impulso de liquidez/QE-QT en el sistema.",
+      "signal_notes": [
+        "Contracción de balance puede presionar múltiplos."
+      ]
+    },
+    {
+      "id": 8,
+      "code": "M2SL",
+      "name": "M2 Money Stock",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Billion USD",
+      "notes": "Agregado monetario M2",
+      "explanation": "Aporta lectura de liquidez monetaria y crecimiento nominal.",
+      "signal_notes": [
+        "Aceleraciones/desaceleraciones extremas alimentan hipótesis de liquidez."
+      ]
+    },
+    {
+      "id": 9,
+      "code": "VIXCLS",
+      "name": "CBOE Volatility Index",
+      "source": "FRED",
+      "frequency": "M",
+      "unit": "Index",
+      "notes": "Volatilidad implícita",
+      "explanation": "Medida de estrés de mercado y aversión al riesgo.",
+      "signal_notes": [
+        "Picos de VIX suelen asociarse a risk-off o capitulación."
+      ]
+    }
+  ]
+}

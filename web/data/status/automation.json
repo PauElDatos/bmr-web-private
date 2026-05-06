@@ -1,0 +1,14 @@
+{
+  "stage": "validated",
+  "status": "ok",
+  "validation_status": "ok",
+  "message": "mock phase5 validado",
+  "generated_at": "2026-05-05T18:27:44.150183+00:00",
+  "snapshot_date": "2026-05-05",
+  "manifest_version": "0.5.0-phase5",
+  "mode": "mock",
+  "host": "d434a07eacec",
+  "platform": "Linux-4.4.0-x86_64-with-glibc2.41",
+  "python_version": "3.13.5",
+  "log_file": ""
+}

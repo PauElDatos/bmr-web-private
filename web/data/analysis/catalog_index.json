@@ -1,0 +1,159 @@
+{
+  "count": 22,
+  "items": [
+    {
+      "kind": "indicators",
+      "code": "FEDFUNDS",
+      "name": "Federal Funds Effective Rate",
+      "source": "FRED",
+      "path": "timeseries/indicators/FEDFUNDS.json"
+    },
+    {
+      "kind": "indicators",
+      "code": "CPIAUCSL",
+      "name": "Consumer Price Index",
+      "source": "FRED",
+      "path": "timeseries/indicators/CPIAUCSL.json"
+    },
+    {
+      "kind": "indicators",
+      "code": "UNRATE",
+      "name": "Unemployment Rate",
+      "source": "FRED",
+      "path": "timeseries/indicators/UNRATE.json"
+    },
+    {
+      "kind": "indicators",
+      "code": "USREC",
+      "name": "NBER Recession Indicator",
+      "source": "FRED",
+      "path": "timeseries/indicators/USREC.json"
+    },
+    {
+      "kind": "indicators",
+      "code": "T10Y3M",
+      "name": "10Y Treasury minus 3M Treasury",
+      "source": "FRED",
+      "path": "timeseries/indicators/T10Y3M.json"
+    },
+    {
+      "kind": "indicators",
+      "code": "SP500",
+      "name": "S&P 500",
+      "source": "FRED",
+      "path": "timeseries/indicators/SP500.json"
+    },
+    {
+      "kind": "indicators",
+      "code": "WSHOSHO",
+      "name": "Fed Total Assets",
+      "source": "FRED",
+      "path": "timeseries/indicators/WSHOSHO.json"
+    },
+    {
+      "kind": "indicators",
+      "code": "M2SL",
+      "name": "M2 Money Stock",
+      "source": "FRED",
+      "path": "timeseries/indicators/M2SL.json"
+    },
+    {
+      "kind": "indicators",
+      "code": "VIXCLS",
+      "name": "CBOE Volatility Index",
+      "source": "FRED",
+      "path": "timeseries/indicators/VIXCLS.json"
+    },
+    {
+      "kind": "assets",
+      "code": "AAPL",
+      "name": "Apple Inc.",
+      "source": "equity",
+      "path": "timeseries/assets/AAPL.json"
+    },
+    {
+      "kind": "assets",
+      "code": "MSFT",
+      "name": "Microsoft Corporation",
+      "source": "equity",
+      "path": "timeseries/assets/MSFT.json"
+    },
+    {
+      "kind": "assets",
+      "code": "SPX",
+      "name": "S&P 500 histórico",
+      "source": "index",
+      "path": "timeseries/assets/SPX.json"
+    },
+    {
+      "kind": "assets",
+      "code": "NDX",
+      "name": "Nasdaq 100 histórico",
+      "source": "index",
+      "path": "timeseries/assets/NDX.json"
+    },
+    {
+      "kind": "assets",
+      "code": "DJI",
+      "name": "Dow Jones Industrial Average",
+      "source": "index",
+      "path": "timeseries/assets/DJI.json"
+    },
+    {
+      "kind": "assets",
+      "code": "RUT",
+      "name": "Russell 2000",
+      "source": "index",
+      "path": "timeseries/assets/RUT.json"
+    },
+    {
+      "kind": "series",
+      "code": "SPX",
+      "name": "S&P 500 Canonical Series",
+      "source": "equity_index",
+      "path": "timeseries/series/SPX.json"
+    },
+    {
+      "kind": "series",
+      "code": "NDX",
+      "name": "Nasdaq 100 Canonical Series",
+      "source": "equity_index",
+      "path": "timeseries/series/NDX.json"
+    },
+    {
+      "kind": "series",
+      "code": "BTC",
+      "name": "Bitcoin USD Canonical Series",
+      "source": "crypto",
+      "path": "timeseries/series/BTC.json"
+    },
+    {
+      "kind": "series",
+      "code": "GOLD",
+      "name": "Gold Spot Canonical Series",
+      "source": "commodity",
+      "path": "timeseries/series/GOLD.json"
+    },
+    {
+      "kind": "series",
+      "code": "MSCI",
+      "name": "MSCI World Proxy",
+      "source": "equity_index",
+      "path": "timeseries/series/MSCI.json"
+    },
+    {
+      "kind": "crypto",
+      "code": "BTC",
+      "name": "Bitcoin",
+      "source": "coinpaprika",
+      "path": "timeseries/crypto/BTC.json"
+    },
+    {
+      "kind": "crypto",
+      "code": "ETH",
+      "name": "Ethereum",
+      "source": "coinpaprika",
+      "path": "timeseries/crypto/ETH.json"
+    }
+  ]
+}

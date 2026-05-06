@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "run_id": 1101,
+      "hypothesis_code": "M1_MOCK_MODULE",
+      "params_json": "{}",
+      "data_from": "1995-01-28",
+      "data_to": "2026-05-05",
+      "created_at": "2026-05-05T19:00:00+02:00",
+      "notes": "Mock run Fase 1"
+    },
+    {
+      "run_id": 1102,
+      "hypothesis_code": "M2_MOCK_MODULE",
+      "params_json": "{}",
+      "data_from": "1995-01-28",
+      "data_to": "2026-05-05",
+      "created_at": "2026-05-05T19:00:00+02:00",
+      "notes": "Mock run Fase 1"
+    },
+    {
+      "run_id": 1103,
+      "hypothesis_code": "M3_MOCK_MODULE",
+      "params_json": "{}",
+      "data_from": "1995-01-28",
+      "data_to": "2026-05-05",
+      "created_at": "2026-05-05T19:00:00+02:00",
+      "notes": "Mock run Fase 1"
+    },
+    {
+      "run_id": 1104,
+      "hypothesis_code": "M4_MOCK_MODULE",
+      "params_json": "{}",
+      "data_from": "1995-01-28",
+      "data_to": "2026-05-05",
+      "created_at": "2026-05-05T19:00:00+02:00",
+      "notes": "Mock run Fase 1"
+    },
+    {
+      "run_id": 1105,
+      "hypothesis_code": "M5_MOCK_MODULE",
+      "params_json": "{}",
+      "data_from": "1995-01-28",
+      "data_to": "2026-05-05",
+      "created_at": "2026-05-05T19:00:00+02:00",
+      "notes": "Mock run Fase 1"
+    }
+  ]
+}

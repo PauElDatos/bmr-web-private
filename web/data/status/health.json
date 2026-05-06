@@ -1,0 +1,41 @@
+{
+  "status": "ok",
+  "snapshot_status": "ok",
+  "generated_at": "2026-05-05T20:15:00+02:00",
+  "snapshot_date": "2026-05-05",
+  "mode": "mock",
+  "phase": "phase5",
+  "checks": [
+    {
+      "name": "manifest",
+      "status": "ok",
+      "ok": true,
+      "detail": "manifest.json cargable y actualizado a Fase 5"
+    },
+    {
+      "name": "catalogs",
+      "status": "ok",
+      "ok": true,
+      "detail": "indicators/assets/series/crypto presentes"
+    },
+    {
+      "name": "market",
+      "status": "ok",
+      "ok": true,
+      "detail": "M1-M5 y detalle ml_* mock presentes"
+    },
+    {
+      "name": "analysis",
+      "status": "ok",
+      "ok": true,
+      "detail": "comparador y overlays disponibles"
+    },
+    {
+      "name": "automation",
+      "status": "ok",
+      "ok": true,
+      "detail": "status operativo de exportación y publicación disponible"
+    }
+  ],
+  "warnings": []
+}

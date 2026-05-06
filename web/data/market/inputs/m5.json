@@ -1,0 +1,30 @@
+{
+  "module_code": "M5",
+  "run_id": 1105,
+  "items": [
+    {
+      "input_kind": "series",
+      "input_code": "SPX",
+      "role": "benchmark",
+      "notes": "Mock Fase 3 para M5; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "run",
+      "input_code": "M2_BREADTH_DUAL_ML",
+      "role": "input_score",
+      "notes": "Mock Fase 3 para M5; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "run",
+      "input_code": "M3_MACRO_FACTOR_KALMAN",
+      "role": "input_factor",
+      "notes": "Mock Fase 3 para M5; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "run",
+      "input_code": "M4_SUPERVISED_PROBA_SPX",
+      "role": "input_probability",
+      "notes": "Mock Fase 3 para M5; en real vendrá de ml_run_inputs."
+    }
+  ]
+}

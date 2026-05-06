@@ -1,0 +1,21 @@
+[Unit]
+Description=BMR Web daily JSON export and GitHub publication
+Documentation=file:/opt/bmr-web-private/docs/PHASE5_AUTOMATION_DAILY.md
+Wants=network-online.target
+After=network-online.target docker.service mariadb.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/bmr-web-private
+EnvironmentFile=-/opt/bmr-web-private/automation/env/daily-export.env
+ExecStart=/bin/bash /opt/bmr-web-private/automation/run_daily_pipeline.sh
+TimeoutStartSec=45min
+Nice=5
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+
+# Endurecimiento básico. Si necesitas escribir fuera de /opt/bmr-web-private, relaja estas opciones.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/opt/bmr-web-private /tmp

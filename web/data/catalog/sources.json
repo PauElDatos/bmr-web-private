@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "source": "FRED",
+      "count": 8
+    },
+    {
+      "source": "CoinPaprika",
+      "count": 2
+    },
+    {
+      "source": "yfinance",
+      "count": 6
+    }
+  ]
+}

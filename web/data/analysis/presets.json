@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "name": "Liquidez vs SPX",
+      "slots": [
+        "series:SPX",
+        "indicators:WSHOSHO",
+        "indicators:FEDFUNDS"
+      ]
+    },
+    {
+      "name": "Riesgo recesión",
+      "slots": [
+        "series:SPX",
+        "indicators:T10Y3M",
+        "indicators:UNRATE"
+      ]
+    }
+  ]
+}

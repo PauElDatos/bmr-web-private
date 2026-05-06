@@ -1,0 +1,44 @@
+name = "bmr-patreon-auth-gateway"
+main = "src/index.js"
+compatibility_date = "2025-10-01"
+workers_dev = false
+
+# Producción: usa un dominio propio o ruta Cloudflare, por ejemplo:
+# routes = [
+#   { pattern = "bmr.tudominio.com/*", zone_name = "tudominio.com" }
+# ]
+
+[vars]
+# Origen estático. Puede ser GitHub Pages, Cloudflare Pages u otro hosting estático.
+# Si usas GitHub Pages, recuerda que el origen directo seguirá siendo público.
+STATIC_ORIGIN = "https://TU_USUARIO.github.io/TU_REPO"
+PUBLIC_SITE_NAME = "BMR Market Intelligence"
+PUBLIC_LOGIN_REDIRECT = "/#/"
+SESSION_COOKIE_NAME = "bmr_session"
+STATE_COOKIE_NAME = "bmr_oauth_state"
+SESSION_TTL_SECONDS = "259200"
+PATREON_AUTHORIZE_URL = "https://www.patreon.com/oauth2/authorize"
+PATREON_TOKEN_URL = "https://www.patreon.com/api/oauth2/token"
+PATREON_IDENTITY_URL = "https://www.patreon.com/api/oauth2/v2/identity"
+PATREON_SCOPES = "identity identity[email] identity.memberships"
+# Lista separada por comas. Ejemplo: "123456,7891011"
+PATREON_ALLOWED_TIER_IDS = ""
+# Opcional. Si tienes varias campañas, limita por campaña.
+PATREON_ALLOWED_CAMPAIGN_IDS = ""
+# Si true, exige patron_status=active_patron cuando exista.
+PATREON_REQUIRE_ACTIVE_STATUS = "true"
+# Si true, bloquea /data/* y el sitio completo sin sesión.
+GATE_STATIC_SITE = "true"
+# Si usas R2 para datos privados, los JSON se leerán de PRIVATE_DATA_BUCKET antes que del origen estático.
+DATA_PREFIX = "data/"
+
+# R2 privado para JSON reales. Crea el bucket y descomenta:
+# [[r2_buckets]]
+# binding = "PRIVATE_DATA_BUCKET"
+# bucket_name = "bmr-private-data"
+
+# Secretos obligatorios. Se cargan con wrangler secret put:
+# PATREON_CLIENT_ID
+# PATREON_CLIENT_SECRET
+# PATREON_REDIRECT_URI
+# SESSION_SECRET

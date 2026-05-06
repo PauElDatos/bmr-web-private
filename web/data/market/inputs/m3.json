@@ -1,0 +1,30 @@
+{
+  "module_code": "M3",
+  "run_id": 1103,
+  "items": [
+    {
+      "input_kind": "series",
+      "input_code": "SPX",
+      "role": "benchmark",
+      "notes": "Mock Fase 3 para M3; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "indicator",
+      "input_code": "T10Y3M",
+      "role": "macro_input",
+      "notes": "Mock Fase 3 para M3; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "indicator",
+      "input_code": "UNRATE",
+      "role": "macro_input",
+      "notes": "Mock Fase 3 para M3; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "indicator",
+      "input_code": "VIXCLS",
+      "role": "market_stress",
+      "notes": "Mock Fase 3 para M3; en real vendrá de ml_run_inputs."
+    }
+  ]
+}

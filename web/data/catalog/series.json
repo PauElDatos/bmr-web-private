@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "series_id": 1,
+      "code": "SPX",
+      "name": "S&P 500 Canonical Series",
+      "series_type": "equity_index",
+      "notes": "Empalme histórico + API"
+    },
+    {
+      "series_id": 2,
+      "code": "NDX",
+      "name": "Nasdaq 100 Canonical Series",
+      "series_type": "equity_index",
+      "notes": "Empalme histórico + API"
+    },
+    {
+      "series_id": 3,
+      "code": "BTC",
+      "name": "Bitcoin USD Canonical Series",
+      "series_type": "crypto",
+      "notes": "CoinPaprika/mock"
+    },
+    {
+      "series_id": 4,
+      "code": "GOLD",
+      "name": "Gold Spot Canonical Series",
+      "series_type": "commodity",
+      "notes": "Histórico + API"
+    },
+    {
+      "series_id": 5,
+      "code": "MSCI",
+      "name": "MSCI World Proxy",
+      "series_type": "equity_index",
+      "notes": "Proxy global"
+    }
+  ]
+}

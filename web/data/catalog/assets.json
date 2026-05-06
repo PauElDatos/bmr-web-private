@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "asset_id": 1,
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "asset_type": "equity"
+    },
+    {
+      "asset_id": 2,
+      "symbol": "MSFT",
+      "name": "Microsoft Corporation",
+      "asset_type": "equity"
+    },
+    {
+      "asset_id": 3,
+      "symbol": "SPX",
+      "name": "S&P 500 histórico",
+      "asset_type": "index"
+    },
+    {
+      "asset_id": 4,
+      "symbol": "NDX",
+      "name": "Nasdaq 100 histórico",
+      "asset_type": "index"
+    },
+    {
+      "asset_id": 5,
+      "symbol": "DJI",
+      "name": "Dow Jones Industrial Average",
+      "asset_type": "index"
+    },
+    {
+      "asset_id": 6,
+      "symbol": "RUT",
+      "name": "Russell 2000",
+      "asset_type": "index"
+    }
+  ]
+}

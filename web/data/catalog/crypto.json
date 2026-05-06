@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "coin_id": "btc-bitcoin",
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "quote": "usd",
+      "source": "coinpaprika"
+    },
+    {
+      "coin_id": "eth-ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "quote": "usd",
+      "source": "coinpaprika"
+    }
+  ]
+}

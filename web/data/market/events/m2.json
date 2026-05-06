@@ -1,0 +1,85 @@
+{
+  "module_code": "M2",
+  "run_id": 1102,
+  "source": "mock_phase3",
+  "items": [
+    {
+      "hypothesis_code": "H1_M2_MOCK",
+      "run_id": 1102,
+      "signal_code": "M2_ALERT_SCORE",
+      "direction": "BUY",
+      "event_dt_effective": "2000-01-28",
+      "entry_close": 1043.0,
+      "exit_close_12m": 1097.6,
+      "end_ret_12m_pct": -4.0,
+      "max_dd_12m_pct": -10.0,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H2_M2_MOCK",
+      "run_id": 1102,
+      "signal_code": "M2_CONFIDENCE",
+      "direction": "SELL",
+      "event_dt_effective": "2007-02-28",
+      "entry_close": 1363.0,
+      "exit_close_12m": 1427.6,
+      "end_ret_12m_pct": -0.6,
+      "max_dd_12m_pct": -12.5,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H3_M2_MOCK",
+      "run_id": 1102,
+      "signal_code": "M2_RISK_PULSE",
+      "direction": "BUY",
+      "event_dt_effective": "2011-03-28",
+      "entry_close": 1683.0,
+      "exit_close_12m": 1757.6,
+      "end_ret_12m_pct": 2.8,
+      "max_dd_12m_pct": -15.0,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H4_M2_MOCK",
+      "run_id": 1102,
+      "signal_code": "M2_ALERT_SCORE",
+      "direction": "SELL",
+      "event_dt_effective": "2018-04-28",
+      "entry_close": 2003.0,
+      "exit_close_12m": 2087.6,
+      "end_ret_12m_pct": 6.2,
+      "max_dd_12m_pct": -17.5,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H5_M2_MOCK",
+      "run_id": 1102,
+      "signal_code": "M2_CONFIDENCE",
+      "direction": "BUY",
+      "event_dt_effective": "2020-05-28",
+      "entry_close": 2323.0,
+      "exit_close_12m": 2417.6,
+      "end_ret_12m_pct": 9.6,
+      "max_dd_12m_pct": -20.0,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    },
+    {
+      "hypothesis_code": "H6_M2_MOCK",
+      "run_id": 1102,
+      "signal_code": "M2_RISK_PULSE",
+      "direction": "SELL",
+      "event_dt_effective": "2022-06-28",
+      "entry_close": 2643.0,
+      "exit_close_12m": 2747.6,
+      "end_ret_12m_pct": 13.0,
+      "max_dd_12m_pct": -22.5,
+      "horizon_days": 252,
+      "lag_days_used": 1
+    }
+  ]
+}

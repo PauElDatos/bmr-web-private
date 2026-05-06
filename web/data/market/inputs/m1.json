@@ -1,0 +1,30 @@
+{
+  "module_code": "M1",
+  "run_id": 1101,
+  "items": [
+    {
+      "input_kind": "series",
+      "input_code": "SPX",
+      "role": "benchmark",
+      "notes": "Mock Fase 3 para M1; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "signal",
+      "input_code": "H1_S_SELL",
+      "role": "hypothesis",
+      "notes": "Mock Fase 3 para M1; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "signal",
+      "input_code": "H8_S_BUY",
+      "role": "hypothesis",
+      "notes": "Mock Fase 3 para M1; en real vendrá de ml_run_inputs."
+    },
+    {
+      "input_kind": "indicator",
+      "input_code": "USREC",
+      "role": "recession_overlay",
+      "notes": "Mock Fase 3 para M1; en real vendrá de ml_run_inputs."
+    }
+  ]
+}

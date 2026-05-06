@@ -1,0 +1,11 @@
+{
+  "items": [
+    "none",
+    "sum",
+    "subtract",
+    "divide",
+    "multiply",
+    "spread_z",
+    "correlation_rolling"
+  ]
+}

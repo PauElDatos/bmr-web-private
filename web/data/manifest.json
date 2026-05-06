@@ -1,0 +1,40 @@
+{
+  "version": "0.6.0-phase6",
+  "mode": "mock",
+  "snapshot_date": "2026-05-05",
+  "generated_at": "2026-05-05T20:15:00+02:00",
+  "description": "Contrato JSON Fase 6 con Auth Gateway Patreon, soporte de datos privados en R2 y protección de /data/*.json.",
+  "entrypoints": {
+    "market_latest": "market/latest.json",
+    "catalog_indicators": "catalog/indicators.json",
+    "catalog_assets": "catalog/assets.json",
+    "catalog_series": "catalog/series.json",
+    "market_inputs": "market/inputs/m5.json",
+    "market_metrics": "market/metrics/m5.json",
+    "market_events": "market/events/m5.json",
+    "market_weights": "market/weights/m5.json",
+    "catalog_crypto": "catalog/crypto.json",
+    "analysis_recession_bands": "analysis/recession_bands.json",
+    "analysis_catalog_index": "analysis/catalog_index.json",
+    "status_health": "status/health.json",
+    "status_automation": "status/automation.json",
+    "status_publish": "status/publish.json",
+    "status_file_index": "status/file_index.json",
+    "status_last_export": "status/last_export.json"
+  },
+  "counts": {
+    "market_detail_files": {
+      "inputs": 5,
+      "metrics": 5,
+      "events": 5,
+      "weights": 5
+    }
+  },
+  "manifest_version": "0.6.0-phase6",
+  "phase": "phase6_patreon_auth_gateway",
+  "auth_gateway": {
+    "supported": true,
+    "provider": "patreon",
+    "recommended_private_data_store": "cloudflare_r2"
+  }
+}
