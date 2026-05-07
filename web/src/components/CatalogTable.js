@@ -1,4 +1,4 @@
-import { escapeHtml, translateDbText } from '../utils/format.js';
+import { escapeHtml, fmtNumber, translateDbText } from '../utils/format.js';
 
 export function catalogList(items, selectedCode, kind = 'indicator') {
   return `

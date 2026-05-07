@@ -12,7 +12,7 @@ import {
   describePoints,
   toCsvRows
 } from '../utils/series.js';
-import { escapeHtml, lastOf, translateDbText, translateOptionLabel } from '../utils/format.js';
+import { escapeHtml, lastOf, translateDbText } from '../utils/format.js';
 
 const slots = ['blue', 'red', 'green'];
 let cleanupResize = null;
@@ -56,7 +56,7 @@ export async function AnalysisPage() {
     ${pageHeader('Análisis')}
     <section class="card control-panel analysis-control-panel">
       <div class="analysis-topbar">
-        <label>Preset
+        <label>Plantilla
           <select id="analysis-preset" class="select-input">
             <option value="">Manual</option>
             ${catalogs.presets.map((p, idx) => `<option value="${idx}">${escapeHtml(p.name)}</option>`).join('')}
@@ -70,7 +70,7 @@ export async function AnalysisPage() {
           </select>
         </label>
         <label class="check"><input id="normalize" type="checkbox" checked /> <span>Normalizar a 100</span></label>
-        <label class="check"><input id="align-ffill" type="checkbox" checked /> <span>Forward-fill para cálculo</span></label>
+        <label class="check"><input id="align-ffill" type="checkbox" checked /> <span>Relleno hacia delante para cálculo</span></label>
         <button id="apply-analysis" class="btn primary">Aplicar</button>
         <button id="export-analysis" class="btn ghost">Exportar CSV</button>
         <button id="reset-analysis" class="btn ghost">Borrar</button>
@@ -87,7 +87,7 @@ export async function AnalysisPage() {
 
     <div class="analysis-layout wide">
       <main>
-        ${chartPanel('analysis-chart', 'Comparador de series', 'Slots azul/rojo/verde + capas + cálculo opcional')}
+        ${chartPanel('analysis-chart', 'Comparador de series', 'Slots azul/rojo/verde + overlays + cálculo opcional')}
         <section class="card">
           <div class="card-header">
             <div>
@@ -143,20 +143,33 @@ async function loadAnalysisCatalogs() {
     ...series.items.map(s => normalizeCatalogOption('series', s.code, s.name, s.series_type, 'series_prices', '', s)),
     ...crypto.items.map(c => normalizeCatalogOption('crypto', c.symbol || c.code, c.name || c.symbol, 'crypto', c.source || 'coinpaprika', c.quote || 'usd', c))
   ].filter(o => o.code);
-  const facets = [...new Set(options.flatMap(o => [o.source, o.type, o.frequency].filter(Boolean)))].sort();
+  const facets = [...new Set(options.flatMap(o => [o.rawSource, o.rawType, o.rawFrequency].filter(Boolean)))].sort();
   return { options, overlays: overlays.items || [], presets: normalizePresets(presets.items || []), recessionBands: recession.items || [], facets };
 }
 
 function normalizeCatalogOption(kind, code, name, type, source, frequency, item) {
+  const rawName = name || code;
+  const rawType = type || '';
+  const rawSource = source || '';
+  const rawFrequency = frequency || '';
+  const displayName = translateDbText(rawName);
+  const displayType = translateDbText(rawType);
+  const displaySource = translateDbText(rawSource);
+  const displayFrequency = translateDbText(rawFrequency);
   return {
     key: `${kind}:${code}`,
-    label: `${labelKind(kind)} · ${code} · ${translateDbText(name || '')}`,
+    label: `${labelKind(kind)} · ${code} · ${displayName}`,
     kind,
     code,
-    name: name || code,
-    type: type || '',
-    source: source || '',
-    frequency: frequency || '',
+    name: displayName,
+    rawName,
+    type: displayType,
+    rawType,
+    source: displaySource,
+    rawSource,
+    frequency: displayFrequency,
+    rawFrequency,
+    facetValues: [rawSource, rawType, rawFrequency].filter(Boolean),
     item
   };
 }
@@ -164,9 +177,9 @@ function normalizeCatalogOption(kind, code, name, type, source, frequency, item)
 function normalizePresets(items) {
   return (items || []).map((p) => {
     if (Array.isArray(p.slots)) {
-      return { name: p.name || 'Preset', blue: p.slots[0], red: p.slots[1], green: p.slots[2] };
+      return { name: translateDbText(p.name || 'Plantilla'), blue: p.slots[0], red: p.slots[1], green: p.slots[2] };
     }
-    return p;
+    return { ...p, name: translateDbText(p.name || 'Plantilla') };
   });
 }
 
@@ -184,7 +197,7 @@ function renderSlotControl(slot) {
         <label class="check"><input id="visible-${slot}" type="checkbox" ${state.visible ? 'checked' : ''}/> <span>Visible</span></label>
       </div>
       <select id="slot-${slot}" class="select-input">
-        ${catalogs.options.map(o => `<option value="${escapeHtml(o.key)}" ${o.key === state.key ? 'selected' : ''}>${escapeHtml(translateOptionLabel(o.label))}</option>`).join('')}
+        ${catalogs.options.map(o => `<option value="${escapeHtml(o.key)}" ${o.key === state.key ? 'selected' : ''}>${escapeHtml(o.label)}</option>`).join('')}
       </select>
       <div class="mini-row phase4-mini-row">
         <button class="btn tiny invert-btn ${state.invert ? 'active' : ''}" data-slot="${slot}">Invertir</button>
@@ -287,7 +300,7 @@ async function renderAnalysis() {
       const ts = await loadTimeseries(kind, code);
       let pts = filterByYears(ts.points, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value);
       if (document.getElementById('normalize')?.checked) pts = normalizeTo100(pts);
-      series.push({ name: `Overlay ${o}`, points: pts, color: ov.color || '#a78bfa', width: 1.5 });
+      series.push({ name: `Capa ${o}`, points: pts, color: ov.color || '#a78bfa', width: 1.5 });
     } catch (_) {}
   }
 
@@ -342,8 +355,8 @@ function renderFacts(loaded) {
       <div class="fact-row ${s.slot}">
         <strong>${slotLabels[s.slot].toUpperCase()}</strong>
         <span>${escapeHtml(s.opt.code)}</span>
-        <em>${escapeHtml(translateDbText(s.opt.name || ''))}</em>
-        <small>${escapeHtml(labelKind(s.opt.kind))} · ${escapeHtml(translateDbText(s.opt.source || s.opt.type || 'BMR'))}</small>
+        <em>${escapeHtml(s.opt.name || '')}</em>
+        <small>${escapeHtml(labelKind(s.opt.kind))} · ${escapeHtml(s.opt.source || s.opt.type || 'BMR')}</small>
         <small>Último: ${formatMaybe(last.value)} · ${escapeHtml(last.dt || '—')}</small>
         <small>Rango: ${escapeHtml(stats.firstDt || '—')} → ${escapeHtml(stats.lastDt || '—')} · ${stats.count} puntos</small>
       </div>
@@ -358,7 +371,7 @@ function renderDiagnostics(loaded, calcPoints, op) {
     const stats = describePoints(s.rawPoints);
     return {
       label: `${slotLabels[s.slot]} · ${s.opt.code}`,
-      type: `${labelKind(s.opt.kind)} / ${translateDbText(s.opt.source || s.opt.type || 'BMR')}`,
+      type: `${labelKind(s.opt.kind)} / ${s.opt.source || s.opt.type || 'BMR'}`,
       transform: `${s.state.invert ? 'Invertida + ' : ''}${s.state.transform}${s.state.lag ? ` · lag ${s.state.lag}m` : ''}`,
       points: stats.count,
       from: stats.firstDt || '—',
@@ -405,9 +418,9 @@ function renderCatalogTable() {
   const facet = document.getElementById('catalog-source')?.value || 'all';
   let items = catalogs.options;
   if (kind !== 'all') items = items.filter(i => i.kind === kind);
-  if (facet !== 'all') items = items.filter(i => [i.source, i.type, i.frequency].includes(facet));
+  if (facet !== 'all') items = items.filter(i => (i.facetValues || [i.source, i.type, i.frequency]).includes(facet));
   if (q) {
-    items = items.filter(i => [i.code, i.name, translateDbText(i.name), i.source, translateDbText(i.source), i.type, translateDbText(i.type), i.frequency, translateDbText(i.frequency), i.kind].join(' ').toLowerCase().includes(q));
+    items = items.filter(i => [i.code, i.name, i.rawName, i.source, i.rawSource, i.type, i.rawType, i.frequency, i.rawFrequency, i.kind].join(' ').toLowerCase().includes(q));
   }
   items = items.slice(0, 160);
   el.innerHTML = `
@@ -418,8 +431,8 @@ function renderCatalogTable() {
           <tr>
             <td><span class="pill input">${escapeHtml(labelKind(i.kind))}</span></td>
             <td><code>${escapeHtml(i.code)}</code></td>
-            <td>${escapeHtml(translateDbText(i.name))}</td>
-            <td>${escapeHtml([i.source, i.type, i.frequency].filter(Boolean).map(translateDbText).join(' · ') || '—')}</td>
+            <td>${escapeHtml(i.name)}</td>
+            <td>${escapeHtml([i.source, i.type, i.frequency].filter(Boolean).join(' · ') || '—')}</td>
             <td class="slot-actions">
               ${slots.map(s => `<button class="btn tiny set-slot" data-slot="${s}" data-key="${escapeHtml(i.key)}">${slotLabels[s]}</button>`).join('')}
             </td>

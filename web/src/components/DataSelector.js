@@ -1,4 +1,4 @@
-import { escapeHtml, translateOptionLabel } from '../utils/format.js';
+import { escapeHtml } from '../utils/format.js';
 
 export function selectBox(id, label, options, selected = '') {
   return `
@@ -7,7 +7,7 @@ export function selectBox(id, label, options, selected = '') {
       ${options.map(o => {
         const value = typeof o === 'string' ? o : o.value;
         const label = typeof o === 'string' ? o : o.label;
-        return `<option value="${escapeHtml(value)}" ${String(value) === String(selected) ? 'selected' : ''}>${escapeHtml(translateOptionLabel(label))}</option>`;
+        return `<option value="${escapeHtml(value)}" ${String(value) === String(selected) ? 'selected' : ''}>${escapeHtml(label)}</option>`;
       }).join('')}
     </select>
   `;

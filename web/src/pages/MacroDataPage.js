@@ -29,7 +29,7 @@ export async function MacroDataPage() {
       <section class="data-browser">
         <aside class="card browser-sidebar">
           <div class="filter-grid compact-filter-grid">
-            <label>Fuente<select id="source-filter" class="select-input">${sources.map(s => `<option value="${escapeHtml(s)}" ${s === sourceFilter ? 'selected' : ''}>${escapeHtml(translateDbText(s))}</option>`).join('')}</select></label>
+            <label>Fuente<select id="source-filter" class="select-input">${sources.map(s => `<option value="${escapeHtml(s)}" ${s === sourceFilter ? 'selected' : ''}>${escapeHtml(s === 'ALL' ? 'Todas' : translateDbText(s))}</option>`).join('')}</select></label>
           </div>
           <div id="macro-list" class="macro-list-scroll">${catalogList(filteredCatalogItems(catalog.items), selectedCode, 'indicators')}</div>
         </aside>
