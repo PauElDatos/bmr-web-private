@@ -222,6 +222,8 @@ td { color: #dbe7f5; }
 .split-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; }
 .pill.neutral, .pill.input, .pill.unknown { background: rgba(148, 163, 184, .15); color: #cbd5e1; }
 .pill.input { text-transform: uppercase; }
+.pill.risk_off { background: rgba(248, 113, 113, .15); color: #fca5a5; }
+.pill.risk_on { background: rgba(52, 211, 153, .15); color: #86efac; }
 code { color: #bfdbfe; background: rgba(96, 165, 250, .09); border: 1px solid rgba(96, 165, 250, .16); padding: 2px 5px; border-radius: 8px; }
 @media (max-width: 1080px) { .split-grid { grid-template-columns: 1fr; } }
 

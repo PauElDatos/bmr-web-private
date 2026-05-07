@@ -660,7 +660,51 @@ def export_module_weights(conn, out_dir: Path, module_code: str, run: Optional[D
     """
     items: List[Dict[str, Any]] = []
     source = "none"
-    if run and table_exists(conn, "ml_signal_scores"):
+    asof_dt = None
+    if run and table_exists(conn, "ml_module_contributions"):
+        latest = fetch_all(conn, """
+            SELECT MAX(dt) AS asof_dt
+            FROM ml_module_contributions
+            WHERE run_id = %s AND module_code = %s
+        """, (run["run_id"], module_code))
+        asof_dt = latest[0].get("asof_dt") if latest else None
+        if asof_dt:
+            rows = fetch_all(conn, """
+                SELECT dt, module_code, output_signal_code,
+                       source_hypothesis_code, source_run_id, source_signal_code,
+                       raw_value, signed_value, model_weight, contribution,
+                       abs_contribution, contribution_pct, direction, method,
+                       explanation, meta_json, created_at
+                FROM ml_module_contributions
+                WHERE run_id = %s AND module_code = %s AND dt = %s
+                ORDER BY abs_contribution DESC, source_signal_code ASC
+                LIMIT 120
+            """, (run["run_id"], module_code, asof_dt))
+            if rows:
+                source = "ml_module_contributions"
+                for r in rows:
+                    items.append({
+                        "dt": r.get("dt"),
+                        "asof_dt": asof_dt,
+                        "module_code": r.get("module_code"),
+                        "output_signal_code": r.get("output_signal_code"),
+                        "hypothesis_code": r.get("source_hypothesis_code") or r.get("source_signal_code"),
+                        "run_id": r.get("source_run_id"),
+                        "signal_code": r.get("source_signal_code"),
+                        "direction": r.get("direction") or "NEUTRAL",
+                        "weight": r.get("contribution_pct"),
+                        "score": r.get("contribution"),
+                        "contribution": r.get("contribution"),
+                        "abs_contribution": r.get("abs_contribution"),
+                        "raw_value": r.get("raw_value"),
+                        "signed_value": r.get("signed_value"),
+                        "model_weight": r.get("model_weight"),
+                        "method": r.get("method"),
+                        "updated_at": r.get("created_at"),
+                        "weight_source": source,
+                        "explanation": r.get("explanation") or "Contribucion efectiva registrada por el modulo.",
+                    })
+    if not items and run and table_exists(conn, "ml_signal_scores"):
         rows = fetch_all(conn, """
             SELECT hypothesis_code, run_id, signal_code, direction, score, rank_within_direction,
                    n_events, avg_end_ret_12m_pct, median_end_ret_12m_pct, avg_max_dd_12m_pct, updated_at
@@ -727,7 +771,8 @@ def export_module_weights(conn, out_dir: Path, module_code: str, run: Optional[D
     payload = {
         "module_code": module_code,
         "run_id": run.get("run_id") if run else None,
-        "weights_available": bool(items and source.startswith("ml_signal_scores")),
+        "asof_dt": asof_dt,
+        "weights_available": bool(items and (source == "ml_module_contributions" or source.startswith("ml_signal_scores"))),
         "weights_source": source,
         "items": items,
     }

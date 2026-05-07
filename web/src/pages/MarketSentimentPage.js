@@ -15,7 +15,7 @@ import { runMetricTable } from '../components/RunMetricTable.js';
 import { signalEventTable } from '../components/SignalEventTable.js';
 import { signalSeriesTable } from '../components/SignalSeriesTable.js';
 import { drawLineChart, attachResize } from '../utils/chart.js';
-import { classForLevel, escapeHtml, fmtNumber, fmtPct } from '../utils/format.js';
+import { classForLevel, escapeHtml, fmtNumber } from '../utils/format.js';
 
 let currentModule = 'M5';
 let selectedSignalByModule = {};
@@ -47,9 +47,7 @@ export async function MarketSentimentPage() {
       </div>
       <aside class="card module-panel">
         <h2>Módulos</h2>
-        <p>Selecciona M1–M5. Cada bloque usa el último run compatible exportado desde MariaDB.</p>
         <div class="module-buttons">${buttons}</div>
-        <div id="module-summary" class="module-summary"></div>
       </aside>
     </div>
 
@@ -68,7 +66,7 @@ export async function MarketSentimentPage() {
       <div class="card-header">
         <div>
           <h2>Indicadores, H e inputs que explican la señal</h2>
-          <p id="weights-caption">Pesos calculados a partir de ml_signal_scores cuando existen; si no, fallback a ml_run_inputs sin peso explícito.</p>
+          <p id="weights-caption">Contribuciones efectivas registradas por el módulo para el último punto exportado.</p>
         </div>
       </div>
       <div id="weights-table"></div>
@@ -145,8 +143,8 @@ function signalButtons(mod) {
 
 function buildOperationalReading(mod, weights, inputs, events, metrics) {
   const weightsInfo = weights.weights_available
-    ? `Los pesos proceden de <code>${escapeHtml(weights.weights_source)}</code> y se han normalizado para lectura visual.`
-    : `No hay peso H→M explícito disponible; la web muestra inputs o señales como aproximación estructural.`;
+    ? `Las contribuciones proceden de <code>${escapeHtml(weights.weights_source)}</code>${weights.asof_dt ? ` para <strong>${escapeHtml(weights.asof_dt)}</strong>` : ''}.`
+    : `No hay contribución H→M explícita disponible; la web muestra inputs o señales como aproximación estructural.`;
   const topWeight = (weights.items || [])[0];
   const topSentence = topWeight
     ? `El contribuyente principal mostrado es <strong>${escapeHtml(topWeight.hypothesis_code || topWeight.input_code)}</strong> con señal/rol <strong>${escapeHtml(topWeight.signal_code || topWeight.role || '—')}</strong>.`
@@ -168,7 +166,6 @@ async function renderModule() {
   ]);
 
   const chart = document.getElementById('market-chart');
-  const summary = document.getElementById('module-summary');
   const table = document.getElementById('weights-table');
   const inputsTable = document.getElementById('inputs-table');
   const metricsTable = document.getElementById('metrics-table');
@@ -177,7 +174,7 @@ async function renderModule() {
   const signalTable = document.getElementById('signal-series-table');
   const reading = document.getElementById('operational-reading');
   const caption = document.getElementById('weights-caption');
-  if (!chart || !summary || !table) return;
+  if (!chart || !table) return;
 
   const chosen = selectedSignal(mod);
   selectedSignalByModule[currentModule] = chosen?.signal_code;
@@ -193,19 +190,6 @@ async function renderModule() {
   if (cleanupResize) cleanupResize();
   cleanupResize = attachResize(chart, draw);
 
-  summary.innerHTML = `
-    <h3>${escapeHtml(mod.module_code)} · ${escapeHtml(mod.title)}</h3>
-    <p>${escapeHtml(mod.description)}</p>
-    <div class="summary-grid">
-      <div><span>Último valor</span><strong>${fmtNumber(mod.latest_value, 3)}</strong></div>
-      <div><span>Señal principal</span><strong>${escapeHtml(mod.signal_code || '—')}</strong></div>
-      <div><span>Nivel</span><strong>${escapeHtml(mod.latest_level || '—')}</strong></div>
-      <div><span>Run</span><strong>${escapeHtml(String(mod.run_id || '—'))}</strong></div>
-      <div><span>Rango</span><strong>${escapeHtml(mod.data_from || '—')} → ${escapeHtml(mod.data_to || '—')}</strong></div>
-      <div><span>Señales</span><strong>${fmtNumber(allSignalSeries(mod).length, 0)}</strong></div>
-    </div>
-  `;
-
   selector.innerHTML = signalButtons(mod);
   selector.querySelectorAll('.signal-chip').forEach(btn => {
     btn.addEventListener('click', async () => {
@@ -216,8 +200,8 @@ async function renderModule() {
 
   if (caption) {
     caption.textContent = weights.weights_available
-      ? `Pesos disponibles desde ${weights.weights_source}. ${weights.items?.length || 0} filas exportadas.`
-      : `Sin pesos explícitos. Fallback actual: ${weights.weights_source || 'none'}.`;
+      ? `Contribuciones disponibles desde ${weights.weights_source}${weights.asof_dt ? ` para ${weights.asof_dt}` : ''}. ${weights.items?.length || 0} filas exportadas.`
+      : `Sin contribuciones explícitas. Fallback actual: ${weights.weights_source || 'none'}.`;
   }
   table.innerHTML = signalWeightTable(weights.items || []);
   inputsTable.innerHTML = runInputTable(inputs.items || []);
