@@ -34,7 +34,7 @@ export async function MarketSentimentPage() {
   setTimeout(() => wireMarketPage(), 0);
 
   return `
-    ${pageHeader('Sentimiento del mercado', 'Lectura de M1–M5 conectada al contrato ml_*: señales, inputs, scores/pesos, eventos y métricas del run.')} 
+    ${pageHeader('Sentimiento del mercado')} 
     ${metricGrid([
       { label: 'Régimen actual', value: latest.regime || '—', detail: latest.asof_dt || 'sin fecha', level: classForLevel(latest.regime) },
       { label: 'Confianza', value: `${fmtNumber(latest.confidence, 1)} / 100`, detail: latest.primary_driver || 'driver no disponible', level: 'warn' },

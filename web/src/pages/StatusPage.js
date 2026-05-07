@@ -45,7 +45,7 @@ export async function StatusPage() {
   ]);
 
   return `
-    ${pageHeader('Estado del snapshot', 'Control operativo de los JSON, automatización diaria y publicación de la web estática.')}
+    ${pageHeader('Estado del snapshot')}
     <section class="card">
       <h2>Manifest</h2>
       <div class="json-grid">

@@ -53,7 +53,7 @@ export async function AnalysisPage() {
   catalogs = await loadAnalysisCatalogs();
   setTimeout(() => wireAnalysisPage(), 0);
   return `
-    ${pageHeader('Análisis', 'Comparador web tipo comparador_graf.py: slots azul/rojo/verde, catálogo BMR, overlays, escalas, desfases, cálculo entre series y exportación CSV del panel visible.')}
+    ${pageHeader('Análisis')}
     <section class="card control-panel analysis-control-panel">
       <div class="analysis-topbar">
         <label>Preset

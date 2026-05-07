@@ -14,16 +14,13 @@ export function catalogList(items, selectedCode, kind = 'indicator') {
   `;
 }
 
-export function factsPanel(item, lastPoint) {
+export function factsPanel(item) {
   if (!item) return '';
   return `
     <div class="facts-grid">
       <div><span>Código</span><strong>${escapeHtml(item.code || item.symbol)}</strong></div>
       <div><span>Nombre</span><strong>${escapeHtml(item.name || item.asset_name || '—')}</strong></div>
       <div><span>Fuente/tipo</span><strong>${escapeHtml(item.source || item.asset_type || item.series_type || '—')}</strong></div>
-      <div><span>Frecuencia</span><strong>${escapeHtml(item.frequency || '—')}</strong></div>
-      <div><span>Unidad</span><strong>${escapeHtml(item.unit || '—')}</strong></div>
-      <div><span>Último valor</span><strong>${lastPoint ? fmtNumber(lastPoint.value, 4) : '—'}</strong></div>
     </div>
   `;
 }
