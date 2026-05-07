@@ -1,40 +1,31 @@
 {
   "status": "ok",
-  "snapshot_status": "ok",
-  "generated_at": "2026-05-05T20:15:00+02:00",
-  "snapshot_date": "2026-05-05",
-  "mode": "mock",
-  "phase": "phase5",
+  "generated_at": "2026-05-07T09:36:16.729262+00:00",
+  "snapshot_date": "2026-05-07",
   "checks": [
     {
-      "name": "manifest",
+      "name": "catalog_indicators",
       "status": "ok",
       "ok": true,
-      "detail": "manifest.json cargable y actualizado a Fase 5"
+      "detail": "count=100"
     },
     {
-      "name": "catalogs",
+      "name": "catalog_assets",
       "status": "ok",
       "ok": true,
-      "detail": "indicators/assets/series/crypto presentes"
+      "detail": "count=500"
     },
     {
-      "name": "market",
+      "name": "catalog_series",
       "status": "ok",
       "ok": true,
-      "detail": "M1-M5 y detalle ml_* mock presentes"
+      "detail": "count=62"
     },
     {
-      "name": "analysis",
+      "name": "market_modules",
       "status": "ok",
       "ok": true,
-      "detail": "comparador y overlays disponibles"
-    },
-    {
-      "name": "automation",
-      "status": "ok",
-      "ok": true,
-      "detail": "status operativo de exportación y publicación disponible"
+      "detail": "M1-M5 exportados"
     }
   ],
   "warnings": []
