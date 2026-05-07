@@ -19,7 +19,7 @@ function contributionValue(row) {
 }
 
 export function signalWeightTable(rows = []) {
-  if (!rows.length) return `<div class="empty-state">No hay contribuciones disponibles en este corte de datos.</div>`;
+  if (!rows.length) return `<div class="empty-state">No hay contribuciones disponibles.</div>`;
   return `
     <div class="table-wrap">
       <table>

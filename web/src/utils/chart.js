@@ -31,7 +31,7 @@ function normalizePoints(points) {
 
 export function drawLineChart(container, series, options = {}) {
   const { ctx, width, height } = getCanvas(container);
-  const pad = options.hideYAxisGutter ? { l: 38, r: 22, t: 24, b: 38 } : { l: 58, r: 22, t: 28, b: 38 };
+  const pad = options.hideYAxisGutter ? { l: 72, r: 22, t: 24, b: 38 } : { l: 64, r: 22, t: 28, b: 38 };
   ctx.clearRect(0, 0, width, height);
 
   const normalizedSeries = (series || []).map((s, idx) => ({
@@ -100,33 +100,29 @@ export function drawLineChart(container, series, options = {}) {
     ctx.fillRect(left, pad.t, Math.max(0, right - left), plotH);
   }
 
-  // Grid and axes labels. The left-side label area is not painted separately, avoiding the grey vertical rectangle.
+  // Grid and axes labels. The label gutter is transparent, avoiding the grey vertical rectangle.
   ctx.strokeStyle = 'rgba(74, 74, 74, 0.72)';
   ctx.lineWidth = 1;
   ctx.font = '11px Arial, system-ui, sans-serif';
   ctx.fillStyle = '#B0B0B0';
-
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
   for (let i = 0; i <= 4; i++) {
     const y = pad.t + (plotH * i / 4);
-    ctx.beginPath();
-    ctx.moveTo(pad.l, y);
-    ctx.lineTo(width - pad.r, y);
-    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
     const label = (maxY - (maxY - minY) * i / 4).toLocaleString('es-ES', { maximumFractionDigits: 2 });
-    const labelX = Math.max(4, pad.l - ctx.measureText(label).width - 10);
-    ctx.fillText(label, labelX, y + 4);
+    ctx.fillText(label, pad.l - 8, y);
   }
-
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
   for (let i = 0; i <= 4; i++) {
     const x = pad.l + (plotW * i / 4);
     const t = minX + (maxX - minX) * i / 4;
-    ctx.beginPath();
-    ctx.moveTo(x, pad.t);
-    ctx.lineTo(x, pad.t + plotH);
-    ctx.stroke();
     const label = new Date(t).getFullYear().toString();
-    ctx.fillText(label, x - 14, height - 12);
+    ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t + plotH); ctx.stroke();
+    ctx.fillText(label, x, height - 12);
   }
+  ctx.textAlign = 'left';
 
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
   ctx.beginPath();

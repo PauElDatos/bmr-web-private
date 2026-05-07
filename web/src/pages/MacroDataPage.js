@@ -1,10 +1,9 @@
 import { loadCatalog, loadTimeseries } from '../api/dataClient.js';
 import { pageHeader } from '../components/Layout.js';
-import { escapeHtml } from '../utils/format.js';
 import { chartPanel } from '../components/ChartPanel.js';
 import { catalogList, factsPanel } from '../components/CatalogTable.js';
 import { drawLineChart, attachResize, attachTradingChartInteractions } from '../utils/chart.js';
-import { translateDbSource } from '../utils/translate.js';
+import { escapeHtml, translateDbText } from '../utils/format.js';
 
 let selectedCode = 'FEDFUNDS';
 let sourceFilter = 'ALL';
@@ -30,7 +29,7 @@ export async function MacroDataPage() {
       <section class="data-browser">
         <aside class="card browser-sidebar">
           <div class="filter-grid compact-filter-grid">
-            <label>Fuente<select id="source-filter" class="select-input">${sources.map(s => `<option value="${s}" ${s === sourceFilter ? 'selected' : ''}>${escapeHtml(translateDbSource(s))}</option>`).join('')}</select></label>
+            <label>Fuente<select id="source-filter" class="select-input">${sources.map(s => `<option value="${escapeHtml(s)}" ${s === sourceFilter ? 'selected' : ''}>${escapeHtml(translateDbText(s))}</option>`).join('')}</select></label>
           </div>
           <div id="macro-list" class="macro-list-scroll">${catalogList(filteredCatalogItems(catalog.items), selectedCode, 'indicators')}</div>
         </aside>
@@ -122,7 +121,7 @@ async function renderMacroDetail(catalog) {
     {
       view: macroView,
       hideLegend: true,
-      hideYAxisGutter: false,
+      hideYAxisGutter: true,
       bands: [],
       compactAxes: true
     }

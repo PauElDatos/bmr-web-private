@@ -12,8 +12,7 @@ import {
   describePoints,
   toCsvRows
 } from '../utils/series.js';
-import { escapeHtml, lastOf } from '../utils/format.js';
-import { translateDbSource, translateDbText } from '../utils/translate.js';
+import { escapeHtml, lastOf, translateDbText, translateOptionLabel } from '../utils/format.js';
 
 const slots = ['blue', 'red', 'green'];
 let cleanupResize = null;
@@ -80,7 +79,7 @@ export async function AnalysisPage() {
         ${slots.map(slot => renderSlotControl(slot)).join('')}
       </div>
       <div class="overlay-row">
-        <strong>Overlays:</strong>
+        <strong>Capas:</strong>
         ${catalogs.overlays.map((o, idx) => `<label class="check"><input class="overlay-check" type="checkbox" value="${escapeHtml(o.code)}" ${idx === 1 ? 'checked' : ''}/> <span>${escapeHtml(o.code)}</span></label>`).join('')}
         <label class="check"><input id="overlay-recession" type="checkbox" checked /> <span>Recesión</span></label>
       </div>
@@ -88,7 +87,7 @@ export async function AnalysisPage() {
 
     <div class="analysis-layout wide">
       <main>
-        ${chartPanel('analysis-chart', 'Comparador de series', 'Slots azul/rojo/verde + overlays + cálculo opcional')}
+        ${chartPanel('analysis-chart', 'Comparador de series', 'Slots azul/rojo/verde + capas + cálculo opcional')}
         <section class="card">
           <div class="card-header">
             <div>
@@ -108,7 +107,7 @@ export async function AnalysisPage() {
           <div class="catalog-toolbar">
             <input id="catalog-search" class="text-input" placeholder="Buscar código, nombre, fuente, tipo..." />
             <select id="catalog-kind" class="select-input"><option value="all">Todos</option><option value="indicators">Indicadores macro</option><option value="assets">Activos</option><option value="series">Series canónicas</option><option value="crypto">Cripto</option></select>
-            <select id="catalog-source" class="select-input"><option value="all">Todas las fuentes/tipos</option>${catalogs.facets.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(translateDbSource(f))}</option>`).join('')}</select>
+            <select id="catalog-source" class="select-input"><option value="all">Todas las fuentes/tipos</option>${catalogs.facets.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(translateDbText(f))}</option>`).join('')}</select>
           </div>
           <div id="analysis-catalog-table" class="analysis-catalog-table"></div>
         </section>
@@ -154,9 +153,9 @@ function normalizeCatalogOption(kind, code, name, type, source, frequency, item)
     label: `${labelKind(kind)} · ${code} · ${translateDbText(name || '')}`,
     kind,
     code,
-    name: translateDbText(name || code),
-    type: translateDbSource(type || ''),
-    source: translateDbSource(source || ''),
+    name: name || code,
+    type: type || '',
+    source: source || '',
     frequency: frequency || '',
     item
   };
@@ -185,7 +184,7 @@ function renderSlotControl(slot) {
         <label class="check"><input id="visible-${slot}" type="checkbox" ${state.visible ? 'checked' : ''}/> <span>Visible</span></label>
       </div>
       <select id="slot-${slot}" class="select-input">
-        ${catalogs.options.map(o => `<option value="${escapeHtml(o.key)}" ${o.key === state.key ? 'selected' : ''}>${escapeHtml(o.label)}</option>`).join('')}
+        ${catalogs.options.map(o => `<option value="${escapeHtml(o.key)}" ${o.key === state.key ? 'selected' : ''}>${escapeHtml(translateOptionLabel(o.label))}</option>`).join('')}
       </select>
       <div class="mini-row phase4-mini-row">
         <button class="btn tiny invert-btn ${state.invert ? 'active' : ''}" data-slot="${slot}">Invertir</button>
@@ -343,8 +342,8 @@ function renderFacts(loaded) {
       <div class="fact-row ${s.slot}">
         <strong>${slotLabels[s.slot].toUpperCase()}</strong>
         <span>${escapeHtml(s.opt.code)}</span>
-        <em>${escapeHtml(s.opt.name || '')}</em>
-        <small>${escapeHtml(labelKind(s.opt.kind))} · ${escapeHtml(s.opt.source || s.opt.type || 'BMR')}</small>
+        <em>${escapeHtml(translateDbText(s.opt.name || ''))}</em>
+        <small>${escapeHtml(labelKind(s.opt.kind))} · ${escapeHtml(translateDbText(s.opt.source || s.opt.type || 'BMR'))}</small>
         <small>Último: ${formatMaybe(last.value)} · ${escapeHtml(last.dt || '—')}</small>
         <small>Rango: ${escapeHtml(stats.firstDt || '—')} → ${escapeHtml(stats.lastDt || '—')} · ${stats.count} puntos</small>
       </div>
@@ -359,7 +358,7 @@ function renderDiagnostics(loaded, calcPoints, op) {
     const stats = describePoints(s.rawPoints);
     return {
       label: `${slotLabels[s.slot]} · ${s.opt.code}`,
-      type: `${labelKind(s.opt.kind)} / ${s.opt.source || s.opt.type || 'BMR'}`,
+      type: `${labelKind(s.opt.kind)} / ${translateDbText(s.opt.source || s.opt.type || 'BMR')}`,
       transform: `${s.state.invert ? 'Invertida + ' : ''}${s.state.transform}${s.state.lag ? ` · lag ${s.state.lag}m` : ''}`,
       points: stats.count,
       from: stats.firstDt || '—',
@@ -408,7 +407,7 @@ function renderCatalogTable() {
   if (kind !== 'all') items = items.filter(i => i.kind === kind);
   if (facet !== 'all') items = items.filter(i => [i.source, i.type, i.frequency].includes(facet));
   if (q) {
-    items = items.filter(i => [i.code, i.name, i.source, i.type, i.frequency, i.kind].join(' ').toLowerCase().includes(q));
+    items = items.filter(i => [i.code, i.name, translateDbText(i.name), i.source, translateDbText(i.source), i.type, translateDbText(i.type), i.frequency, translateDbText(i.frequency), i.kind].join(' ').toLowerCase().includes(q));
   }
   items = items.slice(0, 160);
   el.innerHTML = `
@@ -419,8 +418,8 @@ function renderCatalogTable() {
           <tr>
             <td><span class="pill input">${escapeHtml(labelKind(i.kind))}</span></td>
             <td><code>${escapeHtml(i.code)}</code></td>
-            <td>${escapeHtml(i.name)}</td>
-            <td>${escapeHtml([i.source, i.type, i.frequency].filter(Boolean).join(' · ') || '—')}</td>
+            <td>${escapeHtml(translateDbText(i.name))}</td>
+            <td>${escapeHtml([i.source, i.type, i.frequency].filter(Boolean).map(translateDbText).join(' · ') || '—')}</td>
             <td class="slot-actions">
               ${slots.map(s => `<button class="btn tiny set-slot" data-slot="${s}" data-key="${escapeHtml(i.key)}">${slotLabels[s]}</button>`).join('')}
             </td>

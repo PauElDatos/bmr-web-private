@@ -1,5 +1,4 @@
-import { escapeHtml } from '../utils/format.js';
-import { translateDbSource, translateDbText } from '../utils/translate.js';
+import { escapeHtml, translateDbText } from '../utils/format.js';
 
 export function catalogList(items, selectedCode, kind = 'indicator') {
   return `
@@ -8,7 +7,7 @@ export function catalogList(items, selectedCode, kind = 'indicator') {
         <button class="catalog-item ${item.code === selectedCode || item.symbol === selectedCode ? 'active' : ''}" data-code="${escapeHtml(item.code || item.symbol)}" data-kind="${kind}">
           <strong>${escapeHtml(item.code || item.symbol)}</strong>
           <span>${escapeHtml(translateDbText(item.name || item.asset_name || ''))}</span>
-          <em>${escapeHtml(translateDbSource(item.source || item.asset_type || item.series_type || ''))}</em>
+          <em>${escapeHtml(translateDbText(item.source || item.asset_type || item.series_type || ''))}</em>
         </button>
       `).join('')}
     </div>
@@ -21,7 +20,7 @@ export function factsPanel(item) {
     <div class="facts-grid">
       <div><span>Código</span><strong>${escapeHtml(item.code || item.symbol)}</strong></div>
       <div><span>Nombre</span><strong>${escapeHtml(translateDbText(item.name || item.asset_name || '—'))}</strong></div>
-      <div><span>Fuente/tipo</span><strong>${escapeHtml(translateDbSource(item.source || item.asset_type || item.series_type || '—'))}</strong></div>
+      <div><span>Fuente/tipo</span><strong>${escapeHtml(translateDbText(item.source || item.asset_type || item.series_type || '—'))}</strong></div>
     </div>
   `;
 }
