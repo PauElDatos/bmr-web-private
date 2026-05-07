@@ -45,12 +45,12 @@ export async function StatusPage() {
   ]);
 
   return `
-    ${pageHeader('Estado del snapshot')}
+    ${pageHeader('Estado del corte de datos')}
     <section class="card">
       <h2>Manifest</h2>
       <div class="json-grid">
         <div><span>Versión</span><strong>${escapeHtml(manifest.version)}</strong></div>
-        <div><span>Snapshot</span><strong>${escapeHtml(manifest.snapshot_date)}</strong></div>
+        <div><span>Corte de datos</span><strong>${escapeHtml(manifest.snapshot_date)}</strong></div>
         <div><span>Modo</span><strong>${escapeHtml(manifest.mode)}</strong></div>
         <div><span>Generado</span><strong>${escapeHtml(manifest.generated_at)}</strong></div>
       </div>
@@ -85,7 +85,7 @@ export async function StatusPage() {
     ])}
 
     ${renderStatusCard('Última exportación', lastExport, [
-      ['Snapshot', lastExport?.manifest?.snapshot_date || lastExport?.snapshot_date],
+      ['Corte de datos', lastExport?.manifest?.snapshot_date || lastExport?.snapshot_date],
       ['Versión', lastExport?.manifest?.version || lastExport?.manifest_version],
       ['Warnings', (lastExport?.warnings || []).length],
       ['Generado', lastExport?.generated_at || lastExport?.manifest?.generated_at],

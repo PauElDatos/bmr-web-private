@@ -105,15 +105,25 @@ export function drawLineChart(container, series, options = {}) {
   ctx.lineWidth = 1;
   ctx.font = '11px Arial, system-ui, sans-serif';
   ctx.fillStyle = '#B0B0B0';
+
   for (let i = 0; i <= 4; i++) {
     const y = pad.t + (plotH * i / 4);
-    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(pad.l, y);
+    ctx.lineTo(width - pad.r, y);
+    ctx.stroke();
     const label = (maxY - (maxY - minY) * i / 4).toLocaleString('es-ES', { maximumFractionDigits: 2 });
-    ctx.fillText(label, options.hideYAxisGutter ? pad.l + 6 : 8, y + 4);
+    const labelX = Math.max(4, pad.l - ctx.measureText(label).width - 10);
+    ctx.fillText(label, labelX, y + 4);
   }
+
   for (let i = 0; i <= 4; i++) {
     const x = pad.l + (plotW * i / 4);
     const t = minX + (maxX - minX) * i / 4;
+    ctx.beginPath();
+    ctx.moveTo(x, pad.t);
+    ctx.lineTo(x, pad.t + plotH);
+    ctx.stroke();
     const label = new Date(t).getFullYear().toString();
     ctx.fillText(label, x - 14, height - 12);
   }

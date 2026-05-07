@@ -1,4 +1,3 @@
-import { loadManifest } from '../api/dataClient.js';
 import { escapeHtml } from '../utils/format.js';
 
 const navItems = [
@@ -24,17 +23,10 @@ function headerNavigation() {
 }
 
 export async function renderLayout(route, content) {
-  let manifest = null;
-  try { manifest = await loadManifest(); } catch (_) {}
-  const snapshotLabel = escapeHtml(manifest?.snapshot_date || 'mock');
   return `
     <main class="main">
       ${content}
     </main>
-    <div class="snapshot-badge" aria-label="Snapshot de datos">
-      <span class="status-dot"></span>
-      Snapshot: ${snapshotLabel}
-    </div>
   `;
 }
 

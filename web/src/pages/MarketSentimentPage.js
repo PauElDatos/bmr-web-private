@@ -38,7 +38,7 @@ export async function MarketSentimentPage() {
     ${metricGrid([
       { label: 'Régimen actual', value: latest.regime || '—', detail: latest.asof_dt || 'sin fecha', level: classForLevel(latest.regime) },
       { label: 'Confianza', value: `${fmtNumber(latest.confidence, 1)} / 100`, detail: latest.primary_driver || 'driver no disponible', level: 'warn' },
-      { label: 'Pulso BUY', value: latest.buy_pulse == null ? '—' : fmtNumber(latest.buy_pulse, 3), detail: 'si existe en snapshot', level: 'ok' },
+      { label: 'Pulso BUY', value: latest.buy_pulse == null ? '—' : fmtNumber(latest.buy_pulse, 3), detail: 'si existe en el corte de datos', level: 'ok' },
       { label: 'Pulso SELL', value: latest.sell_pulse == null ? '—' : fmtNumber(latest.sell_pulse, 3), detail: latest.primary_driver_reason || 'explicación pendiente', level: 'danger' }
     ])}
     <div class="market-layout">

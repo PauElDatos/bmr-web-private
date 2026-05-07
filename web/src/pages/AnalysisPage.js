@@ -13,6 +13,7 @@ import {
   toCsvRows
 } from '../utils/series.js';
 import { escapeHtml, lastOf } from '../utils/format.js';
+import { translateDbSource, translateDbText } from '../utils/translate.js';
 
 const slots = ['blue', 'red', 'green'];
 let cleanupResize = null;
@@ -106,8 +107,8 @@ export async function AnalysisPage() {
           </div>
           <div class="catalog-toolbar">
             <input id="catalog-search" class="text-input" placeholder="Buscar código, nombre, fuente, tipo..." />
-            <select id="catalog-kind" class="select-input"><option value="all">Todos</option><option value="indicators">Macro indicators</option><option value="assets">Assets</option><option value="series">Series canónicas</option><option value="crypto">Crypto</option></select>
-            <select id="catalog-source" class="select-input"><option value="all">Todas las fuentes/tipos</option>${catalogs.facets.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('')}</select>
+            <select id="catalog-kind" class="select-input"><option value="all">Todos</option><option value="indicators">Indicadores macro</option><option value="assets">Activos</option><option value="series">Series canónicas</option><option value="crypto">Cripto</option></select>
+            <select id="catalog-source" class="select-input"><option value="all">Todas las fuentes/tipos</option>${catalogs.facets.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(translateDbSource(f))}</option>`).join('')}</select>
           </div>
           <div id="analysis-catalog-table" class="analysis-catalog-table"></div>
         </section>
@@ -150,12 +151,12 @@ async function loadAnalysisCatalogs() {
 function normalizeCatalogOption(kind, code, name, type, source, frequency, item) {
   return {
     key: `${kind}:${code}`,
-    label: `${labelKind(kind)} · ${code} · ${name || ''}`,
+    label: `${labelKind(kind)} · ${code} · ${translateDbText(name || '')}`,
     kind,
     code,
-    name: name || code,
-    type: type || '',
-    source: source || '',
+    name: translateDbText(name || code),
+    type: translateDbSource(type || ''),
+    source: translateDbSource(source || ''),
     frequency: frequency || '',
     item
   };
