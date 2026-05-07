@@ -1,0 +1,6789 @@
+{
+  "kind": "series",
+  "code": "SUSDEUSD",
+  "series_id": 52,
+  "points": [
+    {
+      "dt": "2024-05-28",
+      "value": 1.0703,
+      "open_p": 1.0702,
+      "high_p": 1.0732,
+      "low_p": 1.0667,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-05-29",
+      "value": 1.0698,
+      "open_p": 1.0703,
+      "high_p": 1.0742,
+      "low_p": 1.0674,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-05-30",
+      "value": 1.0699,
+      "open_p": 1.0698,
+      "high_p": 1.0732,
+      "low_p": 1.0659,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-05-31",
+      "value": 1.0709,
+      "open_p": 1.0699,
+      "high_p": 1.0721,
+      "low_p": 1.067,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-01",
+      "value": 1.071,
+      "open_p": 1.071,
+      "high_p": 1.0745,
+      "low_p": 1.0684,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-02",
+      "value": 1.0725,
+      "open_p": 1.071,
+      "high_p": 1.0755,
+      "low_p": 1.0678,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-03",
+      "value": 1.0735,
+      "open_p": 1.0725,
+      "high_p": 1.0748,
+      "low_p": 1.0696,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-04",
+      "value": 1.0743,
+      "open_p": 1.0735,
+      "high_p": 1.0749,
+      "low_p": 1.0707,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-05",
+      "value": 1.073,
+      "open_p": 1.0743,
+      "high_p": 1.0751,
+      "low_p": 1.0714,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-06",
+      "value": 1.074,
+      "open_p": 1.073,
+      "high_p": 1.076,
+      "low_p": 1.0714,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-07",
+      "value": 1.0743,
+      "open_p": 1.074,
+      "high_p": 1.0762,
+      "low_p": 1.0674,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-08",
+      "value": 1.076,
+      "open_p": 1.0743,
+      "high_p": 1.0764,
+      "low_p": 1.0716,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-09",
+      "value": 1.0776,
+      "open_p": 1.076,
+      "high_p": 1.081,
+      "low_p": 1.0724,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-10",
+      "value": 1.077,
+      "open_p": 1.0776,
+      "high_p": 1.0791,
+      "low_p": 1.075,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-11",
+      "value": 1.0764,
+      "open_p": 1.077,
+      "high_p": 1.0782,
+      "low_p": 1.073,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-12",
+      "value": 1.0781,
+      "open_p": 1.0764,
+      "high_p": 1.0787,
+      "low_p": 1.0728,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-13",
+      "value": 1.0763,
+      "open_p": 1.0781,
+      "high_p": 1.0796,
+      "low_p": 1.0755,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-14",
+      "value": 1.0785,
+      "open_p": 1.0763,
+      "high_p": 1.0799,
+      "low_p": 1.076,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-15",
+      "value": 1.079,
+      "open_p": 1.0785,
+      "high_p": 1.08,
+      "low_p": 1.0765,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-16",
+      "value": 1.0798,
+      "open_p": 1.079,
+      "high_p": 1.0806,
+      "low_p": 1.078,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-17",
+      "value": 1.0777,
+      "open_p": 1.0798,
+      "high_p": 1.0815,
+      "low_p": 1.0771,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-18",
+      "value": 1.0804,
+      "open_p": 1.0777,
+      "high_p": 1.0822,
+      "low_p": 1.0771,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-19",
+      "value": 1.0797,
+      "open_p": 1.0804,
+      "high_p": 1.082,
+      "low_p": 1.0781,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-20",
+      "value": 1.0781,
+      "open_p": 1.0797,
+      "high_p": 1.0812,
+      "low_p": 1.0779,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-21",
+      "value": 1.0754,
+      "open_p": 1.0781,
+      "high_p": 1.0792,
+      "low_p": 1.0735,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-22",
+      "value": 1.0695,
+      "open_p": 1.0754,
+      "high_p": 1.0754,
+      "low_p": 1.0653,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-23",
+      "value": 1.076,
+      "open_p": 1.0695,
+      "high_p": 1.077,
+      "low_p": 1.0691,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-24",
+      "value": 1.0768,
+      "open_p": 1.076,
+      "high_p": 1.0801,
+      "low_p": 1.0705,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-25",
+      "value": 1.0752,
+      "open_p": 1.0768,
+      "high_p": 1.081,
+      "low_p": 1.0729,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-26",
+      "value": 1.0739,
+      "open_p": 1.0752,
+      "high_p": 1.0799,
+      "low_p": 1.0722,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-27",
+      "value": 1.0793,
+      "open_p": 1.0739,
+      "high_p": 1.0857,
+      "low_p": 1.0737,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-28",
+      "value": 1.079,
+      "open_p": 1.0793,
+      "high_p": 1.0832,
+      "low_p": 1.0741,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-29",
+      "value": 1.0788,
+      "open_p": 1.079,
+      "high_p": 1.0812,
+      "low_p": 1.0778,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-06-30",
+      "value": 1.0809,
+      "open_p": 1.0787,
+      "high_p": 1.0829,
+      "low_p": 1.0779,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-01",
+      "value": 1.0785,
+      "open_p": 1.0809,
+      "high_p": 1.0818,
+      "low_p": 1.0743,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-02",
+      "value": 1.0792,
+      "open_p": 1.0785,
+      "high_p": 1.082,
+      "low_p": 1.0758,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-03",
+      "value": 1.0797,
+      "open_p": 1.0792,
+      "high_p": 1.082,
+      "low_p": 1.0747,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-04",
+      "value": 1.0792,
+      "open_p": 1.0797,
+      "high_p": 1.0836,
+      "low_p": 1.0709,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-05",
+      "value": 1.0788,
+      "open_p": 1.0792,
+      "high_p": 1.0839,
+      "low_p": 1.0699,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-06",
+      "value": 1.0827,
+      "open_p": 1.079,
+      "high_p": 1.085,
+      "low_p": 1.0747,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-07",
+      "value": 1.079,
+      "open_p": 1.0827,
+      "high_p": 1.0861,
+      "low_p": 1.0753,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-08",
+      "value": 1.0841,
+      "open_p": 1.079,
+      "high_p": 1.0898,
+      "low_p": 1.072,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-09",
+      "value": 1.0833,
+      "open_p": 1.0841,
+      "high_p": 1.0942,
+      "low_p": 1.0789,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-10",
+      "value": 1.0843,
+      "open_p": 1.0833,
+      "high_p": 1.0887,
+      "low_p": 1.081,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-11",
+      "value": 1.0849,
+      "open_p": 1.0843,
+      "high_p": 1.0895,
+      "low_p": 1.0809,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-12",
+      "value": 1.087,
+      "open_p": 1.0849,
+      "high_p": 1.0905,
+      "low_p": 1.0818,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-13",
+      "value": 1.087,
+      "open_p": 1.087,
+      "high_p": 1.0895,
+      "low_p": 1.0854,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-14",
+      "value": 1.087,
+      "open_p": 1.087,
+      "high_p": 1.0907,
+      "low_p": 1.086,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-15",
+      "value": 1.088,
+      "open_p": 1.087,
+      "high_p": 1.0913,
+      "low_p": 1.0859,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-16",
+      "value": 1.0853,
+      "open_p": 1.088,
+      "high_p": 1.0922,
+      "low_p": 1.0822,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-17",
+      "value": 1.085,
+      "open_p": 1.0851,
+      "high_p": 1.0889,
+      "low_p": 1.082,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-18",
+      "value": 1.0854,
+      "open_p": 1.085,
+      "high_p": 1.089,
+      "low_p": 1.0823,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-19",
+      "value": 1.087,
+      "open_p": 1.0854,
+      "high_p": 1.0902,
+      "low_p": 1.082,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-20",
+      "value": 1.0848,
+      "open_p": 1.087,
+      "high_p": 1.0887,
+      "low_p": 1.0832,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-21",
+      "value": 1.0858,
+      "open_p": 1.0848,
+      "high_p": 1.088,
+      "low_p": 1.079,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-22",
+      "value": 1.0869,
+      "open_p": 1.0858,
+      "high_p": 1.0911,
+      "low_p": 1.084,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-23",
+      "value": 1.0893,
+      "open_p": 1.0869,
+      "high_p": 1.093,
+      "low_p": 1.0832,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-24",
+      "value": 1.087,
+      "open_p": 1.0893,
+      "high_p": 1.09,
+      "low_p": 1.0837,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-25",
+      "value": 1.087,
+      "open_p": 1.087,
+      "high_p": 1.0892,
+      "low_p": 1.082,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-26",
+      "value": 1.0874,
+      "open_p": 1.087,
+      "high_p": 1.092,
+      "low_p": 1.0841,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-27",
+      "value": 1.085,
+      "open_p": 1.0874,
+      "high_p": 1.0892,
+      "low_p": 1.082,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-28",
+      "value": 1.0909,
+      "open_p": 1.085,
+      "high_p": 1.0917,
+      "low_p": 1.083,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-29",
+      "value": 1.088,
+      "open_p": 1.0909,
+      "high_p": 1.0927,
+      "low_p": 1.0826,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-30",
+      "value": 1.0882,
+      "open_p": 1.088,
+      "high_p": 1.0891,
+      "low_p": 1.0838,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-07-31",
+      "value": 1.086,
+      "open_p": 1.0882,
+      "high_p": 1.0901,
+      "low_p": 1.0819,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-01",
+      "value": 1.09,
+      "open_p": 1.086,
+      "high_p": 1.0926,
+      "low_p": 1.0854,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-02",
+      "value": 1.0878,
+      "open_p": 1.09,
+      "high_p": 1.092,
+      "low_p": 1.087,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-03",
+      "value": 1.089,
+      "open_p": 1.0878,
+      "high_p": 1.092,
+      "low_p": 1.085,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-04",
+      "value": 1.087,
+      "open_p": 1.089,
+      "high_p": 1.0928,
+      "low_p": 1.086,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-05",
+      "value": 1.0822,
+      "open_p": 1.087,
+      "high_p": 1.0893,
+      "low_p": 1.0525,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-06",
+      "value": 1.087,
+      "open_p": 1.0822,
+      "high_p": 1.0892,
+      "low_p": 1.0822,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-07",
+      "value": 1.09,
+      "open_p": 1.087,
+      "high_p": 1.092,
+      "low_p": 1.0855,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-08",
+      "value": 1.0903,
+      "open_p": 1.09,
+      "high_p": 1.0957,
+      "low_p": 1.0883,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-09",
+      "value": 1.0918,
+      "open_p": 1.0903,
+      "high_p": 1.0944,
+      "low_p": 1.0897,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-10",
+      "value": 1.091,
+      "open_p": 1.0918,
+      "high_p": 1.0937,
+      "low_p": 1.09,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-11",
+      "value": 1.0919,
+      "open_p": 1.091,
+      "high_p": 1.0929,
+      "low_p": 1.0892,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-12",
+      "value": 1.0935,
+      "open_p": 1.0919,
+      "high_p": 1.0951,
+      "low_p": 1.0898,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-13",
+      "value": 1.095,
+      "open_p": 1.0935,
+      "high_p": 1.0966,
+      "low_p": 1.0924,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-14",
+      "value": 1.094,
+      "open_p": 1.095,
+      "high_p": 1.0988,
+      "low_p": 1.093,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-15",
+      "value": 1.0951,
+      "open_p": 1.094,
+      "high_p": 1.0961,
+      "low_p": 1.09,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-16",
+      "value": 1.0925,
+      "open_p": 1.0951,
+      "high_p": 1.096,
+      "low_p": 1.091,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-17",
+      "value": 1.0938,
+      "open_p": 1.0927,
+      "high_p": 1.0942,
+      "low_p": 1.0918,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-18",
+      "value": 1.093,
+      "open_p": 1.0938,
+      "high_p": 1.0955,
+      "low_p": 1.0921,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-19",
+      "value": 1.0923,
+      "open_p": 1.093,
+      "high_p": 1.0947,
+      "low_p": 1.0899,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-20",
+      "value": 1.091,
+      "open_p": 1.0923,
+      "high_p": 1.094,
+      "low_p": 1.09,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-21",
+      "value": 1.0917,
+      "open_p": 1.091,
+      "high_p": 1.0944,
+      "low_p": 1.0909,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-22",
+      "value": 1.0937,
+      "open_p": 1.0917,
+      "high_p": 1.0946,
+      "low_p": 1.0911,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-23",
+      "value": 1.0931,
+      "open_p": 1.0937,
+      "high_p": 1.0967,
+      "low_p": 1.0923,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-24",
+      "value": 1.0932,
+      "open_p": 1.0931,
+      "high_p": 1.096,
+      "low_p": 1.0921,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-25",
+      "value": 1.0942,
+      "open_p": 1.0932,
+      "high_p": 1.095,
+      "low_p": 1.0921,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-26",
+      "value": 1.0952,
+      "open_p": 1.0942,
+      "high_p": 1.0964,
+      "low_p": 1.0931,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-27",
+      "value": 1.0951,
+      "open_p": 1.0952,
+      "high_p": 1.0969,
+      "low_p": 1.0939,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-28",
+      "value": 1.095,
+      "open_p": 1.095,
+      "high_p": 1.0958,
+      "low_p": 1.0937,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-29",
+      "value": 1.095,
+      "open_p": 1.095,
+      "high_p": 1.096,
+      "low_p": 1.0942,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-30",
+      "value": 1.0961,
+      "open_p": 1.095,
+      "high_p": 1.0964,
+      "low_p": 1.0934,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-08-31",
+      "value": 1.0962,
+      "open_p": 1.0961,
+      "high_p": 1.0967,
+      "low_p": 1.0946,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-01",
+      "value": 1.0948,
+      "open_p": 1.0962,
+      "high_p": 1.0965,
+      "low_p": 1.0946,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-02",
+      "value": 1.0964,
+      "open_p": 1.0948,
+      "high_p": 1.0966,
+      "low_p": 1.0944,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-03",
+      "value": 1.0952,
+      "open_p": 1.0964,
+      "high_p": 1.097,
+      "low_p": 1.0937,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-04",
+      "value": 1.098,
+      "open_p": 1.0952,
+      "high_p": 1.0986,
+      "low_p": 1.0951,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-05",
+      "value": 1.0982,
+      "open_p": 1.098,
+      "high_p": 1.0985,
+      "low_p": 1.0971,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-06",
+      "value": 1.0977,
+      "open_p": 1.0982,
+      "high_p": 1.0988,
+      "low_p": 1.0972,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-07",
+      "value": 1.0972,
+      "open_p": 1.0977,
+      "high_p": 1.098,
+      "low_p": 1.0968,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-08",
+      "value": 1.0976,
+      "open_p": 1.0972,
+      "high_p": 1.0983,
+      "low_p": 1.0969,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-09",
+      "value": 1.0974,
+      "open_p": 1.0976,
+      "high_p": 1.0988,
+      "low_p": 1.097,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-10",
+      "value": 1.0982,
+      "open_p": 1.0974,
+      "high_p": 1.0987,
+      "low_p": 1.097,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-11",
+      "value": 1.0986,
+      "open_p": 1.0982,
+      "high_p": 1.0991,
+      "low_p": 1.0976,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-12",
+      "value": 1.0983,
+      "open_p": 1.0986,
+      "high_p": 1.0992,
+      "low_p": 1.098,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-13",
+      "value": 1.0969,
+      "open_p": 1.0983,
+      "high_p": 1.099,
+      "low_p": 1.0912,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-14",
+      "value": 1.098,
+      "open_p": 1.0969,
+      "high_p": 1.1006,
+      "low_p": 1.0964,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-15",
+      "value": 1.0985,
+      "open_p": 1.098,
+      "high_p": 1.099,
+      "low_p": 1.0977,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-16",
+      "value": 1.098,
+      "open_p": 1.0985,
+      "high_p": 1.099,
+      "low_p": 1.0975,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-17",
+      "value": 1.0972,
+      "open_p": 1.098,
+      "high_p": 1.0983,
+      "low_p": 1.0951,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-18",
+      "value": 1.0971,
+      "open_p": 1.0972,
+      "high_p": 1.0976,
+      "low_p": 1.0952,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-19",
+      "value": 1.0966,
+      "open_p": 1.097,
+      "high_p": 1.0977,
+      "low_p": 1.0962,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-20",
+      "value": 1.0974,
+      "open_p": 1.0966,
+      "high_p": 1.098,
+      "low_p": 1.0904,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-21",
+      "value": 1.1001,
+      "open_p": 1.0974,
+      "high_p": 1.1003,
+      "low_p": 1.097,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-22",
+      "value": 1.1,
+      "open_p": 1.1001,
+      "high_p": 1.1004,
+      "low_p": 1.0993,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-23",
+      "value": 1.099,
+      "open_p": 1.1,
+      "high_p": 1.1001,
+      "low_p": 1.0987,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-24",
+      "value": 1.0992,
+      "open_p": 1.099,
+      "high_p": 1.0998,
+      "low_p": 1.096,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-25",
+      "value": 1.0984,
+      "open_p": 1.0992,
+      "high_p": 1.1005,
+      "low_p": 1.098,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-26",
+      "value": 1.0969,
+      "open_p": 1.0984,
+      "high_p": 1.0999,
+      "low_p": 1.093,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-27",
+      "value": 1.099,
+      "open_p": 1.0969,
+      "high_p": 1.099,
+      "low_p": 1.0953,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-28",
+      "value": 1.1015,
+      "open_p": 1.099,
+      "high_p": 1.1019,
+      "low_p": 1.0988,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-29",
+      "value": 1.102,
+      "open_p": 1.1015,
+      "high_p": 1.1025,
+      "low_p": 1.1009,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-09-30",
+      "value": 1.1015,
+      "open_p": 1.102,
+      "high_p": 1.1027,
+      "low_p": 1.0952,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-01",
+      "value": 1.1026,
+      "open_p": 1.1015,
+      "high_p": 1.1029,
+      "low_p": 1.1007,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-02",
+      "value": 1.1012,
+      "open_p": 1.1026,
+      "high_p": 1.1029,
+      "low_p": 1.0998,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-03",
+      "value": 1.1031,
+      "open_p": 1.1012,
+      "high_p": 1.1037,
+      "low_p": 1.1011,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-04",
+      "value": 1.1032,
+      "open_p": 1.1031,
+      "high_p": 1.1043,
+      "low_p": 1.1021,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-05",
+      "value": 1.1034,
+      "open_p": 1.1032,
+      "high_p": 1.1039,
+      "low_p": 1.1023,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-06",
+      "value": 1.1031,
+      "open_p": 1.1034,
+      "high_p": 1.1038,
+      "low_p": 1.1026,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-07",
+      "value": 1.103,
+      "open_p": 1.1031,
+      "high_p": 1.1041,
+      "low_p": 1.102,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-08",
+      "value": 1.1032,
+      "open_p": 1.103,
+      "high_p": 1.1047,
+      "low_p": 1.1026,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-09",
+      "value": 1.1032,
+      "open_p": 1.1032,
+      "high_p": 1.104,
+      "low_p": 1.1026,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-10",
+      "value": 1.1011,
+      "open_p": 1.1031,
+      "high_p": 1.1046,
+      "low_p": 1.0989,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-11",
+      "value": 1.1023,
+      "open_p": 1.1013,
+      "high_p": 1.105,
+      "low_p": 1.1006,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-12",
+      "value": 1.1038,
+      "open_p": 1.1023,
+      "high_p": 1.1042,
+      "low_p": 1.1021,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-13",
+      "value": 1.1047,
+      "open_p": 1.1038,
+      "high_p": 1.1053,
+      "low_p": 1.1027,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-14",
+      "value": 1.1056,
+      "open_p": 1.1047,
+      "high_p": 1.1063,
+      "low_p": 1.104,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-15",
+      "value": 1.106,
+      "open_p": 1.1056,
+      "high_p": 1.1068,
+      "low_p": 1.1045,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-16",
+      "value": 1.1067,
+      "open_p": 1.106,
+      "high_p": 1.1073,
+      "low_p": 1.1057,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-17",
+      "value": 1.107,
+      "open_p": 1.1067,
+      "high_p": 1.1074,
+      "low_p": 1.1059,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-18",
+      "value": 1.1077,
+      "open_p": 1.107,
+      "high_p": 1.108,
+      "low_p": 1.1066,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-19",
+      "value": 1.1088,
+      "open_p": 1.1077,
+      "high_p": 1.109,
+      "low_p": 1.1074,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-20",
+      "value": 1.1091,
+      "open_p": 1.1088,
+      "high_p": 1.1094,
+      "low_p": 1.1085,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-21",
+      "value": 1.1093,
+      "open_p": 1.1091,
+      "high_p": 1.1099,
+      "low_p": 1.1087,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-22",
+      "value": 1.1101,
+      "open_p": 1.1093,
+      "high_p": 1.1104,
+      "low_p": 1.1083,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-23",
+      "value": 1.11,
+      "open_p": 1.1101,
+      "high_p": 1.1102,
+      "low_p": 1.1092,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-24",
+      "value": 1.1099,
+      "open_p": 1.11,
+      "high_p": 1.1102,
+      "low_p": 1.1076,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-25",
+      "value": 1.1096,
+      "open_p": 1.1099,
+      "high_p": 1.1109,
+      "low_p": 1.1086,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-26",
+      "value": 1.1101,
+      "open_p": 1.1097,
+      "high_p": 1.1103,
+      "low_p": 1.1095,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-27",
+      "value": 1.1107,
+      "open_p": 1.1101,
+      "high_p": 1.111,
+      "low_p": 1.11,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-28",
+      "value": 1.1121,
+      "open_p": 1.1107,
+      "high_p": 1.1128,
+      "low_p": 1.1101,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-29",
+      "value": 1.1132,
+      "open_p": 1.1124,
+      "high_p": 1.1137,
+      "low_p": 1.1107,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-30",
+      "value": 1.113,
+      "open_p": 1.1132,
+      "high_p": 1.1138,
+      "low_p": 1.1122,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-10-31",
+      "value": 1.1119,
+      "open_p": 1.1132,
+      "high_p": 1.1137,
+      "low_p": 1.1112,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-01",
+      "value": 1.1133,
+      "open_p": 1.1119,
+      "high_p": 1.1136,
+      "low_p": 1.111,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-02",
+      "value": 1.1137,
+      "open_p": 1.1133,
+      "high_p": 1.1144,
+      "low_p": 1.1128,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-03",
+      "value": 1.114,
+      "open_p": 1.1137,
+      "high_p": 1.1148,
+      "low_p": 1.1126,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-04",
+      "value": 1.1143,
+      "open_p": 1.114,
+      "high_p": 1.115,
+      "low_p": 1.1127,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-05",
+      "value": 1.115,
+      "open_p": 1.1143,
+      "high_p": 1.1163,
+      "low_p": 1.1136,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-06",
+      "value": 1.1155,
+      "open_p": 1.115,
+      "high_p": 1.1171,
+      "low_p": 1.1135,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-07",
+      "value": 1.1159,
+      "open_p": 1.1155,
+      "high_p": 1.1175,
+      "low_p": 1.115,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-08",
+      "value": 1.1167,
+      "open_p": 1.1159,
+      "high_p": 1.1175,
+      "low_p": 1.1149,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-09",
+      "value": 1.1172,
+      "open_p": 1.1167,
+      "high_p": 1.1178,
+      "low_p": 1.1155,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-10",
+      "value": 1.1181,
+      "open_p": 1.1172,
+      "high_p": 1.1184,
+      "low_p": 1.1159,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-11",
+      "value": 1.1174,
+      "open_p": 1.1181,
+      "high_p": 1.1195,
+      "low_p": 1.1156,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-12",
+      "value": 1.1181,
+      "open_p": 1.1174,
+      "high_p": 1.1206,
+      "low_p": 1.1149,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-13",
+      "value": 1.1191,
+      "open_p": 1.1181,
+      "high_p": 1.1202,
+      "low_p": 1.1149,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-14",
+      "value": 1.1187,
+      "open_p": 1.1191,
+      "high_p": 1.12,
+      "low_p": 1.1143,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-15",
+      "value": 1.1195,
+      "open_p": 1.1187,
+      "high_p": 1.12,
+      "low_p": 1.1158,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-16",
+      "value": 1.1203,
+      "open_p": 1.1195,
+      "high_p": 1.1204,
+      "low_p": 1.1192,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-17",
+      "value": 1.1204,
+      "open_p": 1.1203,
+      "high_p": 1.1206,
+      "low_p": 1.1188,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-18",
+      "value": 1.1213,
+      "open_p": 1.1204,
+      "high_p": 1.1233,
+      "low_p": 1.1193,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-19",
+      "value": 1.1229,
+      "open_p": 1.1213,
+      "high_p": 1.1241,
+      "low_p": 1.1206,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-20",
+      "value": 1.1236,
+      "open_p": 1.1229,
+      "high_p": 1.1247,
+      "low_p": 1.1209,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-21",
+      "value": 1.1234,
+      "open_p": 1.1236,
+      "high_p": 1.1247,
+      "low_p": 1.1221,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-22",
+      "value": 1.1248,
+      "open_p": 1.1235,
+      "high_p": 1.1255,
+      "low_p": 1.1223,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-23",
+      "value": 1.1252,
+      "open_p": 1.1247,
+      "high_p": 1.1257,
+      "low_p": 1.1227,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-24",
+      "value": 1.1255,
+      "open_p": 1.1252,
+      "high_p": 1.1259,
+      "low_p": 1.1232,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-25",
+      "value": 1.1251,
+      "open_p": 1.1255,
+      "high_p": 1.1264,
+      "low_p": 1.1222,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-26",
+      "value": 1.1255,
+      "open_p": 1.125,
+      "high_p": 1.1268,
+      "low_p": 1.1232,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-27",
+      "value": 1.1264,
+      "open_p": 1.1254,
+      "high_p": 1.1278,
+      "low_p": 1.124,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-28",
+      "value": 1.1268,
+      "open_p": 1.1264,
+      "high_p": 1.1272,
+      "low_p": 1.1243,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-29",
+      "value": 1.1276,
+      "open_p": 1.1268,
+      "high_p": 1.1288,
+      "low_p": 1.1245,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-11-30",
+      "value": 1.1282,
+      "open_p": 1.1276,
+      "high_p": 1.1285,
+      "low_p": 1.1246,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-01",
+      "value": 1.1298,
+      "open_p": 1.1282,
+      "high_p": 1.13,
+      "low_p": 1.1278,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-02",
+      "value": 1.1295,
+      "open_p": 1.1298,
+      "high_p": 1.1301,
+      "low_p": 1.1279,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-03",
+      "value": 1.1307,
+      "open_p": 1.1295,
+      "high_p": 1.1312,
+      "low_p": 1.1271,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-04",
+      "value": 1.1306,
+      "open_p": 1.1307,
+      "high_p": 1.1324,
+      "low_p": 1.1299,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-05",
+      "value": 1.1312,
+      "open_p": 1.1306,
+      "high_p": 1.1328,
+      "low_p": 1.1297,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-06",
+      "value": 1.1312,
+      "open_p": 1.1312,
+      "high_p": 1.1335,
+      "low_p": 1.1302,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-07",
+      "value": 1.1323,
+      "open_p": 1.1312,
+      "high_p": 1.1338,
+      "low_p": 1.1307,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-08",
+      "value": 1.1344,
+      "open_p": 1.1323,
+      "high_p": 1.1346,
+      "low_p": 1.1317,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-09",
+      "value": 1.1329,
+      "open_p": 1.1344,
+      "high_p": 1.1346,
+      "low_p": 1.1313,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-10",
+      "value": 1.1322,
+      "open_p": 1.1329,
+      "high_p": 1.1347,
+      "low_p": 1.13,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-11",
+      "value": 1.1347,
+      "open_p": 1.1322,
+      "high_p": 1.1357,
+      "low_p": 1.1316,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-12",
+      "value": 1.136,
+      "open_p": 1.1348,
+      "high_p": 1.1368,
+      "low_p": 1.1336,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-13",
+      "value": 1.1363,
+      "open_p": 1.136,
+      "high_p": 1.1375,
+      "low_p": 1.1353,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-14",
+      "value": 1.1365,
+      "open_p": 1.1363,
+      "high_p": 1.1372,
+      "low_p": 1.1355,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-15",
+      "value": 1.1373,
+      "open_p": 1.1365,
+      "high_p": 1.1383,
+      "low_p": 1.1359,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-16",
+      "value": 1.1364,
+      "open_p": 1.1373,
+      "high_p": 1.1379,
+      "low_p": 1.131,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-17",
+      "value": 1.1362,
+      "open_p": 1.1364,
+      "high_p": 1.1376,
+      "low_p": 1.1355,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-18",
+      "value": 1.132,
+      "open_p": 1.1362,
+      "high_p": 1.1371,
+      "low_p": 1.1304,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-19",
+      "value": 1.1295,
+      "open_p": 1.132,
+      "high_p": 1.1356,
+      "low_p": 1.1291,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-20",
+      "value": 1.1325,
+      "open_p": 1.1294,
+      "high_p": 1.1371,
+      "low_p": 1.12,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-21",
+      "value": 1.1319,
+      "open_p": 1.1325,
+      "high_p": 1.1346,
+      "low_p": 1.1309,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-22",
+      "value": 1.1315,
+      "open_p": 1.1319,
+      "high_p": 1.1364,
+      "low_p": 1.1304,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-23",
+      "value": 1.1317,
+      "open_p": 1.1313,
+      "high_p": 1.1351,
+      "low_p": 1.1309,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-24",
+      "value": 1.1328,
+      "open_p": 1.1317,
+      "high_p": 1.1367,
+      "low_p": 1.13,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-25",
+      "value": 1.1327,
+      "open_p": 1.1328,
+      "high_p": 1.1333,
+      "low_p": 1.1311,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-26",
+      "value": 1.1326,
+      "open_p": 1.1327,
+      "high_p": 1.1353,
+      "low_p": 1.1265,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-27",
+      "value": 1.132,
+      "open_p": 1.1326,
+      "high_p": 1.1339,
+      "low_p": 1.1285,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-28",
+      "value": 1.1321,
+      "open_p": 1.132,
+      "high_p": 1.1334,
+      "low_p": 1.1312,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-29",
+      "value": 1.1323,
+      "open_p": 1.1321,
+      "high_p": 1.1333,
+      "low_p": 1.1312,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-30",
+      "value": 1.1367,
+      "open_p": 1.1322,
+      "high_p": 1.138,
+      "low_p": 1.1307,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2024-12-31",
+      "value": 1.1355,
+      "open_p": 1.1367,
+      "high_p": 1.137,
+      "low_p": 1.1327,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-01",
+      "value": 1.13789,
+      "open_p": 1.135918,
+      "high_p": 1.13789,
+      "low_p": 1.13789,
+      "volume": 13573772.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-02",
+      "value": 1.138332,
+      "open_p": 1.13789,
+      "high_p": 1.138332,
+      "low_p": 1.138332,
+      "volume": 14088617.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-03",
+      "value": 1.138904,
+      "open_p": 1.138332,
+      "high_p": 1.138904,
+      "low_p": 1.138904,
+      "volume": 17039896.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-04",
+      "value": 1.140559,
+      "open_p": 1.138904,
+      "high_p": 1.140559,
+      "low_p": 1.140559,
+      "volume": 24047491.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-05",
+      "value": 1.142172,
+      "open_p": 1.140559,
+      "high_p": 1.142172,
+      "low_p": 1.142172,
+      "volume": 42319268.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-06",
+      "value": 1.141984,
+      "open_p": 1.142172,
+      "high_p": 1.141984,
+      "low_p": 1.141984,
+      "volume": 43835135.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-07",
+      "value": 1.142211,
+      "open_p": 1.141984,
+      "high_p": 1.142211,
+      "low_p": 1.142211,
+      "volume": 33376020.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-08",
+      "value": 1.141819,
+      "open_p": 1.142211,
+      "high_p": 1.141819,
+      "low_p": 1.141819,
+      "volume": 42204894.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-09",
+      "value": 1.140491,
+      "open_p": 1.141819,
+      "high_p": 1.140491,
+      "low_p": 1.140491,
+      "volume": 73032591.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-10",
+      "value": 1.140375,
+      "open_p": 1.140491,
+      "high_p": 1.140375,
+      "low_p": 1.140375,
+      "volume": 49016174.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-11",
+      "value": 1.141763,
+      "open_p": 1.140375,
+      "high_p": 1.141763,
+      "low_p": 1.141763,
+      "volume": 42711593.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-12",
+      "value": 1.143499,
+      "open_p": 1.141763,
+      "high_p": 1.143499,
+      "low_p": 1.143499,
+      "volume": 27707640.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-13",
+      "value": 1.143686,
+      "open_p": 1.143499,
+      "high_p": 1.143686,
+      "low_p": 1.143686,
+      "volume": 28985239.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-14",
+      "value": 1.14417,
+      "open_p": 1.143686,
+      "high_p": 1.14417,
+      "low_p": 1.14417,
+      "volume": 24576478.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-15",
+      "value": 1.14651,
+      "open_p": 1.14417,
+      "high_p": 1.14651,
+      "low_p": 1.14651,
+      "volume": 34881382.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-16",
+      "value": 1.147273,
+      "open_p": 1.14651,
+      "high_p": 1.147273,
+      "low_p": 1.147273,
+      "volume": 51215930.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-17",
+      "value": 1.14733,
+      "open_p": 1.147273,
+      "high_p": 1.14733,
+      "low_p": 1.14733,
+      "volume": 65572225.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-18",
+      "value": 1.145589,
+      "open_p": 1.14733,
+      "high_p": 1.145589,
+      "low_p": 1.145589,
+      "volume": 57082881.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-19",
+      "value": 1.144621,
+      "open_p": 1.145589,
+      "high_p": 1.144621,
+      "low_p": 1.144621,
+      "volume": 33418000.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-20",
+      "value": 1.14387,
+      "open_p": 1.144621,
+      "high_p": 1.14387,
+      "low_p": 1.14387,
+      "volume": 28535794.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-21",
+      "value": 1.146762,
+      "open_p": 1.14387,
+      "high_p": 1.146762,
+      "low_p": 1.146762,
+      "volume": 26348997.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-22",
+      "value": 1.148102,
+      "open_p": 1.146762,
+      "high_p": 1.148102,
+      "low_p": 1.148102,
+      "volume": 31278729.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-23",
+      "value": 1.147203,
+      "open_p": 1.148102,
+      "high_p": 1.147203,
+      "low_p": 1.147203,
+      "volume": 27244603.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-24",
+      "value": 1.147996,
+      "open_p": 1.147203,
+      "high_p": 1.147996,
+      "low_p": 1.147996,
+      "volume": 17928504.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-25",
+      "value": 1.148801,
+      "open_p": 1.147996,
+      "high_p": 1.148801,
+      "low_p": 1.148801,
+      "volume": 15814724.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-26",
+      "value": 1.150641,
+      "open_p": 1.148801,
+      "high_p": 1.150641,
+      "low_p": 1.150641,
+      "volume": 20014861.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-27",
+      "value": 1.149854,
+      "open_p": 1.150641,
+      "high_p": 1.149854,
+      "low_p": 1.149854,
+      "volume": 23008239.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-28",
+      "value": 1.150582,
+      "open_p": 1.149854,
+      "high_p": 1.150582,
+      "low_p": 1.150582,
+      "volume": 37846964.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-29",
+      "value": 1.151062,
+      "open_p": 1.150582,
+      "high_p": 1.151062,
+      "low_p": 1.151062,
+      "volume": 29148469.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-30",
+      "value": 1.151363,
+      "open_p": 1.151062,
+      "high_p": 1.151363,
+      "low_p": 1.151363,
+      "volume": 40108805.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-01-31",
+      "value": 1.151475,
+      "open_p": 1.151363,
+      "high_p": 1.151475,
+      "low_p": 1.151475,
+      "volume": 20685405.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-01",
+      "value": 1.151647,
+      "open_p": 1.151475,
+      "high_p": 1.151647,
+      "low_p": 1.151647,
+      "volume": 18193585.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-02",
+      "value": 1.150941,
+      "open_p": 1.151647,
+      "high_p": 1.150941,
+      "low_p": 1.150941,
+      "volume": 18780069.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-03",
+      "value": 1.148458,
+      "open_p": 1.150941,
+      "high_p": 1.148458,
+      "low_p": 1.148458,
+      "volume": 43684448.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-04",
+      "value": 1.148254,
+      "open_p": 1.148458,
+      "high_p": 1.148254,
+      "low_p": 1.148254,
+      "volume": 36537852.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-05",
+      "value": 1.147755,
+      "open_p": 1.148254,
+      "high_p": 1.147755,
+      "low_p": 1.147755,
+      "volume": 67853421.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-06",
+      "value": 1.149303,
+      "open_p": 1.147755,
+      "high_p": 1.149303,
+      "low_p": 1.149303,
+      "volume": 16136641.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-07",
+      "value": 1.150123,
+      "open_p": 1.149303,
+      "high_p": 1.150123,
+      "low_p": 1.150123,
+      "volume": 11352550.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-08",
+      "value": 1.15061,
+      "open_p": 1.150123,
+      "high_p": 1.15061,
+      "low_p": 1.15061,
+      "volume": 34115749.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-09",
+      "value": 1.151394,
+      "open_p": 1.15061,
+      "high_p": 1.151394,
+      "low_p": 1.151394,
+      "volume": 23382618.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-10",
+      "value": 1.15151,
+      "open_p": 1.151394,
+      "high_p": 1.15151,
+      "low_p": 1.15151,
+      "volume": 20029053.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-11",
+      "value": 1.151523,
+      "open_p": 1.15151,
+      "high_p": 1.151523,
+      "low_p": 1.151523,
+      "volume": 24522251.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-12",
+      "value": 1.152336,
+      "open_p": 1.151523,
+      "high_p": 1.152336,
+      "low_p": 1.152336,
+      "volume": 19185735.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-13",
+      "value": 1.152511,
+      "open_p": 1.152336,
+      "high_p": 1.152511,
+      "low_p": 1.152511,
+      "volume": 11855871.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-14",
+      "value": 1.152958,
+      "open_p": 1.152511,
+      "high_p": 1.152958,
+      "low_p": 1.152958,
+      "volume": 13392474.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-15",
+      "value": 1.153473,
+      "open_p": 1.152958,
+      "high_p": 1.153473,
+      "low_p": 1.153473,
+      "volume": 15983720.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-16",
+      "value": 1.154013,
+      "open_p": 1.153473,
+      "high_p": 1.154013,
+      "low_p": 1.154013,
+      "volume": 7006778.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-17",
+      "value": 1.153894,
+      "open_p": 1.154013,
+      "high_p": 1.153894,
+      "low_p": 1.153894,
+      "volume": 8311780.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-18",
+      "value": 1.154171,
+      "open_p": 1.153894,
+      "high_p": 1.154171,
+      "low_p": 1.154171,
+      "volume": 13047903.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-19",
+      "value": 1.154723,
+      "open_p": 1.154171,
+      "high_p": 1.154723,
+      "low_p": 1.154723,
+      "volume": 25248438.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-20",
+      "value": 1.154576,
+      "open_p": 1.154723,
+      "high_p": 1.154576,
+      "low_p": 1.154576,
+      "volume": 14918104.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-21",
+      "value": 1.152406,
+      "open_p": 1.154576,
+      "high_p": 1.152406,
+      "low_p": 1.152406,
+      "volume": 48884765.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-22",
+      "value": 1.152549,
+      "open_p": 1.152406,
+      "high_p": 1.152549,
+      "low_p": 1.152549,
+      "volume": 91865737.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-23",
+      "value": 1.154017,
+      "open_p": 1.152549,
+      "high_p": 1.154017,
+      "low_p": 1.154017,
+      "volume": 8649704.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-24",
+      "value": 1.153343,
+      "open_p": 1.154017,
+      "high_p": 1.153343,
+      "low_p": 1.153343,
+      "volume": 19171595.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-25",
+      "value": 1.153979,
+      "open_p": 1.153343,
+      "high_p": 1.153979,
+      "low_p": 1.153979,
+      "volume": 23871026.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-26",
+      "value": 1.154098,
+      "open_p": 1.153979,
+      "high_p": 1.154098,
+      "low_p": 1.154098,
+      "volume": 15288171.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-27",
+      "value": 1.153446,
+      "open_p": 1.154098,
+      "high_p": 1.153446,
+      "low_p": 1.153446,
+      "volume": 14677728.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-02-28",
+      "value": 1.154758,
+      "open_p": 1.153446,
+      "high_p": 1.154758,
+      "low_p": 1.154758,
+      "volume": 11457520.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-01",
+      "value": 1.15579,
+      "open_p": 1.154758,
+      "high_p": 1.15579,
+      "low_p": 1.15579,
+      "volume": 10538938.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-02",
+      "value": 1.156229,
+      "open_p": 1.15579,
+      "high_p": 1.156229,
+      "low_p": 1.156229,
+      "volume": 9919393.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-03",
+      "value": 1.155878,
+      "open_p": 1.156229,
+      "high_p": 1.155878,
+      "low_p": 1.155878,
+      "volume": 14119078.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-04",
+      "value": 1.155911,
+      "open_p": 1.155878,
+      "high_p": 1.155911,
+      "low_p": 1.155911,
+      "volume": 7432737.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-05",
+      "value": 1.157224,
+      "open_p": 1.155911,
+      "high_p": 1.157224,
+      "low_p": 1.157224,
+      "volume": 15321040.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-06",
+      "value": 1.156766,
+      "open_p": 1.157224,
+      "high_p": 1.156766,
+      "low_p": 1.156766,
+      "volume": 10871701.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-07",
+      "value": 1.157538,
+      "open_p": 1.156766,
+      "high_p": 1.157538,
+      "low_p": 1.157538,
+      "volume": 13457176.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-08",
+      "value": 1.1586,
+      "open_p": 1.157538,
+      "high_p": 1.1586,
+      "low_p": 1.1586,
+      "volume": 9956025.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-09",
+      "value": 1.158709,
+      "open_p": 1.1586,
+      "high_p": 1.158709,
+      "low_p": 1.158709,
+      "volume": 8141266.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-10",
+      "value": 1.157159,
+      "open_p": 1.158709,
+      "high_p": 1.157159,
+      "low_p": 1.157159,
+      "volume": 7960402.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-11",
+      "value": 1.157972,
+      "open_p": 1.157159,
+      "high_p": 1.157972,
+      "low_p": 1.157972,
+      "volume": 17230529.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-12",
+      "value": 1.159693,
+      "open_p": 1.157972,
+      "high_p": 1.159693,
+      "low_p": 1.159693,
+      "volume": 18054080.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-13",
+      "value": 1.159923,
+      "open_p": 1.159693,
+      "high_p": 1.159923,
+      "low_p": 1.159923,
+      "volume": 12281974.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-14",
+      "value": 1.159839,
+      "open_p": 1.159923,
+      "high_p": 1.159839,
+      "low_p": 1.159839,
+      "volume": 12339751.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-15",
+      "value": 1.160381,
+      "open_p": 1.159839,
+      "high_p": 1.160381,
+      "low_p": 1.160381,
+      "volume": 8331669.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-16",
+      "value": 1.160822,
+      "open_p": 1.160381,
+      "high_p": 1.160822,
+      "low_p": 1.160822,
+      "volume": 6476068.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-17",
+      "value": 1.160218,
+      "open_p": 1.160822,
+      "high_p": 1.160218,
+      "low_p": 1.160218,
+      "volume": 4441044.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-18",
+      "value": 1.160649,
+      "open_p": 1.160218,
+      "high_p": 1.160649,
+      "low_p": 1.160649,
+      "volume": 17186008.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-19",
+      "value": 1.160531,
+      "open_p": 1.160649,
+      "high_p": 1.160531,
+      "low_p": 1.160531,
+      "volume": 17153532.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-20",
+      "value": 1.160076,
+      "open_p": 1.160531,
+      "high_p": 1.160076,
+      "low_p": 1.160076,
+      "volume": 12648461.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-21",
+      "value": 1.160217,
+      "open_p": 1.160076,
+      "high_p": 1.160217,
+      "low_p": 1.160217,
+      "volume": 11057343.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-22",
+      "value": 1.161457,
+      "open_p": 1.160217,
+      "high_p": 1.161457,
+      "low_p": 1.161457,
+      "volume": 7656370.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-23",
+      "value": 1.162275,
+      "open_p": 1.161457,
+      "high_p": 1.162275,
+      "low_p": 1.162275,
+      "volume": 3052094.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-24",
+      "value": 1.161659,
+      "open_p": 1.162275,
+      "high_p": 1.161659,
+      "low_p": 1.161659,
+      "volume": 8998966.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-25",
+      "value": 1.160832,
+      "open_p": 1.161659,
+      "high_p": 1.160832,
+      "low_p": 1.160832,
+      "volume": 19835107.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-26",
+      "value": 1.161035,
+      "open_p": 1.160832,
+      "high_p": 1.161035,
+      "low_p": 1.161035,
+      "volume": 16939306.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-27",
+      "value": 1.160911,
+      "open_p": 1.161035,
+      "high_p": 1.160911,
+      "low_p": 1.160911,
+      "volume": 43699516.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-28",
+      "value": 1.160617,
+      "open_p": 1.160911,
+      "high_p": 1.160617,
+      "low_p": 1.160617,
+      "volume": 38953069.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-29",
+      "value": 1.162935,
+      "open_p": 1.160617,
+      "high_p": 1.162935,
+      "low_p": 1.162935,
+      "volume": 19232769.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-30",
+      "value": 1.164423,
+      "open_p": 1.162935,
+      "high_p": 1.164423,
+      "low_p": 1.164423,
+      "volume": 29710755.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-03-31",
+      "value": 1.164339,
+      "open_p": 1.164423,
+      "high_p": 1.164339,
+      "low_p": 1.164339,
+      "volume": 21987227.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-01",
+      "value": 1.165118,
+      "open_p": 1.164339,
+      "high_p": 1.165118,
+      "low_p": 1.165118,
+      "volume": 23282168.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-02",
+      "value": 1.165815,
+      "open_p": 1.165118,
+      "high_p": 1.165815,
+      "low_p": 1.165815,
+      "volume": 24280053.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-03",
+      "value": 1.164443,
+      "open_p": 1.165815,
+      "high_p": 1.164443,
+      "low_p": 1.164443,
+      "volume": 15934498.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-04",
+      "value": 1.16461,
+      "open_p": 1.164443,
+      "high_p": 1.16461,
+      "low_p": 1.16461,
+      "volume": 16257532.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-05",
+      "value": 1.164164,
+      "open_p": 1.16461,
+      "high_p": 1.164164,
+      "low_p": 1.164164,
+      "volume": 14953645.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-06",
+      "value": 1.163935,
+      "open_p": 1.164164,
+      "high_p": 1.163935,
+      "low_p": 1.163935,
+      "volume": 9120977.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-07",
+      "value": 1.162962,
+      "open_p": 1.163935,
+      "high_p": 1.162962,
+      "low_p": 1.162962,
+      "volume": 22575757.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-08",
+      "value": 1.163537,
+      "open_p": 1.162962,
+      "high_p": 1.163537,
+      "low_p": 1.163537,
+      "volume": 17202111.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-09",
+      "value": 1.163614,
+      "open_p": 1.163537,
+      "high_p": 1.163614,
+      "low_p": 1.163614,
+      "volume": 15716522.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-10",
+      "value": 1.164017,
+      "open_p": 1.163614,
+      "high_p": 1.164017,
+      "low_p": 1.164017,
+      "volume": 14715738.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-11",
+      "value": 1.164147,
+      "open_p": 1.164017,
+      "high_p": 1.164147,
+      "low_p": 1.164147,
+      "volume": 13528459.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-12",
+      "value": 1.164434,
+      "open_p": 1.164147,
+      "high_p": 1.164434,
+      "low_p": 1.164434,
+      "volume": 13461818.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-13",
+      "value": 1.165038,
+      "open_p": 1.164434,
+      "high_p": 1.165038,
+      "low_p": 1.165038,
+      "volume": 4325599.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-14",
+      "value": 1.165167,
+      "open_p": 1.165038,
+      "high_p": 1.165167,
+      "low_p": 1.165167,
+      "volume": 4624064.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-15",
+      "value": 1.165703,
+      "open_p": 1.165167,
+      "high_p": 1.165703,
+      "low_p": 1.165703,
+      "volume": 11156220.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-16",
+      "value": 1.16599,
+      "open_p": 1.165703,
+      "high_p": 1.16599,
+      "low_p": 1.16599,
+      "volume": 14693159.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-17",
+      "value": 1.165998,
+      "open_p": 1.16599,
+      "high_p": 1.165998,
+      "low_p": 1.165998,
+      "volume": 8619316.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-18",
+      "value": 1.166016,
+      "open_p": 1.165998,
+      "high_p": 1.166016,
+      "low_p": 1.166016,
+      "volume": 7839879.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-19",
+      "value": 1.166615,
+      "open_p": 1.166016,
+      "high_p": 1.166615,
+      "low_p": 1.166615,
+      "volume": 6094364.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-20",
+      "value": 1.166789,
+      "open_p": 1.166615,
+      "high_p": 1.166789,
+      "low_p": 1.166789,
+      "volume": 3702741.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-21",
+      "value": 1.166645,
+      "open_p": 1.166789,
+      "high_p": 1.166645,
+      "low_p": 1.166645,
+      "volume": 4037307.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-22",
+      "value": 1.166759,
+      "open_p": 1.166645,
+      "high_p": 1.166759,
+      "low_p": 1.166759,
+      "volume": 7393864.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-23",
+      "value": 1.167132,
+      "open_p": 1.166759,
+      "high_p": 1.167132,
+      "low_p": 1.167132,
+      "volume": 10576707.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-24",
+      "value": 1.167603,
+      "open_p": 1.167132,
+      "high_p": 1.167603,
+      "low_p": 1.167603,
+      "volume": 15814210.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-25",
+      "value": 1.168003,
+      "open_p": 1.167603,
+      "high_p": 1.168003,
+      "low_p": 1.168003,
+      "volume": 8462208.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-26",
+      "value": 1.168202,
+      "open_p": 1.168003,
+      "high_p": 1.168202,
+      "low_p": 1.168202,
+      "volume": 5417370.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-27",
+      "value": 1.168261,
+      "open_p": 1.168202,
+      "high_p": 1.168261,
+      "low_p": 1.168261,
+      "volume": 4972965.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-28",
+      "value": 1.167727,
+      "open_p": 1.168261,
+      "high_p": 1.167727,
+      "low_p": 1.167727,
+      "volume": 7551176.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-29",
+      "value": 1.168586,
+      "open_p": 1.167727,
+      "high_p": 1.168586,
+      "low_p": 1.168586,
+      "volume": 6828146.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-04-30",
+      "value": 1.168889,
+      "open_p": 1.168586,
+      "high_p": 1.168889,
+      "low_p": 1.168889,
+      "volume": 7197813.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-01",
+      "value": 1.168863,
+      "open_p": 1.168889,
+      "high_p": 1.168863,
+      "low_p": 1.168863,
+      "volume": 12923621.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-02",
+      "value": 1.168636,
+      "open_p": 1.168863,
+      "high_p": 1.168636,
+      "low_p": 1.168636,
+      "volume": 12788821.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-03",
+      "value": 1.16889,
+      "open_p": 1.168636,
+      "high_p": 1.16889,
+      "low_p": 1.16889,
+      "volume": 16352673.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-04",
+      "value": 1.169385,
+      "open_p": 1.16889,
+      "high_p": 1.169385,
+      "low_p": 1.169385,
+      "volume": 11375921.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-05",
+      "value": 1.169978,
+      "open_p": 1.169385,
+      "high_p": 1.169978,
+      "low_p": 1.169978,
+      "volume": 20715796.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-06",
+      "value": 1.169951,
+      "open_p": 1.169978,
+      "high_p": 1.169951,
+      "low_p": 1.169951,
+      "volume": 14614359.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-07",
+      "value": 1.169493,
+      "open_p": 1.169951,
+      "high_p": 1.169493,
+      "low_p": 1.169493,
+      "volume": 6951892.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-08",
+      "value": 1.169152,
+      "open_p": 1.169493,
+      "high_p": 1.169152,
+      "low_p": 1.169152,
+      "volume": 8781899.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-09",
+      "value": 1.170691,
+      "open_p": 1.169152,
+      "high_p": 1.170691,
+      "low_p": 1.170691,
+      "volume": 20429970.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-10",
+      "value": 1.170618,
+      "open_p": 1.170691,
+      "high_p": 1.170618,
+      "low_p": 1.170618,
+      "volume": 22888812.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-11",
+      "value": 1.171141,
+      "open_p": 1.170618,
+      "high_p": 1.171141,
+      "low_p": 1.171141,
+      "volume": 12767334.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-12",
+      "value": 1.171227,
+      "open_p": 1.171141,
+      "high_p": 1.171227,
+      "low_p": 1.171227,
+      "volume": 19576945.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-13",
+      "value": 1.171668,
+      "open_p": 1.171227,
+      "high_p": 1.171668,
+      "low_p": 1.171668,
+      "volume": 18493979.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-14",
+      "value": 1.172245,
+      "open_p": 1.171668,
+      "high_p": 1.172245,
+      "low_p": 1.172245,
+      "volume": 13165338.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-15",
+      "value": 1.173051,
+      "open_p": 1.172245,
+      "high_p": 1.173051,
+      "low_p": 1.173051,
+      "volume": 14101992.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-16",
+      "value": 1.173668,
+      "open_p": 1.173051,
+      "high_p": 1.173668,
+      "low_p": 1.173668,
+      "volume": 12394349.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-17",
+      "value": 1.174212,
+      "open_p": 1.173668,
+      "high_p": 1.174212,
+      "low_p": 1.174212,
+      "volume": 12892109.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-18",
+      "value": 1.173936,
+      "open_p": 1.174212,
+      "high_p": 1.173936,
+      "low_p": 1.173936,
+      "volume": 8144192.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-19",
+      "value": 1.173455,
+      "open_p": 1.173936,
+      "high_p": 1.173455,
+      "low_p": 1.173455,
+      "volume": 11830809.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-20",
+      "value": 1.173818,
+      "open_p": 1.173455,
+      "high_p": 1.173818,
+      "low_p": 1.173818,
+      "volume": 16520315.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-21",
+      "value": 1.174265,
+      "open_p": 1.173818,
+      "high_p": 1.174265,
+      "low_p": 1.174265,
+      "volume": 14742917.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-22",
+      "value": 1.173882,
+      "open_p": 1.174265,
+      "high_p": 1.173882,
+      "low_p": 1.173882,
+      "volume": 13682971.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-23",
+      "value": 1.174013,
+      "open_p": 1.173882,
+      "high_p": 1.174013,
+      "low_p": 1.174013,
+      "volume": 28428937.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-24",
+      "value": 1.174914,
+      "open_p": 1.174013,
+      "high_p": 1.174914,
+      "low_p": 1.174914,
+      "volume": 35417038.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-25",
+      "value": 1.174914,
+      "open_p": 1.174914,
+      "high_p": 1.174914,
+      "low_p": 1.174914,
+      "volume": 11863439.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-26",
+      "value": 1.175028,
+      "open_p": 1.174914,
+      "high_p": 1.175028,
+      "low_p": 1.175028,
+      "volume": 13066342.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-27",
+      "value": 1.175244,
+      "open_p": 1.175028,
+      "high_p": 1.175244,
+      "low_p": 1.175244,
+      "volume": 18942056.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-28",
+      "value": 1.175565,
+      "open_p": 1.175244,
+      "high_p": 1.175565,
+      "low_p": 1.175565,
+      "volume": 20354497.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-29",
+      "value": 1.174748,
+      "open_p": 1.175565,
+      "high_p": 1.174748,
+      "low_p": 1.174748,
+      "volume": 41099411.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-30",
+      "value": 1.174935,
+      "open_p": 1.174748,
+      "high_p": 1.174935,
+      "low_p": 1.174935,
+      "volume": 28309270.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-05-31",
+      "value": 1.177034,
+      "open_p": 1.174935,
+      "high_p": 1.177034,
+      "low_p": 1.177034,
+      "volume": 36632268.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-01",
+      "value": 1.177609,
+      "open_p": 1.177034,
+      "high_p": 1.177609,
+      "low_p": 1.177609,
+      "volume": 18776194.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-02",
+      "value": 1.177333,
+      "open_p": 1.177609,
+      "high_p": 1.177333,
+      "low_p": 1.177333,
+      "volume": 10806866.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-03",
+      "value": 1.177748,
+      "open_p": 1.177333,
+      "high_p": 1.177748,
+      "low_p": 1.177748,
+      "volume": 35720894.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-04",
+      "value": 1.178279,
+      "open_p": 1.177748,
+      "high_p": 1.178279,
+      "low_p": 1.178279,
+      "volume": 40599763.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-05",
+      "value": 1.177852,
+      "open_p": 1.178279,
+      "high_p": 1.177852,
+      "low_p": 1.177852,
+      "volume": 42215755.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-06",
+      "value": 1.178935,
+      "open_p": 1.177852,
+      "high_p": 1.178935,
+      "low_p": 1.178935,
+      "volume": 34932761.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-07",
+      "value": 1.178845,
+      "open_p": 1.178935,
+      "high_p": 1.178845,
+      "low_p": 1.178845,
+      "volume": 20359466.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-08",
+      "value": 1.17888,
+      "open_p": 1.178845,
+      "high_p": 1.17888,
+      "low_p": 1.17888,
+      "volume": 12364542.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-09",
+      "value": 1.178368,
+      "open_p": 1.17888,
+      "high_p": 1.178368,
+      "low_p": 1.178368,
+      "volume": 23114721.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-10",
+      "value": 1.178162,
+      "open_p": 1.178368,
+      "high_p": 1.178162,
+      "low_p": 1.178162,
+      "volume": 27842489.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-11",
+      "value": 1.178389,
+      "open_p": 1.178162,
+      "high_p": 1.178389,
+      "low_p": 1.178389,
+      "volume": 18638946.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-12",
+      "value": 1.178286,
+      "open_p": 1.178389,
+      "high_p": 1.178286,
+      "low_p": 1.178286,
+      "volume": 14539808.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-13",
+      "value": 1.177934,
+      "open_p": 1.178286,
+      "high_p": 1.177934,
+      "low_p": 1.177934,
+      "volume": 13991643.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-14",
+      "value": 1.178512,
+      "open_p": 1.177934,
+      "high_p": 1.178512,
+      "low_p": 1.178512,
+      "volume": 6044883.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-15",
+      "value": 1.17828,
+      "open_p": 1.178512,
+      "high_p": 1.17828,
+      "low_p": 1.17828,
+      "volume": 3921321.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-16",
+      "value": 1.177571,
+      "open_p": 1.17828,
+      "high_p": 1.177571,
+      "low_p": 1.177571,
+      "volume": 6410689.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-17",
+      "value": 1.177415,
+      "open_p": 1.177571,
+      "high_p": 1.177415,
+      "low_p": 1.177415,
+      "volume": 5714784.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-18",
+      "value": 1.177919,
+      "open_p": 1.177415,
+      "high_p": 1.177919,
+      "low_p": 1.177919,
+      "volume": 5088648.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-19",
+      "value": 1.178171,
+      "open_p": 1.177919,
+      "high_p": 1.178171,
+      "low_p": 1.178171,
+      "volume": 9115587.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-20",
+      "value": 1.178237,
+      "open_p": 1.178171,
+      "high_p": 1.178237,
+      "low_p": 1.178237,
+      "volume": 6281041.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-21",
+      "value": 1.178581,
+      "open_p": 1.178237,
+      "high_p": 1.178581,
+      "low_p": 1.178581,
+      "volume": 5955547.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-22",
+      "value": 1.1789,
+      "open_p": 1.178581,
+      "high_p": 1.1789,
+      "low_p": 1.1789,
+      "volume": 8963830.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-23",
+      "value": 1.178728,
+      "open_p": 1.1789,
+      "high_p": 1.178728,
+      "low_p": 1.178728,
+      "volume": 9223880.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-24",
+      "value": 1.17909,
+      "open_p": 1.178728,
+      "high_p": 1.17909,
+      "low_p": 1.17909,
+      "volume": 8393247.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-25",
+      "value": 1.178749,
+      "open_p": 1.17909,
+      "high_p": 1.178749,
+      "low_p": 1.178749,
+      "volume": 5952852.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-26",
+      "value": 1.17841,
+      "open_p": 1.178749,
+      "high_p": 1.17841,
+      "low_p": 1.17841,
+      "volume": 17889863.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-27",
+      "value": 1.177866,
+      "open_p": 1.17841,
+      "high_p": 1.177866,
+      "low_p": 1.177866,
+      "volume": 14624960.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-28",
+      "value": 1.177619,
+      "open_p": 1.177866,
+      "high_p": 1.177619,
+      "low_p": 1.177619,
+      "volume": 4052457.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-29",
+      "value": 1.17823,
+      "open_p": 1.177619,
+      "high_p": 1.17823,
+      "low_p": 1.17823,
+      "volume": 5680153.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-06-30",
+      "value": 1.178547,
+      "open_p": 1.17823,
+      "high_p": 1.178547,
+      "low_p": 1.178547,
+      "volume": 3977992.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-01",
+      "value": 1.178933,
+      "open_p": 1.178547,
+      "high_p": 1.178933,
+      "low_p": 1.178933,
+      "volume": 9482162.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-02",
+      "value": 1.17936,
+      "open_p": 1.178933,
+      "high_p": 1.17936,
+      "low_p": 1.17936,
+      "volume": 16541476.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-03",
+      "value": 1.177884,
+      "open_p": 1.17936,
+      "high_p": 1.177884,
+      "low_p": 1.177884,
+      "volume": 9716217.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-04",
+      "value": 1.178352,
+      "open_p": 1.177884,
+      "high_p": 1.178352,
+      "low_p": 1.178352,
+      "volume": 5800563.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-05",
+      "value": 1.179117,
+      "open_p": 1.178352,
+      "high_p": 1.179117,
+      "low_p": 1.179117,
+      "volume": 6957892.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-06",
+      "value": 1.179046,
+      "open_p": 1.179117,
+      "high_p": 1.179046,
+      "low_p": 1.179046,
+      "volume": 5187893.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-07",
+      "value": 1.178532,
+      "open_p": 1.179046,
+      "high_p": 1.178532,
+      "low_p": 1.178532,
+      "volume": 2619670.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-08",
+      "value": 1.178766,
+      "open_p": 1.178532,
+      "high_p": 1.178766,
+      "low_p": 1.178766,
+      "volume": 4235682.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-09",
+      "value": 1.17873,
+      "open_p": 1.178766,
+      "high_p": 1.17873,
+      "low_p": 1.17873,
+      "volume": 4589564.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-10",
+      "value": 1.178638,
+      "open_p": 1.17873,
+      "high_p": 1.178638,
+      "low_p": 1.178638,
+      "volume": 13668200.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-11",
+      "value": 1.17828,
+      "open_p": 1.178638,
+      "high_p": 1.17828,
+      "low_p": 1.17828,
+      "volume": 18506045.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-12",
+      "value": 1.177631,
+      "open_p": 1.17828,
+      "high_p": 1.177631,
+      "low_p": 1.177631,
+      "volume": 17597257.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-13",
+      "value": 1.178348,
+      "open_p": 1.177631,
+      "high_p": 1.178348,
+      "low_p": 1.178348,
+      "volume": 15001140.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-14",
+      "value": 1.178562,
+      "open_p": 1.178348,
+      "high_p": 1.178562,
+      "low_p": 1.178562,
+      "volume": 13105636.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-15",
+      "value": 1.1792,
+      "open_p": 1.178562,
+      "high_p": 1.1792,
+      "low_p": 1.1792,
+      "volume": 4690503.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-16",
+      "value": 1.181186,
+      "open_p": 1.1792,
+      "high_p": 1.181186,
+      "low_p": 1.181186,
+      "volume": 10890780.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-17",
+      "value": 1.181695,
+      "open_p": 1.181186,
+      "high_p": 1.181695,
+      "low_p": 1.181695,
+      "volume": 28829973.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-18",
+      "value": 1.182873,
+      "open_p": 1.181695,
+      "high_p": 1.182873,
+      "low_p": 1.182873,
+      "volume": 38000677.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-19",
+      "value": 1.183489,
+      "open_p": 1.182873,
+      "high_p": 1.183489,
+      "low_p": 1.183489,
+      "volume": 12001766.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-20",
+      "value": 1.183252,
+      "open_p": 1.183489,
+      "high_p": 1.183252,
+      "low_p": 1.183252,
+      "volume": 10189998.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-21",
+      "value": 1.183502,
+      "open_p": 1.183252,
+      "high_p": 1.183502,
+      "low_p": 1.183502,
+      "volume": 14678359.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-22",
+      "value": 1.183846,
+      "open_p": 1.183502,
+      "high_p": 1.183846,
+      "low_p": 1.183846,
+      "volume": 22766359.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-23",
+      "value": 1.184181,
+      "open_p": 1.183846,
+      "high_p": 1.184181,
+      "low_p": 1.184181,
+      "volume": 21165515.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-24",
+      "value": 1.184568,
+      "open_p": 1.184181,
+      "high_p": 1.184568,
+      "low_p": 1.184568,
+      "volume": 16775772.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-25",
+      "value": 1.185139,
+      "open_p": 1.184568,
+      "high_p": 1.185139,
+      "low_p": 1.185139,
+      "volume": 14633944.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-26",
+      "value": 1.184971,
+      "open_p": 1.185139,
+      "high_p": 1.184971,
+      "low_p": 1.184971,
+      "volume": 12054812.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-27",
+      "value": 1.18506,
+      "open_p": 1.184971,
+      "high_p": 1.18506,
+      "low_p": 1.18506,
+      "volume": 20363428.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-28",
+      "value": 1.184876,
+      "open_p": 1.18506,
+      "high_p": 1.184876,
+      "low_p": 1.184876,
+      "volume": 30814078.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-29",
+      "value": 1.185425,
+      "open_p": 1.184876,
+      "high_p": 1.185425,
+      "low_p": 1.185425,
+      "volume": 25125932.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-30",
+      "value": 1.186499,
+      "open_p": 1.185425,
+      "high_p": 1.186499,
+      "low_p": 1.186499,
+      "volume": 24345868.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-07-31",
+      "value": 1.184341,
+      "open_p": 1.186499,
+      "high_p": 1.184341,
+      "low_p": 1.184341,
+      "volume": 100765938.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-01",
+      "value": 1.184708,
+      "open_p": 1.184341,
+      "high_p": 1.184708,
+      "low_p": 1.184708,
+      "volume": 29994574.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-02",
+      "value": 1.185973,
+      "open_p": 1.184708,
+      "high_p": 1.185973,
+      "low_p": 1.185973,
+      "volume": 17687291.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-03",
+      "value": 1.187762,
+      "open_p": 1.185973,
+      "high_p": 1.187762,
+      "low_p": 1.187762,
+      "volume": 44486470.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-04",
+      "value": 1.188696,
+      "open_p": 1.187762,
+      "high_p": 1.188696,
+      "low_p": 1.188696,
+      "volume": 26477368.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-05",
+      "value": 1.188597,
+      "open_p": 1.188696,
+      "high_p": 1.188597,
+      "low_p": 1.188597,
+      "volume": 9065987.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-06",
+      "value": 1.188955,
+      "open_p": 1.188597,
+      "high_p": 1.188955,
+      "low_p": 1.188955,
+      "volume": 10768699.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-07",
+      "value": 1.188988,
+      "open_p": 1.188955,
+      "high_p": 1.188988,
+      "low_p": 1.188988,
+      "volume": 20780228.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-08",
+      "value": 1.185795,
+      "open_p": 1.188988,
+      "high_p": 1.185795,
+      "low_p": 1.185795,
+      "volume": 30644922.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-09",
+      "value": 1.187205,
+      "open_p": 1.185795,
+      "high_p": 1.187205,
+      "low_p": 1.187205,
+      "volume": 30968272.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-10",
+      "value": 1.18692,
+      "open_p": 1.187205,
+      "high_p": 1.18692,
+      "low_p": 1.18692,
+      "volume": 18948384.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-11",
+      "value": 1.186204,
+      "open_p": 1.18692,
+      "high_p": 1.186204,
+      "low_p": 1.186204,
+      "volume": 17046711.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-12",
+      "value": 1.18605,
+      "open_p": 1.186204,
+      "high_p": 1.18605,
+      "low_p": 1.18605,
+      "volume": 20113748.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-13",
+      "value": 1.186073,
+      "open_p": 1.18605,
+      "high_p": 1.186073,
+      "low_p": 1.186073,
+      "volume": 24355918.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-14",
+      "value": 1.18624,
+      "open_p": 1.186073,
+      "high_p": 1.18624,
+      "low_p": 1.18624,
+      "volume": 18791264.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-15",
+      "value": 1.187099,
+      "open_p": 1.18624,
+      "high_p": 1.187099,
+      "low_p": 1.187099,
+      "volume": 15295897.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-16",
+      "value": 1.18572,
+      "open_p": 1.187099,
+      "high_p": 1.18572,
+      "low_p": 1.18572,
+      "volume": 7275112.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-17",
+      "value": 1.185339,
+      "open_p": 1.18572,
+      "high_p": 1.185339,
+      "low_p": 1.185339,
+      "volume": 4171068.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-18",
+      "value": 1.188437,
+      "open_p": 1.185339,
+      "high_p": 1.188437,
+      "low_p": 1.188437,
+      "volume": 4828592.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-19",
+      "value": 1.188481,
+      "open_p": 1.188437,
+      "high_p": 1.188481,
+      "low_p": 1.188481,
+      "volume": 4845780.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-20",
+      "value": 1.188811,
+      "open_p": 1.188481,
+      "high_p": 1.188811,
+      "low_p": 1.188811,
+      "volume": 6870513.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-21",
+      "value": 1.188803,
+      "open_p": 1.188811,
+      "high_p": 1.188803,
+      "low_p": 1.188803,
+      "volume": 11077954.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-22",
+      "value": 1.189674,
+      "open_p": 1.188803,
+      "high_p": 1.189674,
+      "low_p": 1.189674,
+      "volume": 9975456.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-23",
+      "value": 1.190072,
+      "open_p": 1.189674,
+      "high_p": 1.190072,
+      "low_p": 1.190072,
+      "volume": 13389702.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-24",
+      "value": 1.190786,
+      "open_p": 1.190072,
+      "high_p": 1.190786,
+      "low_p": 1.190786,
+      "volume": 8642133.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-25",
+      "value": 1.192259,
+      "open_p": 1.190786,
+      "high_p": 1.192259,
+      "low_p": 1.192259,
+      "volume": 7590445.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-26",
+      "value": 1.191614,
+      "open_p": 1.192259,
+      "high_p": 1.191614,
+      "low_p": 1.191614,
+      "volume": 7855284.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-27",
+      "value": 1.19062,
+      "open_p": 1.191614,
+      "high_p": 1.19062,
+      "low_p": 1.19062,
+      "volume": 14120775.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-28",
+      "value": 1.191968,
+      "open_p": 1.19062,
+      "high_p": 1.191968,
+      "low_p": 1.191968,
+      "volume": 6906515.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-29",
+      "value": 1.192072,
+      "open_p": 1.191968,
+      "high_p": 1.192072,
+      "low_p": 1.192072,
+      "volume": 4929612.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-30",
+      "value": 1.192383,
+      "open_p": 1.192072,
+      "high_p": 1.192383,
+      "low_p": 1.192383,
+      "volume": 4007051.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-08-31",
+      "value": 1.192454,
+      "open_p": 1.192383,
+      "high_p": 1.192454,
+      "low_p": 1.192454,
+      "volume": 2207482.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-01",
+      "value": 1.193044,
+      "open_p": 1.192454,
+      "high_p": 1.193044,
+      "low_p": 1.193044,
+      "volume": 4708864.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-02",
+      "value": 1.192345,
+      "open_p": 1.193044,
+      "high_p": 1.192345,
+      "low_p": 1.192345,
+      "volume": 5376683.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-03",
+      "value": 1.193861,
+      "open_p": 1.192345,
+      "high_p": 1.193861,
+      "low_p": 1.193861,
+      "volume": 10232173.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-04",
+      "value": 1.194491,
+      "open_p": 1.193861,
+      "high_p": 1.194491,
+      "low_p": 1.194491,
+      "volume": 11587030.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-05",
+      "value": 1.195708,
+      "open_p": 1.194491,
+      "high_p": 1.195708,
+      "low_p": 1.195708,
+      "volume": 21230381.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-06",
+      "value": 1.196152,
+      "open_p": 1.195708,
+      "high_p": 1.196152,
+      "low_p": 1.196152,
+      "volume": 8801320.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-07",
+      "value": 1.196261,
+      "open_p": 1.196152,
+      "high_p": 1.196261,
+      "low_p": 1.196261,
+      "volume": 7682952.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-08",
+      "value": 1.195681,
+      "open_p": 1.196261,
+      "high_p": 1.195681,
+      "low_p": 1.195681,
+      "volume": 5313073.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-09",
+      "value": 1.196025,
+      "open_p": 1.195681,
+      "high_p": 1.196025,
+      "low_p": 1.196025,
+      "volume": 11900486.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-10",
+      "value": 1.196804,
+      "open_p": 1.196025,
+      "high_p": 1.196804,
+      "low_p": 1.196804,
+      "volume": 15955809.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-11",
+      "value": 1.196597,
+      "open_p": 1.196804,
+      "high_p": 1.196597,
+      "low_p": 1.196597,
+      "volume": 12670972.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-12",
+      "value": 1.196769,
+      "open_p": 1.196597,
+      "high_p": 1.196769,
+      "low_p": 1.196769,
+      "volume": 7265807.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-13",
+      "value": 1.197041,
+      "open_p": 1.196769,
+      "high_p": 1.197041,
+      "low_p": 1.197041,
+      "volume": 8966002.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-14",
+      "value": 1.197232,
+      "open_p": 1.197041,
+      "high_p": 1.197232,
+      "low_p": 1.197232,
+      "volume": 5069534.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-15",
+      "value": 1.198109,
+      "open_p": 1.197232,
+      "high_p": 1.198109,
+      "low_p": 1.198109,
+      "volume": 2949095.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-16",
+      "value": 1.198457,
+      "open_p": 1.198109,
+      "high_p": 1.198457,
+      "low_p": 1.198457,
+      "volume": 7597416.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-17",
+      "value": 1.197934,
+      "open_p": 1.198457,
+      "high_p": 1.197934,
+      "low_p": 1.197934,
+      "volume": 12656524.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-18",
+      "value": 1.198044,
+      "open_p": 1.197934,
+      "high_p": 1.198044,
+      "low_p": 1.198044,
+      "volume": 31175275.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-19",
+      "value": 1.198847,
+      "open_p": 1.198044,
+      "high_p": 1.198847,
+      "low_p": 1.198847,
+      "volume": 39068643.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-20",
+      "value": 1.198278,
+      "open_p": 1.198847,
+      "high_p": 1.198278,
+      "low_p": 1.198278,
+      "volume": 27703109.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-21",
+      "value": 1.197177,
+      "open_p": 1.198278,
+      "high_p": 1.197177,
+      "low_p": 1.197177,
+      "volume": 25716606.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-22",
+      "value": 1.197717,
+      "open_p": 1.197177,
+      "high_p": 1.197717,
+      "low_p": 1.197717,
+      "volume": 26094281.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-23",
+      "value": 1.196906,
+      "open_p": 1.197717,
+      "high_p": 1.196906,
+      "low_p": 1.196906,
+      "volume": 20204087.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-24",
+      "value": 1.196808,
+      "open_p": 1.196906,
+      "high_p": 1.196808,
+      "low_p": 1.196808,
+      "volume": 22279022.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-25",
+      "value": 1.197182,
+      "open_p": 1.196808,
+      "high_p": 1.197182,
+      "low_p": 1.197182,
+      "volume": 158841809.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-26",
+      "value": 1.196349,
+      "open_p": 1.197182,
+      "high_p": 1.196349,
+      "low_p": 1.196349,
+      "volume": 152904112.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-27",
+      "value": 1.197535,
+      "open_p": 1.196349,
+      "high_p": 1.197535,
+      "low_p": 1.197535,
+      "volume": 69059936.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-28",
+      "value": 1.198565,
+      "open_p": 1.197535,
+      "high_p": 1.198565,
+      "low_p": 1.198565,
+      "volume": 30916492.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-29",
+      "value": 1.198984,
+      "open_p": 1.198565,
+      "high_p": 1.198984,
+      "low_p": 1.198984,
+      "volume": 37532759.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-09-30",
+      "value": 1.199116,
+      "open_p": 1.198984,
+      "high_p": 1.199116,
+      "low_p": 1.199116,
+      "volume": 52734184.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-01",
+      "value": 1.199206,
+      "open_p": 1.199116,
+      "high_p": 1.199206,
+      "low_p": 1.199206,
+      "volume": 40714905.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-02",
+      "value": 1.199643,
+      "open_p": 1.199206,
+      "high_p": 1.199643,
+      "low_p": 1.199643,
+      "volume": 36862718.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-03",
+      "value": 1.19973,
+      "open_p": 1.199643,
+      "high_p": 1.19973,
+      "low_p": 1.19973,
+      "volume": 34947696.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-04",
+      "value": 1.19968,
+      "open_p": 1.19973,
+      "high_p": 1.19968,
+      "low_p": 1.19968,
+      "volume": 25505877.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-05",
+      "value": 1.198952,
+      "open_p": 1.19968,
+      "high_p": 1.198952,
+      "low_p": 1.198952,
+      "volume": 12452050.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-06",
+      "value": 1.198701,
+      "open_p": 1.198952,
+      "high_p": 1.198701,
+      "low_p": 1.198701,
+      "volume": 10988522.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-07",
+      "value": 1.19883,
+      "open_p": 1.198701,
+      "high_p": 1.19883,
+      "low_p": 1.19883,
+      "volume": 17315478.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-08",
+      "value": 1.199039,
+      "open_p": 1.19883,
+      "high_p": 1.199039,
+      "low_p": 1.199039,
+      "volume": 18046264.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-09",
+      "value": 1.198802,
+      "open_p": 1.199039,
+      "high_p": 1.198802,
+      "low_p": 1.198802,
+      "volume": 16742159.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-10",
+      "value": 1.2,
+      "open_p": 1.198802,
+      "high_p": 1.2,
+      "low_p": 1.2,
+      "volume": 21593640.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-11",
+      "value": 1.19822,
+      "open_p": 1.2,
+      "high_p": 1.19822,
+      "low_p": 1.19822,
+      "volume": 35633912.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-12",
+      "value": 1.199094,
+      "open_p": 1.19822,
+      "high_p": 1.199094,
+      "low_p": 1.199094,
+      "volume": 17035947.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-13",
+      "value": 1.19987,
+      "open_p": 1.199094,
+      "high_p": 1.19987,
+      "low_p": 1.19987,
+      "volume": 24852352.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-14",
+      "value": 1.2,
+      "open_p": 1.19987,
+      "high_p": 1.2,
+      "low_p": 1.2,
+      "volume": 18333101.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-15",
+      "value": 1.199753,
+      "open_p": 1.2,
+      "high_p": 1.199753,
+      "low_p": 1.199753,
+      "volume": 22288543.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-16",
+      "value": 1.199735,
+      "open_p": 1.199753,
+      "high_p": 1.199735,
+      "low_p": 1.199735,
+      "volume": 21526374.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-17",
+      "value": 1.199322,
+      "open_p": 1.199735,
+      "high_p": 1.199322,
+      "low_p": 1.199322,
+      "volume": 18916897.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-18",
+      "value": 1.2,
+      "open_p": 1.199322,
+      "high_p": 1.2,
+      "low_p": 1.2,
+      "volume": 16528588.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-19",
+      "value": 1.2,
+      "open_p": 1.2,
+      "high_p": 1.2,
+      "low_p": 1.2,
+      "volume": 13268574.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-20",
+      "value": 1.2,
+      "open_p": 1.2,
+      "high_p": 1.2,
+      "low_p": 1.2,
+      "volume": 28350001.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-21",
+      "value": 1.2,
+      "open_p": 1.2,
+      "high_p": 1.2,
+      "low_p": 1.2,
+      "volume": 20273895.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-22",
+      "value": 1.199882,
+      "open_p": 1.2,
+      "high_p": 1.199882,
+      "low_p": 1.199882,
+      "volume": 20647487.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-23",
+      "value": 1.199914,
+      "open_p": 1.199914,
+      "high_p": 1.199914,
+      "low_p": 1.199914,
+      "volume": 25491895.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-24",
+      "value": 1.20010916,
+      "open_p": 1.19979673,
+      "high_p": 1.20147342,
+      "low_p": 1.19864596,
+      "volume": 20921515.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-25",
+      "value": 1.20080879,
+      "open_p": 1.19997921,
+      "high_p": 1.20129739,
+      "low_p": 1.19938724,
+      "volume": 30204540.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-26",
+      "value": 1.19995644,
+      "open_p": 1.2009438,
+      "high_p": 1.20176616,
+      "low_p": 1.1987981,
+      "volume": 17106323.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-27",
+      "value": 1.20070785,
+      "open_p": 1.20048078,
+      "high_p": 1.20207625,
+      "low_p": 1.19945952,
+      "volume": 17707991.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-28",
+      "value": 1.20178419,
+      "open_p": 1.20137376,
+      "high_p": 1.20372102,
+      "low_p": 1.19957953,
+      "volume": 15642905.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-29",
+      "value": 1.20233779,
+      "open_p": 1.20206633,
+      "high_p": 1.20663602,
+      "low_p": 1.19967025,
+      "volume": 16655210.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-30",
+      "value": 1.20165179,
+      "open_p": 1.20269575,
+      "high_p": 1.2059608,
+      "low_p": 1.20003775,
+      "volume": 10473663.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-10-31",
+      "value": 1.20202345,
+      "open_p": 1.20169211,
+      "high_p": 1.20279231,
+      "low_p": 1.20040747,
+      "volume": 10147112.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-01",
+      "value": 1.2026281,
+      "open_p": 1.20229967,
+      "high_p": 1.20659203,
+      "low_p": 1.20114007,
+      "volume": 7762945.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-02",
+      "value": 1.20281654,
+      "open_p": 1.202287,
+      "high_p": 1.20369814,
+      "low_p": 1.20179931,
+      "volume": 4218158.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-03",
+      "value": 1.2030005,
+      "open_p": 1.2025792,
+      "high_p": 1.20549097,
+      "low_p": 1.20178182,
+      "volume": 6710935.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-04",
+      "value": 1.20088296,
+      "open_p": 1.20303963,
+      "high_p": 1.20458569,
+      "low_p": 1.19967749,
+      "volume": 26220851.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-05",
+      "value": 1.20157577,
+      "open_p": 1.20186211,
+      "high_p": 1.20266844,
+      "low_p": 1.20000433,
+      "volume": 36988899.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-06",
+      "value": 1.20093037,
+      "open_p": 1.20175693,
+      "high_p": 1.20287746,
+      "low_p": 1.20058191,
+      "volume": 11244407.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-07",
+      "value": 1.20022083,
+      "open_p": 1.20067223,
+      "high_p": 1.20249233,
+      "low_p": 1.19934599,
+      "volume": 32109536.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-08",
+      "value": 1.20156985,
+      "open_p": 1.20133575,
+      "high_p": 1.20247615,
+      "low_p": 1.19974971,
+      "volume": 27598242.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-09",
+      "value": 1.20209519,
+      "open_p": 1.20221186,
+      "high_p": 1.20347666,
+      "low_p": 1.20085342,
+      "volume": 25820916.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-10",
+      "value": 1.20249235,
+      "open_p": 1.20173347,
+      "high_p": 1.20388854,
+      "low_p": 1.20090466,
+      "volume": 18669598.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-11",
+      "value": 1.20276471,
+      "open_p": 1.20231396,
+      "high_p": 1.20457933,
+      "low_p": 1.20086117,
+      "volume": 7437637.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-12",
+      "value": 1.20370339,
+      "open_p": 1.20289831,
+      "high_p": 1.20450572,
+      "low_p": 1.20213584,
+      "volume": 15079220.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-13",
+      "value": 1.20377974,
+      "open_p": 1.20372805,
+      "high_p": 1.20543313,
+      "low_p": 1.20189987,
+      "volume": 6620105.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-14",
+      "value": 1.20358554,
+      "open_p": 1.20336124,
+      "high_p": 1.20816955,
+      "low_p": 1.20092541,
+      "volume": 13286043.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-15",
+      "value": 1.20396206,
+      "open_p": 1.20363357,
+      "high_p": 1.2056837,
+      "low_p": 1.20261926,
+      "volume": 31218306.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-16",
+      "value": 1.20556028,
+      "open_p": 1.2041628,
+      "high_p": 1.20640497,
+      "low_p": 1.2029063,
+      "volume": 2950836.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-17",
+      "value": 1.2035305,
+      "open_p": 1.20459235,
+      "high_p": 1.20686747,
+      "low_p": 1.20064048,
+      "volume": 10111395.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-18",
+      "value": 1.20418359,
+      "open_p": 1.2034154,
+      "high_p": 1.20830793,
+      "low_p": 1.20224972,
+      "volume": 11949086.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-19",
+      "value": 1.20444381,
+      "open_p": 1.20451177,
+      "high_p": 1.20762859,
+      "low_p": 1.20237021,
+      "volume": 10263507.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-20",
+      "value": 1.20403693,
+      "open_p": 1.20424633,
+      "high_p": 1.20550049,
+      "low_p": 1.20333076,
+      "volume": 64845168.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-21",
+      "value": 1.20504388,
+      "open_p": 1.20435118,
+      "high_p": 1.20894989,
+      "low_p": 1.20204928,
+      "volume": 82453771.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-22",
+      "value": 1.20573761,
+      "open_p": 1.20501365,
+      "high_p": 1.20626378,
+      "low_p": 1.20417376,
+      "volume": 33216062.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-23",
+      "value": 1.20582117,
+      "open_p": 1.20548097,
+      "high_p": 1.2068833,
+      "low_p": 1.20456037,
+      "volume": 30660949.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-24",
+      "value": 1.20596715,
+      "open_p": 1.20581723,
+      "high_p": 1.20667916,
+      "low_p": 1.20486497,
+      "volume": 46854669.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-25",
+      "value": 1.20646274,
+      "open_p": 1.20578369,
+      "high_p": 1.20722979,
+      "low_p": 1.20523483,
+      "volume": 25140535.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-26",
+      "value": 1.20670446,
+      "open_p": 1.20601963,
+      "high_p": 1.20749716,
+      "low_p": 1.20515834,
+      "volume": 43429424.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-27",
+      "value": 1.20648698,
+      "open_p": 1.20663084,
+      "high_p": 1.20708322,
+      "low_p": 1.20344764,
+      "volume": 355865591.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-28",
+      "value": 1.20672185,
+      "open_p": 1.2062059,
+      "high_p": 1.20765359,
+      "low_p": 1.20591629,
+      "volume": 78626119.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-29",
+      "value": 1.20691071,
+      "open_p": 1.20670016,
+      "high_p": 1.20780434,
+      "low_p": 1.20652513,
+      "volume": 80183774.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-11-30",
+      "value": 1.20630561,
+      "open_p": 1.2068759,
+      "high_p": 1.20778648,
+      "low_p": 1.20615949,
+      "volume": 55844406.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-01",
+      "value": 1.20693457,
+      "open_p": 1.20661139,
+      "high_p": 1.2091185,
+      "low_p": 1.20591194,
+      "volume": 110572247.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-02",
+      "value": 1.20745433,
+      "open_p": 1.20681308,
+      "high_p": 1.20869605,
+      "low_p": 1.20564841,
+      "volume": 39792885.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-03",
+      "value": 1.20745003,
+      "open_p": 1.20750477,
+      "high_p": 1.21070742,
+      "low_p": 1.20467237,
+      "volume": 74956970.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-04",
+      "value": 1.20803486,
+      "open_p": 1.20775104,
+      "high_p": 1.20965867,
+      "low_p": 1.20528674,
+      "volume": 51161996.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-05",
+      "value": 1.20805737,
+      "open_p": 1.20822752,
+      "high_p": 1.2096747,
+      "low_p": 1.20704764,
+      "volume": 87551894.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-06",
+      "value": 1.20906493,
+      "open_p": 1.20819061,
+      "high_p": 1.20978421,
+      "low_p": 1.20743618,
+      "volume": 32557426.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-07",
+      "value": 1.21004319,
+      "open_p": 1.20891471,
+      "high_p": 1.2105876,
+      "low_p": 1.2074619,
+      "volume": 25037140.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-08",
+      "value": 1.20856232,
+      "open_p": 1.20848457,
+      "high_p": 1.20960282,
+      "low_p": 1.20693828,
+      "volume": 72571995.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-09",
+      "value": 1.20823021,
+      "open_p": 1.20851855,
+      "high_p": 1.20911515,
+      "low_p": 1.20650519,
+      "volume": 75318902.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-10",
+      "value": 1.20880295,
+      "open_p": 1.20846953,
+      "high_p": 1.2105793,
+      "low_p": 1.20706446,
+      "volume": 70234307.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-11",
+      "value": 1.20929492,
+      "open_p": 1.20872221,
+      "high_p": 1.2103644,
+      "low_p": 1.2062341,
+      "volume": 34164795.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-12",
+      "value": 1.21044336,
+      "open_p": 1.20930535,
+      "high_p": 1.21123785,
+      "low_p": 1.20845956,
+      "volume": 47462258.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-13",
+      "value": 1.21064714,
+      "open_p": 1.21051344,
+      "high_p": 1.21145503,
+      "low_p": 1.20982361,
+      "volume": 47171472.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-14",
+      "value": 1.21006105,
+      "open_p": 1.21077071,
+      "high_p": 1.21139782,
+      "low_p": 1.20945975,
+      "volume": 21748049.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-15",
+      "value": 1.20950492,
+      "open_p": 1.20976781,
+      "high_p": 1.21104337,
+      "low_p": 1.20780073,
+      "volume": 53472701.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-16",
+      "value": 1.20979595,
+      "open_p": 1.20950487,
+      "high_p": 1.21087494,
+      "low_p": 1.20771022,
+      "volume": 15901753.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-17",
+      "value": 1.21036254,
+      "open_p": 1.20956011,
+      "high_p": 1.21119298,
+      "low_p": 1.20664025,
+      "volume": 34399024.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-18",
+      "value": 1.21107897,
+      "open_p": 1.21013647,
+      "high_p": 1.21185094,
+      "low_p": 1.20946368,
+      "volume": 59269985.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-19",
+      "value": 1.21074747,
+      "open_p": 1.21073622,
+      "high_p": 1.21141752,
+      "low_p": 1.20964656,
+      "volume": 35348182.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-20",
+      "value": 1.2113743,
+      "open_p": 1.21099778,
+      "high_p": 1.21150459,
+      "low_p": 1.20997433,
+      "volume": 9648704.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-21",
+      "value": 1.21089676,
+      "open_p": 1.2114883,
+      "high_p": 1.21187516,
+      "low_p": 1.21067608,
+      "volume": 25045841.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-22",
+      "value": 1.21070174,
+      "open_p": 1.21083136,
+      "high_p": 1.21144074,
+      "low_p": 1.21012808,
+      "volume": 19756410.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-23",
+      "value": 1.2108038,
+      "open_p": 1.21060956,
+      "high_p": 1.211301,
+      "low_p": 1.2101473,
+      "volume": 13581237.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-24",
+      "value": 1.21131655,
+      "open_p": 1.21064997,
+      "high_p": 1.21172909,
+      "low_p": 1.20947353,
+      "volume": 31238505.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-25",
+      "value": 1.2113816,
+      "open_p": 1.21134492,
+      "high_p": 1.21172852,
+      "low_p": 1.21072644,
+      "volume": 16429478.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-26",
+      "value": 1.21149305,
+      "open_p": 1.21154847,
+      "high_p": 1.2122429,
+      "low_p": 1.210503,
+      "volume": 9614002.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-27",
+      "value": 1.21204306,
+      "open_p": 1.21161108,
+      "high_p": 1.21234145,
+      "low_p": 1.21135109,
+      "volume": 12388338.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-28",
+      "value": 1.21215941,
+      "open_p": 1.21220145,
+      "high_p": 1.21259292,
+      "low_p": 1.20835533,
+      "volume": 11521480.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-29",
+      "value": 1.21154453,
+      "open_p": 1.21199802,
+      "high_p": 1.21307053,
+      "low_p": 1.21031101,
+      "volume": 14268172.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-30",
+      "value": 1.2120938,
+      "open_p": 1.21144634,
+      "high_p": 1.21286939,
+      "low_p": 1.21122366,
+      "volume": 26901727.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2025-12-31",
+      "value": 1.21186235,
+      "open_p": 1.21223425,
+      "high_p": 1.21291494,
+      "low_p": 1.21126454,
+      "volume": 21788424.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-01",
+      "value": 1.21241275,
+      "open_p": 1.21194196,
+      "high_p": 1.21269114,
+      "low_p": 1.21134688,
+      "volume": 4630854.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-02",
+      "value": 1.21302246,
+      "open_p": 1.21257658,
+      "high_p": 1.21393049,
+      "low_p": 1.21212085,
+      "volume": 23675028.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-03",
+      "value": 1.21352258,
+      "open_p": 1.21300955,
+      "high_p": 1.21418883,
+      "low_p": 1.21279298,
+      "volume": 34018477.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-04",
+      "value": 1.21310416,
+      "open_p": 1.21352162,
+      "high_p": 1.21545446,
+      "low_p": 1.21250317,
+      "volume": 21408710.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-05",
+      "value": 1.21444074,
+      "open_p": 1.21354526,
+      "high_p": 1.21481604,
+      "low_p": 1.2126946,
+      "volume": 32179090.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-06",
+      "value": 1.21414047,
+      "open_p": 1.2145634,
+      "high_p": 1.21562747,
+      "low_p": 1.21303271,
+      "volume": 36482635.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-07",
+      "value": 1.21512523,
+      "open_p": 1.21429976,
+      "high_p": 1.21592886,
+      "low_p": 1.21366434,
+      "volume": 47300592.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-08",
+      "value": 1.21516664,
+      "open_p": 1.21532668,
+      "high_p": 1.21569774,
+      "low_p": 1.21403046,
+      "volume": 32146820.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-09",
+      "value": 1.21471182,
+      "open_p": 1.21510061,
+      "high_p": 1.21607426,
+      "low_p": 1.21418196,
+      "volume": 10901547.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-10",
+      "value": 1.21552545,
+      "open_p": 1.21476117,
+      "high_p": 1.22052255,
+      "low_p": 1.21383468,
+      "volume": 12822237.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-11",
+      "value": 1.21541601,
+      "open_p": 1.21539128,
+      "high_p": 1.21609003,
+      "low_p": 1.21496639,
+      "volume": 8644753.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-12",
+      "value": 1.2155231,
+      "open_p": 1.21525733,
+      "high_p": 1.21634415,
+      "low_p": 1.21429702,
+      "volume": 34261274.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-13",
+      "value": 1.21505961,
+      "open_p": 1.21517226,
+      "high_p": 1.21623145,
+      "low_p": 1.21462959,
+      "volume": 38174244.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-14",
+      "value": 1.21505088,
+      "open_p": 1.21394216,
+      "high_p": 1.2161187,
+      "low_p": 1.21331961,
+      "volume": 134585544.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-15",
+      "value": 1.21480239,
+      "open_p": 1.21498275,
+      "high_p": 1.2158094,
+      "low_p": 1.2131883,
+      "volume": 115051627.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-16",
+      "value": 1.21528756,
+      "open_p": 1.21493816,
+      "high_p": 1.21625471,
+      "low_p": 1.2142793,
+      "volume": 114432602.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-17",
+      "value": 1.21549375,
+      "open_p": 1.2154664,
+      "high_p": 1.21595831,
+      "low_p": 1.21487511,
+      "volume": 33035039.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-18",
+      "value": 1.21510413,
+      "open_p": 1.2154658,
+      "high_p": 1.21590171,
+      "low_p": 1.21502867,
+      "volume": 22989368.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-19",
+      "value": 1.21545342,
+      "open_p": 1.21507718,
+      "high_p": 1.21684307,
+      "low_p": 1.2144907,
+      "volume": 53431309.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-20",
+      "value": 1.21535948,
+      "open_p": 1.2157036,
+      "high_p": 1.21705769,
+      "low_p": 1.21503844,
+      "volume": 98950348.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-21",
+      "value": 1.21641457,
+      "open_p": 1.21572242,
+      "high_p": 1.21707375,
+      "low_p": 1.215275,
+      "volume": 40409694.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-22",
+      "value": 1.21619482,
+      "open_p": 1.21571129,
+      "high_p": 1.21664824,
+      "low_p": 1.21527306,
+      "volume": 47006989.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-23",
+      "value": 1.21599005,
+      "open_p": 1.21610533,
+      "high_p": 1.21660961,
+      "low_p": 1.21555262,
+      "volume": 26619319.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-24",
+      "value": 1.21637296,
+      "open_p": 1.21597335,
+      "high_p": 1.21659118,
+      "low_p": 1.21560016,
+      "volume": 6829828.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-25",
+      "value": 1.21656204,
+      "open_p": 1.21638498,
+      "high_p": 1.2176447,
+      "low_p": 1.21584309,
+      "volume": 7219113.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-26",
+      "value": 1.21681317,
+      "open_p": 1.21678883,
+      "high_p": 1.21766156,
+      "low_p": 1.21568626,
+      "volume": 39474076.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-27",
+      "value": 1.2163267,
+      "open_p": 1.21718105,
+      "high_p": 1.21752642,
+      "low_p": 1.21608235,
+      "volume": 19330881.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-28",
+      "value": 1.21639806,
+      "open_p": 1.21630626,
+      "high_p": 1.21716791,
+      "low_p": 1.21560401,
+      "volume": 12874086.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-29",
+      "value": 1.21653908,
+      "open_p": 1.2161868,
+      "high_p": 1.21732709,
+      "low_p": 1.21559025,
+      "volume": 34830549.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-30",
+      "value": 1.21606065,
+      "open_p": 1.2163685,
+      "high_p": 1.21912752,
+      "low_p": 1.21499185,
+      "volume": 31549420.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-01-31",
+      "value": 1.21618416,
+      "open_p": 1.21636807,
+      "high_p": 1.21847879,
+      "low_p": 1.21507197,
+      "volume": 72536901.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-01",
+      "value": 1.21572601,
+      "open_p": 1.21556466,
+      "high_p": 1.21708475,
+      "low_p": 1.21448626,
+      "volume": 44313290.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-02",
+      "value": 1.21660656,
+      "open_p": 1.21580727,
+      "high_p": 1.21791477,
+      "low_p": 1.2137551,
+      "volume": 51414653.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-03",
+      "value": 1.21665326,
+      "open_p": 1.2166195,
+      "high_p": 1.21744543,
+      "low_p": 1.21532791,
+      "volume": 27970225.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-04",
+      "value": 1.2166924,
+      "open_p": 1.21655312,
+      "high_p": 1.21767748,
+      "low_p": 1.21477792,
+      "volume": 53122538.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-05",
+      "value": 1.21540445,
+      "open_p": 1.21614655,
+      "high_p": 1.21783121,
+      "low_p": 1.21310709,
+      "volume": 137765055.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-06",
+      "value": 1.2164563,
+      "open_p": 1.21451115,
+      "high_p": 1.21822679,
+      "low_p": 1.21310729,
+      "volume": 94772994.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-07",
+      "value": 1.21732012,
+      "open_p": 1.21672009,
+      "high_p": 1.21938666,
+      "low_p": 1.21539026,
+      "volume": 42407283.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-08",
+      "value": 1.21737033,
+      "open_p": 1.21739101,
+      "high_p": 1.21835386,
+      "low_p": 1.21651603,
+      "volume": 9130004.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-09",
+      "value": 1.21754277,
+      "open_p": 1.21750692,
+      "high_p": 1.21828605,
+      "low_p": 1.21648866,
+      "volume": 10356238.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-10",
+      "value": 1.2174608,
+      "open_p": 1.21725299,
+      "high_p": 1.21804036,
+      "low_p": 1.21649891,
+      "volume": 14563216.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-11",
+      "value": 1.21788901,
+      "open_p": 1.21764837,
+      "high_p": 1.21867198,
+      "low_p": 1.21639934,
+      "volume": 22632221.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-12",
+      "value": 1.21778425,
+      "open_p": 1.21801553,
+      "high_p": 1.21907328,
+      "low_p": 1.2164654,
+      "volume": 67765034.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-13",
+      "value": 1.21758094,
+      "open_p": 1.21798528,
+      "high_p": 1.22022396,
+      "low_p": 1.21660696,
+      "volume": 25873990.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-14",
+      "value": 1.2178807,
+      "open_p": 1.21770186,
+      "high_p": 1.22469369,
+      "low_p": 1.21285103,
+      "volume": 36099489.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-15",
+      "value": 1.21880161,
+      "open_p": 1.21750599,
+      "high_p": 1.21972876,
+      "low_p": 1.21621656,
+      "volume": 12242001.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-16",
+      "value": 1.21784952,
+      "open_p": 1.21840092,
+      "high_p": 1.21976184,
+      "low_p": 1.21654208,
+      "volume": 13166930.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-17",
+      "value": 1.21819271,
+      "open_p": 1.21799506,
+      "high_p": 1.22036977,
+      "low_p": 1.21408264,
+      "volume": 62903070.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-18",
+      "value": 1.21933271,
+      "open_p": 1.21759213,
+      "high_p": 1.22089222,
+      "low_p": 1.21489849,
+      "volume": 20148376.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-19",
+      "value": 1.21905158,
+      "open_p": 1.21936782,
+      "high_p": 1.22120846,
+      "low_p": 1.21737918,
+      "volume": 7703091.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-20",
+      "value": 1.21895432,
+      "open_p": 1.21928505,
+      "high_p": 1.22199059,
+      "low_p": 1.21560319,
+      "volume": 8333444.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-21",
+      "value": 1.21942633,
+      "open_p": 1.21933947,
+      "high_p": 1.22024035,
+      "low_p": 1.21822688,
+      "volume": 17751220.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-22",
+      "value": 1.21979503,
+      "open_p": 1.21931513,
+      "high_p": 1.22031862,
+      "low_p": 1.21853509,
+      "volume": 8830423.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-23",
+      "value": 1.21988007,
+      "open_p": 1.21973541,
+      "high_p": 1.22133041,
+      "low_p": 1.21891391,
+      "volume": 49864960.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-24",
+      "value": 1.21973849,
+      "open_p": 1.21952704,
+      "high_p": 1.22119723,
+      "low_p": 1.21844803,
+      "volume": 39656260.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-25",
+      "value": 1.22021612,
+      "open_p": 1.21973571,
+      "high_p": 1.22096479,
+      "low_p": 1.21803129,
+      "volume": 16357793.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-26",
+      "value": 1.22034093,
+      "open_p": 1.22019525,
+      "high_p": 1.22175579,
+      "low_p": 1.21923632,
+      "volume": 12269370.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-27",
+      "value": 1.22038929,
+      "open_p": 1.22033025,
+      "high_p": 1.22139348,
+      "low_p": 1.2197521,
+      "volume": 12563026.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-02-28",
+      "value": 1.22053929,
+      "open_p": 1.22045258,
+      "high_p": 1.22144775,
+      "low_p": 1.21953272,
+      "volume": 10040762.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-01",
+      "value": 1.22061859,
+      "open_p": 1.22073223,
+      "high_p": 1.22186846,
+      "low_p": 1.21950455,
+      "volume": 6807857.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-02",
+      "value": 1.220202,
+      "open_p": 1.22082741,
+      "high_p": 1.22135136,
+      "low_p": 1.21863966,
+      "volume": 53508989.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-03",
+      "value": 1.22057907,
+      "open_p": 1.22042097,
+      "high_p": 1.22332134,
+      "low_p": 1.21937097,
+      "volume": 63516201.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-04",
+      "value": 1.22083978,
+      "open_p": 1.22118878,
+      "high_p": 1.22269008,
+      "low_p": 1.21831607,
+      "volume": 47072253.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-05",
+      "value": 1.22068409,
+      "open_p": 1.22031052,
+      "high_p": 1.22238376,
+      "low_p": 1.21933974,
+      "volume": 7854114.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-06",
+      "value": 1.22109183,
+      "open_p": 1.22005483,
+      "high_p": 1.22220656,
+      "low_p": 1.21892477,
+      "volume": 28669253.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-07",
+      "value": 1.22191062,
+      "open_p": 1.22119022,
+      "high_p": 1.22262311,
+      "low_p": 1.22049493,
+      "volume": 9417454.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-08",
+      "value": 1.22174814,
+      "open_p": 1.22192776,
+      "high_p": 1.22242216,
+      "low_p": 1.22130266,
+      "volume": 3548710.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-09",
+      "value": 1.22219964,
+      "open_p": 1.22197567,
+      "high_p": 1.22273316,
+      "low_p": 1.22054627,
+      "volume": 14437440.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-10",
+      "value": 1.22197406,
+      "open_p": 1.22199547,
+      "high_p": 1.22415074,
+      "low_p": 1.22139144,
+      "volume": 19945780.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-11",
+      "value": 1.22227098,
+      "open_p": 1.22202828,
+      "high_p": 1.22398052,
+      "low_p": 1.22132065,
+      "volume": 23925817.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-12",
+      "value": 1.22260532,
+      "open_p": 1.22239041,
+      "high_p": 1.22499845,
+      "low_p": 1.22104143,
+      "volume": 23645529.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-13",
+      "value": 1.22343386,
+      "open_p": 1.22262531,
+      "high_p": 1.22432179,
+      "low_p": 1.22173091,
+      "volume": 16523744.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-14",
+      "value": 1.22324652,
+      "open_p": 1.22335802,
+      "high_p": 1.22391811,
+      "low_p": 1.222907,
+      "volume": 14828512.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-15",
+      "value": 1.22331587,
+      "open_p": 1.22349847,
+      "high_p": 1.22419621,
+      "low_p": 1.2226535,
+      "volume": 15940090.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-16",
+      "value": 1.22291481,
+      "open_p": 1.22330227,
+      "high_p": 1.22461958,
+      "low_p": 1.22128882,
+      "volume": 11494312.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-17",
+      "value": 1.22377832,
+      "open_p": 1.22316991,
+      "high_p": 1.22469004,
+      "low_p": 1.22188245,
+      "volume": 9735073.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-18",
+      "value": 1.22342967,
+      "open_p": 1.22374906,
+      "high_p": 1.22468566,
+      "low_p": 1.22221215,
+      "volume": 7051169.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-19",
+      "value": 1.22335648,
+      "open_p": 1.22330508,
+      "high_p": 1.22516615,
+      "low_p": 1.22188713,
+      "volume": 16774227.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-20",
+      "value": 1.22398281,
+      "open_p": 1.2237807,
+      "high_p": 1.22503152,
+      "low_p": 1.22302371,
+      "volume": 19910107.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-21",
+      "value": 1.22422845,
+      "open_p": 1.22430965,
+      "high_p": 1.22507132,
+      "low_p": 1.22358519,
+      "volume": 10520339.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-22",
+      "value": 1.22338756,
+      "open_p": 1.22369112,
+      "high_p": 1.2264546,
+      "low_p": 1.2211259,
+      "volume": 153139197.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-23",
+      "value": 1.22396127,
+      "open_p": 1.2235419,
+      "high_p": 1.22512971,
+      "low_p": 1.21938486,
+      "volume": 18234300.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-24",
+      "value": 1.22383842,
+      "open_p": 1.22366947,
+      "high_p": 1.22475232,
+      "low_p": 1.2227735,
+      "volume": 17542759.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-25",
+      "value": 1.22407388,
+      "open_p": 1.2236405,
+      "high_p": 1.2246596,
+      "low_p": 1.22300597,
+      "volume": 23197473.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-26",
+      "value": 1.2243793,
+      "open_p": 1.2241101,
+      "high_p": 1.22532452,
+      "low_p": 1.22316639,
+      "volume": 19981535.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-27",
+      "value": 1.22451885,
+      "open_p": 1.22399475,
+      "high_p": 1.22508714,
+      "low_p": 1.22137502,
+      "volume": 20572471.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-28",
+      "value": 1.22468234,
+      "open_p": 1.2246212,
+      "high_p": 1.22533151,
+      "low_p": 1.22389905,
+      "volume": 4093999.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-29",
+      "value": 1.22479419,
+      "open_p": 1.22475423,
+      "high_p": 1.22552278,
+      "low_p": 1.22364951,
+      "volume": 3206235.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-30",
+      "value": 1.22490324,
+      "open_p": 1.22461629,
+      "high_p": 1.22719424,
+      "low_p": 1.2229462,
+      "volume": 13645606.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-03-31",
+      "value": 1.22510334,
+      "open_p": 1.22468351,
+      "high_p": 1.22581396,
+      "low_p": 1.22168832,
+      "volume": 24284731.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-01",
+      "value": 1.22439604,
+      "open_p": 1.22479603,
+      "high_p": 1.2264411,
+      "low_p": 1.2229552,
+      "volume": 27788826.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-02",
+      "value": 1.22529591,
+      "open_p": 1.22501736,
+      "high_p": 1.22856988,
+      "low_p": 1.22322967,
+      "volume": 10101716.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-03",
+      "value": 1.22493436,
+      "open_p": 1.22495121,
+      "high_p": 1.2265089,
+      "low_p": 1.223986,
+      "volume": 17980498.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-04",
+      "value": 1.2256219,
+      "open_p": 1.22500871,
+      "high_p": 1.22659772,
+      "low_p": 1.22483943,
+      "volume": 8798413.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-05",
+      "value": 1.22584169,
+      "open_p": 1.22545397,
+      "high_p": 1.22926011,
+      "low_p": 1.22446144,
+      "volume": 18701253.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-06",
+      "value": 1.225552,
+      "open_p": 1.22578764,
+      "high_p": 1.22751235,
+      "low_p": 1.22314667,
+      "volume": 9189011.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-07",
+      "value": 1.22570594,
+      "open_p": 1.22606014,
+      "high_p": 1.22907037,
+      "low_p": 1.22452802,
+      "volume": 11902011.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-08",
+      "value": 1.22603408,
+      "open_p": 1.22575716,
+      "high_p": 1.22844406,
+      "low_p": 1.22499691,
+      "volume": 17270761.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-09",
+      "value": 1.2265489,
+      "open_p": 1.22649872,
+      "high_p": 1.22724851,
+      "low_p": 1.22419917,
+      "volume": 32311053.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-10",
+      "value": 1.22639773,
+      "open_p": 1.22606687,
+      "high_p": 1.22706445,
+      "low_p": 1.22539281,
+      "volume": 41821029.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-11",
+      "value": 1.22608173,
+      "open_p": 1.22639486,
+      "high_p": 1.22682864,
+      "low_p": 1.22561611,
+      "volume": 34945756.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-12",
+      "value": 1.22651555,
+      "open_p": 1.22632253,
+      "high_p": 1.22771375,
+      "low_p": 1.22584462,
+      "volume": 16374195.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-13",
+      "value": 1.2273913,
+      "open_p": 1.22639594,
+      "high_p": 1.22834883,
+      "low_p": 1.22595127,
+      "volume": 41776967.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-14",
+      "value": 1.22754918,
+      "open_p": 1.22675358,
+      "high_p": 1.2283438,
+      "low_p": 1.22655421,
+      "volume": 14021036.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-15",
+      "value": 1.22740605,
+      "open_p": 1.227618,
+      "high_p": 1.22816444,
+      "low_p": 1.22658192,
+      "volume": 21519053.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-16",
+      "value": 1.22678464,
+      "open_p": 1.22729432,
+      "high_p": 1.22893475,
+      "low_p": 1.22519824,
+      "volume": 16489162.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-17",
+      "value": 1.22783878,
+      "open_p": 1.22696075,
+      "high_p": 1.22866994,
+      "low_p": 1.22597924,
+      "volume": 12396300.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-18",
+      "value": 1.22763682,
+      "open_p": 1.22777313,
+      "high_p": 1.22892074,
+      "low_p": 1.22733992,
+      "volume": 12823092.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-19",
+      "value": 1.22566942,
+      "open_p": 1.22718027,
+      "high_p": 1.22744073,
+      "low_p": 1.22058188,
+      "volume": 264316905.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-20",
+      "value": 1.22685072,
+      "open_p": 1.22567521,
+      "high_p": 1.22951959,
+      "low_p": 1.22260547,
+      "volume": 201012671.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-21",
+      "value": 1.22653665,
+      "open_p": 1.22658408,
+      "high_p": 1.22781119,
+      "low_p": 1.22395121,
+      "volume": 214190420.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-22",
+      "value": 1.22724569,
+      "open_p": 1.22651126,
+      "high_p": 1.22826567,
+      "low_p": 1.22421077,
+      "volume": 169309306.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-23",
+      "value": 1.22746663,
+      "open_p": 1.22746704,
+      "high_p": 1.22849063,
+      "low_p": 1.22648074,
+      "volume": 89703038.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-24",
+      "value": 1.22809222,
+      "open_p": 1.22765836,
+      "high_p": 1.22933635,
+      "low_p": 1.22712046,
+      "volume": 32375622.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-25",
+      "value": 1.22849179,
+      "open_p": 1.2280548,
+      "high_p": 1.2288204,
+      "low_p": 1.22779859,
+      "volume": 6757343.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-26",
+      "value": 1.22857056,
+      "open_p": 1.22866629,
+      "high_p": 1.22888849,
+      "low_p": 1.22815711,
+      "volume": 3721935.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    },
+    {
+      "dt": "2026-04-27",
+      "value": 1.22825036,
+      "open_p": 1.22851822,
+      "high_p": 1.22913257,
+      "low_p": 1.22778554,
+      "volume": 10046375.0,
+      "source_kind": "ASSET",
+      "source_id": 852
+    }
+  ]
+}

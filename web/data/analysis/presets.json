@@ -2,19 +2,27 @@
   "items": [
     {
       "name": "Liquidez vs SPX",
-      "slots": [
-        "series:SPX",
-        "indicators:WSHOSHO",
-        "indicators:FEDFUNDS"
-      ]
+      "blue": "series:SPX",
+      "red": "indicators:WSHOSHO",
+      "green": "indicators:FEDFUNDS"
+    },
+    {
+      "name": "Ciclo macro",
+      "blue": "indicators:UNRATE",
+      "red": "indicators:CPIAUCSL",
+      "green": "indicators:T10Y3M"
     },
     {
       "name": "Riesgo recesión",
-      "slots": [
-        "series:SPX",
-        "indicators:T10Y3M",
-        "indicators:UNRATE"
-      ]
+      "blue": "series:SPX",
+      "red": "indicators:T10Y3M",
+      "green": "indicators:USREC"
+    },
+    {
+      "name": "Cripto vs riesgo",
+      "blue": "series:SPX",
+      "red": "series:BTC",
+      "green": "indicators:VIXCLS"
     }
   ]
 }

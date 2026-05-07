@@ -2,33 +2,24 @@
   "items": [
     {
       "code": "BTC",
-      "kind": "series",
-      "color": "#fbbf24"
+      "kind": "crypto",
+      "target_code": "BTC",
+      "label": "Bitcoin",
+      "color": "#f59e0b"
     },
     {
       "code": "SPX",
       "kind": "series",
+      "target_code": "SPX",
+      "label": "S&P 500",
       "color": "#60a5fa"
     },
     {
       "code": "NDX",
       "kind": "series",
+      "target_code": "NDX",
+      "label": "Nasdaq 100",
       "color": "#a78bfa"
-    },
-    {
-      "code": "DJI",
-      "kind": "assets",
-      "color": "#fb7185"
-    },
-    {
-      "code": "RUT",
-      "kind": "assets",
-      "color": "#22d3ee"
-    },
-    {
-      "code": "MSCI",
-      "kind": "series",
-      "color": "#34d399"
     }
   ]
 }

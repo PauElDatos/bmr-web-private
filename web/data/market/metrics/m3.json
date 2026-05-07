@@ -1,36 +1,144 @@
 {
   "module_code": "M3",
-  "run_id": 1103,
+  "run_id": 23,
   "items": [
     {
-      "metric_code": "n_observations",
-      "metric_value": 384,
-      "details_json": "{\"source\":\"mock_phase3\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "AVG_COVERAGE",
+      "metric_value": 0.8641666666666667,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
     },
     {
-      "metric_code": "hit_rate_12m",
-      "metric_value": 0.601,
-      "details_json": "{\"horizon\":\"12m\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "BETA",
+      "metric_value": 1.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
     },
     {
-      "metric_code": "avg_forward_return_12m",
-      "metric_value": 6.9,
-      "details_json": "{\"unit\":\"pct\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "CONFIRM_MONTHS",
+      "metric_value": 2.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
     },
     {
-      "metric_code": "max_drawdown_alerts",
-      "metric_value": -21.6,
-      "details_json": "{\"unit\":\"pct\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "EM_ITERS",
+      "metric_value": 5.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
     },
     {
-      "metric_code": "coverage_ratio",
-      "metric_value": 0.835,
-      "details_json": "{\"source\":\"ml_run_metrics_mock\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "EWM_HALFLIFE",
+      "metric_value": 6.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "EXCLUDED_SIGNALS",
+      "metric_value": 0.0,
+      "details_json": "[{\"signal_code\": \"H9_VIX_SPIKE_BUY_T20\", \"reason\": \"exclude_pattern\"}, {\"signal_code\": \"H15_IWM_STRONG_VS_SPX_5W_7PCT\", \"reason\": \"exclude_pattern\"}, {\"signal_code\": \"H17_BUY_SPX\", \"reason\": \"exclude_pattern\"}, {\"signal_code\": \"H20_BUY_SPX\", \"reason\": \"exclude_pattern\"}, {\"signal_code\": \"H7_YIELD_INVERSION_SIGNAL\", \"reason\": \"nonzero<6\"}, {\"signal_code\": \"H8_GS_RATIO_SIGNAL\", \"reason\": \"activation_rate<0.01\"}, {\"signal_code\": \"H19_AAII_BEAR\", \"reason\": \"nonzero<6\"}, {\"signal_code\": \"H19_AAII_BULL\", \"reason\": \"nonzero<6\"}]",
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "INPUT_SIGNAL_STATS",
+      "metric_value": 0.0,
+      "details_json": "[{\"signal_code\": \"H1_GDP_SIGNAL\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 14, \"activation_rate\": 0.014941302027748132, \"mean\": -0.014941302027748132, \"std\": 0.12131800988090655}, {\"signal_code\": \"H2_UNEMP_SIGNAL\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 197, \"activation_rate\": 0.2102454642475987, \"mean\": -0.2102454642475987, \"std\": 0.40748289413288313}, {\"signal_code\": \"H3_RATE_CUT_LAG_BUY\", \"polarity\": \"bull\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 16, \"activation_rate\": 0.017075773745997867, \"mean\": 0.017075773745997867, \"std\": 0.12955381776301828}, {\"signal_code\": \"H5_BEAR_SIGNAL\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 62, \"activation_rate\": 0.06616862326574173, \"mean\": -0.06616862326574173, \"std\": 0.24857662110676873}, {\"signal_code\": \"H5_BULL_SIGNAL\", \"polarity\": \"bull\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 47, \"activation_rate\": 0.05016008537886873, \"mean\": 0.05016008537886873, \"std\": 0.21827517314997905}, {\"signal_code\": \"H6_REAL_RATE_SIGNAL\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 459, \"activation_rate\": 0.48986125933831376, \"mean\": -0.48986125933831376, \"std\": 0.4998971953690029}, {\"signal_code\": \"H7_YIELD_INVERSION_SIGNAL\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 0, \"activation_rate\": 0.0, \"mean\": 0.0, \"std\": 0.0}, {\"signal_code\": \"H8_GS_RATIO_SIGNAL\", \"polarity\": \"bull\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 7, \"activation_rate\": 0.007470651013874066, \"mean\": 0.007470651013874066, \"std\": 0.08610946746614433}, {\"signal_code\": \"H11_OIL_SHOCK_ALERT\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 29, \"activation_rate\": 0.030949839914621132, \"mean\": -0.030949839914621132, \"std\": 0.17318183312310922}, {\"signal_code\": \"H11_OIL_WEAKNESS_ML\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 39, \"activation_rate\": 0.0416221985058698, \"mean\": -0.0416221985058698, \"std\": 0.19972428770033895}, {\"signal_code\": \"H13_FED_GT_10Y_12M\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 34, \"activation_rate\": 0.03628601921024546, \"mean\": -0.03628601921024546, \"std\": 0.18700091983762854}, {\"signal_code\": \"H13_FED_GT_10Y_ACTIVE\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 185, \"activation_rate\": 0.19743863393810032, \"mean\": -0.19743863393810032, \"std\": 0.39806609974570445}, {\"signal_code\": \"H19_AAII_BEAR\", \"polarity\": \"bear\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 5, \"activation_rate\": 0.005336179295624333, \"mean\": -0.005336179295624333, \"std\": 0.07285399430470017}, {\"signal_code\": \"H19_AAII_BULL\", \"polarity\": \"bull\", \"mode\": \"binary\", \"n\": 937, \"nonzero\": 5, \"activation_rate\": 0.005336179295624333, \"mean\": 0.005336179295624333, \"std\": 0.07285399430470017}]",
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "LOWER",
+      "metric_value": 0.4,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "MIN_ACTIVATION",
+      "metric_value": 0.01,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "MIN_NONZERO",
+      "metric_value": 6.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "N_FACTORS",
+      "metric_value": 1.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "N_SIGNALS_AFTER_ACTIVATION",
+      "metric_value": 10.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "N_SIGNALS_AFTER_FILTERS",
+      "metric_value": 14.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "N_SIGNALS_INPUT",
+      "metric_value": 18.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "N_SIGNALS_USED",
+      "metric_value": 7.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "PHI",
+      "metric_value": 0.0,
+      "details_json": "{\"phi_1\": 0.95}",
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "Q",
+      "metric_value": 0.0,
+      "details_json": "{\"q_1\": 0.0020525659779939737}",
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "ROLLING_Z_STATS",
+      "metric_value": 0.0,
+      "details_json": "{\"H1_GDP_SIGNAL\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.026059616022122138, \"sd_min\": 0.01014204961897243, \"valid_frac\": 0.9626467449306296}, \"H2_UNEMP_SIGNAL\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.2644590540467492, \"sd_min\": 0.09539949494541973, \"valid_frac\": 0.9626467449306296}, \"H3_RATE_CUT_LAG_BUY\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.02656621515702281, \"sd_min\": 0.0, \"valid_frac\": 0.8420490928495198}, \"H5_BEAR_SIGNAL\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.08083310151862318, \"sd_min\": 0.0, \"valid_frac\": 0.8356456776947705}, \"H5_BULL_SIGNAL\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.10566904225087591, \"sd_min\": 0.0, \"valid_frac\": 0.6488794023479189}, \"H6_REAL_RATE_SIGNAL\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.25527393097146095, \"sd_min\": 0.0, \"valid_frac\": 0.8932764140875133}, \"H11_OIL_SHOCK_ALERT\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.0, \"sd_min\": 0.0, \"valid_frac\": 0.4578441835645678}, \"H11_OIL_WEAKNESS_ML\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.0, \"sd_min\": 0.0, \"valid_frac\": 0.4610458911419424}, \"H13_FED_GT_10Y_12M\": {\"win\": 120, \"minp\": 36, \"sd_median\": 1.2846267652280183e-10, \"sd_min\": 0.0, \"valid_frac\": 0.4621131270010672}, \"H13_FED_GT_10Y_ACTIVE\": {\"win\": 120, \"minp\": 36, \"sd_median\": 0.19612036336016242, \"sd_min\": 0.0, \"valid_frac\": 0.768409818569904}}",
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "TOP_LOADINGS_F1",
+      "metric_value": 0.0,
+      "details_json": "[{\"signal_code\": \"H13_FED_GT_10Y_ACTIVE\", \"loading\": 2.3738301832155138}, {\"signal_code\": \"H6_REAL_RATE_SIGNAL\", \"loading\": 1.2768109947797652}, {\"signal_code\": \"H1_GDP_SIGNAL\", \"loading\": 0.4100533010515718}, {\"signal_code\": \"H5_BULL_SIGNAL\", \"loading\": 0.36960242030788537}, {\"signal_code\": \"H5_BEAR_SIGNAL\", \"loading\": -0.27914538015260254}, {\"signal_code\": \"H3_RATE_CUT_LAG_BUY\", \"loading\": 0.25933880904619033}, {\"signal_code\": \"H2_UNEMP_SIGNAL\", \"loading\": 0.024093405666546615}]",
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "UPPER",
+      "metric_value": 0.6,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "ZCAP",
+      "metric_value": 3.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "ZMIN",
+      "metric_value": 36.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
+    },
+    {
+      "metric_code": "ZWIN",
+      "metric_value": 120.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:00:03"
     }
   ]
 }

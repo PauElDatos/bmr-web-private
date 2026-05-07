@@ -1,0 +1,3767 @@
+{
+  "kind": "crypto",
+  "code": "DOT",
+  "symbol": "DOT",
+  "points": [
+    {
+      "dt": "2024-10-24",
+      "value": 4.2,
+      "open_p": 4.2,
+      "high_p": 4.2,
+      "low_p": 4.2,
+      "volume": 127088388.0,
+      "market_cap": 6007322669.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-10-25",
+      "value": 4.14,
+      "open_p": 4.2,
+      "high_p": 4.14,
+      "low_p": 4.14,
+      "volume": 118694408.0,
+      "market_cap": 5909898837.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-10-26",
+      "value": 4.02,
+      "open_p": 4.14,
+      "high_p": 4.02,
+      "low_p": 4.02,
+      "volume": 198901111.0,
+      "market_cap": 5753911146.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-10-27",
+      "value": 4.06,
+      "open_p": 4.02,
+      "high_p": 4.06,
+      "low_p": 4.06,
+      "volume": 97661479.0,
+      "market_cap": 5801543486.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-10-28",
+      "value": 4.12,
+      "open_p": 4.06,
+      "high_p": 4.12,
+      "low_p": 4.12,
+      "volume": 125253895.0,
+      "market_cap": 5896338799.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-10-29",
+      "value": 4.17,
+      "open_p": 4.12,
+      "high_p": 4.17,
+      "low_p": 4.17,
+      "volume": 187998653.0,
+      "market_cap": 5972356301.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-10-30",
+      "value": 4.18,
+      "open_p": 4.17,
+      "high_p": 4.18,
+      "low_p": 4.18,
+      "volume": 165639989.0,
+      "market_cap": 5983615883.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-10-31",
+      "value": 4.07,
+      "open_p": 4.18,
+      "high_p": 4.07,
+      "low_p": 4.07,
+      "volume": 162175674.0,
+      "market_cap": 5820967735.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-01",
+      "value": 3.93,
+      "open_p": 4.07,
+      "high_p": 3.93,
+      "low_p": 3.93,
+      "volume": 186767730.0,
+      "market_cap": 5633087680.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-02",
+      "value": 3.9,
+      "open_p": 3.93,
+      "high_p": 3.9,
+      "low_p": 3.9,
+      "volume": 138854365.0,
+      "market_cap": 5584240613.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-03",
+      "value": 3.79,
+      "open_p": 3.9,
+      "high_p": 3.79,
+      "low_p": 3.79,
+      "volume": 152370814.0,
+      "market_cap": 5436010915.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-04",
+      "value": 3.78,
+      "open_p": 3.79,
+      "high_p": 3.78,
+      "low_p": 3.78,
+      "volume": 143218299.0,
+      "market_cap": 5423897657.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-05",
+      "value": 3.84,
+      "open_p": 3.78,
+      "high_p": 3.84,
+      "low_p": 3.84,
+      "volume": 134012890.0,
+      "market_cap": 5511840619.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-06",
+      "value": 4.06,
+      "open_p": 3.84,
+      "high_p": 4.06,
+      "low_p": 4.06,
+      "volume": 266935885.0,
+      "market_cap": 5817626586.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-07",
+      "value": 4.12,
+      "open_p": 4.06,
+      "high_p": 4.12,
+      "low_p": 4.12,
+      "volume": 274141526.0,
+      "market_cap": 5911089660.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-08",
+      "value": 4.27,
+      "open_p": 4.12,
+      "high_p": 4.27,
+      "low_p": 4.27,
+      "volume": 298630017.0,
+      "market_cap": 6131393503.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-09",
+      "value": 4.37,
+      "open_p": 4.27,
+      "high_p": 4.37,
+      "low_p": 4.37,
+      "volume": 309425244.0,
+      "market_cap": 6278382189.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-10",
+      "value": 5.06,
+      "open_p": 4.37,
+      "high_p": 5.06,
+      "low_p": 5.06,
+      "volume": 689244447.0,
+      "market_cap": 7267010804.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-11",
+      "value": 5.2,
+      "open_p": 5.06,
+      "high_p": 5.2,
+      "low_p": 5.2,
+      "volume": 1019407616.0,
+      "market_cap": 7472515189.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-12",
+      "value": 5.44,
+      "open_p": 5.2,
+      "high_p": 5.44,
+      "low_p": 5.44,
+      "volume": 1017102647.0,
+      "market_cap": 7815274340.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-13",
+      "value": 5.15,
+      "open_p": 5.44,
+      "high_p": 5.15,
+      "low_p": 5.15,
+      "volume": 792018278.0,
+      "market_cap": 7399661290.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-14",
+      "value": 4.99,
+      "open_p": 5.15,
+      "high_p": 4.99,
+      "low_p": 4.99,
+      "volume": 637655112.0,
+      "market_cap": 7169824677.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-15",
+      "value": 4.95,
+      "open_p": 4.99,
+      "high_p": 4.95,
+      "low_p": 4.95,
+      "volume": 475064735.0,
+      "market_cap": 7114072695.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-16",
+      "value": 5.43,
+      "open_p": 4.95,
+      "high_p": 5.43,
+      "low_p": 5.43,
+      "volume": 551347776.0,
+      "market_cap": 7814313758.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-17",
+      "value": 5.6,
+      "open_p": 5.43,
+      "high_p": 5.6,
+      "low_p": 5.6,
+      "volume": 879857226.0,
+      "market_cap": 8052083793.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-18",
+      "value": 5.82,
+      "open_p": 5.6,
+      "high_p": 5.82,
+      "low_p": 5.82,
+      "volume": 620755380.0,
+      "market_cap": 8373998112.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-19",
+      "value": 5.86,
+      "open_p": 5.82,
+      "high_p": 5.86,
+      "low_p": 5.86,
+      "volume": 575925203.0,
+      "market_cap": 8430591922.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-20",
+      "value": 5.83,
+      "open_p": 5.86,
+      "high_p": 5.83,
+      "low_p": 5.83,
+      "volume": 524169553.0,
+      "market_cap": 8398615247.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-21",
+      "value": 5.77,
+      "open_p": 5.83,
+      "high_p": 5.77,
+      "low_p": 5.77,
+      "volume": 647165654.0,
+      "market_cap": 8302407981.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-22",
+      "value": 6.22,
+      "open_p": 5.77,
+      "high_p": 6.22,
+      "low_p": 6.22,
+      "volume": 790655075.0,
+      "market_cap": 8953339949.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-23",
+      "value": 7.93,
+      "open_p": 6.22,
+      "high_p": 7.93,
+      "low_p": 7.93,
+      "volume": 2270236594.0,
+      "market_cap": 11428090163.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-24",
+      "value": 8.85,
+      "open_p": 7.93,
+      "high_p": 8.85,
+      "low_p": 8.85,
+      "volume": 3784128044.0,
+      "market_cap": 12753937104.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-25",
+      "value": 8.72,
+      "open_p": 8.85,
+      "high_p": 8.72,
+      "low_p": 8.72,
+      "volume": 1854088949.0,
+      "market_cap": 12568743881.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-26",
+      "value": 8.09,
+      "open_p": 8.72,
+      "high_p": 8.09,
+      "low_p": 8.09,
+      "volume": 1172526706.0,
+      "market_cap": 11667401548.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-27",
+      "value": 8.26,
+      "open_p": 8.09,
+      "high_p": 8.26,
+      "low_p": 8.26,
+      "volume": 982544664.0,
+      "market_cap": 11912227221.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-28",
+      "value": 8.3,
+      "open_p": 8.26,
+      "high_p": 8.3,
+      "low_p": 8.3,
+      "volume": 798090688.0,
+      "market_cap": 11973584852.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-29",
+      "value": 8.65,
+      "open_p": 8.3,
+      "high_p": 8.65,
+      "low_p": 8.65,
+      "volume": 773357511.0,
+      "market_cap": 12478025007.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-11-30",
+      "value": 8.89,
+      "open_p": 8.65,
+      "high_p": 8.89,
+      "low_p": 8.89,
+      "volume": 946290329.0,
+      "market_cap": 12822998729.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-01",
+      "value": 9.01,
+      "open_p": 8.89,
+      "high_p": 9.01,
+      "low_p": 9.01,
+      "volume": 849402312.0,
+      "market_cap": 13000789479.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-02",
+      "value": 9.11,
+      "open_p": 9.01,
+      "high_p": 9.11,
+      "low_p": 9.11,
+      "volume": 1192224059.0,
+      "market_cap": 13149242159.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-03",
+      "value": 9.85,
+      "open_p": 9.11,
+      "high_p": 9.85,
+      "low_p": 9.85,
+      "volume": 2131003032.0,
+      "market_cap": 14218401490.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-04",
+      "value": 10.5,
+      "open_p": 9.85,
+      "high_p": 10.5,
+      "low_p": 10.5,
+      "volume": 2124155477.0,
+      "market_cap": 15156983305.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-05",
+      "value": 10.68,
+      "open_p": 10.5,
+      "high_p": 10.68,
+      "low_p": 10.68,
+      "volume": 2366693379.0,
+      "market_cap": 15413844468.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-06",
+      "value": 10.51,
+      "open_p": 10.68,
+      "high_p": 10.51,
+      "low_p": 10.51,
+      "volume": 1468299980.0,
+      "market_cap": 15180250947.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-07",
+      "value": 10.6,
+      "open_p": 10.51,
+      "high_p": 10.6,
+      "low_p": 10.6,
+      "volume": 1016231625.0,
+      "market_cap": 15306201747.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-08",
+      "value": 10.43,
+      "open_p": 10.6,
+      "high_p": 10.43,
+      "low_p": 10.43,
+      "volume": 820409046.0,
+      "market_cap": 15057319625.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-09",
+      "value": 9.6,
+      "open_p": 10.43,
+      "high_p": 9.6,
+      "low_p": 9.6,
+      "volume": 918495626.0,
+      "market_cap": 13881421256.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-10",
+      "value": 8.35,
+      "open_p": 9.6,
+      "high_p": 8.35,
+      "low_p": 8.35,
+      "volume": 1671027921.0,
+      "market_cap": 12074060784.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-11",
+      "value": 8.71,
+      "open_p": 8.35,
+      "high_p": 8.71,
+      "low_p": 8.71,
+      "volume": 1207415486.0,
+      "market_cap": 12592842273.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-12",
+      "value": 9.21,
+      "open_p": 8.71,
+      "high_p": 9.21,
+      "low_p": 9.21,
+      "volume": 1068715300.0,
+      "market_cap": 13329217677.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-13",
+      "value": 9.01,
+      "open_p": 9.21,
+      "high_p": 9.01,
+      "low_p": 9.01,
+      "volume": 965455095.0,
+      "market_cap": 13043561210.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-14",
+      "value": 8.78,
+      "open_p": 9.01,
+      "high_p": 8.78,
+      "low_p": 8.78,
+      "volume": 656288693.0,
+      "market_cap": 12707169548.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-15",
+      "value": 8.76,
+      "open_p": 8.78,
+      "high_p": 8.76,
+      "low_p": 8.76,
+      "volume": 683075347.0,
+      "market_cap": 12685215966.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-16",
+      "value": 8.89,
+      "open_p": 8.76,
+      "high_p": 8.89,
+      "low_p": 8.89,
+      "volume": 759848878.0,
+      "market_cap": 12862551897.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-17",
+      "value": 8.72,
+      "open_p": 8.89,
+      "high_p": 8.72,
+      "low_p": 8.72,
+      "volume": 661844655.0,
+      "market_cap": 12629000888.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-18",
+      "value": 8.23,
+      "open_p": 8.72,
+      "high_p": 8.23,
+      "low_p": 8.23,
+      "volume": 734062122.0,
+      "market_cap": 11922083755.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-19",
+      "value": 7.44,
+      "open_p": 8.23,
+      "high_p": 7.44,
+      "low_p": 7.44,
+      "volume": 1002414509.0,
+      "market_cap": 10785553324.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-20",
+      "value": 6.91,
+      "open_p": 7.44,
+      "high_p": 6.91,
+      "low_p": 6.91,
+      "volume": 1085588655.0,
+      "market_cap": 9995490992.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-21",
+      "value": 7.25,
+      "open_p": 6.91,
+      "high_p": 7.25,
+      "low_p": 7.25,
+      "volume": 918204898.0,
+      "market_cap": 10507948967.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-22",
+      "value": 6.97,
+      "open_p": 7.25,
+      "high_p": 6.97,
+      "low_p": 6.97,
+      "volume": 674758853.0,
+      "market_cap": 10103730713.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-23",
+      "value": 7.01,
+      "open_p": 6.97,
+      "high_p": 7.01,
+      "low_p": 7.01,
+      "volume": 642639250.0,
+      "market_cap": 10172485352.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-24",
+      "value": 7.38,
+      "open_p": 7.01,
+      "high_p": 7.38,
+      "low_p": 7.38,
+      "volume": 682853499.0,
+      "market_cap": 10710546103.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-25",
+      "value": 7.48,
+      "open_p": 7.38,
+      "high_p": 7.48,
+      "low_p": 7.48,
+      "volume": 602695379.0,
+      "market_cap": 10856853663.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-26",
+      "value": 7.11,
+      "open_p": 7.48,
+      "high_p": 7.11,
+      "low_p": 7.11,
+      "volume": 569914552.0,
+      "market_cap": 10316362593.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-27",
+      "value": 7.02,
+      "open_p": 7.11,
+      "high_p": 7.02,
+      "low_p": 7.02,
+      "volume": 589671104.0,
+      "market_cap": 10189344788.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-28",
+      "value": 6.95,
+      "open_p": 7.02,
+      "high_p": 6.95,
+      "low_p": 6.95,
+      "volume": 546018443.0,
+      "market_cap": 10094704704.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-29",
+      "value": 7.01,
+      "open_p": 6.95,
+      "high_p": 7.01,
+      "low_p": 7.01,
+      "volume": 509276177.0,
+      "market_cap": 10183590835.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-30",
+      "value": 6.83,
+      "open_p": 7.01,
+      "high_p": 6.83,
+      "low_p": 6.83,
+      "volume": 538677242.0,
+      "market_cap": 9928956298.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2024-12-31",
+      "value": 6.69,
+      "open_p": 6.83,
+      "high_p": 6.69,
+      "low_p": 6.69,
+      "volume": 576065132.0,
+      "market_cap": 9722195097.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-01",
+      "value": 6.75,
+      "open_p": 6.69,
+      "high_p": 6.75,
+      "low_p": 6.75,
+      "volume": 520437161.0,
+      "market_cap": 9813900954.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-02",
+      "value": 7.2,
+      "open_p": 6.75,
+      "high_p": 7.2,
+      "low_p": 7.2,
+      "volume": 579034890.0,
+      "market_cap": 10471483055.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-03",
+      "value": 7.55,
+      "open_p": 7.2,
+      "high_p": 7.55,
+      "low_p": 7.55,
+      "volume": 626462539.0,
+      "market_cap": 10976951577.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-04",
+      "value": 7.73,
+      "open_p": 7.55,
+      "high_p": 7.73,
+      "low_p": 7.73,
+      "volume": 638323833.0,
+      "market_cap": 11237863404.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-05",
+      "value": 7.61,
+      "open_p": 7.73,
+      "high_p": 7.61,
+      "low_p": 7.61,
+      "volume": 536558149.0,
+      "market_cap": 11074225734.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-06",
+      "value": 7.74,
+      "open_p": 7.61,
+      "high_p": 7.74,
+      "low_p": 7.74,
+      "volume": 574179602.0,
+      "market_cap": 11261950652.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-07",
+      "value": 7.55,
+      "open_p": 7.74,
+      "high_p": 7.55,
+      "low_p": 7.55,
+      "volume": 638381886.0,
+      "market_cap": 10984137194.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-08",
+      "value": 6.85,
+      "open_p": 7.55,
+      "high_p": 6.85,
+      "low_p": 6.85,
+      "volume": 729616847.0,
+      "market_cap": 9971073552.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-09",
+      "value": 6.67,
+      "open_p": 6.85,
+      "high_p": 6.67,
+      "low_p": 6.67,
+      "volume": 641682695.0,
+      "market_cap": 9715782441.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-10",
+      "value": 6.68,
+      "open_p": 6.67,
+      "high_p": 6.68,
+      "low_p": 6.68,
+      "volume": 594833747.0,
+      "market_cap": 9734617932.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-11",
+      "value": 6.68,
+      "open_p": 6.68,
+      "high_p": 6.68,
+      "low_p": 6.68,
+      "volume": 550887478.0,
+      "market_cap": 9732600925.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-12",
+      "value": 6.71,
+      "open_p": 6.68,
+      "high_p": 6.71,
+      "low_p": 6.71,
+      "volume": 498267218.0,
+      "market_cap": 9773707245.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-13",
+      "value": 6.35,
+      "open_p": 6.71,
+      "high_p": 6.35,
+      "low_p": 6.35,
+      "volume": 546736951.0,
+      "market_cap": 9260883529.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-14",
+      "value": 6.51,
+      "open_p": 6.35,
+      "high_p": 6.51,
+      "low_p": 6.51,
+      "volume": 603033843.0,
+      "market_cap": 9483747137.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-15",
+      "value": 6.82,
+      "open_p": 6.51,
+      "high_p": 6.82,
+      "low_p": 6.82,
+      "volume": 587774996.0,
+      "market_cap": 9942856895.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-16",
+      "value": 7.13,
+      "open_p": 6.82,
+      "high_p": 7.13,
+      "low_p": 7.13,
+      "volume": 694729213.0,
+      "market_cap": 10390570278.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-17",
+      "value": 7.4,
+      "open_p": 7.13,
+      "high_p": 7.4,
+      "low_p": 7.4,
+      "volume": 683632967.0,
+      "market_cap": 10791590806.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-18",
+      "value": 7.1,
+      "open_p": 7.4,
+      "high_p": 7.1,
+      "low_p": 7.1,
+      "volume": 630938162.0,
+      "market_cap": 10357134609.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-19",
+      "value": 6.77,
+      "open_p": 7.1,
+      "high_p": 6.77,
+      "low_p": 6.77,
+      "volume": 684713409.0,
+      "market_cap": 9885305491.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-20",
+      "value": 6.47,
+      "open_p": 6.77,
+      "high_p": 6.47,
+      "low_p": 6.47,
+      "volume": 1033834944.0,
+      "market_cap": 9442455495.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-21",
+      "value": 6.49,
+      "open_p": 6.47,
+      "high_p": 6.49,
+      "low_p": 6.49,
+      "volume": 770545277.0,
+      "market_cap": 9476743517.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-22",
+      "value": 6.57,
+      "open_p": 6.49,
+      "high_p": 6.57,
+      "low_p": 6.57,
+      "volume": 583773329.0,
+      "market_cap": 9594379571.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-23",
+      "value": 6.34,
+      "open_p": 6.57,
+      "high_p": 6.34,
+      "low_p": 6.34,
+      "volume": 523887897.0,
+      "market_cap": 9263414623.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-24",
+      "value": 6.41,
+      "open_p": 6.34,
+      "high_p": 6.41,
+      "low_p": 6.41,
+      "volume": 547233981.0,
+      "market_cap": 9363075954.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-25",
+      "value": 6.34,
+      "open_p": 6.41,
+      "high_p": 6.34,
+      "low_p": 6.34,
+      "volume": 433430639.0,
+      "market_cap": 9259773189.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-26",
+      "value": 6.36,
+      "open_p": 6.34,
+      "high_p": 6.36,
+      "low_p": 6.36,
+      "volume": 487293499.0,
+      "market_cap": 9290891286.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-27",
+      "value": 5.83,
+      "open_p": 6.36,
+      "high_p": 5.83,
+      "low_p": 5.83,
+      "volume": 570935214.0,
+      "market_cap": 8525254745.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-28",
+      "value": 5.88,
+      "open_p": 5.83,
+      "high_p": 5.88,
+      "low_p": 5.88,
+      "volume": 577050135.0,
+      "market_cap": 8598790593.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-29",
+      "value": 5.74,
+      "open_p": 5.88,
+      "high_p": 5.74,
+      "low_p": 5.74,
+      "volume": 510153837.0,
+      "market_cap": 8392716091.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-30",
+      "value": 6.03,
+      "open_p": 5.74,
+      "high_p": 6.03,
+      "low_p": 6.03,
+      "volume": 567839242.0,
+      "market_cap": 8823844358.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-01-31",
+      "value": 6.25,
+      "open_p": 6.03,
+      "high_p": 6.25,
+      "low_p": 6.25,
+      "volume": 534045306.0,
+      "market_cap": 9149219306.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-01",
+      "value": 6.28,
+      "open_p": 6.25,
+      "high_p": 6.28,
+      "low_p": 6.28,
+      "volume": 604480603.0,
+      "market_cap": 9185861420.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-02",
+      "value": 5.62,
+      "open_p": 6.28,
+      "high_p": 5.62,
+      "low_p": 5.62,
+      "volume": 547134316.0,
+      "market_cap": 8224671261.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-03",
+      "value": 4.75,
+      "open_p": 5.62,
+      "high_p": 4.75,
+      "low_p": 4.75,
+      "volume": 1266830565.0,
+      "market_cap": 6949638159.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-04",
+      "value": 4.84,
+      "open_p": 4.75,
+      "high_p": 4.84,
+      "low_p": 4.84,
+      "volume": 778741730.0,
+      "market_cap": 7091420105.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-05",
+      "value": 4.75,
+      "open_p": 4.84,
+      "high_p": 4.75,
+      "low_p": 4.75,
+      "volume": 571912990.0,
+      "market_cap": 6956171039.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-06",
+      "value": 4.67,
+      "open_p": 4.75,
+      "high_p": 4.67,
+      "low_p": 4.67,
+      "volume": 394096886.0,
+      "market_cap": 6848379881.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-07",
+      "value": 4.65,
+      "open_p": 4.67,
+      "high_p": 4.65,
+      "low_p": 4.65,
+      "volume": 407130026.0,
+      "market_cap": 6818446636.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-08",
+      "value": 4.6,
+      "open_p": 4.65,
+      "high_p": 4.6,
+      "low_p": 4.6,
+      "volume": 432283605.0,
+      "market_cap": 6747462381.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-09",
+      "value": 4.77,
+      "open_p": 4.6,
+      "high_p": 4.77,
+      "low_p": 4.77,
+      "volume": 399477521.0,
+      "market_cap": 6999392224.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-10",
+      "value": 4.83,
+      "open_p": 4.77,
+      "high_p": 4.83,
+      "low_p": 4.83,
+      "volume": 433216670.0,
+      "market_cap": 7080109919.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-11",
+      "value": 4.98,
+      "open_p": 4.83,
+      "high_p": 4.98,
+      "low_p": 4.98,
+      "volume": 425583372.0,
+      "market_cap": 7300268879.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-12",
+      "value": 4.99,
+      "open_p": 4.98,
+      "high_p": 4.99,
+      "low_p": 4.99,
+      "volume": 465956779.0,
+      "market_cap": 7315517064.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-13",
+      "value": 5.16,
+      "open_p": 4.99,
+      "high_p": 5.16,
+      "low_p": 5.16,
+      "volume": 553863406.0,
+      "market_cap": 7574471842.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-14",
+      "value": 5.22,
+      "open_p": 5.16,
+      "high_p": 5.22,
+      "low_p": 5.22,
+      "volume": 432452973.0,
+      "market_cap": 7657746403.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-15",
+      "value": 5.1,
+      "open_p": 5.22,
+      "high_p": 5.1,
+      "low_p": 5.1,
+      "volume": 399887960.0,
+      "market_cap": 7487394065.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-16",
+      "value": 4.95,
+      "open_p": 5.1,
+      "high_p": 4.95,
+      "low_p": 4.95,
+      "volume": 336679375.0,
+      "market_cap": 7273779025.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-17",
+      "value": 4.92,
+      "open_p": 4.95,
+      "high_p": 4.92,
+      "low_p": 4.92,
+      "volume": 359551828.0,
+      "market_cap": 7221713525.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-18",
+      "value": 4.76,
+      "open_p": 4.92,
+      "high_p": 4.76,
+      "low_p": 4.76,
+      "volume": 380495214.0,
+      "market_cap": 6996248400.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-19",
+      "value": 4.82,
+      "open_p": 4.76,
+      "high_p": 4.82,
+      "low_p": 4.82,
+      "volume": 398831486.0,
+      "market_cap": 7079062796.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-20",
+      "value": 4.99,
+      "open_p": 4.82,
+      "high_p": 4.99,
+      "low_p": 4.99,
+      "volume": 396438501.0,
+      "market_cap": 7335611642.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-21",
+      "value": 5.12,
+      "open_p": 4.99,
+      "high_p": 5.12,
+      "low_p": 5.12,
+      "volume": 468516989.0,
+      "market_cap": 7520441728.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-22",
+      "value": 5.11,
+      "open_p": 5.12,
+      "high_p": 5.11,
+      "low_p": 5.11,
+      "volume": 521973573.0,
+      "market_cap": 7514579814.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-23",
+      "value": 5.02,
+      "open_p": 5.11,
+      "high_p": 5.02,
+      "low_p": 5.02,
+      "volume": 389479420.0,
+      "market_cap": 7383237801.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-24",
+      "value": 4.73,
+      "open_p": 5.02,
+      "high_p": 4.73,
+      "low_p": 4.73,
+      "volume": 393014324.0,
+      "market_cap": 6960017965.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-25",
+      "value": 4.44,
+      "open_p": 4.73,
+      "high_p": 4.44,
+      "low_p": 4.44,
+      "volume": 547194464.0,
+      "market_cap": 6533623603.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-26",
+      "value": 4.76,
+      "open_p": 4.44,
+      "high_p": 4.76,
+      "low_p": 4.76,
+      "volume": 497801743.0,
+      "market_cap": 7011036622.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-27",
+      "value": 4.96,
+      "open_p": 4.76,
+      "high_p": 4.96,
+      "low_p": 4.96,
+      "volume": 490814224.0,
+      "market_cap": 7297607613.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-02-28",
+      "value": 4.66,
+      "open_p": 4.96,
+      "high_p": 4.66,
+      "low_p": 4.66,
+      "volume": 507823982.0,
+      "market_cap": 6860907815.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-01",
+      "value": 4.65,
+      "open_p": 4.66,
+      "high_p": 4.65,
+      "low_p": 4.65,
+      "volume": 478418226.0,
+      "market_cap": 6851639200.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-02",
+      "value": 4.8,
+      "open_p": 4.65,
+      "high_p": 4.8,
+      "low_p": 4.8,
+      "volume": 511219613.0,
+      "market_cap": 7067784786.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-03",
+      "value": 4.89,
+      "open_p": 4.8,
+      "high_p": 4.89,
+      "low_p": 4.89,
+      "volume": 613842328.0,
+      "market_cap": 7197109942.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-04",
+      "value": 4.28,
+      "open_p": 4.89,
+      "high_p": 4.28,
+      "low_p": 4.28,
+      "volume": 540246164.0,
+      "market_cap": 6305771762.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-05",
+      "value": 4.4,
+      "open_p": 4.28,
+      "high_p": 4.4,
+      "low_p": 4.4,
+      "volume": 522476034.0,
+      "market_cap": 6485252791.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-06",
+      "value": 4.51,
+      "open_p": 4.4,
+      "high_p": 4.51,
+      "low_p": 4.51,
+      "volume": 486274222.0,
+      "market_cap": 6643004668.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-07",
+      "value": 4.51,
+      "open_p": 4.51,
+      "high_p": 4.51,
+      "low_p": 4.51,
+      "volume": 522262954.0,
+      "market_cap": 6648691165.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-08",
+      "value": 4.36,
+      "open_p": 4.51,
+      "high_p": 4.36,
+      "low_p": 4.36,
+      "volume": 507704124.0,
+      "market_cap": 6429305253.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-09",
+      "value": 4.21,
+      "open_p": 4.36,
+      "high_p": 4.21,
+      "low_p": 4.21,
+      "volume": 453752873.0,
+      "market_cap": 6205595848.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-10",
+      "value": 4.09,
+      "open_p": 4.21,
+      "high_p": 4.09,
+      "low_p": 4.09,
+      "volume": 502643490.0,
+      "market_cap": 6027098363.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-11",
+      "value": 3.97,
+      "open_p": 4.09,
+      "high_p": 3.97,
+      "low_p": 3.97,
+      "volume": 568178592.0,
+      "market_cap": 5865517073.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-12",
+      "value": 3.98,
+      "open_p": 3.97,
+      "high_p": 3.98,
+      "low_p": 3.98,
+      "volume": 513013010.0,
+      "market_cap": 5880095286.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-13",
+      "value": 3.97,
+      "open_p": 3.98,
+      "high_p": 3.97,
+      "low_p": 3.97,
+      "volume": 508583021.0,
+      "market_cap": 5854556791.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-14",
+      "value": 4.12,
+      "open_p": 3.97,
+      "high_p": 4.12,
+      "low_p": 4.12,
+      "volume": 539559158.0,
+      "market_cap": 6087717510.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-15",
+      "value": 4.33,
+      "open_p": 4.12,
+      "high_p": 4.33,
+      "low_p": 4.33,
+      "volume": 542504588.0,
+      "market_cap": 6389788423.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-16",
+      "value": 4.3,
+      "open_p": 4.33,
+      "high_p": 4.3,
+      "low_p": 4.3,
+      "volume": 496607391.0,
+      "market_cap": 6345266325.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-17",
+      "value": 4.4,
+      "open_p": 4.3,
+      "high_p": 4.4,
+      "low_p": 4.4,
+      "volume": 531071889.0,
+      "market_cap": 6496676463.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-18",
+      "value": 4.32,
+      "open_p": 4.4,
+      "high_p": 4.32,
+      "low_p": 4.32,
+      "volume": 500234691.0,
+      "market_cap": 6386213705.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-19",
+      "value": 4.52,
+      "open_p": 4.32,
+      "high_p": 4.52,
+      "low_p": 4.52,
+      "volume": 536588281.0,
+      "market_cap": 6682648671.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-20",
+      "value": 4.43,
+      "open_p": 4.52,
+      "high_p": 4.43,
+      "low_p": 4.43,
+      "volume": 524512656.0,
+      "market_cap": 6543807328.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-21",
+      "value": 4.49,
+      "open_p": 4.43,
+      "high_p": 4.49,
+      "low_p": 4.49,
+      "volume": 526381733.0,
+      "market_cap": 6638798175.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-22",
+      "value": 4.48,
+      "open_p": 4.49,
+      "high_p": 4.48,
+      "low_p": 4.48,
+      "volume": 514956302.0,
+      "market_cap": 6630252464.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-23",
+      "value": 4.46,
+      "open_p": 4.48,
+      "high_p": 4.46,
+      "low_p": 4.46,
+      "volume": 455752222.0,
+      "market_cap": 6602125494.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-24",
+      "value": 4.67,
+      "open_p": 4.46,
+      "high_p": 4.67,
+      "low_p": 4.67,
+      "volume": 515456888.0,
+      "market_cap": 6905675487.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-25",
+      "value": 4.65,
+      "open_p": 4.67,
+      "high_p": 4.65,
+      "low_p": 4.65,
+      "volume": 526784112.0,
+      "market_cap": 6884265683.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-26",
+      "value": 4.69,
+      "open_p": 4.65,
+      "high_p": 4.69,
+      "low_p": 4.69,
+      "volume": 503800536.0,
+      "market_cap": 6938307621.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-27",
+      "value": 4.65,
+      "open_p": 4.69,
+      "high_p": 4.65,
+      "low_p": 4.65,
+      "volume": 544141542.0,
+      "market_cap": 6881200069.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-28",
+      "value": 4.37,
+      "open_p": 4.65,
+      "high_p": 4.37,
+      "low_p": 4.37,
+      "volume": 530458904.0,
+      "market_cap": 6467640617.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-29",
+      "value": 4.13,
+      "open_p": 4.37,
+      "high_p": 4.13,
+      "low_p": 4.13,
+      "volume": 505798587.0,
+      "market_cap": 6114207592.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-30",
+      "value": 4.1,
+      "open_p": 4.13,
+      "high_p": 4.1,
+      "low_p": 4.1,
+      "volume": 493337695.0,
+      "market_cap": 6068903807.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-03-31",
+      "value": 4.04,
+      "open_p": 4.1,
+      "high_p": 4.04,
+      "low_p": 4.04,
+      "volume": 420537434.0,
+      "market_cap": 5983229050.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-01",
+      "value": 4.16,
+      "open_p": 4.04,
+      "high_p": 4.16,
+      "low_p": 4.16,
+      "volume": 175874291.0,
+      "market_cap": 6167346310.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-02",
+      "value": 4.1,
+      "open_p": 4.16,
+      "high_p": 4.1,
+      "low_p": 4.1,
+      "volume": 175371896.0,
+      "market_cap": 6082096863.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-03",
+      "value": 4.0,
+      "open_p": 4.1,
+      "high_p": 4.0,
+      "low_p": 4.0,
+      "volume": 257375309.0,
+      "market_cap": 5937879637.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-04",
+      "value": 4.05,
+      "open_p": 4.0,
+      "high_p": 4.05,
+      "low_p": 4.05,
+      "volume": 184029459.0,
+      "market_cap": 6005479688.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-05",
+      "value": 3.98,
+      "open_p": 4.05,
+      "high_p": 3.98,
+      "low_p": 3.98,
+      "volume": 142688281.0,
+      "market_cap": 5903172065.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-06",
+      "value": 3.87,
+      "open_p": 3.98,
+      "high_p": 3.87,
+      "low_p": 3.87,
+      "volume": 110289516.0,
+      "market_cap": 5745212976.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-07",
+      "value": 3.54,
+      "open_p": 3.87,
+      "high_p": 3.54,
+      "low_p": 3.54,
+      "volume": 355515075.0,
+      "market_cap": 5255130745.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-08",
+      "value": 3.57,
+      "open_p": 3.54,
+      "high_p": 3.57,
+      "low_p": 3.57,
+      "volume": 281865106.0,
+      "market_cap": 5297692171.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-09",
+      "value": 3.49,
+      "open_p": 3.57,
+      "high_p": 3.49,
+      "low_p": 3.49,
+      "volume": 245003756.0,
+      "market_cap": 5176362896.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-10",
+      "value": 3.51,
+      "open_p": 3.49,
+      "high_p": 3.51,
+      "low_p": 3.51,
+      "volume": 290356503.0,
+      "market_cap": 5218325408.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-11",
+      "value": 3.53,
+      "open_p": 3.51,
+      "high_p": 3.53,
+      "low_p": 3.53,
+      "volume": 191844092.0,
+      "market_cap": 5246708510.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-12",
+      "value": 3.64,
+      "open_p": 3.53,
+      "high_p": 3.64,
+      "low_p": 3.64,
+      "volume": 134620389.0,
+      "market_cap": 5407863642.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-13",
+      "value": 3.7,
+      "open_p": 3.64,
+      "high_p": 3.7,
+      "low_p": 3.7,
+      "volume": 154762117.0,
+      "market_cap": 5499898243.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-14",
+      "value": 3.72,
+      "open_p": 3.7,
+      "high_p": 3.72,
+      "low_p": 3.72,
+      "volume": 193451528.0,
+      "market_cap": 5526716511.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-15",
+      "value": 3.64,
+      "open_p": 3.72,
+      "high_p": 3.64,
+      "low_p": 3.64,
+      "volume": 146708312.0,
+      "market_cap": 5414976834.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-16",
+      "value": 3.55,
+      "open_p": 3.64,
+      "high_p": 3.55,
+      "low_p": 3.55,
+      "volume": 145323173.0,
+      "market_cap": 5278737456.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-17",
+      "value": 3.63,
+      "open_p": 3.55,
+      "high_p": 3.63,
+      "low_p": 3.63,
+      "volume": 142372918.0,
+      "market_cap": 5396484972.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-18",
+      "value": 3.69,
+      "open_p": 3.63,
+      "high_p": 3.69,
+      "low_p": 3.69,
+      "volume": 113418206.0,
+      "market_cap": 5489844157.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-19",
+      "value": 3.75,
+      "open_p": 3.69,
+      "high_p": 3.75,
+      "low_p": 3.75,
+      "volume": 95393845.0,
+      "market_cap": 5581611440.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-20",
+      "value": 3.88,
+      "open_p": 3.75,
+      "high_p": 3.88,
+      "low_p": 3.88,
+      "volume": 138384766.0,
+      "market_cap": 5781387427.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-21",
+      "value": 3.89,
+      "open_p": 3.88,
+      "high_p": 3.89,
+      "low_p": 3.89,
+      "volume": 131899222.0,
+      "market_cap": 5794712353.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-22",
+      "value": 3.83,
+      "open_p": 3.89,
+      "high_p": 3.83,
+      "low_p": 3.83,
+      "volume": 158496363.0,
+      "market_cap": 5699851092.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-23",
+      "value": 4.09,
+      "open_p": 3.83,
+      "high_p": 4.09,
+      "low_p": 4.09,
+      "volume": 260067499.0,
+      "market_cap": 6094280873.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-24",
+      "value": 4.09,
+      "open_p": 4.09,
+      "high_p": 4.09,
+      "low_p": 4.09,
+      "volume": 213151018.0,
+      "market_cap": 6097127991.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-25",
+      "value": 4.29,
+      "open_p": 4.09,
+      "high_p": 4.29,
+      "low_p": 4.29,
+      "volume": 246512616.0,
+      "market_cap": 6393612903.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-26",
+      "value": 4.28,
+      "open_p": 4.29,
+      "high_p": 4.28,
+      "low_p": 4.28,
+      "volume": 185387171.0,
+      "market_cap": 6382564805.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-27",
+      "value": 4.14,
+      "open_p": 4.28,
+      "high_p": 4.14,
+      "low_p": 4.14,
+      "volume": 140593420.0,
+      "market_cap": 6170625638.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-28",
+      "value": 4.18,
+      "open_p": 4.14,
+      "high_p": 4.18,
+      "low_p": 4.18,
+      "volume": 208358961.0,
+      "market_cap": 6226253763.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-29",
+      "value": 4.25,
+      "open_p": 4.18,
+      "high_p": 4.25,
+      "low_p": 4.25,
+      "volume": 184299001.0,
+      "market_cap": 6341595345.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-04-30",
+      "value": 4.12,
+      "open_p": 4.25,
+      "high_p": 4.12,
+      "low_p": 4.12,
+      "volume": 153871708.0,
+      "market_cap": 6140862443.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-01",
+      "value": 4.15,
+      "open_p": 4.12,
+      "high_p": 4.15,
+      "low_p": 4.15,
+      "volume": 155259223.0,
+      "market_cap": 6197111278.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-02",
+      "value": 4.2,
+      "open_p": 4.15,
+      "high_p": 4.2,
+      "low_p": 4.2,
+      "volume": 156500538.0,
+      "market_cap": 6268074043.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-03",
+      "value": 4.11,
+      "open_p": 4.2,
+      "high_p": 4.11,
+      "low_p": 4.11,
+      "volume": 114769003.0,
+      "market_cap": 6132803815.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-04",
+      "value": 3.98,
+      "open_p": 4.11,
+      "high_p": 3.98,
+      "low_p": 3.98,
+      "volume": 135732420.0,
+      "market_cap": 5946491331.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-05",
+      "value": 3.96,
+      "open_p": 3.98,
+      "high_p": 3.96,
+      "low_p": 3.96,
+      "volume": 150027548.0,
+      "market_cap": 5907724751.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-06",
+      "value": 3.91,
+      "open_p": 3.96,
+      "high_p": 3.91,
+      "low_p": 3.91,
+      "volume": 146739110.0,
+      "market_cap": 5835920775.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-07",
+      "value": 3.96,
+      "open_p": 3.91,
+      "high_p": 3.96,
+      "low_p": 3.96,
+      "volume": 148825078.0,
+      "market_cap": 5909564586.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-08",
+      "value": 4.25,
+      "open_p": 3.96,
+      "high_p": 4.25,
+      "low_p": 4.25,
+      "volume": 222847644.0,
+      "market_cap": 6354469358.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-09",
+      "value": 4.65,
+      "open_p": 4.25,
+      "high_p": 4.65,
+      "low_p": 4.65,
+      "volume": 411965624.0,
+      "market_cap": 6946667006.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-10",
+      "value": 5.05,
+      "open_p": 4.65,
+      "high_p": 5.05,
+      "low_p": 5.05,
+      "volume": 490744755.0,
+      "market_cap": 7555979412.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-11",
+      "value": 5.1,
+      "open_p": 5.05,
+      "high_p": 5.1,
+      "low_p": 5.1,
+      "volume": 451829638.0,
+      "market_cap": 7618805235.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-12",
+      "value": 5.15,
+      "open_p": 5.1,
+      "high_p": 5.15,
+      "low_p": 5.15,
+      "volume": 351239665.0,
+      "market_cap": 7708202496.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-13",
+      "value": 5.04,
+      "open_p": 5.15,
+      "high_p": 5.04,
+      "low_p": 5.04,
+      "volume": 373883781.0,
+      "market_cap": 7536059402.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-14",
+      "value": 5.09,
+      "open_p": 5.04,
+      "high_p": 5.09,
+      "low_p": 5.09,
+      "volume": 302229532.0,
+      "market_cap": 7620960443.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-15",
+      "value": 4.84,
+      "open_p": 5.09,
+      "high_p": 4.84,
+      "low_p": 4.84,
+      "volume": 279269196.0,
+      "market_cap": 7239631681.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-16",
+      "value": 4.86,
+      "open_p": 4.84,
+      "high_p": 4.86,
+      "low_p": 4.86,
+      "volume": 279595755.0,
+      "market_cap": 7272154029.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-17",
+      "value": 4.67,
+      "open_p": 4.86,
+      "high_p": 4.67,
+      "low_p": 4.67,
+      "volume": 223357859.0,
+      "market_cap": 6995658010.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-18",
+      "value": 4.72,
+      "open_p": 4.67,
+      "high_p": 4.72,
+      "low_p": 4.72,
+      "volume": 182090980.0,
+      "market_cap": 7068735335.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-19",
+      "value": 4.56,
+      "open_p": 4.72,
+      "high_p": 4.56,
+      "low_p": 4.56,
+      "volume": 273690994.0,
+      "market_cap": 6828786056.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-20",
+      "value": 4.61,
+      "open_p": 4.56,
+      "high_p": 4.61,
+      "low_p": 4.61,
+      "volume": 216387007.0,
+      "market_cap": 6913928165.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-21",
+      "value": 4.71,
+      "open_p": 4.61,
+      "high_p": 4.71,
+      "low_p": 4.71,
+      "volume": 240294937.0,
+      "market_cap": 7063544638.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-22",
+      "value": 4.88,
+      "open_p": 4.71,
+      "high_p": 4.88,
+      "low_p": 4.88,
+      "volume": 295980624.0,
+      "market_cap": 7314632218.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-23",
+      "value": 4.85,
+      "open_p": 4.88,
+      "high_p": 4.85,
+      "low_p": 4.85,
+      "volume": 328070218.0,
+      "market_cap": 7265924135.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-24",
+      "value": 4.59,
+      "open_p": 4.85,
+      "high_p": 4.59,
+      "low_p": 4.59,
+      "volume": 258274092.0,
+      "market_cap": 6888825805.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-25",
+      "value": 4.48,
+      "open_p": 4.59,
+      "high_p": 4.48,
+      "low_p": 4.48,
+      "volume": 161477800.0,
+      "market_cap": 6717661235.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-26",
+      "value": 4.53,
+      "open_p": 4.48,
+      "high_p": 4.53,
+      "low_p": 4.53,
+      "volume": 192712105.0,
+      "market_cap": 6789119352.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-27",
+      "value": 4.53,
+      "open_p": 4.53,
+      "high_p": 4.53,
+      "low_p": 4.53,
+      "volume": 183623544.0,
+      "market_cap": 6796810064.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-28",
+      "value": 4.53,
+      "open_p": 4.53,
+      "high_p": 4.53,
+      "low_p": 4.53,
+      "volume": 193061781.0,
+      "market_cap": 6804137746.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-29",
+      "value": 4.54,
+      "open_p": 4.53,
+      "high_p": 4.54,
+      "low_p": 4.54,
+      "volume": 227415648.0,
+      "market_cap": 6808073038.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-30",
+      "value": 4.19,
+      "open_p": 4.54,
+      "high_p": 4.19,
+      "low_p": 4.19,
+      "volume": 273323927.0,
+      "market_cap": 6285811319.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-05-31",
+      "value": 4.04,
+      "open_p": 4.19,
+      "high_p": 4.04,
+      "low_p": 4.04,
+      "volume": 258322574.0,
+      "market_cap": 6066279746.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-01",
+      "value": 4.05,
+      "open_p": 4.04,
+      "high_p": 4.05,
+      "low_p": 4.05,
+      "volume": 136410692.0,
+      "market_cap": 6087620980.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-02",
+      "value": 4.04,
+      "open_p": 4.05,
+      "high_p": 4.04,
+      "low_p": 4.04,
+      "volume": 143986225.0,
+      "market_cap": 6073722209.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-03",
+      "value": 4.17,
+      "open_p": 4.04,
+      "high_p": 4.17,
+      "low_p": 4.17,
+      "volume": 170786159.0,
+      "market_cap": 6267053968.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-04",
+      "value": 4.12,
+      "open_p": 4.17,
+      "high_p": 4.12,
+      "low_p": 4.12,
+      "volume": 169748447.0,
+      "market_cap": 6197055827.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-05",
+      "value": 3.99,
+      "open_p": 4.12,
+      "high_p": 3.99,
+      "low_p": 3.99,
+      "volume": 175890130.0,
+      "market_cap": 5997035404.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-06",
+      "value": 3.92,
+      "open_p": 3.99,
+      "high_p": 3.92,
+      "low_p": 3.92,
+      "volume": 225109371.0,
+      "market_cap": 5887880473.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-07",
+      "value": 4.01,
+      "open_p": 3.92,
+      "high_p": 4.01,
+      "low_p": 4.01,
+      "volume": 135346626.0,
+      "market_cap": 6034290779.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-08",
+      "value": 4.05,
+      "open_p": 4.01,
+      "high_p": 4.05,
+      "low_p": 4.05,
+      "volume": 105308294.0,
+      "market_cap": 6092818335.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-09",
+      "value": 4.04,
+      "open_p": 4.05,
+      "high_p": 4.04,
+      "low_p": 4.04,
+      "volume": 144595647.0,
+      "market_cap": 6085383593.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-10",
+      "value": 4.2,
+      "open_p": 4.04,
+      "high_p": 4.2,
+      "low_p": 4.2,
+      "volume": 245069108.0,
+      "market_cap": 6327186799.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-11",
+      "value": 4.27,
+      "open_p": 4.2,
+      "high_p": 4.27,
+      "low_p": 4.27,
+      "volume": 293527362.0,
+      "market_cap": 6420423552.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-12",
+      "value": 4.07,
+      "open_p": 4.27,
+      "high_p": 4.07,
+      "low_p": 4.07,
+      "volume": 276126121.0,
+      "market_cap": 6129877555.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-13",
+      "value": 3.81,
+      "open_p": 4.07,
+      "high_p": 3.81,
+      "low_p": 3.81,
+      "volume": 331018726.0,
+      "market_cap": 5731437706.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-14",
+      "value": 3.79,
+      "open_p": 3.81,
+      "high_p": 3.79,
+      "low_p": 3.79,
+      "volume": 189834162.0,
+      "market_cap": 5715298902.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-15",
+      "value": 3.79,
+      "open_p": 3.79,
+      "high_p": 3.79,
+      "low_p": 3.79,
+      "volume": 100190048.0,
+      "market_cap": 5714135517.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-16",
+      "value": 3.91,
+      "open_p": 3.79,
+      "high_p": 3.91,
+      "low_p": 3.91,
+      "volume": 125981499.0,
+      "market_cap": 5897931779.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-17",
+      "value": 3.79,
+      "open_p": 3.91,
+      "high_p": 3.79,
+      "low_p": 3.79,
+      "volume": 181608095.0,
+      "market_cap": 5710029777.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-18",
+      "value": 3.69,
+      "open_p": 3.79,
+      "high_p": 3.69,
+      "low_p": 3.69,
+      "volume": 176479466.0,
+      "market_cap": 5559959298.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-19",
+      "value": 3.58,
+      "open_p": 3.69,
+      "high_p": 3.58,
+      "low_p": 3.58,
+      "volume": 222229111.0,
+      "market_cap": 5392179654.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-20",
+      "value": 3.5,
+      "open_p": 3.58,
+      "high_p": 3.5,
+      "low_p": 3.5,
+      "volume": 207012193.0,
+      "market_cap": 5272195895.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-21",
+      "value": 3.43,
+      "open_p": 3.5,
+      "high_p": 3.43,
+      "low_p": 3.43,
+      "volume": 196361556.0,
+      "market_cap": 5172204138.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-22",
+      "value": 3.23,
+      "open_p": 3.43,
+      "high_p": 3.23,
+      "low_p": 3.23,
+      "volume": 241757530.0,
+      "market_cap": 4877390919.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-23",
+      "value": 3.23,
+      "open_p": 3.23,
+      "high_p": 3.23,
+      "low_p": 3.23,
+      "volume": 293660845.0,
+      "market_cap": 4882173735.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-24",
+      "value": 3.44,
+      "open_p": 3.23,
+      "high_p": 3.44,
+      "low_p": 3.44,
+      "volume": 266137029.0,
+      "market_cap": 5191815089.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-25",
+      "value": 3.41,
+      "open_p": 3.44,
+      "high_p": 3.41,
+      "low_p": 3.41,
+      "volume": 159313376.0,
+      "market_cap": 5146517220.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-26",
+      "value": 3.34,
+      "open_p": 3.41,
+      "high_p": 3.34,
+      "low_p": 3.34,
+      "volume": 161283490.0,
+      "market_cap": 5039859548.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-27",
+      "value": 3.33,
+      "open_p": 3.34,
+      "high_p": 3.33,
+      "low_p": 3.33,
+      "volume": 147114115.0,
+      "market_cap": 5034505435.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-28",
+      "value": 3.37,
+      "open_p": 3.33,
+      "high_p": 3.37,
+      "low_p": 3.37,
+      "volume": 118194254.0,
+      "market_cap": 5093831980.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-29",
+      "value": 3.43,
+      "open_p": 3.37,
+      "high_p": 3.43,
+      "low_p": 3.43,
+      "volume": 95433879.0,
+      "market_cap": 5177059143.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-06-30",
+      "value": 3.44,
+      "open_p": 3.43,
+      "high_p": 3.44,
+      "low_p": 3.44,
+      "volume": 160032295.0,
+      "market_cap": 5200329799.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-01",
+      "value": 3.34,
+      "open_p": 3.44,
+      "high_p": 3.34,
+      "low_p": 3.34,
+      "volume": 167282754.0,
+      "market_cap": 5048282724.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-02",
+      "value": 3.41,
+      "open_p": 3.34,
+      "high_p": 3.41,
+      "low_p": 3.41,
+      "volume": 185047870.0,
+      "market_cap": 5152354958.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-03",
+      "value": 3.57,
+      "open_p": 3.41,
+      "high_p": 3.57,
+      "low_p": 3.57,
+      "volume": 302314756.0,
+      "market_cap": 5403350716.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-04",
+      "value": 3.43,
+      "open_p": 3.57,
+      "high_p": 3.43,
+      "low_p": 3.43,
+      "volume": 214732838.0,
+      "market_cap": 5185827687.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-05",
+      "value": 3.36,
+      "open_p": 3.43,
+      "high_p": 3.36,
+      "low_p": 3.36,
+      "volume": 170351939.0,
+      "market_cap": 5080829648.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-06",
+      "value": 3.37,
+      "open_p": 3.36,
+      "high_p": 3.37,
+      "low_p": 3.37,
+      "volume": 105749631.0,
+      "market_cap": 5105299506.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-07",
+      "value": 3.39,
+      "open_p": 3.37,
+      "high_p": 3.39,
+      "low_p": 3.39,
+      "volume": 159232422.0,
+      "market_cap": 5129552011.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-08",
+      "value": 3.39,
+      "open_p": 3.39,
+      "high_p": 3.39,
+      "low_p": 3.39,
+      "volume": 159038602.0,
+      "market_cap": 5129190031.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-09",
+      "value": 3.51,
+      "open_p": 3.39,
+      "high_p": 3.51,
+      "low_p": 3.51,
+      "volume": 187525481.0,
+      "market_cap": 5321109136.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-10",
+      "value": 3.68,
+      "open_p": 3.51,
+      "high_p": 3.68,
+      "low_p": 3.68,
+      "volume": 281195920.0,
+      "market_cap": 5580242374.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-11",
+      "value": 3.96,
+      "open_p": 3.68,
+      "high_p": 3.96,
+      "low_p": 3.96,
+      "volume": 447899237.0,
+      "market_cap": 6002559657.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-12",
+      "value": 3.93,
+      "open_p": 3.96,
+      "high_p": 3.93,
+      "low_p": 3.93,
+      "volume": 412011285.0,
+      "market_cap": 5951790488.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-13",
+      "value": 3.97,
+      "open_p": 3.93,
+      "high_p": 3.97,
+      "low_p": 3.97,
+      "volume": 242981646.0,
+      "market_cap": 6017036420.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-14",
+      "value": 4.05,
+      "open_p": 3.97,
+      "high_p": 4.05,
+      "low_p": 4.05,
+      "volume": 324062607.0,
+      "market_cap": 6137689334.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-15",
+      "value": 3.93,
+      "open_p": 4.05,
+      "high_p": 3.93,
+      "low_p": 3.93,
+      "volume": 330021646.0,
+      "market_cap": 5955133199.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-16",
+      "value": 4.13,
+      "open_p": 3.93,
+      "high_p": 4.13,
+      "low_p": 4.13,
+      "volume": 360899336.0,
+      "market_cap": 6258566250.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-17",
+      "value": 4.18,
+      "open_p": 4.13,
+      "high_p": 4.18,
+      "low_p": 4.18,
+      "volume": 451710951.0,
+      "market_cap": 6346356816.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-18",
+      "value": 4.37,
+      "open_p": 4.18,
+      "high_p": 4.37,
+      "low_p": 4.37,
+      "volume": 654025203.0,
+      "market_cap": 6636270260.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-19",
+      "value": 4.28,
+      "open_p": 4.37,
+      "high_p": 4.28,
+      "low_p": 4.28,
+      "volume": 437001500.0,
+      "market_cap": 6490437634.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-20",
+      "value": 4.46,
+      "open_p": 4.28,
+      "high_p": 4.46,
+      "low_p": 4.46,
+      "volume": 355433417.0,
+      "market_cap": 6765941437.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-21",
+      "value": 4.53,
+      "open_p": 4.46,
+      "high_p": 4.53,
+      "low_p": 4.53,
+      "volume": 487254316.0,
+      "market_cap": 6877279298.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-22",
+      "value": 4.42,
+      "open_p": 4.53,
+      "high_p": 4.42,
+      "low_p": 4.42,
+      "volume": 571108529.0,
+      "market_cap": 6706543576.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-23",
+      "value": 4.31,
+      "open_p": 4.42,
+      "high_p": 4.31,
+      "low_p": 4.31,
+      "volume": 484540573.0,
+      "market_cap": 6550600762.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-24",
+      "value": 4.05,
+      "open_p": 4.31,
+      "high_p": 4.05,
+      "low_p": 4.05,
+      "volume": 577840816.0,
+      "market_cap": 6156364925.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-25",
+      "value": 3.99,
+      "open_p": 4.05,
+      "high_p": 3.99,
+      "low_p": 3.99,
+      "volume": 432558133.0,
+      "market_cap": 6064685440.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-26",
+      "value": 4.12,
+      "open_p": 3.99,
+      "high_p": 4.12,
+      "low_p": 4.12,
+      "volume": 264825386.0,
+      "market_cap": 6260675711.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-27",
+      "value": 4.17,
+      "open_p": 4.12,
+      "high_p": 4.17,
+      "low_p": 4.17,
+      "volume": 194499931.0,
+      "market_cap": 6336614657.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-28",
+      "value": 4.15,
+      "open_p": 4.17,
+      "high_p": 4.15,
+      "low_p": 4.15,
+      "volume": 275340367.0,
+      "market_cap": 6310538363.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-29",
+      "value": 3.95,
+      "open_p": 4.15,
+      "high_p": 3.95,
+      "low_p": 3.95,
+      "volume": 331260750.0,
+      "market_cap": 6014204258.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-30",
+      "value": 3.83,
+      "open_p": 3.95,
+      "high_p": 3.83,
+      "low_p": 3.83,
+      "volume": 321308018.0,
+      "market_cap": 5824576136.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-07-31",
+      "value": 3.82,
+      "open_p": 3.83,
+      "high_p": 3.82,
+      "low_p": 3.82,
+      "volume": 324100846.0,
+      "market_cap": 5816641389.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-01",
+      "value": 3.63,
+      "open_p": 3.82,
+      "high_p": 3.63,
+      "low_p": 3.63,
+      "volume": 374959377.0,
+      "market_cap": 5521384985.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-02",
+      "value": 3.54,
+      "open_p": 3.63,
+      "high_p": 3.54,
+      "low_p": 3.54,
+      "volume": 351783588.0,
+      "market_cap": 5392592423.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-03",
+      "value": 3.58,
+      "open_p": 3.54,
+      "high_p": 3.58,
+      "low_p": 3.58,
+      "volume": 236817964.0,
+      "market_cap": 5451469469.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-04",
+      "value": 3.66,
+      "open_p": 3.58,
+      "high_p": 3.66,
+      "low_p": 3.66,
+      "volume": 205377861.0,
+      "market_cap": 5580213680.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-05",
+      "value": 3.64,
+      "open_p": 3.66,
+      "high_p": 3.64,
+      "low_p": 3.64,
+      "volume": 223061364.0,
+      "market_cap": 5544613794.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-06",
+      "value": 3.63,
+      "open_p": 3.64,
+      "high_p": 3.63,
+      "low_p": 3.63,
+      "volume": 206407847.0,
+      "market_cap": 5530920870.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-07",
+      "value": 3.73,
+      "open_p": 3.63,
+      "high_p": 3.73,
+      "low_p": 3.73,
+      "volume": 219774833.0,
+      "market_cap": 5690836248.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-08",
+      "value": 3.91,
+      "open_p": 3.73,
+      "high_p": 3.91,
+      "low_p": 3.91,
+      "volume": 399424243.0,
+      "market_cap": 5961760455.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-09",
+      "value": 4.08,
+      "open_p": 3.91,
+      "high_p": 4.08,
+      "low_p": 4.08,
+      "volume": 301698933.0,
+      "market_cap": 6216056270.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-10",
+      "value": 4.06,
+      "open_p": 4.08,
+      "high_p": 4.06,
+      "low_p": 4.06,
+      "volume": 302038526.0,
+      "market_cap": 6192907960.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-11",
+      "value": 4.0,
+      "open_p": 4.06,
+      "high_p": 4.0,
+      "low_p": 4.0,
+      "volume": 305308403.0,
+      "market_cap": 6095435076.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-12",
+      "value": 4.0,
+      "open_p": 4.0,
+      "high_p": 4.0,
+      "low_p": 4.0,
+      "volume": 409299234.0,
+      "market_cap": 6095316801.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-13",
+      "value": 4.22,
+      "open_p": 4.0,
+      "high_p": 4.22,
+      "low_p": 4.22,
+      "volume": 527843902.0,
+      "market_cap": 6431337613.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-14",
+      "value": 4.14,
+      "open_p": 4.22,
+      "high_p": 4.14,
+      "low_p": 4.14,
+      "volume": 540617379.0,
+      "market_cap": 6312937646.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-15",
+      "value": 3.96,
+      "open_p": 4.14,
+      "high_p": 3.96,
+      "low_p": 3.96,
+      "volume": 446183136.0,
+      "market_cap": 6046198292.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-16",
+      "value": 3.94,
+      "open_p": 3.96,
+      "high_p": 3.94,
+      "low_p": 3.94,
+      "volume": 303261566.0,
+      "market_cap": 6018862673.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-17",
+      "value": 4.05,
+      "open_p": 3.94,
+      "high_p": 4.05,
+      "low_p": 4.05,
+      "volume": 206955438.0,
+      "market_cap": 6186884609.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-18",
+      "value": 3.92,
+      "open_p": 4.05,
+      "high_p": 3.92,
+      "low_p": 3.92,
+      "volume": 366055409.0,
+      "market_cap": 5992823834.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-19",
+      "value": 3.83,
+      "open_p": 3.92,
+      "high_p": 3.83,
+      "low_p": 3.83,
+      "volume": 311524521.0,
+      "market_cap": 5851435337.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-20",
+      "value": 3.81,
+      "open_p": 3.83,
+      "high_p": 3.81,
+      "low_p": 3.81,
+      "volume": 309558836.0,
+      "market_cap": 5819735930.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-21",
+      "value": 3.84,
+      "open_p": 3.81,
+      "high_p": 3.84,
+      "low_p": 3.84,
+      "volume": 235613476.0,
+      "market_cap": 5870667215.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-22",
+      "value": 3.92,
+      "open_p": 3.84,
+      "high_p": 3.92,
+      "low_p": 3.92,
+      "volume": 278124999.0,
+      "market_cap": 5988636970.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-23",
+      "value": 4.15,
+      "open_p": 3.92,
+      "high_p": 4.15,
+      "low_p": 4.15,
+      "volume": 501382041.0,
+      "market_cap": 6342329171.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-24",
+      "value": 4.12,
+      "open_p": 4.15,
+      "high_p": 4.12,
+      "low_p": 4.12,
+      "volume": 311386163.0,
+      "market_cap": 6295374205.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-25",
+      "value": 3.92,
+      "open_p": 4.12,
+      "high_p": 3.92,
+      "low_p": 3.92,
+      "volume": 459219026.0,
+      "market_cap": 5998871696.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-26",
+      "value": 3.82,
+      "open_p": 3.92,
+      "high_p": 3.82,
+      "low_p": 3.82,
+      "volume": 424026978.0,
+      "market_cap": 5843987188.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-27",
+      "value": 3.88,
+      "open_p": 3.82,
+      "high_p": 3.88,
+      "low_p": 3.88,
+      "volume": 267587008.0,
+      "market_cap": 5939889397.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-28",
+      "value": 3.93,
+      "open_p": 3.88,
+      "high_p": 3.93,
+      "low_p": 3.93,
+      "volume": 359143232.0,
+      "market_cap": 6019964847.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-29",
+      "value": 3.84,
+      "open_p": 3.93,
+      "high_p": 3.84,
+      "low_p": 3.84,
+      "volume": 439464433.0,
+      "market_cap": 5873465881.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-30",
+      "value": 3.79,
+      "open_p": 3.84,
+      "high_p": 3.79,
+      "low_p": 3.79,
+      "volume": 337074840.0,
+      "market_cap": 5797599991.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-08-31",
+      "value": 3.82,
+      "open_p": 3.79,
+      "high_p": 3.82,
+      "low_p": 3.82,
+      "volume": 215670941.0,
+      "market_cap": 5843622943.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-01",
+      "value": 3.73,
+      "open_p": 3.82,
+      "high_p": 3.73,
+      "low_p": 3.73,
+      "volume": 302394763.0,
+      "market_cap": 5715396847.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-02",
+      "value": 3.76,
+      "open_p": 3.73,
+      "high_p": 3.76,
+      "low_p": 3.76,
+      "volume": 306518391.0,
+      "market_cap": 5769165374.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-03",
+      "value": 3.85,
+      "open_p": 3.76,
+      "high_p": 3.85,
+      "low_p": 3.85,
+      "volume": 232557376.0,
+      "market_cap": 5894230470.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-04",
+      "value": 3.79,
+      "open_p": 3.85,
+      "high_p": 3.79,
+      "low_p": 3.79,
+      "volume": 196656100.0,
+      "market_cap": 5809920553.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-05",
+      "value": 3.81,
+      "open_p": 3.79,
+      "high_p": 3.81,
+      "low_p": 3.81,
+      "volume": 211888986.0,
+      "market_cap": 5849172467.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-06",
+      "value": 3.82,
+      "open_p": 3.81,
+      "high_p": 3.82,
+      "low_p": 3.82,
+      "volume": 224301299.0,
+      "market_cap": 5864604622.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-07",
+      "value": 3.92,
+      "open_p": 3.82,
+      "high_p": 3.92,
+      "low_p": 3.92,
+      "volume": 219608583.0,
+      "market_cap": 6014165792.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-08",
+      "value": 4.03,
+      "open_p": 3.92,
+      "high_p": 4.03,
+      "low_p": 4.03,
+      "volume": 412355698.0,
+      "market_cap": 6185260094.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-09",
+      "value": 4.1,
+      "open_p": 4.03,
+      "high_p": 4.1,
+      "low_p": 4.1,
+      "volume": 398488696.0,
+      "market_cap": 6289868193.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-10",
+      "value": 4.14,
+      "open_p": 4.1,
+      "high_p": 4.14,
+      "low_p": 4.14,
+      "volume": 383481184.0,
+      "market_cap": 6358041939.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-11",
+      "value": 4.21,
+      "open_p": 4.14,
+      "high_p": 4.21,
+      "low_p": 4.21,
+      "volume": 338073119.0,
+      "market_cap": 6462863950.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-12",
+      "value": 4.24,
+      "open_p": 4.21,
+      "high_p": 4.24,
+      "low_p": 4.24,
+      "volume": 284935098.0,
+      "market_cap": 6507285926.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-13",
+      "value": 4.47,
+      "open_p": 4.24,
+      "high_p": 4.47,
+      "low_p": 4.47,
+      "volume": 448830662.0,
+      "market_cap": 6859020770.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-14",
+      "value": 4.39,
+      "open_p": 4.47,
+      "high_p": 4.39,
+      "low_p": 4.39,
+      "volume": 402784697.0,
+      "market_cap": 6735876457.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-15",
+      "value": 4.23,
+      "open_p": 4.39,
+      "high_p": 4.23,
+      "low_p": 4.23,
+      "volume": 316324119.0,
+      "market_cap": 6495014982.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-16",
+      "value": 4.21,
+      "open_p": 4.23,
+      "high_p": 4.21,
+      "low_p": 4.21,
+      "volume": 338787312.0,
+      "market_cap": 6471796397.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-17",
+      "value": 4.23,
+      "open_p": 4.21,
+      "high_p": 4.23,
+      "low_p": 4.23,
+      "volume": 300196231.0,
+      "market_cap": 6500473470.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-18",
+      "value": 4.52,
+      "open_p": 4.23,
+      "high_p": 4.52,
+      "low_p": 4.52,
+      "volume": 462835806.0,
+      "market_cap": 6942454129.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-19",
+      "value": 4.53,
+      "open_p": 4.52,
+      "high_p": 4.53,
+      "low_p": 4.53,
+      "volume": 675361151.0,
+      "market_cap": 6967797895.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-20",
+      "value": 4.37,
+      "open_p": 4.53,
+      "high_p": 4.37,
+      "low_p": 4.37,
+      "volume": 423107782.0,
+      "market_cap": 6720078733.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-21",
+      "value": 4.32,
+      "open_p": 4.37,
+      "high_p": 4.32,
+      "low_p": 4.32,
+      "volume": 257513414.0,
+      "market_cap": 6644592431.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-22",
+      "value": 4.04,
+      "open_p": 4.32,
+      "high_p": 4.04,
+      "low_p": 4.04,
+      "volume": 411054629.0,
+      "market_cap": 6209211573.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-23",
+      "value": 4.01,
+      "open_p": 4.04,
+      "high_p": 4.01,
+      "low_p": 4.01,
+      "volume": 323861227.0,
+      "market_cap": 6176810716.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-24",
+      "value": 4.03,
+      "open_p": 4.01,
+      "high_p": 4.03,
+      "low_p": 4.03,
+      "volume": 276578237.0,
+      "market_cap": 6208269721.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-25",
+      "value": 3.91,
+      "open_p": 4.03,
+      "high_p": 3.91,
+      "low_p": 3.91,
+      "volume": 326878757.0,
+      "market_cap": 6024951088.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-26",
+      "value": 3.87,
+      "open_p": 3.91,
+      "high_p": 3.87,
+      "low_p": 3.87,
+      "volume": 339789482.0,
+      "market_cap": 5964323151.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-27",
+      "value": 3.89,
+      "open_p": 3.87,
+      "high_p": 3.89,
+      "low_p": 3.89,
+      "volume": 217748319.0,
+      "market_cap": 5996491754.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-28",
+      "value": 3.87,
+      "open_p": 3.89,
+      "high_p": 3.87,
+      "low_p": 3.87,
+      "volume": 157712776.0,
+      "market_cap": 5961130052.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-29",
+      "value": 3.97,
+      "open_p": 3.87,
+      "high_p": 3.97,
+      "low_p": 3.97,
+      "volume": 253604161.0,
+      "market_cap": 6119811655.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-09-30",
+      "value": 3.9,
+      "open_p": 3.97,
+      "high_p": 3.9,
+      "low_p": 3.9,
+      "volume": 233175919.0,
+      "market_cap": 6011992978.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-01",
+      "value": 4.03,
+      "open_p": 3.9,
+      "high_p": 4.03,
+      "low_p": 4.03,
+      "volume": 251044392.0,
+      "market_cap": 6207470087.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-02",
+      "value": 4.24,
+      "open_p": 4.03,
+      "high_p": 4.24,
+      "low_p": 4.24,
+      "volume": 328641965.0,
+      "market_cap": 6536566117.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-03",
+      "value": 4.27,
+      "open_p": 4.24,
+      "high_p": 4.27,
+      "low_p": 4.27,
+      "volume": 350512092.0,
+      "market_cap": 6586413826.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-04",
+      "value": 4.23,
+      "open_p": 4.27,
+      "high_p": 4.23,
+      "low_p": 4.23,
+      "volume": 287376936.0,
+      "market_cap": 6524085348.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-05",
+      "value": 4.23,
+      "open_p": 4.23,
+      "high_p": 4.23,
+      "low_p": 4.23,
+      "volume": 254318802.0,
+      "market_cap": 6525880854.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-06",
+      "value": 4.27,
+      "open_p": 4.23,
+      "high_p": 4.27,
+      "low_p": 4.27,
+      "volume": 327968364.0,
+      "market_cap": 6589112213.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-07",
+      "value": 4.27,
+      "open_p": 4.27,
+      "high_p": 4.27,
+      "low_p": 4.27,
+      "volume": 399359880.0,
+      "market_cap": 6598072259.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-08",
+      "value": 4.17,
+      "open_p": 4.27,
+      "high_p": 4.17,
+      "low_p": 4.17,
+      "volume": 349103238.0,
+      "market_cap": 6431834088.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-09",
+      "value": 4.06,
+      "open_p": 4.17,
+      "high_p": 4.06,
+      "low_p": 4.06,
+      "volume": 305190070.0,
+      "market_cap": 6275003885.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-10",
+      "value": 3.96,
+      "open_p": 4.06,
+      "high_p": 3.96,
+      "low_p": 3.96,
+      "volume": 348261718.0,
+      "market_cap": 6117427520.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-11",
+      "value": 3.12,
+      "open_p": 3.96,
+      "high_p": 3.12,
+      "low_p": 3.12,
+      "volume": 1500579327.0,
+      "market_cap": 4816925422.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-12",
+      "value": 3.1,
+      "open_p": 3.12,
+      "high_p": 3.1,
+      "low_p": 3.1,
+      "volume": 519150558.0,
+      "market_cap": 4789959044.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-13",
+      "value": 3.31,
+      "open_p": 3.1,
+      "high_p": 3.31,
+      "low_p": 3.31,
+      "volume": 460996243.0,
+      "market_cap": 5118897310.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-14",
+      "value": 3.22,
+      "open_p": 3.31,
+      "high_p": 3.22,
+      "low_p": 3.22,
+      "volume": 498379976.0,
+      "market_cap": 4985245519.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-15",
+      "value": 3.21,
+      "open_p": 3.22,
+      "high_p": 3.21,
+      "low_p": 3.21,
+      "volume": 357479686.0,
+      "market_cap": 4961439747.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-16",
+      "value": 3.11,
+      "open_p": 3.21,
+      "high_p": 3.11,
+      "low_p": 3.11,
+      "volume": 352463988.0,
+      "market_cap": 4816575492.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-17",
+      "value": 2.93,
+      "open_p": 3.11,
+      "high_p": 2.93,
+      "low_p": 2.93,
+      "volume": 424550568.0,
+      "market_cap": 4535129847.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-18",
+      "value": 2.93,
+      "open_p": 2.93,
+      "high_p": 2.93,
+      "low_p": 2.93,
+      "volume": 272696149.0,
+      "market_cap": 4533359584.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-19",
+      "value": 2.98,
+      "open_p": 2.93,
+      "high_p": 2.98,
+      "low_p": 2.98,
+      "volume": 175100585.0,
+      "market_cap": 4607831852.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-20",
+      "value": 3.07,
+      "open_p": 2.98,
+      "high_p": 3.07,
+      "low_p": 3.07,
+      "volume": 241718023.0,
+      "market_cap": 4757703966.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-21",
+      "value": 3.05,
+      "open_p": 3.07,
+      "high_p": 3.05,
+      "low_p": 3.05,
+      "volume": 250152947.0,
+      "market_cap": 4726683165.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-22",
+      "value": 2.97,
+      "open_p": 3.05,
+      "high_p": 2.97,
+      "low_p": 2.97,
+      "volume": 294238131.0,
+      "market_cap": 4603595308.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-23",
+      "value": 2.97,
+      "open_p": 2.97,
+      "high_p": 2.97,
+      "low_p": 2.97,
+      "volume": 258309308.0,
+      "market_cap": 4597893831.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-24",
+      "value": 3.08330758,
+      "open_p": 3.0027747,
+      "high_p": 3.09784586,
+      "low_p": 2.99664548,
+      "volume": 215308624.0,
+      "market_cap": 4776932289.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-25",
+      "value": 3.08925774,
+      "open_p": 3.08021948,
+      "high_p": 3.09567491,
+      "low_p": 3.0326952,
+      "volume": 123409938.0,
+      "market_cap": 4787250117.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-26",
+      "value": 3.21315662,
+      "open_p": 3.09231326,
+      "high_p": 3.21782052,
+      "low_p": 3.0628738,
+      "volume": 172652398.0,
+      "market_cap": 4980168963.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-27",
+      "value": 3.15858421,
+      "open_p": 3.19457864,
+      "high_p": 3.24417253,
+      "low_p": 3.12562382,
+      "volume": 238815629.0,
+      "market_cap": 4896695482.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-28",
+      "value": 3.03238223,
+      "open_p": 3.14081369,
+      "high_p": 3.19074249,
+      "low_p": 3.012676,
+      "volume": 659607938.0,
+      "market_cap": 4701996222.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-29",
+      "value": 3.14391821,
+      "open_p": 3.05731988,
+      "high_p": 3.17271513,
+      "low_p": 3.0432056,
+      "volume": 394730097.0,
+      "market_cap": 4876102835.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-30",
+      "value": 2.84127372,
+      "open_p": 3.08336571,
+      "high_p": 3.11674758,
+      "low_p": 2.79243472,
+      "volume": 353412605.0,
+      "market_cap": 4407545629.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-10-31",
+      "value": 2.87724976,
+      "open_p": 2.87308467,
+      "high_p": 2.92355198,
+      "low_p": 2.83393374,
+      "volume": 243552359.0,
+      "market_cap": 4464386384.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-11-01",
+      "value": 2.94254171,
+      "open_p": 2.88461139,
+      "high_p": 2.96690551,
+      "low_p": 2.86841134,
+      "volume": 193556853.0,
+      "market_cap": 4566509146.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-11-02",
+      "value": 2.92044951,
+      "open_p": 2.97316391,
+      "high_p": 3.01315223,
+      "low_p": 2.88040738,
+      "volume": 217101196.0,
+      "market_cap": 4533122031.0,
+      "quote": "usd"
+    },
+    {
+      "dt": "2025-11-03",
+      "value": 2.56482339,
+      "open_p": 2.98792856,
+      "high_p": 2.99132646,
+      "low_p": 2.52846923,
+      "volume": 395988290.0,
+      "market_cap": 3981982309.0,
+      "quote": "usd"
+    }
+  ]
+}

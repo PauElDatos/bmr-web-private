@@ -1,36 +1,60 @@
 {
   "module_code": "M1",
-  "run_id": 1101,
+  "run_id": 21,
   "items": [
     {
-      "metric_code": "n_observations",
-      "metric_value": 384,
-      "details_json": "{\"source\":\"mock_phase3\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "agg_blend_alpha",
+      "metric_value": 0.45,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
     },
     {
-      "metric_code": "hit_rate_12m",
-      "metric_value": 0.547,
-      "details_json": "{\"horizon\":\"12m\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "agg_cooldown_days",
+      "metric_value": 60.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
     },
     {
-      "metric_code": "avg_forward_return_12m",
-      "metric_value": 5.3,
-      "details_json": "{\"unit\":\"pct\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "agg_n_signals_used",
+      "metric_value": 15.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
     },
     {
-      "metric_code": "max_drawdown_alerts",
-      "metric_value": -19.2,
-      "details_json": "{\"unit\":\"pct\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "agg_weight_gamma",
+      "metric_value": 1.25,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
     },
     {
-      "metric_code": "coverage_ratio",
-      "metric_value": 0.865,
-      "details_json": "{\"source\":\"ml_run_metrics_mock\"}",
-      "created_at": "2026-05-05T00:00:00Z"
+      "metric_code": "scoring_dry_run",
+      "metric_value": 0.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
+    },
+    {
+      "metric_code": "scoring_n_event_rows",
+      "metric_value": 296.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
+    },
+    {
+      "metric_code": "scoring_n_hypotheses",
+      "metric_value": 12.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
+    },
+    {
+      "metric_code": "scoring_n_runs_used",
+      "metric_value": 12.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
+    },
+    {
+      "metric_code": "scoring_n_score_rows",
+      "metric_value": 15.0,
+      "details_json": null,
+      "created_at": "2026-05-07T11:13:32"
     }
   ]
 }

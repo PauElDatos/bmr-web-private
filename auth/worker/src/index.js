@@ -79,6 +79,7 @@ async function handleCallback(request, env) {
   const token = await exchangeCodeForToken(env, code);
   const identity = await fetchPatreonIdentity(env, token.access_token);
   const entitlement = evaluateEntitlement(env, identity);
+  logAuthDecision(env, entitlement);
 
   if (!entitlement.allowed) {
     return redirectWithClearedState(`/auth/denied?reason=${encodeURIComponent(entitlement.reason)}`, env);
@@ -185,6 +186,26 @@ function wantsHtml(request) {
 function requireEnv(env, names) {
   const missing = names.filter((name) => !env[name]);
   if (missing.length) throw new Error(`Faltan variables/secrets: ${missing.join(', ')}`);
+}
+
+function logAuthDecision(env, entitlement) {
+  const safeTierIds = Array.isArray(entitlement.detectedTierIds) ? entitlement.detectedTierIds : [];
+  const allowedTierIds = String(env.PATREON_ALLOWED_TIER_IDS || '')
+    .split(',')
+    .map((v) => v.trim())
+    .filter(Boolean);
+  const adminEmails = String(env.ADMIN_EMAIL_ALLOWLIST || '')
+    .split(',')
+    .map((v) => v.trim())
+    .filter(Boolean);
+  console.log(JSON.stringify({
+    event: 'patreon_auth_check',
+    allowed: Boolean(entitlement.allowed),
+    adminAllowed: Boolean(entitlement.adminAllowed),
+    detectedTierIds: safeTierIds,
+    allowedTierIds,
+    adminAllowlistCount: adminEmails.length
+  }));
 }
 
 function redirectWithClearedState(location, env) {

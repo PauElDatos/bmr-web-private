@@ -1,30 +1,24 @@
 {
   "module_code": "M4",
-  "run_id": 1104,
+  "run_id": 24,
   "items": [
     {
       "input_kind": "series",
       "input_code": "SPX",
       "role": "benchmark",
-      "notes": "Mock Fase 3 para M4; en real vendrá de ml_run_inputs."
+      "notes": "SPX base for label+features"
     },
     {
-      "input_kind": "indicator",
-      "input_code": "T10Y3M",
-      "role": "macro_input",
-      "notes": "Mock Fase 3 para M4; en real vendrá de ml_run_inputs."
+      "input_kind": "series",
+      "input_code": "SPX",
+      "role": "features_spx",
+      "notes": "SPX monthly features"
     },
     {
-      "input_kind": "indicator",
-      "input_code": "UNRATE",
-      "role": "macro_input",
-      "notes": "Mock Fase 3 para M4; en real vendrá de ml_run_inputs."
-    },
-    {
-      "input_kind": "indicator",
-      "input_code": "VIXCLS",
-      "role": "market_stress",
-      "notes": "Mock Fase 3 para M4; en real vendrá de ml_run_inputs."
+      "input_kind": "series",
+      "input_code": "SPX",
+      "role": "label_spx",
+      "notes": "Label from SPX drawdown"
     }
   ]
 }

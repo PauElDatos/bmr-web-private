@@ -5,6 +5,10 @@ function csv(value) {
     .filter(Boolean);
 }
 
+function lowerCsv(value) {
+  return csv(value).map((v) => v.toLowerCase());
+}
+
 export function buildPatreonAuthorizeUrl(env, state) {
   const url = new URL(env.PATREON_AUTHORIZE_URL || 'https://www.patreon.com/oauth2/authorize');
   url.searchParams.set('response_type', 'code');
@@ -58,12 +62,15 @@ export async function fetchPatreonIdentity(env, accessToken) {
 export function evaluateEntitlement(env, identity) {
   const allowedTierIds = csv(env.PATREON_ALLOWED_TIER_IDS);
   const allowedCampaignIds = csv(env.PATREON_ALLOWED_CAMPAIGN_IDS);
+  const adminEmails = lowerCsv(env.ADMIN_EMAIL_ALLOWLIST);
   const requireActive = String(env.PATREON_REQUIRE_ACTIVE_STATUS || 'true').toLowerCase() !== 'false';
   const included = Array.isArray(identity?.included) ? identity.included : [];
   const user = identity?.data || {};
   const members = included.filter((x) => x.type === 'member');
   const tiersById = new Map(included.filter((x) => x.type === 'tier').map((x) => [String(x.id), x]));
   const campaignsById = new Map(included.filter((x) => x.type === 'campaign').map((x) => [String(x.id), x]));
+  const userEmail = String(user.attributes?.email || '').toLowerCase();
+  const adminAllowed = Boolean(userEmail && adminEmails.includes(userEmail));
 
   const matches = [];
   for (const member of members) {
@@ -93,13 +100,16 @@ export function evaluateEntitlement(env, identity) {
   }
 
   return {
-    allowed: matches.length > 0,
+    allowed: adminAllowed || matches.length > 0,
+    adminAllowed,
     user: {
       patreon_user_id: user.id || null,
       full_name: user.attributes?.full_name || null,
       email: user.attributes?.email || null
     },
     entitlements: matches,
-    reason: matches.length ? 'tier_allowed' : 'no_allowed_tier'
+    reason: adminAllowed ? 'admin_allowlist' : (matches.length ? 'tier_allowed' : 'no_allowed_tier'),
+    detectedTierIds: matches.map((x) => x.tier_id).filter(Boolean),
+    allowedTierIds
   };
 }

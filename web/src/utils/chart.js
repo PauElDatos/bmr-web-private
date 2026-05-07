@@ -9,7 +9,7 @@ function getCanvas(container) {
   return { canvas, ctx, width: rect.width, height: rect.height };
 }
 
-const PALETTE = ['#60a5fa', '#f87171', '#34d399', '#fbbf24', '#a78bfa', '#22d3ee', '#fb7185'];
+const PALETTE = ['#FEF702', '#36C3FF', '#FF6A00', '#B0B0B0', '#9467bd', '#17becf', '#8c564b'];
 
 function parseDate(d) { return new Date(d).getTime(); }
 
@@ -28,8 +28,8 @@ export function drawLineChart(container, series, options = {}) {
   }
 
   if (!all.length) {
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '14px Inter, system-ui, sans-serif';
+    ctx.fillStyle = '#B0B0B0';
+    ctx.font = '14px Arial, system-ui, sans-serif';
     ctx.fillText('Sin datos para mostrar', 24, 40);
     return;
   }
@@ -47,7 +47,7 @@ export function drawLineChart(container, series, options = {}) {
   const xScale = (x) => pad.l + ((x - minX) / Math.max(1, maxX - minX)) * plotW;
   const yScale = (y) => pad.t + (1 - ((y - minY) / Math.max(1, maxY - minY))) * plotH;
 
-  ctx.fillStyle = '#08111f';
+  ctx.fillStyle = '#252525';
   ctx.fillRect(0, 0, width, height);
 
   // recession or regime bands
@@ -59,10 +59,10 @@ export function drawLineChart(container, series, options = {}) {
   }
 
   // grid
-  ctx.strokeStyle = 'rgba(148, 163, 184, 0.18)';
+  ctx.strokeStyle = 'rgba(74, 74, 74, 0.72)';
   ctx.lineWidth = 1;
-  ctx.font = '11px Inter, system-ui, sans-serif';
-  ctx.fillStyle = '#94a3b8';
+  ctx.font = '11px Arial, system-ui, sans-serif';
+  ctx.fillStyle = '#B0B0B0';
   for (let i = 0; i <= 4; i++) {
     const y = pad.t + (plotH * i / 4);
     ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
@@ -77,7 +77,7 @@ export function drawLineChart(container, series, options = {}) {
   }
 
   // border
-  ctx.strokeStyle = 'rgba(226, 232, 240, 0.25)';
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
   ctx.strokeRect(pad.l, pad.t, plotW, plotH);
 
   (series || []).forEach((s, idx) => {
@@ -98,7 +98,7 @@ export function drawLineChart(container, series, options = {}) {
     if (!marker.dt) continue;
     const mx = xScale(parseDate(marker.dt));
     if (!Number.isFinite(mx) || mx < pad.l || mx > width - pad.r) continue;
-    ctx.strokeStyle = marker.color || 'rgba(251, 191, 36, .38)';
+    ctx.strokeStyle = marker.color || 'rgba(254, 247, 2, .42)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(mx, pad.t);
@@ -109,12 +109,12 @@ export function drawLineChart(container, series, options = {}) {
   // legend
   let lx = pad.l;
   let ly = 16;
-  ctx.font = '12px Inter, system-ui, sans-serif';
+  ctx.font = '12px Arial, system-ui, sans-serif';
   (series || []).forEach((s, idx) => {
     const c = s.color || PALETTE[idx % PALETTE.length];
     ctx.fillStyle = c;
     ctx.fillRect(lx, ly - 9, 14, 3);
-    ctx.fillStyle = '#cbd5e1';
+    ctx.fillStyle = '#B0B0B0';
     ctx.fillText(s.name || `Serie ${idx + 1}`, lx + 20, ly - 5);
     lx += (s.name || '').length * 7 + 64;
   });
