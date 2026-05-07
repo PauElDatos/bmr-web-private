@@ -3,7 +3,6 @@ import { HomePage } from './pages/HomePage.js';
 import { MarketSentimentPage } from './pages/MarketSentimentPage.js';
 import { MacroDataPage } from './pages/MacroDataPage.js';
 import { AnalysisPage } from './pages/AnalysisPage.js';
-import { StatusPage } from './pages/StatusPage.js';
 import { AuthPage } from './pages/AuthPage.js';
 import { authConfig, loadSession } from './api/authClient.js';
 
@@ -12,7 +11,6 @@ const routes = {
   '/sentimiento': MarketSentimentPage,
   '/macro': MacroDataPage,
   '/analisis': AnalysisPage,
-  '/estado': StatusPage,
   '/auth': AuthPage
 };
 
