@@ -2,100 +2,108 @@ import { loadCatalog, loadTimeseries } from '../api/dataClient.js';
 import { pageHeader } from '../components/Layout.js';
 import { chartPanel } from '../components/ChartPanel.js';
 import { catalogList, factsPanel } from '../components/CatalogTable.js';
-import { drawLineChart, attachResize, attachTradingViewInteractions } from '../utils/chart.js';
+import { drawLineChart, attachResize, attachTradingChartInteractions } from '../utils/chart.js';
 
 let selectedCode = 'FEDFUNDS';
 let sourceFilter = 'ALL';
 let cleanupResize = null;
 let cleanupChartInteractions = null;
 let macroView = {};
-let macroCatalog = [];
 
 export async function MacroDataPage() {
   const catalog = await loadCatalog('indicators');
-  macroCatalog = catalog.items || [];
-  const sources = ['ALL', ...new Set(macroCatalog.map(i => i.source).filter(Boolean))];
+  const sources = ['ALL', ...new Set(catalog.items.map(i => i.source).filter(Boolean))];
+  const selectedItem = catalog.items.find(i => i.code === selectedCode) || catalog.items[0];
+  if (selectedItem) selectedCode = selectedItem.code;
   setTimeout(() => wireMacroPage(), 0);
 
-  return `
-    ${pageHeader('Macro datos')}
-    <section class="data-browser macro-data-browser">
-      <aside class="card browser-sidebar macro-browser-sidebar">
-        <div class="filter-grid compact-filter-grid">
-          <label>Fuente<select id="source-filter" class="select-input">${sources.map(s => `<option value="${s}" ${s === sourceFilter ? 'selected' : ''}>${s}</option>`).join('')}</select></label>
-        </div>
-        <div id="macro-list" class="macro-list-scroll">${catalogList(filteredCatalog(), selectedCode, 'indicators')}</div>
-      </aside>
-      <main class="browser-main macro-browser-main">
-        <div id="macro-facts"></div>
-        ${chartPanel(
-          'macro-chart',
-          `Serie ${selectedCode}`,
-          '',
-          `<button id="macro-prev" class="icon-btn" type="button" aria-label="Serie anterior">‹</button><button id="macro-next" class="icon-btn" type="button" aria-label="Serie siguiente">›</button>`
-        )}
-      </main>
-    </section>
+  const chartActions = `
+    <button id="macro-prev" class="btn icon-btn" type="button" aria-label="Serie anterior">‹</button>
+    <button id="macro-next" class="btn icon-btn" type="button" aria-label="Serie siguiente">›</button>
   `;
-}
 
-function filteredCatalog() {
-  return macroCatalog.filter(i => sourceFilter === 'ALL' || i.source === sourceFilter);
+  return `
+    <div class="macro-page">
+      ${pageHeader('Macro datos')}
+      <section class="data-browser">
+        <aside class="card browser-sidebar">
+          <div class="filter-grid compact-filter-grid">
+            <label>Fuente<select id="source-filter" class="select-input">${sources.map(s => `<option value="${s}" ${s === sourceFilter ? 'selected' : ''}>${s}</option>`).join('')}</select></label>
+          </div>
+          <div id="macro-list" class="macro-list-scroll">${catalogList(filteredCatalogItems(catalog.items), selectedCode, 'indicators')}</div>
+        </aside>
+        <main class="browser-main">
+          <div id="macro-facts">${factsPanel(selectedItem)}</div>
+          ${chartPanel('macro-chart', `Serie ${selectedCode}`, '', chartActions)}
+        </main>
+      </section>
+    </div>
+  `;
 }
 
 async function wireMacroPage() {
   const catalog = await loadCatalog('indicators');
-  macroCatalog = catalog.items || [];
   const list = document.getElementById('macro-list');
   const source = document.getElementById('source-filter');
-  const prev = document.getElementById('macro-prev');
-  const next = document.getElementById('macro-next');
+  const prevBtn = document.getElementById('macro-prev');
+  const nextBtn = document.getElementById('macro-next');
+  if (!list || !source) return;
+
+  const getVisibleItems = () => filteredCatalogItems(catalog.items);
 
   const renderList = () => {
-    if (!list) return;
-    sourceFilter = source?.value || 'ALL';
-    const filtered = filteredCatalog();
-    if (filtered.length && !filtered.some(i => i.code === selectedCode)) selectedCode = filtered[0].code;
-    list.innerHTML = catalogList(filtered, selectedCode, 'indicators');
+    sourceFilter = source.value;
+    list.innerHTML = catalogList(getVisibleItems(), selectedCode, 'indicators');
     bindItems();
   };
 
-  const navigateSeries = async (step) => {
-    const filtered = filteredCatalog();
-    if (!filtered.length) return;
-    const currentIndex = Math.max(0, filtered.findIndex(i => i.code === selectedCode));
-    const nextIndex = (currentIndex + step + filtered.length) % filtered.length;
-    selectedCode = filtered[nextIndex].code;
+  const selectCode = async (code) => {
+    selectedCode = code;
     macroView = {};
     renderList();
     await renderMacroDetail(catalog);
   };
 
+  const selectByOffset = async (offset) => {
+    const visible = getVisibleItems();
+    if (!visible.length) return;
+    const currentIndex = Math.max(0, visible.findIndex(i => i.code === selectedCode));
+    const nextIndex = (currentIndex + offset + visible.length) % visible.length;
+    await selectCode(visible[nextIndex].code);
+  };
+
   const bindItems = () => {
-    if (!list) return;
     list.querySelectorAll('.catalog-item').forEach(btn => {
       btn.addEventListener('click', async () => {
-        selectedCode = btn.dataset.code;
-        macroView = {};
-        renderList();
-        await renderMacroDetail(catalog);
+        await selectCode(btn.dataset.code);
       });
     });
   };
 
-  source?.addEventListener('change', async () => {
+  source.addEventListener('change', async () => {
+    sourceFilter = source.value;
+    const visible = getVisibleItems();
+    if (visible.length && !visible.some(i => i.code === selectedCode)) {
+      selectedCode = visible[0].code;
+      macroView = {};
+    }
     renderList();
-    macroView = {};
     await renderMacroDetail(catalog);
   });
-  prev?.addEventListener('click', () => navigateSeries(-1));
-  next?.addEventListener('click', () => navigateSeries(1));
+
+  prevBtn?.addEventListener('click', () => selectByOffset(-1));
+  nextBtn?.addEventListener('click', () => selectByOffset(1));
+
   bindItems();
   await renderMacroDetail(catalog);
 }
 
+function filteredCatalogItems(items) {
+  return (items || []).filter(i => sourceFilter === 'ALL' || i.source === sourceFilter);
+}
+
 async function renderMacroDetail(catalog) {
-  const item = (catalog.items || []).find(i => i.code === selectedCode) || (catalog.items || [])[0];
+  const item = catalog.items.find(i => i.code === selectedCode) || catalog.items[0];
   if (!item) return;
   selectedCode = item.code;
   const ts = await loadTimeseries('indicators', item.code);
@@ -113,7 +121,8 @@ async function renderMacroDetail(catalog) {
       view: macroView,
       hideLegend: true,
       hideYAxisGutter: true,
-      bands: []
+      bands: [],
+      compactAxes: true
     }
   );
 
@@ -121,5 +130,5 @@ async function renderMacroDetail(catalog) {
   if (cleanupResize) cleanupResize();
   cleanupResize = attachResize(chart, draw);
   if (cleanupChartInteractions) cleanupChartInteractions();
-  cleanupChartInteractions = attachTradingViewInteractions(chart, macroView, draw);
+  cleanupChartInteractions = attachTradingChartInteractions(chart, macroView, draw);
 }

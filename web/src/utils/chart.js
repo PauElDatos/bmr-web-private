@@ -22,88 +22,31 @@ function paddedYRange(values) {
   return { minY: minY - yPad, maxY: maxY + yPad };
 }
 
-function formatDateEs(timestamp) {
-  const d = new Date(timestamp);
-  const dd = String(d.getDate()).padStart(2, '0');
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const yyyy = d.getFullYear();
-  return `${dd}/${mm}/${yyyy}`;
-}
-
-function formatChartNumber(value) {
-  return Number(value).toLocaleString('es-ES', { maximumFractionDigits: 4 });
-}
-
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
-}
-
-function textBox(ctx, lines, x, y, options = {}) {
-  const pad = 8;
-  ctx.save();
-  ctx.font = options.font || '12px Arial, system-ui, sans-serif';
-  const width = Math.max(...lines.map(line => ctx.measureText(line).width)) + pad * 2;
-  const lineH = 16;
-  const height = lines.length * lineH + pad * 2 - 3;
-  const bx = clamp(x, 8, Math.max(8, options.maxW - width - 8));
-  const by = clamp(y, 8, Math.max(8, options.maxH - height - 8));
-  const radius = 8;
-  ctx.fillStyle = 'rgba(15, 15, 15, 0.92)';
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(bx + radius, by);
-  ctx.lineTo(bx + width - radius, by);
-  ctx.quadraticCurveTo(bx + width, by, bx + width, by + radius);
-  ctx.lineTo(bx + width, by + height - radius);
-  ctx.quadraticCurveTo(bx + width, by + height, bx + width - radius, by + height);
-  ctx.lineTo(bx + radius, by + height);
-  ctx.quadraticCurveTo(bx, by + height, bx, by + height - radius);
-  ctx.lineTo(bx, by + radius);
-  ctx.quadraticCurveTo(bx, by, bx + radius, by);
-  ctx.fill();
-  ctx.stroke();
-  lines.forEach((line, idx) => {
-    ctx.fillStyle = idx === 0 ? '#FEF702' : '#FFFFFF';
-    ctx.fillText(line, bx + pad, by + pad + 11 + idx * lineH);
-  });
-  ctx.restore();
-}
-
-function findNearestPoint(seriesPoints, hoverX, minX, maxX) {
-  let nearest = null;
-  for (const s of seriesPoints || []) {
-    const visible = s.points.filter(p => p.x >= minX && p.x <= maxX);
-    const candidates = visible.length ? visible : s.points;
-    for (const p of candidates) {
-      const dist = Math.abs(p.x - hoverX);
-      if (!nearest || dist < nearest.dist) nearest = { ...p, name: s.name, color: s.color, dist };
-    }
-  }
-  return nearest;
+function normalizePoints(points) {
+  return (points || [])
+    .map(p => ({ dt: String(p.dt || '').slice(0, 10), x: parseDate(p.dt), y: Number(p.value) }))
+    .filter(p => p.dt && Number.isFinite(p.x) && Number.isFinite(p.y))
+    .sort((a, b) => a.x - b.x);
 }
 
 export function drawLineChart(container, series, options = {}) {
   const { ctx, width, height } = getCanvas(container);
-  const pad = options.hideYAxisGutter ? { l: 38, r: 24, t: 26, b: 38 } : { l: 58, r: 22, t: 28, b: 38 };
+  const pad = options.hideYAxisGutter ? { l: 38, r: 22, t: 24, b: 38 } : { l: 58, r: 22, t: 28, b: 38 };
   ctx.clearRect(0, 0, width, height);
 
-  const seriesPoints = (series || []).map((s, idx) => ({
-    name: s.name || `Serie ${idx + 1}`,
+  const normalizedSeries = (series || []).map((s, idx) => ({
+    ...s,
     color: s.color || PALETTE[idx % PALETTE.length],
     width: s.width || 2,
-    points: (s.points || [])
-      .filter(p => Number.isFinite(Number(p.value)) && Number.isFinite(parseDate(p.dt)))
-      .map(p => ({ x: parseDate(p.dt), y: Number(p.value), dt: String(p.dt).slice(0, 10), raw: p }))
-      .sort((a, b) => a.x - b.x)
+    points: normalizePoints(s.points)
   }));
-
-  const all = seriesPoints.flatMap(s => s.points.map(p => ({ x: p.x, y: p.y })));
+  const all = normalizedSeries.flatMap(s => s.points.map(p => ({ x: p.x, y: p.y })));
 
   if (!all.length) {
     ctx.fillStyle = '#B0B0B0';
     ctx.font = '14px Arial, system-ui, sans-serif';
     ctx.fillText('Sin datos para mostrar', 24, 40);
+    container._chartState = null;
     return;
   }
 
@@ -125,8 +68,6 @@ export function drawLineChart(container, series, options = {}) {
   const plotH = Math.max(1, height - pad.t - pad.b);
   const xScale = (x) => pad.l + ((x - minX) / Math.max(1, maxX - minX)) * plotW;
   const yScale = (y) => pad.t + (1 - ((y - minY) / Math.max(1, maxY - minY))) * plotH;
-  const xFromPx = (x) => minX + ((x - pad.l) / Math.max(1, plotW)) * (maxX - minX);
-  const yFromPx = (y) => minY + (1 - ((y - pad.t) / Math.max(1, plotH))) * (maxY - minY);
 
   container._chartState = {
     pad,
@@ -142,17 +83,13 @@ export function drawLineChart(container, series, options = {}) {
     dataMaxX,
     dataMinY,
     dataMaxY,
-    seriesPoints,
-    xScale,
-    yScale,
-    xFromPx,
-    yFromPx
+    series: normalizedSeries
   };
 
   ctx.fillStyle = '#252525';
   ctx.fillRect(0, 0, width, height);
 
-  // recession or regime bands
+  // Optional vertical bands, disabled on macro by passing an empty array.
   for (const band of options.bands || []) {
     const bx0 = xScale(parseDate(band.from));
     const bx1 = xScale(parseDate(band.to));
@@ -163,7 +100,7 @@ export function drawLineChart(container, series, options = {}) {
     ctx.fillRect(left, pad.t, Math.max(0, right - left), plotH);
   }
 
-  // grid and axes
+  // Grid and axes labels. The left-side label area is not painted separately, avoiding the grey vertical rectangle.
   ctx.strokeStyle = 'rgba(74, 74, 74, 0.72)';
   ctx.lineWidth = 1;
   ctx.font = '11px Arial, system-ui, sans-serif';
@@ -182,26 +119,29 @@ export function drawLineChart(container, series, options = {}) {
   }
 
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
-  ctx.strokeRect(pad.l, pad.t, plotW, plotH);
+  ctx.beginPath();
+  ctx.rect(pad.l, pad.t, plotW, plotH);
+  ctx.stroke();
 
   ctx.save();
   ctx.beginPath();
   ctx.rect(pad.l, pad.t, plotW, plotH);
   ctx.clip();
 
-  seriesPoints.forEach((s) => {
-    if (!s.points.length) return;
+  normalizedSeries.forEach((s) => {
+    const visiblePts = s.points.filter(p => p.x >= minX && p.x <= maxX);
+    const pts = visiblePts.length ? visiblePts : s.points;
+    if (!pts.length) return;
     ctx.strokeStyle = s.color;
     ctx.lineWidth = s.width;
     ctx.beginPath();
-    s.points.forEach((p, i) => {
+    pts.forEach((p, i) => {
       const x = xScale(p.x), y = yScale(p.y);
       if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     });
     ctx.stroke();
   });
 
-  // event markers
   for (const marker of options.markers || []) {
     if (!marker.dt) continue;
     const mx = xScale(parseDate(marker.dt));
@@ -214,48 +154,19 @@ export function drawLineChart(container, series, options = {}) {
     ctx.stroke();
   }
 
-  const hover = options.view?.hover;
-  if (hover && hover.active) {
-    const hoverXValue = xFromPx(hover.x);
-    const nearest = findNearestPoint(seriesPoints, hoverXValue, minX, maxX);
-    if (nearest) {
-      const hx = xScale(nearest.x);
-      const hy = yScale(nearest.y);
-      if (hx >= pad.l && hx <= width - pad.r && hy >= pad.t && hy <= pad.t + plotH) {
-        ctx.strokeStyle = 'rgba(254, 247, 2, 0.46)';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([4, 4]);
-        ctx.beginPath();
-        ctx.moveTo(hx, pad.t);
-        ctx.lineTo(hx, pad.t + plotH);
-        ctx.moveTo(pad.l, hy);
-        ctx.lineTo(width - pad.r, hy);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        ctx.fillStyle = nearest.color || '#FEF702';
-        ctx.beginPath();
-        ctx.arc(hx, hy, 4, 0, Math.PI * 2);
-        ctx.fill();
-
-        const lines = [formatDateEs(nearest.x), `${nearest.name}: ${formatChartNumber(nearest.y)}`];
-        textBox(ctx, lines, hx + 12, hy - 38, { maxW: width, maxH: height });
-      }
-    }
-  }
-
   ctx.restore();
 
   if (!options.hideLegend) {
     let lx = pad.l;
     let ly = 16;
     ctx.font = '12px Arial, system-ui, sans-serif';
-    seriesPoints.forEach((s) => {
-      ctx.fillStyle = s.color;
+    normalizedSeries.forEach((s, idx) => {
+      const c = s.color || PALETTE[idx % PALETTE.length];
+      ctx.fillStyle = c;
       ctx.fillRect(lx, ly - 9, 14, 3);
       ctx.fillStyle = '#B0B0B0';
-      ctx.fillText(s.name, lx + 20, ly - 5);
-      lx += s.name.length * 7 + 64;
+      ctx.fillText(s.name || `Serie ${idx + 1}`, lx + 20, ly - 5);
+      lx += (s.name || '').length * 7 + 64;
     });
   }
 }
@@ -279,171 +190,205 @@ function zoomAround(min, max, floor, ceiling, center, factor, minRange) {
   return clampRange(nextMin, nextMax, floor, ceiling);
 }
 
-function isInsidePlot(state, x, y) {
+function formatTooltipDate(dt) {
+  const d = new Date(dt);
+  if (!Number.isFinite(d.getTime())) return String(dt || '');
+  return d.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+function formatTooltipValue(value) {
+  return Number(value).toLocaleString('es-ES', { maximumFractionDigits: 4 });
+}
+
+function ensureTooltip(container) {
+  let tooltip = container.querySelector('.chart-tooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.className = 'chart-tooltip';
+    tooltip.setAttribute('role', 'status');
+    container.appendChild(tooltip);
+  }
+  return tooltip;
+}
+
+function findNearestPoint(state, x, y) {
+  const { pad, plotW, plotH, minX, maxX, minY, maxY, series } = state;
+  const xScale = (px) => pad.l + ((px - minX) / Math.max(1, maxX - minX)) * plotW;
+  const yScale = (py) => pad.t + (1 - ((py - minY) / Math.max(1, maxY - minY))) * plotH;
+  let best = null;
+  for (const s of series || []) {
+    for (const p of s.points || []) {
+      if (p.x < minX || p.x > maxX || p.y < minY || p.y > maxY) continue;
+      const px = xScale(p.x);
+      const py = yScale(p.y);
+      const dx = Math.abs(px - x);
+      const dy = Math.abs(py - y);
+      const score = dx * 1.5 + dy * 0.35;
+      if (!best || score < best.score) best = { ...p, px, py, name: s.name, score };
+    }
+  }
+  return best;
+}
+
+function pointInPlot(state, x, y) {
   return x >= state.pad.l && x <= state.width - state.pad.r && y >= state.pad.t && y <= state.height - state.pad.b;
 }
 
-export function attachTradingViewInteractions(container, view, draw) {
+export function attachTradingChartInteractions(container, view, draw) {
+  const canvas = container.querySelector('canvas');
+  const tooltip = ensureTooltip(container);
   let dragging = false;
-  let dragStart = null;
+  let last = null;
 
-  const canvas = () => container.querySelector('canvas');
-
-  const setCursor = (cursor) => {
-    const c = canvas();
-    if (c) c.style.cursor = cursor;
-  };
-
-  const resetView = () => {
-    delete view.xMin;
-    delete view.xMax;
-    delete view.yMin;
-    delete view.yMax;
-    draw();
+  const updateTooltip = (event) => {
+    const state = container._chartState;
+    if (!state || !canvas || dragging) {
+      tooltip.classList.remove('visible');
+      return;
+    }
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    if (!pointInPlot(state, x, y)) {
+      tooltip.classList.remove('visible');
+      return;
+    }
+    const nearest = findNearestPoint(state, x, y);
+    if (!nearest) {
+      tooltip.classList.remove('visible');
+      return;
+    }
+    tooltip.innerHTML = `<strong>${nearest.name || 'Serie'}</strong><span>${formatTooltipDate(nearest.dt)}</span><em>${formatTooltipValue(nearest.y)}</em>`;
+    const tooltipX = Math.min(Math.max(nearest.px + 12, 8), rect.width - 132);
+    const tooltipY = Math.min(Math.max(nearest.py - 42, 8), rect.height - 78);
+    tooltip.style.left = `${tooltipX}px`;
+    tooltip.style.top = `${tooltipY}px`;
+    tooltip.classList.add('visible');
   };
 
   const onWheel = (event) => {
     const state = container._chartState;
-    const c = canvas();
-    if (!state || !c) return;
-
-    const rect = c.getBoundingClientRect();
+    if (!state || !canvas) return;
+    const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
     const { pad, width, height, plotW, plotH } = state;
-
-    const overYAxis = x >= 0 && x <= pad.l + 28 && y >= pad.t && y <= height - pad.b;
-    const overXAxis = y >= height - pad.b - 24 && y <= height && x >= pad.l && x <= width - pad.r;
-    const overPlot = isInsidePlot(state, x, y);
+    const overYAxis = x >= 0 && x <= pad.l + 20 && y >= pad.t && y <= height - pad.b;
+    const overXAxis = y >= height - pad.b - 20 && y <= height && x >= pad.l && x <= width - pad.r;
+    const overPlot = pointInPlot(state, x, y);
     if (!overYAxis && !overXAxis && !overPlot) return;
 
     event.preventDefault();
     const factor = event.deltaY > 0 ? 1.16 : 0.86;
 
-    const shouldZoomY = overYAxis || (overPlot && event.shiftKey);
-    const shouldZoomX = overXAxis || overPlot || !shouldZoomY;
-
-    if (shouldZoomX && !overYAxis) {
-      const center = state.minX + ((x - pad.l) / Math.max(1, plotW)) * (state.maxX - state.minX);
-      const minRange = 7 * DAY_MS;
+    if (overXAxis || overPlot) {
+      const center = state.minX + ((Math.min(Math.max(x, pad.l), width - pad.r) - pad.l) / Math.max(1, plotW)) * (state.maxX - state.minX);
+      const minRange = 30 * DAY_MS;
       const [xMin, xMax] = zoomAround(state.minX, state.maxX, state.dataMinX, state.dataMaxX, center, factor, minRange);
       view.xMin = xMin;
       view.xMax = xMax;
     }
 
-    if (shouldZoomY) {
-      const center = state.minY + (1 - ((y - pad.t) / Math.max(1, plotH))) * (state.maxY - state.minY);
-      const minRange = Math.max((state.dataMaxY - state.dataMinY) * 0.01, 0.000001);
+    if (overYAxis || overPlot || event.shiftKey) {
+      const center = state.minY + (1 - ((Math.min(Math.max(y, pad.t), height - pad.b) - pad.t) / Math.max(1, plotH))) * (state.maxY - state.minY);
+      const minRange = Math.max((state.dataMaxY - state.dataMinY) * 0.015, 0.000001);
       const [yMin, yMax] = zoomAround(state.minY, state.maxY, state.dataMinY, state.dataMaxY, center, factor, minRange);
       view.yMin = yMin;
       view.yMax = yMax;
     }
 
     draw();
+    updateTooltip(event);
   };
 
   const onPointerDown = (event) => {
     const state = container._chartState;
-    const c = canvas();
-    if (!state || !c || event.button !== 0) return;
-    const rect = c.getBoundingClientRect();
+    if (!state || !canvas) return;
+    const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    if (!isInsidePlot(state, x, y)) return;
-
+    if (!pointInPlot(state, x, y)) return;
+    event.preventDefault();
     dragging = true;
-    dragStart = {
-      pointerId: event.pointerId,
-      x,
-      y,
-      minX: state.minX,
-      maxX: state.maxX,
-      minY: state.minY,
-      maxY: state.maxY
-    };
-    c.setPointerCapture(event.pointerId);
-    setCursor('grabbing');
+    last = { x, y };
+    canvas.setPointerCapture?.(event.pointerId);
+    container.classList.add('dragging');
+    tooltip.classList.remove('visible');
   };
 
   const onPointerMove = (event) => {
     const state = container._chartState;
-    const c = canvas();
-    if (!state || !c) return;
-
-    const rect = c.getBoundingClientRect();
+    if (!state || !canvas) return;
+    const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    if (dragging && dragStart) {
-      event.preventDefault();
-      const dx = x - dragStart.x;
-      const dy = y - dragStart.y;
-      const xSpan = dragStart.maxX - dragStart.minX;
-      const ySpan = dragStart.maxY - dragStart.minY;
-      const xShift = -dx / Math.max(1, state.plotW) * xSpan;
-      const yShift = dy / Math.max(1, state.plotH) * ySpan;
-      const [xMin, xMax] = clampRange(dragStart.minX + xShift, dragStart.maxX + xShift, state.dataMinX, state.dataMaxX);
-      const [yMin, yMax] = clampRange(dragStart.minY + yShift, dragStart.maxY + yShift, state.dataMinY, state.dataMaxY);
-      view.xMin = xMin;
-      view.xMax = xMax;
-      view.yMin = yMin;
-      view.yMax = yMax;
-      draw();
+    if (!dragging || !last) {
+      updateTooltip(event);
       return;
     }
 
-    if (isInsidePlot(state, x, y)) {
-      view.hover = { active: true, x, y };
-      setCursor('grab');
-      draw();
-    } else if (view.hover?.active) {
-      view.hover = { active: false };
-      setCursor('default');
-      draw();
-    } else {
-      setCursor('default');
-    }
+    const dx = x - last.x;
+    const dy = y - last.y;
+    last = { x, y };
+
+    const xSpan = state.maxX - state.minX;
+    const ySpan = state.maxY - state.minY;
+    const xShift = -dx / Math.max(1, state.plotW) * xSpan;
+    const yShift = dy / Math.max(1, state.plotH) * ySpan;
+    const [xMin, xMax] = clampRange(state.minX + xShift, state.maxX + xShift, state.dataMinX, state.dataMaxX);
+    const [yMin, yMax] = clampRange(state.minY + yShift, state.maxY + yShift, state.dataMinY, state.dataMaxY);
+
+    view.xMin = xMin;
+    view.xMax = xMax;
+    view.yMin = yMin;
+    view.yMax = yMax;
+    draw();
   };
 
-  const onPointerUp = (event) => {
+  const endDrag = (event) => {
     if (!dragging) return;
-    const c = canvas();
-    if (c && dragStart?.pointerId === event.pointerId) c.releasePointerCapture(event.pointerId);
     dragging = false;
-    dragStart = null;
-    setCursor('grab');
+    last = null;
+    container.classList.remove('dragging');
+    canvas.releasePointerCapture?.(event.pointerId);
   };
 
-  const onPointerLeave = () => {
-    if (dragging) return;
-    if (view.hover?.active) {
-      view.hover = { active: false };
-      draw();
-    }
-    setCursor('default');
+  const onDblClick = () => {
+    delete view.xMin;
+    delete view.xMax;
+    delete view.yMin;
+    delete view.yMax;
+    tooltip.classList.remove('visible');
+    draw();
+  };
+
+  const onLeave = () => {
+    tooltip.classList.remove('visible');
   };
 
   container.addEventListener('wheel', onWheel, { passive: false });
-  container.addEventListener('pointerdown', onPointerDown);
-  container.addEventListener('pointermove', onPointerMove);
-  container.addEventListener('pointerup', onPointerUp);
-  container.addEventListener('pointercancel', onPointerUp);
-  container.addEventListener('pointerleave', onPointerLeave);
-  container.addEventListener('dblclick', resetView);
+  canvas.addEventListener('pointerdown', onPointerDown);
+  canvas.addEventListener('pointermove', onPointerMove);
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+  canvas.addEventListener('mouseleave', onLeave);
+  container.addEventListener('dblclick', onDblClick);
 
   return () => {
     container.removeEventListener('wheel', onWheel);
-    container.removeEventListener('pointerdown', onPointerDown);
-    container.removeEventListener('pointermove', onPointerMove);
-    container.removeEventListener('pointerup', onPointerUp);
-    container.removeEventListener('pointercancel', onPointerUp);
-    container.removeEventListener('pointerleave', onPointerLeave);
-    container.removeEventListener('dblclick', resetView);
+    canvas.removeEventListener('pointerdown', onPointerDown);
+    canvas.removeEventListener('pointermove', onPointerMove);
+    canvas.removeEventListener('pointerup', endDrag);
+    canvas.removeEventListener('pointercancel', endDrag);
+    canvas.removeEventListener('mouseleave', onLeave);
+    container.removeEventListener('dblclick', onDblClick);
+    tooltip.remove();
   };
 }
 
 export function attachAxisWheelZoom(container, view, draw) {
-  return attachTradingViewInteractions(container, view, draw);
+  return attachTradingChartInteractions(container, view, draw);
 }
 
 export function attachResize(container, draw) {
