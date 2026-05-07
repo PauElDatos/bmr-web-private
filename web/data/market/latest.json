@@ -1,9 +1,0 @@
-{
-  "regime": "RISK_OFF",
-  "asof_dt": "2026-03-31",
-  "confidence": 100,
-  "primary_driver": "M2_S_WEAK",
-  "primary_driver_reason": "Derivado del último punto disponible del run M5 exportado desde MariaDB.",
-  "buy_pulse": null,
-  "sell_pulse": null
-}

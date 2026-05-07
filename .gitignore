@@ -12,3 +12,7 @@ exporter/.env.local
 automation/env/daily-export.env
 automation/logs/*.log
 .DS_Store
+
+# Datos exportados reales: van a R2, no a GitHub Pages
+web/data/
+.private-data/
