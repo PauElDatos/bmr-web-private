@@ -61,7 +61,28 @@ const DB_EXACT_TRANSLATIONS = new Map([
   ['weekly', 'semanal'],
   ['monthly', 'mensual'],
   ['quarterly', 'trimestral'],
-  ['annual', 'anual']
+  ['annual', 'anual'],
+
+  // Traducciones específicas de la página Macro datos.
+  ['AAII Bullish % - MA50w', 'AAII % alcistas - media móvil de 50 semanas'],
+  ['AAII Bullish %', 'AAII % alcistas'],
+  ['Bad weather at work 1–34h (usually full-time)', 'Mal tiempo en el trabajo 1–34 h (normalmente jornada completa)'],
+  ['Bad weather at work 1-34h (usually full-time)', 'Mal tiempo en el trabajo 1–34 h (normalmente jornada completa)'],
+  ['IWM/SPX Ratio (Russell 2000 proxy vs S&P 500) - semanal', 'Ratio IWM/SPX (IWM como proxy del Russell 2000 frente al S&P 500) - semanal'],
+  ['IWM/SPX Ratio (Russell 2000 proxy vs S&P 500) - weekly', 'Ratio IWM/SPX (IWM como proxy del Russell 2000 frente al S&P 500) - semanal'],
+  ['SPX EMA 20', 'SPX media móvil exponencial de 20 sesiones'],
+  ['SPX EMA 50', 'SPX media móvil exponencial de 50 sesiones'],
+  ['SPX EMA 200', 'SPX media móvil exponencial de 200 sesiones'],
+
+  // Fuentes y tipos frecuentes.
+  ['calc', 'cálculo'],
+  ['CALC', 'cálculo'],
+  ['BMR_HYPOTHESIS', 'Hipótesis BMR'],
+  ['BMR hypothesis', 'Hipótesis BMR'],
+  ['BMR Hypothesis', 'Hipótesis BMR'],
+  ['FRED', 'FRED'],
+  ['BLS', 'BLS'],
+  ['AAII', 'AAII']
 ]);
 
 const DB_TEXT_REPLACEMENTS = [
@@ -75,6 +96,26 @@ const DB_TEXT_REPLACEMENTS = [
     const unitLabel = Number(amount) === 1 ? singular : plural;
     return `Tasa del Tesoro a vencimiento constante de ${amount} ${unitLabel}`;
   }],
+
+  // Reglas genéricas para indicadores de mercado y sentimiento.
+  [/\b([A-Z][A-Z0-9./-]*)\s+EMA\s+(\d+)\b/g, '$1 media móvil exponencial de $2 sesiones'],
+  [/\b([A-Z][A-Z0-9./-]*)\s+SMA\s+(\d+)\b/g, '$1 media móvil simple de $2 sesiones'],
+  [/\b([A-Z][A-Z0-9./-]*)\s+MA\s*(\d+)\s*w\b/gi, '$1 media móvil de $2 semanas'],
+  [/\bMA\s*(\d+)\s*w\b/gi, 'media móvil de $1 semanas'],
+  [/\bEMA\s+(\d+)\b/g, 'media móvil exponencial de $1 sesiones'],
+  [/\bSMA\s+(\d+)\b/g, 'media móvil simple de $1 sesiones'],
+  [/\bBullish\b/gi, 'alcistas'],
+  [/\bBearish\b/gi, 'bajistas'],
+  [/\bNeutral\b/gi, 'neutral'],
+  [/\bSentiment\b/gi, 'sentimiento'],
+  [/\bRatio\b/gi, 'ratio'],
+  [/\bproxy\b/gi, 'proxy'],
+  [/\bvs\.?\b/gi, 'frente a'],
+  [/\busually full-time\b/gi, 'normalmente jornada completa'],
+  [/\bBad weather at work\b/gi, 'Mal tiempo en el trabajo'],
+  [/(\d+)\s*[–-]\s*(\d+)h\b/gi, '$1–$2 h'],
+
+  // Reglas macroeconómicas generales.
   [/\bTreasury\b/g, 'Tesoro'],
   [/\bU\.S\.\b/g, 'EE. UU.'],
   [/\bUnited States\b/gi, 'Estados Unidos'],
@@ -85,11 +126,12 @@ const DB_TEXT_REPLACEMENTS = [
   [/\bUnemployment Rate\b/gi, 'tasa de desempleo'],
   [/\bInflation\b/gi, 'inflación'],
   [/\bConsumer Price Index\b/gi, 'índice de precios al consumo'],
-  [/\bProducer Price Index\b/gi, 'índice de precios al productor'],
+  [/\bProducer Price Index\b/gi, 'índice de precios de producción'],
   [/\bGross Domestic Product\b/gi, 'producto interior bruto'],
   [/\bReal\b/g, 'real'],
   [/\bIndustrial Production\b/gi, 'producción industrial'],
   [/\bRetail Sales\b/gi, 'ventas minoristas'],
+  [/\bRetail Trade\b/gi, 'comercio minorista'],
   [/\bTotal Nonfarm\b/gi, 'total no agrícola'],
   [/\bAll Employees\b/gi, 'todos los empleados'],
   [/\bMoney Stock\b/gi, 'masa monetaria'],
@@ -101,26 +143,28 @@ const DB_TEXT_REPLACEMENTS = [
   [/\bMarket Yield\b/gi, 'rendimiento de mercado'],
   [/\bSecurities\b/gi, 'valores'],
   [/\bAverage\b/gi, 'promedio'],
-  [/\bIndex\b/g, 'índice'],
-  [/\bPrice\b/g, 'precio'],
-  [/\bPrices\b/g, 'precios'],
-  [/\bYield\b/g, 'rendimiento'],
-  [/\bRate\b/g, 'tasa'],
-  [/\bLevel\b/g, 'nivel'],
-  [/\bChange\b/g, 'cambio'],
-  [/\bMonthly\b/g, 'mensual'],
-  [/\bQuarterly\b/g, 'trimestral'],
-  [/\bWeekly\b/g, 'semanal'],
-  [/\bDaily\b/g, 'diaria'],
-  [/\bAnnual\b/g, 'anual'],
-  [/\bAssets\b/g, 'activos'],
-  [/\bAsset\b/g, 'activo'],
-  [/\bSeries\b/g, 'series'],
+  [/\bIndex\b/gi, 'índice'],
+  [/\bPrice\b/gi, 'precio'],
+  [/\bPrices\b/gi, 'precios'],
+  [/\bYield\b/gi, 'rendimiento'],
+  [/\bRate\b/gi, 'tasa'],
+  [/\bLevel\b/gi, 'nivel'],
+  [/\bChange\b/gi, 'cambio'],
+  [/\bMonthly\b/gi, 'mensual'],
+  [/\bQuarterly\b/gi, 'trimestral'],
+  [/\bWeekly\b/gi, 'semanal'],
+  [/\bDaily\b/gi, 'diaria'],
+  [/\bAnnual\b/gi, 'anual'],
+  [/\bAssets\b/gi, 'activos'],
+  [/\bAsset\b/gi, 'activo'],
+  [/\bSeries\b/gi, 'series'],
   [/\bMacro indicators\b/gi, 'indicadores macro'],
   [/\bprices\b/g, 'precios'],
   [/\bseries_prices\b/g, 'precios de series'],
   [/\bcrypto\b/gi, 'cripto'],
-  [/\bcoinpaprika\b/gi, 'Coinpaprika']
+  [/\bcoinpaprika\b/gi, 'Coinpaprika'],
+  [/\bBMR_HYPOTHESIS\b/g, 'Hipótesis BMR'],
+  [/\bcalc\b/gi, 'cálculo']
 ];
 
 export function translateDbText(value) {
@@ -133,4 +177,3 @@ export function translateDbText(value) {
   }
   return translated;
 }
-
