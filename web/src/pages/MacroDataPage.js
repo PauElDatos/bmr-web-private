@@ -123,7 +123,8 @@ async function renderMacroDetail(catalog) {
       hideLegend: true,
       hideYAxisGutter: true,
       bands: [],
-      compactAxes: true
+      compactAxes: true,
+      anchoredGrid: true
     }
   );
 

@@ -22,6 +22,104 @@ function paddedYRange(values) {
   return { minY: minY - yPad, maxY: maxY + yPad };
 }
 
+
+function niceNumber(value, round = true) {
+  if (!Number.isFinite(value) || value <= 0) return 1;
+  const exponent = Math.floor(Math.log10(value));
+  const fraction = value / Math.pow(10, exponent);
+  const niceFraction = round
+    ? (fraction < 1.5 ? 1 : fraction < 3 ? 2 : fraction < 4 ? 2.5 : fraction < 7 ? 5 : 10)
+    : (fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 2.5 ? 2.5 : fraction <= 5 ? 5 : 10);
+  return niceFraction * Math.pow(10, exponent);
+}
+
+function pickStep(targetValue, allowedSteps) {
+  for (const step of allowedSteps) {
+    if (targetValue <= step) return step;
+  }
+  return allowedSteps[allowedSteps.length - 1];
+}
+
+function formatAxisNumber(value, step) {
+  const normalized = Math.abs(value) < Math.abs(step) * 1e-8 ? 0 : value;
+  const decimals = Math.max(0, Math.min(6, -Math.floor(Math.log10(Math.abs(step || 1))) + 1));
+  return normalized.toLocaleString('es-ES', { maximumFractionDigits: decimals });
+}
+
+function generateAnchoredYTicks(minY, maxY, plotH) {
+  const span = maxY - minY;
+  if (!Number.isFinite(span) || span <= 0) return [];
+  const targetTicks = Math.max(3, Math.min(8, Math.round(plotH / 72)));
+  const step = niceNumber(span / targetTicks, true);
+  const first = Math.floor(minY / step) * step;
+  const ticks = [];
+  const maxTicks = 40;
+  for (let value = first, i = 0; value <= maxY + step * 0.5 && i < maxTicks; value += step, i++) {
+    if (value >= minY - step * 0.5) ticks.push({ value, label: formatAxisNumber(value, step) });
+  }
+  return ticks;
+}
+
+function chooseYearInterval(yearSpan, targetTicks) {
+  const raw = Math.max(1, yearSpan / Math.max(1, targetTicks));
+  const exponent = Math.floor(Math.log10(raw));
+  const base = Math.pow(10, exponent);
+  const fraction = raw / base;
+  const niceFraction = fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 5 ? 5 : 10;
+  return Math.max(1, niceFraction * base);
+}
+
+function generateAnchoredTimeTicks(minX, maxX, plotW) {
+  const span = maxX - minX;
+  if (!Number.isFinite(span) || span <= 0) return [];
+  const spanDays = span / DAY_MS;
+  const targetTicks = Math.max(3, Math.min(9, Math.round(plotW / 130)));
+  const ticks = [];
+  const maxTicks = 80;
+
+  if (spanDays > 365 * 1.35) {
+    const minDate = new Date(minX);
+    const maxDate = new Date(maxX);
+    const minYear = minDate.getUTCFullYear();
+    const maxYear = maxDate.getUTCFullYear();
+    const interval = chooseYearInterval(Math.max(1, maxYear - minYear + 1), targetTicks);
+    const startYear = Math.floor(minYear / interval) * interval;
+    for (let year = startYear, i = 0; year <= maxYear + interval && i < maxTicks; year += interval, i++) {
+      const value = Date.UTC(year, 0, 1);
+      if (value >= minX - span * 0.03 && value <= maxX + span * 0.03) ticks.push({ value, label: String(year) });
+    }
+    return ticks;
+  }
+
+  if (spanDays > 45) {
+    const minDate = new Date(minX);
+    const maxDate = new Date(maxX);
+    const totalMonths = (maxDate.getUTCFullYear() - minDate.getUTCFullYear()) * 12 + (maxDate.getUTCMonth() - minDate.getUTCMonth()) + 1;
+    const interval = pickStep(Math.max(1, totalMonths / targetTicks), [1, 2, 3, 6, 12]);
+    const startMonthIndex = Math.floor(((minDate.getUTCFullYear() * 12) + minDate.getUTCMonth()) / interval) * interval;
+    for (let monthIndex = startMonthIndex, i = 0; monthIndex <= (maxDate.getUTCFullYear() * 12 + maxDate.getUTCMonth()) + interval && i < maxTicks; monthIndex += interval, i++) {
+      const year = Math.floor(monthIndex / 12);
+      const month = monthIndex % 12;
+      const value = Date.UTC(year, month, 1);
+      if (value < minX - span * 0.03 || value > maxX + span * 0.03) continue;
+      const date = new Date(value);
+      const monthLabel = date.toLocaleDateString('es-ES', { month: 'short', timeZone: 'UTC' }).replace('.', '');
+      ticks.push({ value, label: month === 0 || interval >= 12 ? `${monthLabel} ${year}` : monthLabel });
+    }
+    return ticks;
+  }
+
+  const intervalDays = pickStep(Math.max(1, spanDays / targetTicks), [1, 2, 7, 14, 30]);
+  const firstDay = Math.floor(minX / DAY_MS / intervalDays) * intervalDays;
+  for (let day = firstDay, i = 0; day * DAY_MS <= maxX + span * 0.03 && i < maxTicks; day += intervalDays, i++) {
+    const value = day * DAY_MS;
+    if (value < minX - span * 0.03) continue;
+    const date = new Date(value);
+    ticks.push({ value, label: date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', timeZone: 'UTC' }) });
+  }
+  return ticks;
+}
+
 function normalizePoints(points) {
   return (points || [])
     .map(p => ({ dt: String(p.dt || '').slice(0, 10), x: parseDate(p.dt), y: Number(p.value) }))
@@ -100,25 +198,46 @@ export function drawLineChart(container, series, options = {}) {
     ctx.fillRect(left, pad.t, Math.max(0, right - left), plotH);
   }
 
-  // Grid and axes labels. The left-side label area is not painted separately, avoiding the grey vertical rectangle.
+  // Grid and axes labels. With anchoredGrid enabled, ticks are calculated in data coordinates
+  // instead of fixed screen percentages. That makes the grid and axis numbers move with the
+  // data while panning, rather than staying pinned to static canvas positions.
   ctx.strokeStyle = 'rgba(74, 74, 74, 0.72)';
   ctx.lineWidth = 1;
   ctx.font = '11px Arial, system-ui, sans-serif';
   ctx.fillStyle = '#B0B0B0';
-  ctx.textAlign = 'right';
-  for (let i = 0; i <= 4; i++) {
-    const y = pad.t + (plotH * i / 4);
-    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
-    const label = (maxY - (maxY - minY) * i / 4).toLocaleString('es-ES', { maximumFractionDigits: 2 });
-    ctx.fillText(label, pad.l - 8, y + 4);
-  }
-  ctx.textAlign = 'center';
-  for (let i = 0; i <= 4; i++) {
-    const x = pad.l + (plotW * i / 4);
-    const t = minX + (maxX - minX) * i / 4;
-    const label = new Date(t).getFullYear().toString();
-    ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t + plotH); ctx.stroke();
-    ctx.fillText(label, x, height - 12);
+
+  if (options.anchoredGrid) {
+    ctx.textAlign = 'right';
+    for (const tick of generateAnchoredYTicks(minY, maxY, plotH)) {
+      const y = yScale(tick.value);
+      if (y < pad.t - 0.5 || y > pad.t + plotH + 0.5) continue;
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
+      ctx.fillText(tick.label, pad.l - 8, y + 4);
+    }
+
+    ctx.textAlign = 'center';
+    for (const tick of generateAnchoredTimeTicks(minX, maxX, plotW)) {
+      const x = xScale(tick.value);
+      if (x < pad.l - 0.5 || x > width - pad.r + 0.5) continue;
+      ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t + plotH); ctx.stroke();
+      ctx.fillText(tick.label, x, height - 12);
+    }
+  } else {
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= 4; i++) {
+      const y = pad.t + (plotH * i / 4);
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
+      const label = (maxY - (maxY - minY) * i / 4).toLocaleString('es-ES', { maximumFractionDigits: 2 });
+      ctx.fillText(label, pad.l - 8, y + 4);
+    }
+    ctx.textAlign = 'center';
+    for (let i = 0; i <= 4; i++) {
+      const x = pad.l + (plotW * i / 4);
+      const t = minX + (maxX - minX) * i / 4;
+      const label = new Date(t).getFullYear().toString();
+      ctx.beginPath(); ctx.moveTo(x, pad.t); ctx.lineTo(x, pad.t + plotH); ctx.stroke();
+      ctx.fillText(label, x, height - 12);
+    }
   }
   ctx.textAlign = 'left';
 
