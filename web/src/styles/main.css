@@ -502,12 +502,35 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 }
 
 /* Macro datos: gráfico rectangular estable y panel lateral adaptable */
+.main:has(.macro-page) {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.macro-page {
+  min-height: calc(100dvh - 36px);
+  display: flex;
+  flex-direction: column;
+}
+.macro-page .page-header {
+  margin-bottom: 12px;
+  padding: 14px 16px;
+}
+.macro-page .eyebrow {
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+.macro-page h1 {
+  font-size: clamp(34px, 3vw, 46px);
+}
+.macro-page .header-nav .nav-link {
+  padding: 8px 12px;
+}
 .macro-page .data-browser {
   align-items: start;
-  --macro-browser-height: calc(100dvh - 184px);
+  --macro-browser-height: calc(100dvh - 150px);
   height: var(--macro-browser-height);
   min-height: 0;
-  overflow: visible;
+  overflow: hidden;
 }
 .macro-page .browser-sidebar {
   position: sticky;
@@ -522,7 +545,7 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 }
 @supports not (height: 100dvh) {
   .macro-page .data-browser {
-    --macro-browser-height: calc(100vh - 184px);
+    --macro-browser-height: calc(100vh - 150px);
   }
   .macro-page .browser-sidebar {
     height: var(--macro-browser-height);
@@ -530,10 +553,18 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   }
 }
 .macro-page .browser-main {
+  height: var(--macro-browser-height);
   min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(280px, 1fr) auto;
+  gap: 12px;
+  overflow: hidden;
 }
 .macro-page .facts-grid {
-  margin-bottom: 14px;
+  margin-bottom: 0;
+}
+.macro-page .facts-grid div {
+  padding: 10px 12px;
 }
 .macro-page .chart-card,
 .macro-page .series-explanation-card {
@@ -541,12 +572,23 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   max-width: 1040px;
 }
 .macro-page .chart-card {
-  margin-bottom: 18px;
+  margin-bottom: 0;
+  padding: 14px 16px 16px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.macro-page .chart-card .card-header {
+  margin-bottom: 10px;
 }
 .macro-page .chart-wrap {
-  height: 430px;
-  min-height: 430px;
-  flex: none;
+  height: auto;
+  min-height: 260px;
+  flex: 1 1 auto;
+}
+.macro-page .series-explanation-card {
+  margin-bottom: 0;
+  padding: 14px 16px;
 }
 .macro-page .macro-list-scroll {
   flex: 1 1 auto;
@@ -579,21 +621,23 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   margin-top: 0;
 }
 .explanation-header {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .series-explanation-body {
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
 }
 .series-explanation-body article {
+  min-width: 0;
   border: 1px solid var(--stroke);
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 9px 12px;
   background: rgba(255,255,255,.03);
 }
 .series-explanation-body span {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   color: var(--primary);
   font-size: 11px;
   font-weight: 800;
@@ -603,7 +647,7 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 .series-explanation-body p {
   margin: 0;
   color: var(--muted);
-  line-height: 1.65;
+  line-height: 1.45;
 }
 .chart-card-actions {
   display: flex;
@@ -678,6 +722,14 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
     height: auto;
     min-height: 0;
     overflow: visible;
+  }
+  .macro-page .browser-main {
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+  .series-explanation-body {
+    grid-template-columns: 1fr;
   }
   .macro-page .browser-sidebar {
     position: relative;
