@@ -402,22 +402,38 @@ export function attachTradingChartInteractions(container, view, draw) {
     if (!overYAxis && !overXAxis && !overPlot) return;
 
     event.preventDefault();
-    const factor = event.deltaY > 0 ? 1.16 : 0.86;
 
-    if (overXAxis || overPlot) {
-      const center = state.minX + ((Math.min(Math.max(x, pad.l), width - pad.r) - pad.l) / Math.max(1, plotW)) * (state.maxX - state.minX);
-      const minRange = 30 * DAY_MS;
-      const [xMin, xMax] = zoomAround(state.minX, state.maxX, state.dataMinX, state.dataMaxX, center, factor, minRange);
+    // Trackpads emit horizontal wheel deltas when the user slides two fingers left/right.
+    // In that case the chart should pan on X, not zoom.
+    const horizontalDelta = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? event.deltaX * 16 : event.deltaX;
+    const verticalDelta = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? event.deltaY * 16 : event.deltaY;
+    const isHorizontalPan = Math.abs(horizontalDelta) > Math.abs(verticalDelta) && Math.abs(horizontalDelta) > 0;
+
+    if (isHorizontalPan) {
+      const xSpan = state.maxX - state.minX;
+      const xShift = horizontalDelta / Math.max(1, plotW) * xSpan;
+      const [xMin, xMax] = clampRange(state.minX + xShift, state.maxX + xShift, state.dataMinX, state.dataMaxX);
       view.xMin = xMin;
       view.xMax = xMax;
+      draw();
+      updateTooltip(event);
+      return;
     }
 
-    if (overYAxis || overPlot || event.shiftKey) {
+    const factor = verticalDelta > 0 ? 1.16 : 0.86;
+
+    if (event.shiftKey) {
       const center = state.minY + (1 - ((Math.min(Math.max(y, pad.t), height - pad.b) - pad.t) / Math.max(1, plotH))) * (state.maxY - state.minY);
       const minRange = Math.max((state.dataMaxY - state.dataMinY) * 0.015, 0.000001);
       const [yMin, yMax] = zoomAround(state.minY, state.maxY, state.dataMinY, state.dataMaxY, center, factor, minRange);
       view.yMin = yMin;
       view.yMax = yMax;
+    } else {
+      const center = state.minX + ((Math.min(Math.max(x, pad.l), width - pad.r) - pad.l) / Math.max(1, plotW)) * (state.maxX - state.minX);
+      const minRange = 30 * DAY_MS;
+      const [xMin, xMax] = zoomAround(state.minX, state.maxX, state.dataMinX, state.dataMaxX, center, factor, minRange);
+      view.xMin = xMin;
+      view.xMax = xMax;
     }
 
     draw();

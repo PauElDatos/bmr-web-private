@@ -501,54 +501,60 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   .home-card { min-height: 210px; }
 }
 
-/* Macro datos: layout ajustado a viewport y controles de gráfico */
+/* Macro datos: gráfico rectangular estable y controles de gráfico */
 .macro-page .data-browser {
-  height: calc(100vh - 205px);
-  min-height: 440px;
-  overflow: hidden;
+  align-items: start;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
 }
 .macro-page .browser-sidebar {
-  position: relative;
-  top: 0;
-  height: 100%;
-  max-height: none;
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 64px);
   margin-bottom: 0;
 }
 .macro-page .browser-main {
-  display: flex;
-  flex-direction: column;
   min-height: 0;
-}
-.macro-page #macro-facts {
-  flex: 0 0 auto;
 }
 .macro-page .facts-grid {
   margin-bottom: 14px;
 }
-.macro-page .chart-card {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0;
+.macro-page .chart-card,
+.macro-page .series-explanation-card {
+  width: 100%;
+  max-width: 1040px;
 }
-.macro-page .chart-card .card-header {
-  flex: 0 0 auto;
+.macro-page .chart-card {
+  margin-bottom: 18px;
 }
 .macro-page .chart-wrap {
-  flex: 1 1 auto;
-  height: auto;
-  min-height: 300px;
+  height: 430px;
+  min-height: 430px;
+  flex: none;
 }
 .macro-page .macro-list-scroll {
   flex: 1 1 auto;
   min-height: 0;
 }
 .macro-page .macro-list-scroll .catalog-list {
-  height: 100%;
-  max-height: none;
+  max-height: calc(100vh - 170px);
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+.series-explanation-card {
+  margin-top: 0;
+}
+.explanation-header {
+  margin-bottom: 12px;
+}
+.explanation-label {
+  gap: 8px;
+}
+.explanation-textarea {
+  min-height: 126px;
+  resize: vertical;
+  line-height: 1.55;
 }
 .chart-card-actions {
   display: flex;

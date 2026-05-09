@@ -36,6 +36,7 @@ export async function MacroDataPage() {
         <main class="browser-main">
           <div id="macro-facts">${factsPanel(selectedItem)}</div>
           ${chartPanel('macro-chart', `Serie ${selectedCode}`, '', chartActions)}
+          ${seriesExplanationPanel(selectedItem)}
         </main>
       </section>
     </div>
@@ -52,16 +53,24 @@ async function wireMacroPage() {
 
   const getVisibleItems = () => filteredCatalogItems(catalog.items);
 
-  const renderList = () => {
+  const renderList = ({ preserveScroll = false } = {}) => {
+    const scrollBox = list.querySelector('.catalog-list');
+    const previousScrollTop = preserveScroll && scrollBox ? scrollBox.scrollTop : 0;
+
     sourceFilter = source.value;
     list.innerHTML = catalogList(getVisibleItems(), selectedCode, 'indicators');
     bindItems();
+
+    if (preserveScroll) {
+      const nextScrollBox = list.querySelector('.catalog-list');
+      if (nextScrollBox) nextScrollBox.scrollTop = previousScrollTop;
+    }
   };
 
   const selectCode = async (code) => {
     selectedCode = code;
     macroView = {};
-    renderList();
+    renderList({ preserveScroll: true });
     await renderMacroDetail(catalog);
   };
 
@@ -99,6 +108,63 @@ async function wireMacroPage() {
   await renderMacroDetail(catalog);
 }
 
+
+function macroExplanationKey(code) {
+  return `macro-explanation:${code}`;
+}
+
+function readStoredExplanation(code) {
+  try {
+    return window.localStorage.getItem(macroExplanationKey(code)) || '';
+  } catch (_) {
+    return '';
+  }
+}
+
+function writeStoredExplanation(code, value) {
+  try {
+    window.localStorage.setItem(macroExplanationKey(code), value || '');
+  } catch (_) {
+    // localStorage may be unavailable in restrictive browser modes; the textarea still works during the session.
+  }
+}
+
+function seriesExplanationPanel(item) {
+  if (!item) return '';
+  return `
+    <section id="macro-series-explanation" class="card series-explanation-card">
+      ${seriesExplanationContent(item)}
+    </section>
+  `;
+}
+
+function seriesExplanationContent(item) {
+  const code = item.code || item.symbol || '';
+  const name = translateDbText(item.name || item.asset_name || '');
+  const storedText = readStoredExplanation(code);
+  return `
+    <div class="card-header explanation-header">
+      <div>
+        <h2>Explicación de ${escapeHtml(code)}</h2>
+        <p>${escapeHtml(name || 'Añade una nota descriptiva para esta serie.')}</p>
+      </div>
+    </div>
+    <label class="field-label explanation-label" for="macro-explanation-text">
+      Contenedor de explicación
+      <textarea id="macro-explanation-text" class="text-input explanation-textarea" data-code="${escapeHtml(code)}" placeholder="Escribe aquí la explicación, contexto o interpretación de la serie ${escapeHtml(code)}.">${escapeHtml(storedText)}</textarea>
+    </label>
+  `;
+}
+
+function renderMacroExplanation(item) {
+  const explanation = document.getElementById('macro-series-explanation');
+  if (!explanation || !item) return;
+  const code = item.code || item.symbol || '';
+  explanation.innerHTML = seriesExplanationContent(item);
+  const textarea = document.getElementById('macro-explanation-text');
+  textarea?.addEventListener('input', () => writeStoredExplanation(code, textarea.value));
+}
+
 function filteredCatalogItems(items) {
   return (items || []).filter(i => sourceFilter === 'ALL' || i.source === sourceFilter);
 }
@@ -113,6 +179,7 @@ async function renderMacroDetail(catalog) {
   const facts = document.getElementById('macro-facts');
   if (title) title.textContent = `Serie ${item.code}`;
   if (facts) facts.innerHTML = factsPanel(item);
+  renderMacroExplanation(item);
   if (!chart) return;
 
   const draw = () => drawLineChart(
