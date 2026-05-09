@@ -504,15 +504,16 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 /* Macro datos: gráfico rectangular estable y panel lateral adaptable */
 .macro-page .data-browser {
   align-items: start;
-  height: auto;
+  --macro-browser-height: calc(100dvh - 184px);
+  height: var(--macro-browser-height);
   min-height: 0;
   overflow: visible;
 }
 .macro-page .browser-sidebar {
   position: sticky;
-  top: 24px;
-  height: calc(100dvh - 48px);
-  max-height: calc(100dvh - 48px);
+  top: 16px;
+  height: var(--macro-browser-height);
+  max-height: var(--macro-browser-height);
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
@@ -520,9 +521,12 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   overflow: hidden;
 }
 @supports not (height: 100dvh) {
+  .macro-page .data-browser {
+    --macro-browser-height: calc(100vh - 184px);
+  }
   .macro-page .browser-sidebar {
-    height: calc(100vh - 48px);
-    max-height: calc(100vh - 48px);
+    height: var(--macro-browser-height);
+    max-height: var(--macro-browser-height);
   }
 }
 .macro-page .browser-main {
@@ -557,6 +561,19 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   max-height: none;
   overflow-y: auto;
   overscroll-behavior: contain;
+  gap: 6px;
+}
+.macro-page .catalog-item {
+  gap: 3px;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+.macro-page .catalog-item span {
+  font-size: 12px;
+  line-height: 1.25;
+}
+.macro-page .catalog-item em {
+  font-size: 11px;
 }
 .series-explanation-card {
   margin-top: 0;
