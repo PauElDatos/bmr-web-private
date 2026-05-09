@@ -556,7 +556,7 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   height: var(--macro-browser-height);
   min-height: 0;
   display: grid;
-  grid-template-rows: auto minmax(280px, 1fr) auto;
+  grid-template-rows: auto auto minmax(0, 1fr);
   gap: 12px;
   overflow: hidden;
 }
@@ -574,21 +574,20 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 .macro-page .chart-card {
   margin-bottom: 0;
   padding: 14px 16px 16px;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
 }
 .macro-page .chart-card .card-header {
   margin-bottom: 10px;
 }
 .macro-page .chart-wrap {
-  height: auto;
-  min-height: 260px;
-  flex: 1 1 auto;
+  height: clamp(340px, 42dvh, 430px);
+  min-height: 340px;
+  flex: none;
 }
 .macro-page .series-explanation-card {
+  min-height: 0;
   margin-bottom: 0;
-  padding: 14px 16px;
+  padding: 12px 16px;
+  overflow: auto;
 }
 .macro-page .macro-list-scroll {
   flex: 1 1 auto;
@@ -625,21 +624,21 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 }
 .series-explanation-body {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: 1fr;
+  gap: 6px;
 }
 .series-explanation-body article {
   min-width: 0;
   border: 1px solid var(--stroke);
   border-radius: 8px;
-  padding: 9px 12px;
+  padding: 7px 10px;
   background: rgba(255,255,255,.03);
 }
 .series-explanation-body span {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   color: var(--primary);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -647,7 +646,8 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 .series-explanation-body p {
   margin: 0;
   color: var(--muted);
-  line-height: 1.45;
+  font-size: 13px;
+  line-height: 1.35;
 }
 .chart-card-actions {
   display: flex;
@@ -728,9 +728,6 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
     display: block;
     overflow: visible;
   }
-  .series-explanation-body {
-    grid-template-columns: 1fr;
-  }
   .macro-page .browser-sidebar {
     position: relative;
     top: 0;
@@ -744,5 +741,8 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   .macro-page .chart-wrap {
     height: 320px;
     min-height: 320px;
+  }
+  .macro-page .series-explanation-card {
+    overflow: visible;
   }
 }
