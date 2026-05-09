@@ -564,13 +564,29 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 .explanation-header {
   margin-bottom: 12px;
 }
-.explanation-label {
-  gap: 8px;
+.series-explanation-body {
+  display: grid;
+  gap: 12px;
 }
-.explanation-textarea {
-  min-height: 126px;
-  resize: vertical;
-  line-height: 1.55;
+.series-explanation-body article {
+  border: 1px solid var(--stroke);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.03);
+}
+.series-explanation-body span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.series-explanation-body p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
 }
 .chart-card-actions {
   display: flex;

@@ -4,6 +4,7 @@ import { chartPanel } from '../components/ChartPanel.js';
 import { catalogList, factsPanel } from '../components/CatalogTable.js';
 import { drawLineChart, attachResize, attachTradingChartInteractions } from '../utils/chart.js';
 import { escapeHtml, translateDbText } from '../utils/format.js';
+import { MACRO_SERIES_EXPLANATIONS, fallbackMacroSeriesExplanation } from '../data/macroSeriesExplanations.js';
 
 let selectedCode = 'FEDFUNDS';
 let sourceFilter = 'ALL';
@@ -109,26 +110,6 @@ async function wireMacroPage() {
 }
 
 
-function macroExplanationKey(code) {
-  return `macro-explanation:${code}`;
-}
-
-function readStoredExplanation(code) {
-  try {
-    return window.localStorage.getItem(macroExplanationKey(code)) || '';
-  } catch (_) {
-    return '';
-  }
-}
-
-function writeStoredExplanation(code, value) {
-  try {
-    window.localStorage.setItem(macroExplanationKey(code), value || '');
-  } catch (_) {
-    // localStorage may be unavailable in restrictive browser modes; the textarea still works during the session.
-  }
-}
-
 function seriesExplanationPanel(item) {
   if (!item) return '';
   return `
@@ -141,30 +122,36 @@ function seriesExplanationPanel(item) {
 function seriesExplanationContent(item) {
   const code = item.code || item.symbol || '';
   const name = translateDbText(item.name || item.asset_name || '');
-  const storedText = readStoredExplanation(code);
+  const info = MACRO_SERIES_EXPLANATIONS.get(code) || fallbackMacroSeriesExplanation();
   return `
     <div class="card-header explanation-header">
       <div>
-        <h2>Explicación de ${escapeHtml(code)}</h2>
-        <p>${escapeHtml(name || 'Añade una nota descriptiva para esta serie.')}</p>
+        <h2>Explicaci\u00f3n de ${escapeHtml(code)}</h2>
+        <p>${escapeHtml(name || 'Serie macroecon\u00f3mica')}</p>
       </div>
     </div>
-    <label class="field-label explanation-label" for="macro-explanation-text">
-      Contenedor de explicación
-      <textarea id="macro-explanation-text" class="text-input explanation-textarea" data-code="${escapeHtml(code)}" placeholder="Escribe aquí la explicación, contexto o interpretación de la serie ${escapeHtml(code)}.">${escapeHtml(storedText)}</textarea>
-    </label>
+    <div class="series-explanation-body">
+      <article>
+        <span>Qu\u00e9 mide</span>
+        <p>${escapeHtml(info.summary)}</p>
+      </article>
+      <article>
+        <span>Zona sana</span>
+        <p>${escapeHtml(info.healthy)}</p>
+      </article>
+      <article>
+        <span>Alerta</span>
+        <p>${escapeHtml(info.alert)}</p>
+      </article>
+    </div>
   `;
 }
 
 function renderMacroExplanation(item) {
   const explanation = document.getElementById('macro-series-explanation');
   if (!explanation || !item) return;
-  const code = item.code || item.symbol || '';
   explanation.innerHTML = seriesExplanationContent(item);
-  const textarea = document.getElementById('macro-explanation-text');
-  textarea?.addEventListener('input', () => writeStoredExplanation(code, textarea.value));
 }
-
 function filteredCatalogItems(items) {
   return (items || []).filter(i => sourceFilter === 'ALL' || i.source === sourceFilter);
 }
