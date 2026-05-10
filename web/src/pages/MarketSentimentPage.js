@@ -494,18 +494,32 @@ async function weightRowsForSelectedDate(weights, selectedDate) {
   return rowsForSelectedDate(weights.items || [], selectedDate);
 }
 
-async function renderWeightsForDate(weights, selectedDate) {
+function preserveWindowScroll(position) {
+  if (!position) return;
+  window.scrollTo(position.x, position.y);
+}
+
+function captureWindowScroll() {
+  return { x: window.scrollX, y: window.scrollY };
+}
+
+async function renderWeightsForDate(weights, selectedDate, options = {}) {
   const table = document.getElementById('weights-table');
   if (!table) return;
+  const preserveScroll = Boolean(options.preserveScroll);
+  const scrollPos = preserveScroll ? captureWindowScroll() : null;
   const token = ++weightsRenderToken;
   table.innerHTML = `<div class="empty-state">Cargando pesos para la fecha seleccionada...</div>`;
+  preserveWindowScroll(scrollPos);
   try {
     const rows = await weightRowsForSelectedDate(weights, selectedDate);
     if (token !== weightsRenderToken) return;
     table.innerHTML = signalWeightTable(rows);
+    preserveWindowScroll(scrollPos);
   } catch (err) {
     if (token !== weightsRenderToken) return;
     table.innerHTML = `<div class="empty-state">No se pudieron cargar los pesos historicos para esta fecha.</div>`;
+    preserveWindowScroll(scrollPos);
   }
 }
 
@@ -579,12 +593,14 @@ async function renderModule() {
   const range = document.getElementById('market-date-range');
   const dateLabel = document.getElementById('market-selected-date');
   range?.addEventListener('input', () => {
+    const scrollPos = captureWindowScroll();
     const nextDate = dateOptions[Number(range.value)] || selectedDate;
     selectedDateByModule[currentModule] = nextDate;
     if (dateLabel) dateLabel.textContent = formatSelectedDate(nextDate);
-    renderWeightsForDate(weights, nextDate);
+    renderWeightsForDate(weights, nextDate, { preserveScroll: true });
     renderLegend(mod, draw);
     draw();
+    preserveWindowScroll(scrollPos);
   });
 
   await renderWeightsForDate(weights, selectedDate);
