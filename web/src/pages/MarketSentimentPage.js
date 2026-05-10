@@ -20,11 +20,14 @@ let cleanupResize = null;
 let cleanupChartInteractions = null;
 let marketView = {};
 let weightsRenderToken = 0;
+let moduleRenderToken = 0;
+const weightChunkCache = new Map();
 
 const SIGNAL_COLORS = ['#f87171', '#fbbf24', '#34d399', '#a78bfa', '#22d3ee', '#fb7185', '#60a5fa'];
 const MIN_MARKET_DATE = '1875-01-01';
 const DEFAULT_START_YEAR = 1950;
 const YEAR_MIN = 1875;
+const WEIGHT_CHUNK_PRELOAD_CONCURRENCY = 6;
 const SPX_KEY = 'spx';
 const USREC_KEY = 'usrec';
 const COMPACT_WEIGHT_FIELDS = [
@@ -464,6 +467,38 @@ function chunkForDate(historyIndex, dt) {
   return (historyIndex?.chunks || []).find(chunk => chunk.from <= dt && dt <= chunk.to);
 }
 
+function weightHistoryChunkPaths(weights = {}) {
+  const chunks = weights.history_index?.chunks;
+  if (!Array.isArray(chunks) || !chunks.length) return [];
+  return [...new Set(chunks.map(chunk => chunk?.path).filter(Boolean))];
+}
+
+function loadWeightChunkCached(path) {
+  if (!path) return Promise.resolve(null);
+  if (!weightChunkCache.has(path)) {
+    const promise = loadMarketWeightChunk(path).catch(err => {
+      weightChunkCache.delete(path);
+      throw err;
+    });
+    weightChunkCache.set(path, promise);
+  }
+  return weightChunkCache.get(path);
+}
+
+async function preloadWeightHistoryChunks(weights) {
+  const paths = weightHistoryChunkPaths(weights);
+  if (!paths.length) return;
+  let index = 0;
+  const workers = Array.from({ length: Math.min(WEIGHT_CHUNK_PRELOAD_CONCURRENCY, paths.length) }, async () => {
+    while (index < paths.length) {
+      const path = paths[index];
+      index += 1;
+      await loadWeightChunkCached(path);
+    }
+  });
+  await Promise.all(workers);
+}
+
 function hydrateCompactRows(chunk, dt) {
   const fields = chunk.fields || COMPACT_WEIGHT_FIELDS;
   const rows = chunk.rows_by_date?.[dt] || [];
@@ -487,7 +522,7 @@ async function weightRowsForSelectedDate(weights, selectedDate) {
     const effectiveDate = findDateAtOrBefore(history.dates, selectedDate);
     const chunk = chunkForDate(history, effectiveDate);
     if (chunk?.path) {
-      const chunkPayload = await loadMarketWeightChunk(chunk.path);
+      const chunkPayload = await loadWeightChunkCached(chunk.path);
       return hydrateCompactRows(chunkPayload, effectiveDate);
     }
   }
@@ -524,11 +559,13 @@ async function renderWeightsForDate(weights, selectedDate, options = {}) {
 }
 
 async function renderModule() {
+  const renderToken = ++moduleRenderToken;
   weightsRenderToken += 1;
   const [mod, weights] = await Promise.all([
     loadMarketModule(currentModule),
     loadMarketWeights(currentModule).catch(() => ({ items: [] }))
   ]);
+  if (renderToken !== moduleRenderToken) return;
 
   const chart = document.getElementById('market-chart');
   const title = document.getElementById('market-chart-title');
@@ -602,6 +639,20 @@ async function renderModule() {
     draw();
     preserveWindowScroll(scrollPos);
   });
+
+  const table = document.getElementById('weights-table');
+  const chunksToPreload = weightHistoryChunkPaths(weights);
+  if (table && chunksToPreload.length) {
+    table.innerHTML = `<div class="empty-state">Cargando historial completo de pesos (${chunksToPreload.length} bloques)...</div>`;
+    try {
+      await preloadWeightHistoryChunks(weights);
+    } catch (err) {
+      if (renderToken !== moduleRenderToken) return;
+      table.innerHTML = `<div class="empty-state">No se pudo cargar el historial completo de pesos.</div>`;
+      return;
+    }
+    if (renderToken !== moduleRenderToken) return;
+  }
 
   await renderWeightsForDate(weights, selectedDate);
 }
