@@ -142,7 +142,7 @@ export function drawLineChart(container, series, options = {}) {
 
   if (!all.length) {
     ctx.fillStyle = '#B0B0B0';
-    ctx.font = '14px Arial, system-ui, sans-serif';
+    ctx.font = '16px Arial, system-ui, sans-serif';
     ctx.fillText('Sin datos para mostrar', 24, 40);
     container._chartState = null;
     return;
@@ -203,7 +203,7 @@ export function drawLineChart(container, series, options = {}) {
   // data while panning, rather than staying pinned to static canvas positions.
   ctx.strokeStyle = 'rgba(74, 74, 74, 0.72)';
   ctx.lineWidth = 1;
-  ctx.font = '11px Arial, system-ui, sans-serif';
+  ctx.font = '13px Arial, system-ui, sans-serif';
   ctx.fillStyle = '#B0B0B0';
 
   if (options.anchoredGrid) {
@@ -282,7 +282,7 @@ export function drawLineChart(container, series, options = {}) {
   if (!options.hideLegend) {
     let lx = pad.l;
     let ly = 16;
-    ctx.font = '12px Arial, system-ui, sans-serif';
+    ctx.font = '14px Arial, system-ui, sans-serif';
     normalizedSeries.forEach((s, idx) => {
       const c = s.color || PALETTE[idx % PALETTE.length];
       ctx.fillStyle = c;
