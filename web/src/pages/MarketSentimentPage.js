@@ -2,20 +2,19 @@ import {
   loadJson,
   loadMarketModule,
   loadMarketWeights,
-  loadMarketWeightChunk,
-  loadMarketInputs
+  loadMarketWeightChunk
 } from '../api/dataClient.js';
 import { pageHeader } from '../components/Layout.js';
 import { chartPanel } from '../components/ChartPanel.js';
 import { metricGrid } from '../components/MetricCard.js';
 import { signalWeightTable } from '../components/SignalWeightTable.js';
-import { runInputTable } from '../components/RunInputTable.js';
 import { drawLineChart, attachResize, attachTradingChartInteractions } from '../utils/chart.js';
 import { classForLevel, escapeHtml, fmtNumber, sentimentLabel } from '../utils/format.js';
 
 let currentModule = 'M5';
 let selectedDateByModule = {};
 let highlightedLegendKeyByModule = {};
+let yearRangeByModule = {};
 let availableModules = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7'];
 let cleanupResize = null;
 let cleanupChartInteractions = null;
@@ -23,7 +22,9 @@ let marketView = {};
 let weightsRenderToken = 0;
 
 const SIGNAL_COLORS = ['#f87171', '#fbbf24', '#34d399', '#a78bfa', '#22d3ee', '#fb7185', '#60a5fa'];
-const MIN_MARKET_DATE = '1800-01-01';
+const MIN_MARKET_DATE = '1875-01-01';
+const DEFAULT_START_YEAR = 1950;
+const YEAR_MIN = 1875;
 const SPX_KEY = 'spx';
 const USREC_KEY = 'usrec';
 const COMPACT_WEIGHT_FIELDS = [
@@ -55,16 +56,16 @@ export async function MarketSentimentPage() {
     <div class="market-page">
       ${pageHeader('Sentimiento del mercado')}
       ${metricGrid([
-        { label: 'Régimen actual', value: sentimentLabel(latest.regime || '—'), detail: latest.asof_dt || 'sin fecha', level: classForLevel(latest.regime) },
+        { label: 'Regimen actual', value: sentimentLabel(latest.regime || '-'), detail: latest.asof_dt || 'sin fecha', level: classForLevel(latest.regime) },
         { label: 'Confianza', value: `${fmtNumber(latest.confidence, 1)} / 100`, detail: latest.primary_driver || 'driver no disponible', level: 'warn' }
       ])}
 
       <div class="market-chart-stack">
-        ${chartPanel('market-chart', 'Gráfico de mercado y señales', '')}
+        ${chartPanel('market-chart', 'Grafico de mercado y senales', '', yearRangeControls())}
         <div id="market-chart-legend" class="market-chart-legend"></div>
         <div id="market-date-selector" class="market-date-selector"></div>
         <aside class="card module-panel market-module-panel">
-          <h2>Módulos</h2>
+          <h2>Modulos</h2>
           <div class="module-buttons market-module-buttons">${buttons}</div>
         </aside>
       </div>
@@ -72,16 +73,20 @@ export async function MarketSentimentPage() {
       <section class="card">
         <div class="card-header">
           <div>
-            <h2>Indicadores, H e inputs que explican la señal</h2>
+            <h2>Indicadores, H e inputs que explican la senal</h2>
           </div>
         </div>
         <div id="weights-table"></div>
       </section>
+    </div>
+  `;
+}
 
-      <section class="card">
-        <div class="card-header"><div><h2>Inputs del run</h2><p>Origen directo: ml_run_inputs.</p></div></div>
-        <div id="inputs-table"></div>
-      </section>
+function yearRangeControls() {
+  return `
+    <div class="market-year-controls" aria-label="Rango de anos del grafico">
+      <label><span>Inicio</span><input id="market-year-start" class="text-input xsmall" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" aria-label="Ano inicial"></label>
+      <label><span>Fin</span><input id="market-year-end" class="text-input xsmall" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" aria-label="Ano final"></label>
     </div>
   `;
 }
@@ -131,7 +136,7 @@ function moduleCodesFromRuns(runs, latest) {
 function allSignalSeries(mod) {
   if (Array.isArray(mod.signals) && mod.signals.length) return mod.signals;
   return [{
-    signal_code: mod.signal_code || 'SEÑAL',
+    signal_code: mod.signal_code || 'SENAL',
     latest_dt: mod.chart?.signal?.at?.(-1)?.dt || null,
     latest_value: mod.latest_value,
     latest_level: mod.latest_level,
@@ -163,18 +168,12 @@ function colorWithAlpha(color, alpha) {
 function seriesColor(baseColor, key) {
   const active = activeLegendKey();
   if (!active || active === key) return baseColor;
-  return colorWithAlpha(baseColor, 0.22);
-}
-
-function seriesWidth(key) {
-  const active = activeLegendKey();
-  if (!active) return 2;
-  return active === key ? 3 : 1.2;
+  return colorWithAlpha(baseColor, 0.18);
 }
 
 function bandsForChart(bands = []) {
   const active = activeLegendKey();
-  const alpha = active === USREC_KEY ? 0.3 : active ? 0.05 : 0.16;
+  const alpha = active && active !== USREC_KEY ? 0.05 : 0.16;
   return bands.map(band => ({ ...band, color: `rgba(148, 163, 184, ${alpha})` }));
 }
 
@@ -185,6 +184,86 @@ function dateKey(value) {
   const time = new Date(value).getTime();
   if (!Number.isFinite(time)) return '';
   return new Date(time).toISOString().slice(0, 10);
+}
+
+function parsePointTime(point) {
+  const dt = dateKey(point?.dt);
+  const time = dt ? new Date(`${dt}T00:00:00Z`).getTime() : NaN;
+  return Number.isFinite(time) ? time : NaN;
+}
+
+function latestYearFromPoints(points = []) {
+  const dt = dateKey(points.at?.(-1)?.dt);
+  const year = Number(dt.slice(0, 4));
+  return Number.isFinite(year) ? year : new Date().getFullYear();
+}
+
+function moduleMaxYear(mod) {
+  return Math.max(YEAR_MIN, latestYearFromPoints(mod.chart?.spx || []), new Date().getFullYear());
+}
+
+function normalizeYearRange(range, maxYear) {
+  let start = Number(range?.start);
+  let end = Number(range?.end);
+  if (!Number.isFinite(start)) start = DEFAULT_START_YEAR;
+  if (!Number.isFinite(end)) end = maxYear;
+  start = Math.max(YEAR_MIN, Math.min(maxYear, Math.trunc(start)));
+  end = Math.max(YEAR_MIN, Math.min(maxYear, Math.trunc(end)));
+  if (start > end) start = end;
+  return { start, end };
+}
+
+function yearRangeForModule(mod) {
+  const maxYear = moduleMaxYear(mod);
+  const saved = yearRangeByModule[currentModule] || { start: DEFAULT_START_YEAR, end: maxYear };
+  const range = normalizeYearRange(saved, maxYear);
+  yearRangeByModule[currentModule] = range;
+  return range;
+}
+
+function applyYearRangeToView(mod) {
+  const range = yearRangeForModule(mod);
+  const dataStart = parsePointTime((mod.chart?.spx || [])[0]);
+  const dataEnd = parsePointTime((mod.chart?.spx || []).at?.(-1));
+  const start = Date.UTC(range.start, 0, 1);
+  const end = Date.UTC(range.end, 11, 31, 23, 59, 59);
+  marketView.xMin = Number.isFinite(dataStart) ? Math.max(dataStart, start) : start;
+  marketView.xMax = Number.isFinite(dataEnd) ? Math.min(dataEnd, end) : end;
+}
+
+function syncYearInputs(mod) {
+  const startInput = document.getElementById('market-year-start');
+  const endInput = document.getElementById('market-year-end');
+  const maxYear = moduleMaxYear(mod);
+  const range = yearRangeForModule(mod);
+  [startInput, endInput].forEach(input => {
+    if (!input) return;
+    input.min = String(YEAR_MIN);
+    input.max = String(maxYear);
+  });
+  if (startInput) startInput.value = String(range.start);
+  if (endInput) endInput.value = String(range.end);
+}
+
+function wireYearInputs(mod, draw) {
+  syncYearInputs(mod);
+  const bind = (id, key) => {
+    const input = document.getElementById(id);
+    if (!input) return;
+    const apply = () => {
+      if (!/^\d{4}$/.test(input.value)) return;
+      const current = yearRangeForModule(mod);
+      const next = normalizeYearRange({ ...current, [key]: Number(input.value) }, moduleMaxYear(mod));
+      yearRangeByModule[currentModule] = next;
+      syncYearInputs(mod);
+      applyYearRangeToView(mod);
+      draw();
+    };
+    input.addEventListener('input', apply);
+    input.addEventListener('change', apply);
+  };
+  bind('market-year-start', 'start');
+  bind('market-year-end', 'end');
 }
 
 function pointAtOrBefore(points = [], selectedDate = '') {
@@ -208,14 +287,14 @@ function pointAtOrBefore(points = [], selectedDate = '') {
 
 function legendPointMeta(point, digits = 3) {
   if (!point) return 'sin dato';
-  return `${dateKey(point.dt) || '—'} · ${fmtNumber(point.value, digits)}`;
+  return `${dateKey(point.dt) || '-'} · ${fmtNumber(point.value, digits)}`;
 }
 
 function usrecMeta(bands = [], selectedDate = '') {
   const dt = dateKey(selectedDate);
   if (!dt) return 'recesiones EEUU';
   const active = bands.some(band => dateKey(band.from) <= dt && dt <= dateKey(band.to));
-  return active ? `${dt} · en recesión` : `${dt} · sin recesión`;
+  return active ? `${dt} · en recesion` : `${dt} · sin recesion`;
 }
 
 function legendItems(mod, selectedDate) {
@@ -229,7 +308,7 @@ function legendItems(mod, selectedDate) {
     },
     ...signals.map((signal, idx) => ({
       key: signalKey(signal.signal_code),
-      label: signal.signal_code || `Señal ${idx + 1}`,
+      label: signal.signal_code || `Senal ${idx + 1}`,
       color: SIGNAL_COLORS[idx % SIGNAL_COLORS.length],
       meta: legendPointMeta(pointAtOrBefore(signal.points || [], selectedDate), 4)
     })),
@@ -248,7 +327,7 @@ function renderLegend(mod, draw) {
   const selectedDate = selectedDateByModule[currentModule] || '';
   const active = activeLegendKey();
   wrap.innerHTML = legendItems(mod, selectedDate).map(item => `
-    <button class="legend-item ${item.key === active ? 'active' : ''}" data-key="${escapeHtml(item.key)}" type="button">
+    <button class="legend-item ${active && item.key !== active ? 'muted' : ''}" data-key="${escapeHtml(item.key)}" type="button">
       <span class="legend-swatch" style="background:${escapeHtml(item.color)}"></span>
       <span class="legend-text">
         <strong>${escapeHtml(item.label)}</strong>
@@ -273,10 +352,9 @@ function collectDateOptions(mod, weights) {
     if (key && key >= MIN_MARKET_DATE) dates.add(key);
   };
   const addPoints = (points = []) => points.forEach(point => addDate(point.dt || point.asof_dt || point.date));
-  addPoints(mod.chart?.spx || []);
+  weightHistoryDates(weights).forEach(addDate);
   addPoints(mod.chart?.signal || []);
   allSignalSeries(mod).forEach(signal => addPoints(signal.points || []));
-  weightHistoryDates(weights).forEach(addDate);
   return [...dates].sort();
 }
 
@@ -290,7 +368,7 @@ function selectedDateForModule(dateOptions) {
 }
 
 function formatSelectedDate(dt) {
-  if (!dt) return '—';
+  if (!dt) return '-';
   const date = new Date(`${dt}T00:00:00Z`);
   if (!Number.isFinite(date.getTime())) return dt;
   return date.toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -322,7 +400,7 @@ function renderDateSelector(dateOptions, selectedDate) {
   wrap.innerHTML = `
     <div class="timeline-head">
       <strong>Fecha seleccionada: <span id="market-selected-date">${escapeHtml(formatSelectedDate(selectedDate))}</span></strong>
-      <span>${escapeHtml(dateOptions[0].slice(0, 4))} — ${escapeHtml(dateOptions[dateOptions.length - 1].slice(0, 4))}</span>
+      <span>${escapeHtml(dateOptions[0].slice(0, 4))} - ${escapeHtml(dateOptions[dateOptions.length - 1].slice(0, 4))}</span>
     </div>
     <input id="market-date-range" class="market-date-range" type="range" min="0" max="${dateOptions.length - 1}" step="1" value="${index}" list="market-year-ticks" aria-label="Fecha del mercado">
     <datalist id="market-year-ticks">${timelineOptions(dateOptions)}</datalist>
@@ -365,20 +443,21 @@ function weightHistoryDates(weights = {}) {
 
 function findDateAtOrBefore(dates = [], selectedDate = '') {
   if (!dates.length) return '';
-  const target = dateKey(selectedDate) || dates[dates.length - 1];
+  const sorted = dates.map(dateKey).filter(Boolean).sort();
+  const target = dateKey(selectedDate) || sorted[sorted.length - 1];
   let lo = 0;
-  let hi = dates.length - 1;
+  let hi = sorted.length - 1;
   let best = '';
   while (lo <= hi) {
     const mid = Math.floor((lo + hi) / 2);
-    if (dates[mid] <= target) {
-      best = dates[mid];
+    if (sorted[mid] <= target) {
+      best = sorted[mid];
       lo = mid + 1;
     } else {
       hi = mid - 1;
     }
   }
-  return best || dates[0];
+  return best || sorted[0];
 }
 
 function chunkForDate(historyIndex, dt) {
@@ -426,26 +505,25 @@ async function renderWeightsForDate(weights, selectedDate) {
     table.innerHTML = signalWeightTable(rows);
   } catch (err) {
     if (token !== weightsRenderToken) return;
-    table.innerHTML = `<div class="empty-state">No se pudieron cargar los pesos históricos para esta fecha.</div>`;
+    table.innerHTML = `<div class="empty-state">No se pudieron cargar los pesos historicos para esta fecha.</div>`;
   }
 }
 
 async function renderModule() {
   weightsRenderToken += 1;
-  const [mod, weights, inputs] = await Promise.all([
+  const [mod, weights] = await Promise.all([
     loadMarketModule(currentModule),
-    loadMarketWeights(currentModule).catch(() => ({ items: [] })),
-    loadMarketInputs(currentModule).catch(() => ({ items: [] }))
+    loadMarketWeights(currentModule).catch(() => ({ items: [] }))
   ]);
 
   const chart = document.getElementById('market-chart');
   const title = document.getElementById('market-chart-title');
-  const inputsTable = document.getElementById('inputs-table');
   if (!chart) return;
 
   const signals = allSignalSeries(mod);
   const dateOptions = collectDateOptions(mod, weights);
   const selectedDate = selectedDateForModule(dateOptions);
+  applyYearRangeToView(mod);
 
   if (title) title.textContent = `${currentModule} · SP500 completo, USREC y señales`;
 
@@ -457,10 +535,10 @@ async function renderModule() {
       const key = signalKey(signal.signal_code);
       const color = SIGNAL_COLORS[idx % SIGNAL_COLORS.length];
       return {
-        name: signal.signal_code || `Señal ${idx + 1}`,
+        name: signal.signal_code || `Senal ${idx + 1}`,
         points: signal.points || [],
         color: seriesColor(color, key),
-        width: seriesWidth(key),
+        width: 2,
         axis: 'left'
       };
     });
@@ -470,23 +548,25 @@ async function renderModule() {
         name: 'SP500 completo',
         points: mod.chart?.spx || [],
         color: seriesColor('#60a5fa', SPX_KEY),
-        width: seriesWidth(SPX_KEY),
+        width: 2,
         axis: 'right'
       }
     ];
     drawLineChart(chart, series, {
       view: marketView,
       dualAxis: true,
+      axisScales: { right: 'log' },
       bands: bandsForChart(mod.chart?.bands || []),
       markers: selectedMarker,
       anchoredGrid: true,
       hideLegend: true,
-      axisLabels: { left: 'Señales M', right: 'SP500' }
+      axisLabels: { left: 'Señales M', right: 'SP500 log' }
     });
   };
 
   draw();
   renderLegend(mod, draw);
+  wireYearInputs(mod, draw);
   if (cleanupResize) cleanupResize();
   cleanupResize = attachResize(chart, () => {
     draw();
@@ -508,5 +588,4 @@ async function renderModule() {
   });
 
   await renderWeightsForDate(weights, selectedDate);
-  inputsTable.innerHTML = runInputTable(inputs.items || []);
 }

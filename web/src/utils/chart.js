@@ -24,6 +24,21 @@ function paddedYRange(values) {
   return { minY: minY - yPad, maxY: maxY + yPad };
 }
 
+function paddedLogYRange(values) {
+  const finite = (values || []).map(Number).filter(v => Number.isFinite(v) && v > 0);
+  if (!finite.length) return { minY: 1, maxY: 10 };
+  let minY = Math.min(...finite);
+  let maxY = Math.max(...finite);
+  if (minY === maxY) {
+    minY = minY / 1.5;
+    maxY = maxY * 1.5;
+  }
+  const minLog = Math.log10(minY);
+  const maxLog = Math.log10(maxY);
+  const pad = Math.max((maxLog - minLog) * 0.08, 0.08);
+  return { minY: Math.pow(10, minLog - pad), maxY: Math.pow(10, maxLog + pad) };
+}
+
 function niceNumber(value, round = true) {
   if (!Number.isFinite(value) || value <= 0) return 1;
   const exponent = Math.floor(Math.log10(value));
@@ -59,6 +74,25 @@ function generateAnchoredYTicks(minY, maxY, plotH) {
     if (value >= minY - step * 0.5) ticks.push({ value, label: formatAxisNumber(value, step) });
   }
   return ticks;
+}
+
+function generateLogYTicks(minY, maxY, plotH) {
+  if (!Number.isFinite(minY) || !Number.isFinite(maxY) || minY <= 0 || maxY <= minY) return [];
+  const minExp = Math.floor(Math.log10(minY));
+  const maxExp = Math.ceil(Math.log10(maxY));
+  const ticks = [];
+  for (let exp = minExp; exp <= maxExp; exp++) {
+    for (const mult of [1, 2, 5]) {
+      const value = mult * Math.pow(10, exp);
+      if (value >= minY && value <= maxY) {
+        ticks.push({ value, label: formatAxisNumber(value, value >= 100 ? 1 : 0.1) });
+      }
+    }
+  }
+  const targetTicks = Math.max(4, Math.min(9, Math.round(plotH / 64)));
+  if (ticks.length <= targetTicks) return ticks;
+  const step = Math.ceil(ticks.length / targetTicks);
+  return ticks.filter((_, idx) => idx % step === 0 || idx === ticks.length - 1);
 }
 
 function chooseYearInterval(yearSpan, targetTicks) {
@@ -139,6 +173,59 @@ function buildAxisRange(axisKey, dataRange, view, multiAxis) {
   return { ...dataRange, minY, maxY };
 }
 
+function axisScaleKind(options, axisKey) {
+  return options.axisScales?.[axisKey] === 'log' || (axisKey === 'right' && options.logRightAxis) ? 'log' : 'linear';
+}
+
+function yToCanvas(axis, pad, plotH, value) {
+  if (axis.scale === 'log' && axis.minY > 0 && axis.maxY > axis.minY && value > 0) {
+    const minLog = Math.log10(axis.minY);
+    const maxLog = Math.log10(axis.maxY);
+    return pad.t + (1 - ((Math.log10(value) - minLog) / Math.max(1e-12, maxLog - minLog))) * plotH;
+  }
+  return pad.t + (1 - ((value - axis.minY) / Math.max(1e-12, axis.maxY - axis.minY))) * plotH;
+}
+
+function canvasToY(axis, pad, plotH, y) {
+  const ratio = 1 - ((Math.min(Math.max(y, pad.t), pad.t + plotH) - pad.t) / Math.max(1, plotH));
+  if (axis.scale === 'log' && axis.minY > 0 && axis.maxY > axis.minY) {
+    const minLog = Math.log10(axis.minY);
+    const maxLog = Math.log10(axis.maxY);
+    return Math.pow(10, minLog + ratio * (maxLog - minLog));
+  }
+  return axis.minY + ratio * (axis.maxY - axis.minY);
+}
+
+function zoomAxis(axis, center, factor) {
+  if (axis.scale === 'log' && axis.dataMinY > 0 && axis.dataMaxY > axis.dataMinY && center > 0) {
+    const minLog = Math.log10(axis.minY);
+    const maxLog = Math.log10(axis.maxY);
+    const floor = Math.log10(axis.dataMinY);
+    const ceiling = Math.log10(axis.dataMaxY);
+    const centerLog = Math.log10(center);
+    const minRange = Math.max((ceiling - floor) * 0.015, 0.001);
+    const [nextMin, nextMax] = zoomAround(minLog, maxLog, floor, ceiling, centerLog, factor, minRange);
+    return [Math.pow(10, nextMin), Math.pow(10, nextMax)];
+  }
+  const minRange = Math.max((axis.dataMaxY - axis.dataMinY) * 0.015, 0.000001);
+  return zoomAround(axis.minY, axis.maxY, axis.dataMinY, axis.dataMaxY, center, factor, minRange);
+}
+
+function panAxis(axis, dy, plotH) {
+  if (axis.scale === 'log' && axis.dataMinY > 0 && axis.dataMaxY > axis.dataMinY) {
+    const minLog = Math.log10(axis.minY);
+    const maxLog = Math.log10(axis.maxY);
+    const floor = Math.log10(axis.dataMinY);
+    const ceiling = Math.log10(axis.dataMaxY);
+    const shift = dy / Math.max(1, plotH) * (maxLog - minLog);
+    const [nextMin, nextMax] = clampRange(minLog + shift, maxLog + shift, floor, ceiling);
+    return [Math.pow(10, nextMin), Math.pow(10, nextMax)];
+  }
+  const ySpan = axis.maxY - axis.minY;
+  const yShift = dy / Math.max(1, plotH) * ySpan;
+  return clampRange(axis.minY + yShift, axis.maxY + yShift, axis.dataMinY, axis.dataMaxY);
+}
+
 function setAxisView(view, axisKey, minY, maxY, multiAxis) {
   if (!view) return;
   if (multiAxis) {
@@ -196,10 +283,14 @@ export function drawLineChart(container, series, options = {}) {
 
   const dataMinX = Math.min(...all.map(p => p.x));
   const dataMaxX = Math.max(...all.map(p => p.x));
-  const leftRange = paddedYRange(all.filter(p => p.axis !== 'right').map(p => p.y));
-  const rightRange = paddedYRange(all.filter(p => p.axis === 'right').map(p => p.y));
-  const leftAxis = buildAxisRange('left', leftRange, options.view, multiAxis);
-  const rightAxis = buildAxisRange('right', hasRightAxis ? rightRange : leftRange, options.view, multiAxis);
+  const leftScale = axisScaleKind(options, 'left');
+  const rightScale = axisScaleKind(options, 'right');
+  const leftValues = all.filter(p => p.axis !== 'right').map(p => p.y);
+  const rightValues = all.filter(p => p.axis === 'right').map(p => p.y);
+  const leftRange = leftScale === 'log' ? paddedLogYRange(leftValues) : paddedYRange(leftValues);
+  const rightRange = rightScale === 'log' ? paddedLogYRange(rightValues) : paddedYRange(rightValues);
+  const leftAxis = { ...buildAxisRange('left', leftRange, options.view, multiAxis), scale: leftScale };
+  const rightAxis = { ...buildAxisRange('right', hasRightAxis ? rightRange : leftRange, options.view, multiAxis), scale: rightScale };
 
   let minX = Number.isFinite(Number(options.view?.xMin)) ? Number(options.view.xMin) : dataMinX;
   let maxX = Number.isFinite(Number(options.view?.xMax)) ? Number(options.view.xMax) : dataMaxX;
@@ -212,7 +303,7 @@ export function drawLineChart(container, series, options = {}) {
   const xScale = (x) => pad.l + ((x - minX) / Math.max(1, maxX - minX)) * plotW;
   const yScaleForAxis = (axisKey) => {
     const a = axisKey === 'right' ? rightAxis : leftAxis;
-    return (y) => pad.t + (1 - ((y - a.minY) / Math.max(1e-12, a.maxY - a.minY))) * plotH;
+    return (y) => yToCanvas(a, pad, plotH, y);
   };
   const yScaleLeft = yScaleForAxis('left');
   const yScaleRight = yScaleForAxis('right');
@@ -270,8 +361,8 @@ export function drawLineChart(container, series, options = {}) {
   };
 
   if (options.anchoredGrid) {
-    drawYTicks(generateAnchoredYTicks(leftAxis.minY, leftAxis.maxY, plotH), yScaleLeft, 'left', true);
-    if (multiAxis && hasRightAxis) drawYTicks(generateAnchoredYTicks(rightAxis.minY, rightAxis.maxY, plotH), yScaleRight, 'right', false);
+    drawYTicks(leftAxis.scale === 'log' ? generateLogYTicks(leftAxis.minY, leftAxis.maxY, plotH) : generateAnchoredYTicks(leftAxis.minY, leftAxis.maxY, plotH), yScaleLeft, 'left', true);
+    if (multiAxis && hasRightAxis) drawYTicks(rightAxis.scale === 'log' ? generateLogYTicks(rightAxis.minY, rightAxis.maxY, plotH) : generateAnchoredYTicks(rightAxis.minY, rightAxis.maxY, plotH), yScaleRight, 'right', false);
 
     ctx.textAlign = 'center';
     for (const tick of generateAnchoredTimeTicks(minX, maxX, plotW)) {
@@ -412,9 +503,7 @@ function ensureTooltip(container) {
 
 function axisYScale(state, axisKey) {
   const axis = axisKey === 'right' ? state.axes?.right : state.axes?.left;
-  const minY = axis?.minY ?? state.minY;
-  const maxY = axis?.maxY ?? state.maxY;
-  return (py) => state.pad.t + (1 - ((py - minY) / Math.max(1e-12, maxY - minY))) * state.plotH;
+  return (py) => yToCanvas(axis || { minY: state.minY, maxY: state.maxY, scale: 'linear' }, state.pad, state.plotH, py);
 }
 
 function findNearestPoint(state, x, y) {
@@ -514,9 +603,8 @@ export function attachTradingChartInteractions(container, view, draw) {
     if (event.shiftKey || overLeftYAxis || overRightYAxis) {
       const axisKey = overRightYAxis ? 'right' : yAxisFromPointer(state, x);
       const axis = state.axes?.[axisKey] || state.axes?.left || { minY: state.minY, maxY: state.maxY, dataMinY: state.dataMinY, dataMaxY: state.dataMaxY };
-      const center = axis.minY + (1 - ((Math.min(Math.max(y, pad.t), height - pad.b) - pad.t) / Math.max(1, plotH))) * (axis.maxY - axis.minY);
-      const minRange = Math.max((axis.dataMaxY - axis.dataMinY) * 0.015, 0.000001);
-      const [yMin, yMax] = zoomAround(axis.minY, axis.maxY, axis.dataMinY, axis.dataMaxY, center, factor, minRange);
+      const center = canvasToY(axis, pad, plotH, y);
+      const [yMin, yMax] = zoomAxis(axis, center, factor);
       setAxisView(view, axisKey, yMin, yMax, state.multiAxis);
     } else {
       const center = state.minX + ((Math.min(Math.max(x, pad.l), width - pad.r) - pad.l) / Math.max(1, plotW)) * (state.maxX - state.minX);
@@ -569,9 +657,7 @@ export function attachTradingChartInteractions(container, view, draw) {
 
     for (const axisKey of state.multiAxis ? ['left', 'right'] : ['left']) {
       const axis = state.axes?.[axisKey] || state.axes?.left || { minY: state.minY, maxY: state.maxY, dataMinY: state.dataMinY, dataMaxY: state.dataMaxY };
-      const ySpan = axis.maxY - axis.minY;
-      const yShift = dy / Math.max(1, state.plotH) * ySpan;
-      const [yMin, yMax] = clampRange(axis.minY + yShift, axis.maxY + yShift, axis.dataMinY, axis.dataMaxY);
+      const [yMin, yMax] = panAxis(axis, dy, state.plotH);
       setAxisView(view, axisKey, yMin, yMax, state.multiAxis);
     }
 
