@@ -1,8 +1,4 @@
-import { escapeHtml, fmtNumber, fmtPct } from '../utils/format.js';
-
-function sourceLabel(row) {
-  return row.weight_source || row.source || row.weights_source || row.method || '';
-}
+import { escapeHtml, fmtNumber, fmtPct, sentimentLabel, sentimentPillClass } from '../utils/format.js';
 
 function rowDate(row) {
   return row.dt || row.asof_dt || '';
@@ -19,7 +15,7 @@ function contributionValue(row) {
 }
 
 export function signalWeightTable(rows = []) {
-  if (!rows.length) return `<div class="empty-state">No hay contribuciones disponibles en este snapshot.</div>`;
+  if (!rows.length) return `<div class="empty-state">No hay contribuciones disponibles para la fecha seleccionada.</div>`;
   return `
     <div class="table-wrap">
       <table>
@@ -32,26 +28,20 @@ export function signalWeightTable(rows = []) {
             <th>Peso efectivo</th>
             <th>Contribución</th>
             <th>Valor</th>
-            <th>Coef.</th>
-            <th>Fuente</th>
-            <th>Explicación</th>
           </tr>
         </thead>
         <tbody>
           ${rows.map(r => {
-            const directionClass = String(r.direction || 'neutral').toLowerCase();
+            const directionClass = sentimentPillClass(r.direction || r.latest_level);
             return `
             <tr>
               <td>${escapeHtml(rowDate(r) || '—')}</td>
               <td><strong>${escapeHtml(r.hypothesis_code || r.input_code || '—')}</strong></td>
               <td>${escapeHtml(r.signal_code || r.role || r.output_signal_code || '—')}</td>
-              <td><span class="pill ${directionClass}">${escapeHtml(r.direction || '—')}</span></td>
+              <td><span class="pill ${directionClass}">${escapeHtml(sentimentLabel(r.direction || '—'))}</span></td>
               <td>${pctValue(r)}</td>
               <td>${contributionValue(r)}</td>
               <td>${r.raw_value == null ? '—' : fmtNumber(r.raw_value, 4)}</td>
-              <td>${r.model_weight == null ? '—' : fmtNumber(r.model_weight, 5)}</td>
-              <td><code>${escapeHtml(sourceLabel(r))}</code></td>
-              <td>${escapeHtml(r.explanation || '')}</td>
             </tr>`;
           }).join('')}
         </tbody>

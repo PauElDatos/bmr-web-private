@@ -15,13 +15,14 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 function parseDate(d) { return new Date(d).getTime(); }
 
 function paddedYRange(values) {
-  let minY = Math.min(...values);
-  let maxY = Math.max(...values);
+  const finite = (values || []).map(Number).filter(Number.isFinite);
+  if (!finite.length) return { minY: -1, maxY: 1 };
+  let minY = Math.min(...finite);
+  let maxY = Math.max(...finite);
   if (minY === maxY) { minY -= 1; maxY += 1; }
   const yPad = (maxY - minY) * 0.08;
   return { minY: minY - yPad, maxY: maxY + yPad };
 }
-
 
 function niceNumber(value, round = true) {
   if (!Number.isFinite(value) || value <= 0) return 1;
@@ -127,18 +128,57 @@ function normalizePoints(points) {
     .sort((a, b) => a.x - b.x);
 }
 
+function buildAxisRange(axisKey, dataRange, view, multiAxis) {
+  const minKey = axisKey === 'right' ? 'rightYMin' : 'leftYMin';
+  const maxKey = axisKey === 'right' ? 'rightYMax' : 'leftYMax';
+  const legacyMin = axisKey === 'left' && !multiAxis ? view?.yMin : undefined;
+  const legacyMax = axisKey === 'left' && !multiAxis ? view?.yMax : undefined;
+  let minY = Number.isFinite(Number(view?.[minKey])) ? Number(view[minKey]) : Number.isFinite(Number(legacyMin)) ? Number(legacyMin) : dataRange.minY;
+  let maxY = Number.isFinite(Number(view?.[maxKey])) ? Number(view[maxKey]) : Number.isFinite(Number(legacyMax)) ? Number(legacyMax) : dataRange.maxY;
+  if (minY === maxY) { minY -= 1; maxY += 1; }
+  return { ...dataRange, minY, maxY };
+}
+
+function setAxisView(view, axisKey, minY, maxY, multiAxis) {
+  if (!view) return;
+  if (multiAxis) {
+    if (axisKey === 'right') {
+      view.rightYMin = minY;
+      view.rightYMax = maxY;
+    } else {
+      view.leftYMin = minY;
+      view.leftYMax = maxY;
+    }
+    return;
+  }
+  view.yMin = minY;
+  view.yMax = maxY;
+}
+
+function clearAxisView(view, multiAxis) {
+  if (!view) return;
+  delete view.xMin;
+  delete view.xMax;
+  delete view.yMin;
+  delete view.yMax;
+  delete view.leftYMin;
+  delete view.leftYMax;
+  delete view.rightYMin;
+  delete view.rightYMax;
+}
+
 export function drawLineChart(container, series, options = {}) {
   const { ctx, width, height } = getCanvas(container);
-  const pad = options.hideYAxisGutter ? { l: 58, r: 22, t: 24, b: 38 } : { l: 58, r: 22, t: 28, b: 38 };
   ctx.clearRect(0, 0, width, height);
 
   const normalizedSeries = (series || []).map((s, idx) => ({
     ...s,
+    axis: s.axis === 'right' ? 'right' : 'left',
     color: s.color || PALETTE[idx % PALETTE.length],
     width: s.width || 2,
     points: normalizePoints(s.points)
   }));
-  const all = normalizedSeries.flatMap(s => s.points.map(p => ({ x: p.x, y: p.y })));
+  const all = normalizedSeries.flatMap(s => s.points.map(p => ({ x: p.x, y: p.y, axis: s.axis })));
 
   if (!all.length) {
     ctx.fillStyle = '#B0B0B0';
@@ -148,24 +188,34 @@ export function drawLineChart(container, series, options = {}) {
     return;
   }
 
+  const hasRightAxis = normalizedSeries.some(s => s.axis === 'right' && s.points.length);
+  const multiAxis = Boolean(options.dualAxis || hasRightAxis);
+  const pad = multiAxis
+    ? { l: 66, r: 72, t: 30, b: 40 }
+    : (options.hideYAxisGutter ? { l: 58, r: 22, t: 24, b: 38 } : { l: 58, r: 22, t: 28, b: 38 });
+
   const dataMinX = Math.min(...all.map(p => p.x));
   const dataMaxX = Math.max(...all.map(p => p.x));
-  const yRange = paddedYRange(all.map(p => p.y));
-  const dataMinY = yRange.minY;
-  const dataMaxY = yRange.maxY;
+  const leftRange = paddedYRange(all.filter(p => p.axis !== 'right').map(p => p.y));
+  const rightRange = paddedYRange(all.filter(p => p.axis === 'right').map(p => p.y));
+  const leftAxis = buildAxisRange('left', leftRange, options.view, multiAxis);
+  const rightAxis = buildAxisRange('right', hasRightAxis ? rightRange : leftRange, options.view, multiAxis);
 
   let minX = Number.isFinite(Number(options.view?.xMin)) ? Number(options.view.xMin) : dataMinX;
   let maxX = Number.isFinite(Number(options.view?.xMax)) ? Number(options.view.xMax) : dataMaxX;
-  let minY = Number.isFinite(Number(options.view?.yMin)) ? Number(options.view.yMin) : dataMinY;
-  let maxY = Number.isFinite(Number(options.view?.yMax)) ? Number(options.view.yMax) : dataMaxY;
-
   if (minX === maxX) { minX -= DAY_MS; maxX += DAY_MS; }
-  if (minY === maxY) { minY -= 1; maxY += 1; }
+  if (leftAxis.minY === leftAxis.maxY) { leftAxis.minY -= 1; leftAxis.maxY += 1; }
+  if (rightAxis.minY === rightAxis.maxY) { rightAxis.minY -= 1; rightAxis.maxY += 1; }
 
   const plotW = Math.max(1, width - pad.l - pad.r);
   const plotH = Math.max(1, height - pad.t - pad.b);
   const xScale = (x) => pad.l + ((x - minX) / Math.max(1, maxX - minX)) * plotW;
-  const yScale = (y) => pad.t + (1 - ((y - minY) / Math.max(1, maxY - minY))) * plotH;
+  const yScaleForAxis = (axisKey) => {
+    const a = axisKey === 'right' ? rightAxis : leftAxis;
+    return (y) => pad.t + (1 - ((y - a.minY) / Math.max(1e-12, a.maxY - a.minY))) * plotH;
+  };
+  const yScaleLeft = yScaleForAxis('left');
+  const yScaleRight = yScaleForAxis('right');
 
   container._chartState = {
     pad,
@@ -175,19 +225,23 @@ export function drawLineChart(container, series, options = {}) {
     plotH,
     minX,
     maxX,
-    minY,
-    maxY,
+    minY: leftAxis.minY,
+    maxY: leftAxis.maxY,
     dataMinX,
     dataMaxX,
-    dataMinY,
-    dataMaxY,
+    dataMinY: leftAxis.minY,
+    dataMaxY: leftAxis.maxY,
+    multiAxis,
+    axes: {
+      left: { ...leftAxis, dataMinY: leftRange.minY, dataMaxY: leftRange.maxY },
+      right: { ...rightAxis, dataMinY: (hasRightAxis ? rightRange : leftRange).minY, dataMaxY: (hasRightAxis ? rightRange : leftRange).maxY }
+    },
     series: normalizedSeries
   };
 
   ctx.fillStyle = '#252525';
   ctx.fillRect(0, 0, width, height);
 
-  // Optional vertical bands, disabled on macro by passing an empty array.
   for (const band of options.bands || []) {
     const bx0 = xScale(parseDate(band.from));
     const bx1 = xScale(parseDate(band.to));
@@ -198,22 +252,26 @@ export function drawLineChart(container, series, options = {}) {
     ctx.fillRect(left, pad.t, Math.max(0, right - left), plotH);
   }
 
-  // Grid and axes labels. With anchoredGrid enabled, ticks are calculated in data coordinates
-  // instead of fixed screen percentages. That makes the grid and axis numbers move with the
-  // data while panning, rather than staying pinned to static canvas positions.
   ctx.strokeStyle = 'rgba(74, 74, 74, 0.72)';
   ctx.lineWidth = 1;
   ctx.font = '13px Arial, system-ui, sans-serif';
   ctx.fillStyle = '#B0B0B0';
 
-  if (options.anchoredGrid) {
-    ctx.textAlign = 'right';
-    for (const tick of generateAnchoredYTicks(minY, maxY, plotH)) {
-      const y = yScale(tick.value);
+  const drawYTicks = (ticks, scale, side = 'left', drawGrid = false) => {
+    ctx.textAlign = side === 'right' ? 'left' : 'right';
+    for (const tick of ticks) {
+      const y = scale(tick.value);
       if (y < pad.t - 0.5 || y > pad.t + plotH + 0.5) continue;
-      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
-      ctx.fillText(tick.label, pad.l - 8, y + 4);
+      if (drawGrid) {
+        ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
+      }
+      ctx.fillText(tick.label, side === 'right' ? width - pad.r + 8 : pad.l - 8, y + 4);
     }
+  };
+
+  if (options.anchoredGrid) {
+    drawYTicks(generateAnchoredYTicks(leftAxis.minY, leftAxis.maxY, plotH), yScaleLeft, 'left', true);
+    if (multiAxis && hasRightAxis) drawYTicks(generateAnchoredYTicks(rightAxis.minY, rightAxis.maxY, plotH), yScaleRight, 'right', false);
 
     ctx.textAlign = 'center';
     for (const tick of generateAnchoredTimeTicks(minX, maxX, plotW)) {
@@ -227,8 +285,16 @@ export function drawLineChart(container, series, options = {}) {
     for (let i = 0; i <= 4; i++) {
       const y = pad.t + (plotH * i / 4);
       ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(width - pad.r, y); ctx.stroke();
-      const label = (maxY - (maxY - minY) * i / 4).toLocaleString('es-ES', { maximumFractionDigits: 2 });
+      const label = (leftAxis.maxY - (leftAxis.maxY - leftAxis.minY) * i / 4).toLocaleString('es-ES', { maximumFractionDigits: 2 });
       ctx.fillText(label, pad.l - 8, y + 4);
+    }
+    if (multiAxis && hasRightAxis) {
+      ctx.textAlign = 'left';
+      for (let i = 0; i <= 4; i++) {
+        const y = pad.t + (plotH * i / 4);
+        const label = (rightAxis.maxY - (rightAxis.maxY - rightAxis.minY) * i / 4).toLocaleString('es-ES', { maximumFractionDigits: 2 });
+        ctx.fillText(label, width - pad.r + 8, y + 4);
+      }
     }
     ctx.textAlign = 'center';
     for (let i = 0; i <= 4; i++) {
@@ -239,8 +305,17 @@ export function drawLineChart(container, series, options = {}) {
       ctx.fillText(label, x, height - 12);
     }
   }
-  ctx.textAlign = 'left';
 
+  if (multiAxis && options.axisLabels) {
+    ctx.font = '12px Arial, system-ui, sans-serif';
+    ctx.fillStyle = '#B0B0B0';
+    ctx.textAlign = 'left';
+    if (options.axisLabels.left) ctx.fillText(options.axisLabels.left, pad.l, 18);
+    ctx.textAlign = 'right';
+    if (options.axisLabels.right) ctx.fillText(options.axisLabels.right, width - pad.r, 18);
+  }
+
+  ctx.textAlign = 'left';
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
   ctx.beginPath();
   ctx.rect(pad.l, pad.t, plotW, plotH);
@@ -252,6 +327,7 @@ export function drawLineChart(container, series, options = {}) {
   ctx.clip();
 
   normalizedSeries.forEach((s) => {
+    const scaleY = s.axis === 'right' ? yScaleRight : yScaleLeft;
     const visiblePts = s.points.filter(p => p.x >= minX && p.x <= maxX);
     const pts = visiblePts.length ? visiblePts : s.points;
     if (!pts.length) return;
@@ -259,7 +335,7 @@ export function drawLineChart(container, series, options = {}) {
     ctx.lineWidth = s.width;
     ctx.beginPath();
     pts.forEach((p, i) => {
-      const x = xScale(p.x), y = yScale(p.y);
+      const x = xScale(p.x), y = scaleY(p.y);
       if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     });
     ctx.stroke();
@@ -270,7 +346,7 @@ export function drawLineChart(container, series, options = {}) {
     const mx = xScale(parseDate(marker.dt));
     if (!Number.isFinite(mx) || mx < pad.l || mx > width - pad.r) continue;
     ctx.strokeStyle = marker.color || 'rgba(254, 247, 2, .42)';
-    ctx.lineWidth = 1;
+    ctx.lineWidth = marker.width || 1;
     ctx.beginPath();
     ctx.moveTo(mx, pad.t);
     ctx.lineTo(mx, pad.t + plotH);
@@ -334,14 +410,23 @@ function ensureTooltip(container) {
   return tooltip;
 }
 
+function axisYScale(state, axisKey) {
+  const axis = axisKey === 'right' ? state.axes?.right : state.axes?.left;
+  const minY = axis?.minY ?? state.minY;
+  const maxY = axis?.maxY ?? state.maxY;
+  return (py) => state.pad.t + (1 - ((py - minY) / Math.max(1e-12, maxY - minY))) * state.plotH;
+}
+
 function findNearestPoint(state, x, y) {
-  const { pad, plotW, plotH, minX, maxX, minY, maxY, series } = state;
+  const { pad, plotW, minX, maxX, series } = state;
   const xScale = (px) => pad.l + ((px - minX) / Math.max(1, maxX - minX)) * plotW;
-  const yScale = (py) => pad.t + (1 - ((py - minY) / Math.max(1, maxY - minY))) * plotH;
   let best = null;
   for (const s of series || []) {
+    const axis = s.axis === 'right' ? 'right' : 'left';
+    const a = state.axes?.[axis] || state.axes?.left || { minY: state.minY, maxY: state.maxY };
+    const yScale = axisYScale(state, axis);
     for (const p of s.points || []) {
-      if (p.x < minX || p.x > maxX || p.y < minY || p.y > maxY) continue;
+      if (p.x < minX || p.x > maxX || p.y < a.minY || p.y > a.maxY) continue;
       const px = xScale(p.x);
       const py = yScale(p.y);
       const dx = Math.abs(px - x);
@@ -355,6 +440,11 @@ function findNearestPoint(state, x, y) {
 
 function pointInPlot(state, x, y) {
   return x >= state.pad.l && x <= state.width - state.pad.r && y >= state.pad.t && y <= state.height - state.pad.b;
+}
+
+function yAxisFromPointer(state, x) {
+  if (state.multiAxis && x >= state.width - state.pad.r - 22) return 'right';
+  return 'left';
 }
 
 export function attachTradingChartInteractions(container, view, draw) {
@@ -396,15 +486,14 @@ export function attachTradingChartInteractions(container, view, draw) {
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
     const { pad, width, height, plotW, plotH } = state;
-    const overYAxis = x >= 0 && x <= pad.l + 20 && y >= pad.t && y <= height - pad.b;
+    const overLeftYAxis = x >= 0 && x <= pad.l + 20 && y >= pad.t && y <= height - pad.b;
+    const overRightYAxis = state.multiAxis && x >= width - pad.r - 20 && x <= width && y >= pad.t && y <= height - pad.b;
     const overXAxis = y >= height - pad.b - 20 && y <= height && x >= pad.l && x <= width - pad.r;
     const overPlot = pointInPlot(state, x, y);
-    if (!overYAxis && !overXAxis && !overPlot) return;
+    if (!overLeftYAxis && !overRightYAxis && !overXAxis && !overPlot) return;
 
     event.preventDefault();
 
-    // Trackpads emit horizontal wheel deltas when the user slides two fingers left/right.
-    // In that case the chart should pan on X, not zoom.
     const horizontalDelta = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? event.deltaX * 16 : event.deltaX;
     const verticalDelta = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? event.deltaY * 16 : event.deltaY;
     const isHorizontalPan = Math.abs(horizontalDelta) > Math.abs(verticalDelta) && Math.abs(horizontalDelta) > 0;
@@ -422,12 +511,13 @@ export function attachTradingChartInteractions(container, view, draw) {
 
     const factor = verticalDelta > 0 ? 1.16 : 0.86;
 
-    if (event.shiftKey) {
-      const center = state.minY + (1 - ((Math.min(Math.max(y, pad.t), height - pad.b) - pad.t) / Math.max(1, plotH))) * (state.maxY - state.minY);
-      const minRange = Math.max((state.dataMaxY - state.dataMinY) * 0.015, 0.000001);
-      const [yMin, yMax] = zoomAround(state.minY, state.maxY, state.dataMinY, state.dataMaxY, center, factor, minRange);
-      view.yMin = yMin;
-      view.yMax = yMax;
+    if (event.shiftKey || overLeftYAxis || overRightYAxis) {
+      const axisKey = overRightYAxis ? 'right' : yAxisFromPointer(state, x);
+      const axis = state.axes?.[axisKey] || state.axes?.left || { minY: state.minY, maxY: state.maxY, dataMinY: state.dataMinY, dataMaxY: state.dataMaxY };
+      const center = axis.minY + (1 - ((Math.min(Math.max(y, pad.t), height - pad.b) - pad.t) / Math.max(1, plotH))) * (axis.maxY - axis.minY);
+      const minRange = Math.max((axis.dataMaxY - axis.dataMinY) * 0.015, 0.000001);
+      const [yMin, yMax] = zoomAround(axis.minY, axis.maxY, axis.dataMinY, axis.dataMaxY, center, factor, minRange);
+      setAxisView(view, axisKey, yMin, yMax, state.multiAxis);
     } else {
       const center = state.minX + ((Math.min(Math.max(x, pad.l), width - pad.r) - pad.l) / Math.max(1, plotW)) * (state.maxX - state.minX);
       const minRange = 30 * DAY_MS;
@@ -472,16 +562,19 @@ export function attachTradingChartInteractions(container, view, draw) {
     last = { x, y };
 
     const xSpan = state.maxX - state.minX;
-    const ySpan = state.maxY - state.minY;
     const xShift = -dx / Math.max(1, state.plotW) * xSpan;
-    const yShift = dy / Math.max(1, state.plotH) * ySpan;
     const [xMin, xMax] = clampRange(state.minX + xShift, state.maxX + xShift, state.dataMinX, state.dataMaxX);
-    const [yMin, yMax] = clampRange(state.minY + yShift, state.maxY + yShift, state.dataMinY, state.dataMaxY);
-
     view.xMin = xMin;
     view.xMax = xMax;
-    view.yMin = yMin;
-    view.yMax = yMax;
+
+    for (const axisKey of state.multiAxis ? ['left', 'right'] : ['left']) {
+      const axis = state.axes?.[axisKey] || state.axes?.left || { minY: state.minY, maxY: state.maxY, dataMinY: state.dataMinY, dataMaxY: state.dataMaxY };
+      const ySpan = axis.maxY - axis.minY;
+      const yShift = dy / Math.max(1, state.plotH) * ySpan;
+      const [yMin, yMax] = clampRange(axis.minY + yShift, axis.maxY + yShift, axis.dataMinY, axis.dataMaxY);
+      setAxisView(view, axisKey, yMin, yMax, state.multiAxis);
+    }
+
     draw();
   };
 
@@ -494,10 +587,8 @@ export function attachTradingChartInteractions(container, view, draw) {
   };
 
   const onDblClick = () => {
-    delete view.xMin;
-    delete view.xMax;
-    delete view.yMin;
-    delete view.yMax;
+    const state = container._chartState;
+    clearAxisView(view, state?.multiAxis);
     tooltip.classList.remove('visible');
     draw();
   };

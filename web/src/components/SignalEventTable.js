@@ -2,7 +2,7 @@ import { escapeHtml, fmtNumber, fmtPct } from '../utils/format.js';
 
 export function signalEventTable(rows = []) {
   if (!rows.length) {
-    return `<div class="empty-state">No hay eventos exportados para este módulo. En producción se rellenará desde ml_signal_events.</div>`;
+    return `<div class="empty-state">Sin eventos para esta vista.</div>`;
   }
   return `
     <div class="table-wrap">

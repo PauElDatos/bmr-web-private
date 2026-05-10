@@ -13,11 +13,26 @@ export function fmtPct(value, digits = 2) {
 }
 
 export function classForLevel(level) {
-  const v = String(level || '').toLowerCase();
-  if (['risk_off', 'sell', 'alert', 'action', 'alto'].includes(v)) return 'danger';
+  const v = String(level || '').toLowerCase().replace(/[\s-]+/g, '_');
+  if (['risk_off', 'sell', 'bear', 'bearish', 'alert', 'action', 'alto', 'pesimista'].includes(v)) return 'danger';
   if (['watch', 'neutral', 'hold', 'medio'].includes(v)) return 'warn';
-  if (['risk_on', 'buy', 'ok', 'bajo'].includes(v)) return 'ok';
+  if (['risk_on', 'buy', 'bull', 'bullish', 'ok', 'bajo', 'optimista'].includes(v)) return 'ok';
   return 'muted';
+}
+
+export function sentimentLabel(value) {
+  const raw = String(value ?? '').trim();
+  const v = raw.toLowerCase().replace(/[\s-]+/g, '_');
+  if (!raw) return '—';
+  if (['risk_on', 'buy', 'bull', 'bullish', 'positive', 'optimista'].includes(v)) return 'Optimista';
+  if (['risk_off', 'sell', 'bear', 'bearish', 'negative', 'pesimista'].includes(v)) return 'Pesimista';
+  if (['neutral', 'hold', 'watch', 'medio'].includes(v)) return 'Neutral';
+  return raw.replace(/risk[ _-]?on/ig, 'Optimista').replace(/risk[ _-]?off/ig, 'Pesimista');
+}
+
+export function sentimentPillClass(value) {
+  const level = classForLevel(value);
+  return level === 'muted' ? 'neutral' : level;
 }
 
 export function lastOf(arr) {
