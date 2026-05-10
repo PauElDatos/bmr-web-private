@@ -23,7 +23,6 @@ export function signalWeightTable(rows = []) {
           <tr>
             <th>Fecha</th>
             <th>Hipótesis/Input</th>
-            <th>Señal/Rol</th>
             <th>Dirección</th>
             <th>Peso efectivo</th>
             <th>Contribución</th>
@@ -37,7 +36,6 @@ export function signalWeightTable(rows = []) {
             <tr>
               <td>${escapeHtml(rowDate(r) || '—')}</td>
               <td><strong>${escapeHtml(r.hypothesis_code || r.input_code || '—')}</strong></td>
-              <td>${escapeHtml(r.signal_code || r.role || r.output_signal_code || '—')}</td>
               <td><span class="pill ${directionClass}">${escapeHtml(sentimentLabel(r.direction || '—'))}</span></td>
               <td>${pctValue(r)}</td>
               <td>${contributionValue(r)}</td>

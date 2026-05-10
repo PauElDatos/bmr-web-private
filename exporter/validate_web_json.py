@@ -15,9 +15,18 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
+
+SAFE_NAME_RE = re.compile(r"[^A-Za-z0-9_.-]+")
+
+
+def safe_code(code: Any) -> str:
+    text = str(code or "").strip()
+    text = SAFE_NAME_RE.sub("_", text)
+    return text[:180] if text else "UNKNOWN"
 
 
 def load_json(path: Path) -> Any:
@@ -62,7 +71,7 @@ def validate(data_dir: Path, strict: bool = False, sample: int = 25) -> int:
     for path in required:
         exists(path, errors, path.name)
 
-    for m in ['m1', 'm2', 'm3', 'm4', 'm5']:
+    for m in ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7']:
         exists(data_dir / 'market' / f'{m}.json', errors, f'market/{m}.json')
         exists(data_dir / 'market' / 'weights' / f'{m}.json', errors, f'market/weights/{m}.json')
         exists(data_dir / 'market' / 'inputs' / f'{m}.json', errors, f'market/inputs/{m}.json')
@@ -82,7 +91,7 @@ def validate(data_dir: Path, strict: bool = False, sample: int = 25) -> int:
             load_json(path)
         except Exception as exc:
             errors.append(f"JSON inválido {path}: {exc}")
-    for m in ['m1', 'm2', 'm3', 'm4', 'm5']:
+    for m in ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7']:
         for path in [
             data_dir / 'market' / f'{m}.json',
             data_dir / 'market' / 'weights' / f'{m}.json',
@@ -108,7 +117,7 @@ def validate(data_dir: Path, strict: bool = False, sample: int = 25) -> int:
         catalog = load_json(cat_path)
         items = catalog.get('items', [])[:sample]
         for item in items:
-            code = str(item.get(key) or item.get('code') or '').replace('/', '_')
+            code = safe_code(item.get(key) or item.get('code') or '')
             if not code:
                 continue
             path = data_dir / 'timeseries' / kind / f'{code}.json'

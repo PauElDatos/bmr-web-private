@@ -73,7 +73,32 @@ MODULES = {
         "where": "hypothesis_code LIKE 'M5%'",
         "preferred_signals": ["M5_RISK_OFF", "M2_S_WEAK", "M3_S_HEALTHY", "M4_S_SIDEWAYS_OR_DOWN"],
     },
+    "M6": {
+        "title": "M6_RULES_M2M3M4_COMPOSITE",
+        "description": "Composite M2/M3/M4 con seÃ±ales de rÃ©gimen agregadas.",
+        "where": "hypothesis_code LIKE 'M6%'",
+        "preferred_signals": ["M6_RISK_OFF", "M2_S_WEAK", "M3_S_HEALTHY", "M4_S_SIDEWAYS_OR_DOWN"],
+    },
+    "M7": {
+        "title": "M7_DEEP_SP500_DRAWDOWN",
+        "description": "Probabilidades profundas de drawdown futuro del S&P 500.",
+        "where": "hypothesis_code LIKE 'M7%'",
+        "preferred_signals": ["M7_SP500_DD40_PROBA", "M7_SP500_DD25_PROBA", "M7_SP500_DD10_PROBA"],
+    },
 }
+
+WEIGHT_HISTORY_FIELDS = [
+    "hypothesis_code",
+    "run_id",
+    "signal_code",
+    "direction",
+    "weight",
+    "contribution",
+    "raw_value",
+    "output_signal_code",
+    "signed_value",
+    "model_weight",
+]
 
 DEFAULT_OVERLAYS = [
     {"code": "BTC", "kind": "series", "target_code": "BTC", "label": "Bitcoin", "color": "#f59e0b"},
@@ -158,6 +183,11 @@ def safe_code(code: Any) -> str:
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, default=json_default), encoding="utf-8")
+
+
+def write_json_compact(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":"), default=json_default), encoding="utf-8")
 
 
 def fetch_all(conn, sql: str, params: Sequence[Any] = ()) -> List[Dict[str, Any]]:
@@ -473,21 +503,21 @@ def load_reference_spx(conn, max_points: int) -> List[Dict[str, Any]]:
             rows = query_last_points(conn, "SELECT time AS dt, close_p AS value FROM series_prices WHERE series_id=%s", (row["series_id"],), max_points)
             pts = points_from_rows(rows)
             if pts:
-                return normalize_to_100(pts)
+                return pts
     if table_exists(conn, "indicators") and table_exists(conn, "indicator_values"):
         row = fetch_one(conn, "SELECT id FROM indicators WHERE code IN ('SP500','SPX') ORDER BY FIELD(code,'SP500','SPX') LIMIT 1")
         if row:
             rows = query_last_points(conn, "SELECT dt, value FROM indicator_values WHERE indicator_id=%s", (row["id"],), max_points)
             pts = points_from_rows(rows)
             if pts:
-                return normalize_to_100(pts)
+                return pts
     if table_exists(conn, "assets") and table_exists(conn, "prices"):
         row = fetch_one(conn, "SELECT asset_id FROM assets WHERE symbol IN ('SPX','SP500','^GSPC') ORDER BY FIELD(symbol,'SPX','SP500','^GSPC') LIMIT 1")
         if row:
             rows = query_last_points(conn, "SELECT time AS dt, close_p AS value FROM prices WHERE asset_id=%s", (row["asset_id"],), max_points)
             pts = points_from_rows(rows)
             if pts:
-                return normalize_to_100(pts)
+                return pts
     return []
 
 
@@ -650,6 +680,95 @@ def export_market_runs(conn, out_dir: Path, args, warnings: List[str]) -> List[D
     return runs
 
 
+def date_only(value: Any) -> str:
+    if isinstance(value, dt.datetime):
+        return value.date().isoformat()
+    if isinstance(value, dt.date):
+        return value.isoformat()
+    return str(value or "")[:10]
+
+
+def compact_weight_row(row: Dict[str, Any]) -> List[Any]:
+    return [
+        row.get("source_hypothesis_code") or row.get("source_signal_code"),
+        row.get("source_run_id"),
+        row.get("source_signal_code"),
+        row.get("direction") or "NEUTRAL",
+        row.get("contribution_pct"),
+        row.get("contribution"),
+        row.get("raw_value"),
+        row.get("output_signal_code"),
+        row.get("signed_value"),
+        row.get("model_weight"),
+    ]
+
+
+def export_module_weight_history(conn, out_dir: Path, module_code: str, run: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    if not run or not table_exists(conn, "ml_module_contributions"):
+        return None
+
+    rows = fetch_all(conn, """
+        SELECT dt, output_signal_code,
+               source_hypothesis_code, source_run_id, source_signal_code,
+               raw_value, signed_value, model_weight, contribution,
+               contribution_pct, direction
+        FROM ml_module_contributions
+        WHERE run_id = %s AND module_code = %s
+        ORDER BY dt ASC, abs_contribution DESC, source_signal_code ASC
+    """, (run["run_id"], module_code))
+    if not rows:
+        return None
+
+    module_slug = module_code.lower()
+    chunks_by_year: Dict[str, Dict[str, Any]] = {}
+    all_dates: List[str] = []
+    total_rows = 0
+
+    for row in rows:
+        d = date_only(row.get("dt"))
+        if not d:
+            continue
+        year = d[:4]
+        chunk = chunks_by_year.setdefault(year, {"dates": [], "rows_by_date": defaultdict(list), "count": 0})
+        if d not in chunk["rows_by_date"]:
+            chunk["dates"].append(d)
+            all_dates.append(d)
+        chunk["rows_by_date"][d].append(compact_weight_row(row))
+        chunk["count"] += 1
+        total_rows += 1
+
+    chunks: List[Dict[str, Any]] = []
+    for year in sorted(chunks_by_year):
+        chunk = chunks_by_year[year]
+        dates = chunk["dates"]
+        if not dates:
+            continue
+        rel_path = f"market/weights/history/{module_slug}/{year}.json"
+        payload = {
+            "module_code": module_code,
+            "run_id": run.get("run_id"),
+            "source": "ml_module_contributions",
+            "fields": WEIGHT_HISTORY_FIELDS,
+            "dates": dates,
+            "rows_by_date": {d: chunk["rows_by_date"][d] for d in dates},
+        }
+        write_json_compact(out_dir / rel_path, payload)
+        chunks.append({
+            "from": dates[0],
+            "to": dates[-1],
+            "path": rel_path,
+            "count": chunk["count"],
+        })
+
+    return {
+        "source": "ml_module_contributions",
+        "fields": WEIGHT_HISTORY_FIELDS,
+        "dates": all_dates,
+        "chunks": chunks,
+        "count": total_rows,
+    }
+
+
 def export_module_weights(conn, out_dir: Path, module_code: str, run: Optional[Dict[str, Any]], warnings: List[str]) -> Dict[str, Any]:
     """Exporta pesos/contribuciones.
 
@@ -661,6 +780,7 @@ def export_module_weights(conn, out_dir: Path, module_code: str, run: Optional[D
     items: List[Dict[str, Any]] = []
     source = "none"
     asof_dt = None
+    history_index = None
     if run and table_exists(conn, "ml_module_contributions"):
         latest = fetch_all(conn, """
             SELECT MAX(dt) AS asof_dt
@@ -704,6 +824,7 @@ def export_module_weights(conn, out_dir: Path, module_code: str, run: Optional[D
                         "weight_source": source,
                         "explanation": r.get("explanation") or "Contribucion efectiva registrada por el modulo.",
                     })
+        history_index = export_module_weight_history(conn, out_dir, module_code, run)
     if not items and run and table_exists(conn, "ml_signal_scores"):
         rows = fetch_all(conn, """
             SELECT hypothesis_code, run_id, signal_code, direction, score, rank_within_direction,
@@ -772,16 +893,20 @@ def export_module_weights(conn, out_dir: Path, module_code: str, run: Optional[D
         "module_code": module_code,
         "run_id": run.get("run_id") if run else None,
         "asof_dt": asof_dt,
-        "weights_available": bool(items and (source == "ml_module_contributions" or source.startswith("ml_signal_scores"))),
+        "weights_available": bool((items or history_index) and (source == "ml_module_contributions" or source.startswith("ml_signal_scores"))),
         "weights_source": source,
         "items": items,
     }
+    if history_index:
+        payload["history_index"] = history_index
     write_json(out_dir / "market" / "weights" / f"{module_code.lower()}.json", payload)
     return payload
 
 
 def export_market_modules(conn, out_dir: Path, args, warnings: List[str]) -> Dict[str, Any]:
-    spx_points = load_reference_spx(conn, args.max_points)
+    market_max_points = getattr(args, "max_market_points", 0)
+    spx_points = load_reference_spx(conn, market_max_points)
+    recession_bands = build_recession_bands(conn, market_max_points)
     latest_summary = {
         "regime": "SIN_DATOS",
         "asof_dt": None,
@@ -794,7 +919,7 @@ def export_market_modules(conn, out_dir: Path, args, warnings: List[str]) -> Dic
     module_payloads: Dict[str, Any] = {}
     for module_code, cfg in MODULES.items():
         run = latest_run_for_module(conn, module_code)
-        grouped = load_signals_for_run(conn, int(run["run_id"]), args.max_points) if run else {}
+        grouped = load_signals_for_run(conn, int(run["run_id"]), market_max_points) if run else {}
         signal_code, rows = choose_signal(grouped, cfg["preferred_signals"])
         points = points_from_rows(rows, extra_keys=("score", "level", "explanation"))
         signals = signal_series_from_grouped(module_code, grouped)
@@ -819,7 +944,7 @@ def export_market_modules(conn, out_dir: Path, args, warnings: List[str]) -> Dic
             "chart": {
                 "spx": spx_points,
                 "signal": points,
-                "bands": [],
+                "bands": recession_bands,
             },
             "signals": signals,
             "available_signals": [s["signal_code"] for s in signals],
@@ -980,7 +1105,7 @@ def build_manifest(out_dir: Path, catalogs: Dict[str, List[Dict[str, Any]]], ts_
             {"name": "catalog_indicators", "status": "ok" if len(catalogs.get("indicators", [])) > 0 else "error", "ok": len(catalogs.get("indicators", [])) > 0, "detail": f"count={len(catalogs.get('indicators', []))}"},
             {"name": "catalog_assets", "status": "ok" if len(catalogs.get("assets", [])) > 0 else "error", "ok": len(catalogs.get("assets", [])) > 0, "detail": f"count={len(catalogs.get('assets', []))}"},
             {"name": "catalog_series", "status": "ok" if len(catalogs.get("series", [])) > 0 else "warning", "ok": len(catalogs.get("series", [])) > 0, "detail": f"count={len(catalogs.get('series', []))}"},
-            {"name": "market_modules", "status": "ok" if all((out_dir / "market" / f"m{i}.json").exists() for i in range(1, 6)) else "error", "ok": all((out_dir / "market" / f"m{i}.json").exists() for i in range(1, 6)), "detail": "M1-M5 exportados"},
+            {"name": "market_modules", "status": "ok" if all((out_dir / "market" / f"{m.lower()}.json").exists() for m in MODULES) else "error", "ok": all((out_dir / "market" / f"{m.lower()}.json").exists() for m in MODULES), "detail": "M1-M7 exportados"},
         ],
         "warnings": warnings[:200],
     }
@@ -1018,6 +1143,7 @@ def build_argparser() -> argparse.ArgumentParser:
     p.add_argument("--env-file", default=None, help="Ruta a .env con credenciales DB.")
     p.add_argument("--out-dir", default="web/data", help="Directorio destino de JSON.")
     p.add_argument("--max-points", type=int, default=8000, help="Máximo de puntos por serie temporal. 0 = todos.")
+    p.add_argument("--max-market-points", type=int, default=0, help="Máximo de puntos para SPX/señales/USREC en market. 0 = todos.")
     p.add_argument("--max-indicators", type=int, default=0, help="Máximo de indicadores a exportar. 0 = todos.")
     p.add_argument("--max-assets", type=int, default=500, help="Máximo de activos a exportar. 0 = todos.")
     p.add_argument("--max-series", type=int, default=0, help="Máximo de series canónicas a exportar. 0 = todas.")

@@ -2,6 +2,7 @@ import {
   loadJson,
   loadMarketModule,
   loadMarketWeights,
+  loadMarketWeightChunk,
   loadMarketInputs
 } from '../api/dataClient.js';
 import { pageHeader } from '../components/Layout.js';
@@ -9,20 +10,34 @@ import { chartPanel } from '../components/ChartPanel.js';
 import { metricGrid } from '../components/MetricCard.js';
 import { signalWeightTable } from '../components/SignalWeightTable.js';
 import { runInputTable } from '../components/RunInputTable.js';
-import { signalSeriesTable } from '../components/SignalSeriesTable.js';
 import { drawLineChart, attachResize, attachTradingChartInteractions } from '../utils/chart.js';
 import { classForLevel, escapeHtml, fmtNumber, sentimentLabel } from '../utils/format.js';
 
 let currentModule = 'M5';
-let selectedSignalByModule = {};
 let selectedDateByModule = {};
+let highlightedLegendKeyByModule = {};
 let availableModules = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7'];
 let cleanupResize = null;
 let cleanupChartInteractions = null;
 let marketView = {};
+let weightsRenderToken = 0;
 
 const SIGNAL_COLORS = ['#f87171', '#fbbf24', '#34d399', '#a78bfa', '#22d3ee', '#fb7185', '#60a5fa'];
-const MIN_MARKET_DATE = '1950-01-01';
+const MIN_MARKET_DATE = '1800-01-01';
+const SPX_KEY = 'spx';
+const USREC_KEY = 'usrec';
+const COMPACT_WEIGHT_FIELDS = [
+  'hypothesis_code',
+  'run_id',
+  'signal_code',
+  'direction',
+  'weight',
+  'contribution',
+  'raw_value',
+  'output_signal_code',
+  'signed_value',
+  'model_weight'
+];
 
 export async function MarketSentimentPage() {
   const [latest, runs] = await Promise.all([
@@ -46,23 +61,13 @@ export async function MarketSentimentPage() {
 
       <div class="market-chart-stack">
         ${chartPanel('market-chart', 'Gráfico de mercado y señales', '')}
+        <div id="market-chart-legend" class="market-chart-legend"></div>
         <div id="market-date-selector" class="market-date-selector"></div>
         <aside class="card module-panel market-module-panel">
           <h2>Módulos</h2>
           <div class="module-buttons market-module-buttons">${buttons}</div>
         </aside>
       </div>
-
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <h2>Señales disponibles del módulo</h2>
-            <p>Selecciona qué señal se dibuja contra el S&amp;P 500.</p>
-          </div>
-        </div>
-        <div id="signal-selector" class="signal-selector"></div>
-        <div id="signal-series-table"></div>
-      </section>
 
       <section class="card">
         <div class="card-header">
@@ -100,6 +105,8 @@ function moduleCodesFromRuns(runs, latest) {
     if (typeof value === 'string') {
       const code = value.trim().toUpperCase();
       if (/^M\d+$/.test(code)) codes.add(code);
+      const match = code.match(/^(M\d+)/);
+      if (match) codes.add(match[1]);
       return;
     }
     if (Array.isArray(value)) {
@@ -111,7 +118,7 @@ function moduleCodesFromRuns(runs, latest) {
         const code = key.trim().toUpperCase();
         if (/^M\d+$/.test(code)) codes.add(code);
       });
-      ['module_code', 'module', 'code', 'moduleCode'].forEach(key => visit(value[key], depth + 1));
+      ['module_code', 'module', 'code', 'moduleCode', 'hypothesis_code'].forEach(key => visit(value[key], depth + 1));
       ['items', 'modules', 'runs', 'data'].forEach(key => visit(value[key], depth + 1));
     }
   };
@@ -134,21 +141,41 @@ function allSignalSeries(mod) {
   }];
 }
 
-function selectedSignal(mod) {
-  const signals = allSignalSeries(mod);
-  const current = selectedSignalByModule[currentModule];
-  const found = signals.find(s => s.signal_code === current);
-  return found || signals.find(s => s.signal_code === mod.signal_code) || signals[0];
+function signalKey(code) {
+  return `signal:${code || ''}`;
 }
 
-function signalButtons(mod) {
-  const selected = selectedSignal(mod)?.signal_code;
-  return allSignalSeries(mod).map(s => `
-    <button class="signal-chip ${s.signal_code === selected ? 'active' : ''}" data-signal="${escapeHtml(s.signal_code)}">
-      <strong>${escapeHtml(s.signal_code)}</strong>
-      <span>${escapeHtml(s.latest_dt || '—')} · ${fmtNumber(s.latest_value, 3)}</span>
-    </button>
-  `).join('');
+function activeLegendKey() {
+  return highlightedLegendKeyByModule[currentModule] || '';
+}
+
+function colorWithAlpha(color, alpha) {
+  const hex = String(color || '').replace('#', '');
+  if (/^[0-9a-f]{6}$/i.test(hex)) {
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+  return color;
+}
+
+function seriesColor(baseColor, key) {
+  const active = activeLegendKey();
+  if (!active || active === key) return baseColor;
+  return colorWithAlpha(baseColor, 0.22);
+}
+
+function seriesWidth(key) {
+  const active = activeLegendKey();
+  if (!active) return 2;
+  return active === key ? 3 : 1.2;
+}
+
+function bandsForChart(bands = []) {
+  const active = activeLegendKey();
+  const alpha = active === USREC_KEY ? 0.3 : active ? 0.05 : 0.16;
+  return bands.map(band => ({ ...band, color: `rgba(148, 163, 184, ${alpha})` }));
 }
 
 function dateKey(value) {
@@ -160,19 +187,96 @@ function dateKey(value) {
   return new Date(time).toISOString().slice(0, 10);
 }
 
-function collectDateOptions(mod, chosen, weights) {
+function pointAtOrBefore(points = [], selectedDate = '') {
+  if (!points.length) return null;
+  const target = dateKey(selectedDate) || dateKey(points.at(-1)?.dt);
+  let lo = 0;
+  let hi = points.length - 1;
+  let best = null;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    const dt = dateKey(points[mid]?.dt);
+    if (!dt || dt > target) {
+      hi = mid - 1;
+    } else {
+      best = points[mid];
+      lo = mid + 1;
+    }
+  }
+  return best || points[0] || null;
+}
+
+function legendPointMeta(point, digits = 3) {
+  if (!point) return 'sin dato';
+  return `${dateKey(point.dt) || '—'} · ${fmtNumber(point.value, digits)}`;
+}
+
+function usrecMeta(bands = [], selectedDate = '') {
+  const dt = dateKey(selectedDate);
+  if (!dt) return 'recesiones EEUU';
+  const active = bands.some(band => dateKey(band.from) <= dt && dt <= dateKey(band.to));
+  return active ? `${dt} · en recesión` : `${dt} · sin recesión`;
+}
+
+function legendItems(mod, selectedDate) {
+  const signals = allSignalSeries(mod);
+  return [
+    {
+      key: SPX_KEY,
+      label: 'SP500 completo',
+      color: '#60a5fa',
+      meta: legendPointMeta(pointAtOrBefore(mod.chart?.spx || [], selectedDate), 2)
+    },
+    ...signals.map((signal, idx) => ({
+      key: signalKey(signal.signal_code),
+      label: signal.signal_code || `Señal ${idx + 1}`,
+      color: SIGNAL_COLORS[idx % SIGNAL_COLORS.length],
+      meta: legendPointMeta(pointAtOrBefore(signal.points || [], selectedDate), 4)
+    })),
+    {
+      key: USREC_KEY,
+      label: 'USREC',
+      color: '#94a3b8',
+      meta: usrecMeta(mod.chart?.bands || [], selectedDate)
+    }
+  ];
+}
+
+function renderLegend(mod, draw) {
+  const wrap = document.getElementById('market-chart-legend');
+  if (!wrap) return;
+  const selectedDate = selectedDateByModule[currentModule] || '';
+  const active = activeLegendKey();
+  wrap.innerHTML = legendItems(mod, selectedDate).map(item => `
+    <button class="legend-item ${item.key === active ? 'active' : ''}" data-key="${escapeHtml(item.key)}" type="button">
+      <span class="legend-swatch" style="background:${escapeHtml(item.color)}"></span>
+      <span class="legend-text">
+        <strong>${escapeHtml(item.label)}</strong>
+        <em>${escapeHtml(item.meta)}</em>
+      </span>
+    </button>
+  `).join('');
+  wrap.querySelectorAll('.legend-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.key || '';
+      highlightedLegendKeyByModule[currentModule] = activeLegendKey() === key ? '' : key;
+      renderLegend(mod, draw);
+      draw();
+    });
+  });
+}
+
+function collectDateOptions(mod, weights) {
   const dates = new Set();
-  const addPoints = (points = []) => points.forEach(point => {
-    const dt = dateKey(point.dt || point.asof_dt || point.date);
-    if (dt && dt >= MIN_MARKET_DATE) dates.add(dt);
-  });
+  const addDate = (dt) => {
+    const key = dateKey(dt);
+    if (key && key >= MIN_MARKET_DATE) dates.add(key);
+  };
+  const addPoints = (points = []) => points.forEach(point => addDate(point.dt || point.asof_dt || point.date));
   addPoints(mod.chart?.spx || []);
-  addPoints(chosen?.points || mod.chart?.signal || []);
+  addPoints(mod.chart?.signal || []);
   allSignalSeries(mod).forEach(signal => addPoints(signal.points || []));
-  (weights.items || []).forEach(row => {
-    const dt = dateKey(row.dt || row.asof_dt || row.event_dt_effective);
-    if (dt && dt >= MIN_MARKET_DATE) dates.add(dt);
-  });
+  weightHistoryDates(weights).forEach(addDate);
   return [...dates].sort();
 }
 
@@ -226,12 +330,16 @@ function renderDateSelector(dateOptions, selectedDate) {
   `;
 }
 
+function rowDate(row) {
+  return dateKey(row.dt || row.asof_dt || row.event_dt_effective);
+}
+
 function rowsForSelectedDate(rows = [], selectedDate = '') {
   if (!rows.length) return [];
   const rowsByDate = new Map();
   const undated = [];
   rows.forEach(row => {
-    const dt = dateKey(row.dt || row.asof_dt || row.event_dt_effective);
+    const dt = rowDate(row);
     if (!dt) {
       undated.push(row);
       return;
@@ -249,13 +357,81 @@ function rowsForSelectedDate(rows = [], selectedDate = '') {
   return rowsByDate.get(fallbackDate) || undated;
 }
 
-function renderWeightsForDate(weights, selectedDate) {
+function weightHistoryDates(weights = {}) {
+  const indexed = weights.history_index?.dates;
+  if (Array.isArray(indexed) && indexed.length) return indexed.map(dateKey).filter(Boolean);
+  return (weights.items || []).map(rowDate).filter(Boolean).sort();
+}
+
+function findDateAtOrBefore(dates = [], selectedDate = '') {
+  if (!dates.length) return '';
+  const target = dateKey(selectedDate) || dates[dates.length - 1];
+  let lo = 0;
+  let hi = dates.length - 1;
+  let best = '';
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (dates[mid] <= target) {
+      best = dates[mid];
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return best || dates[0];
+}
+
+function chunkForDate(historyIndex, dt) {
+  return (historyIndex?.chunks || []).find(chunk => chunk.from <= dt && dt <= chunk.to);
+}
+
+function hydrateCompactRows(chunk, dt) {
+  const fields = chunk.fields || COMPACT_WEIGHT_FIELDS;
+  const rows = chunk.rows_by_date?.[dt] || [];
+  return rows.map(values => {
+    const row = {
+      dt,
+      asof_dt: dt,
+      module_code: chunk.module_code,
+      weight_source: chunk.source || 'ml_module_contributions'
+    };
+    fields.forEach((field, idx) => {
+      row[field] = values[idx];
+    });
+    return row;
+  });
+}
+
+async function weightRowsForSelectedDate(weights, selectedDate) {
+  const history = weights.history_index;
+  if (history?.dates?.length) {
+    const effectiveDate = findDateAtOrBefore(history.dates, selectedDate);
+    const chunk = chunkForDate(history, effectiveDate);
+    if (chunk?.path) {
+      const chunkPayload = await loadMarketWeightChunk(chunk.path);
+      return hydrateCompactRows(chunkPayload, effectiveDate);
+    }
+  }
+  return rowsForSelectedDate(weights.items || [], selectedDate);
+}
+
+async function renderWeightsForDate(weights, selectedDate) {
   const table = document.getElementById('weights-table');
   if (!table) return;
-  table.innerHTML = signalWeightTable(rowsForSelectedDate(weights.items || [], selectedDate));
+  const token = ++weightsRenderToken;
+  table.innerHTML = `<div class="empty-state">Cargando pesos para la fecha seleccionada...</div>`;
+  try {
+    const rows = await weightRowsForSelectedDate(weights, selectedDate);
+    if (token !== weightsRenderToken) return;
+    table.innerHTML = signalWeightTable(rows);
+  } catch (err) {
+    if (token !== weightsRenderToken) return;
+    table.innerHTML = `<div class="empty-state">No se pudieron cargar los pesos históricos para esta fecha.</div>`;
+  }
 }
 
 async function renderModule() {
+  weightsRenderToken += 1;
   const [mod, weights, inputs] = await Promise.all([
     loadMarketModule(currentModule),
     loadMarketWeights(currentModule).catch(() => ({ items: [] })),
@@ -265,38 +441,57 @@ async function renderModule() {
   const chart = document.getElementById('market-chart');
   const title = document.getElementById('market-chart-title');
   const inputsTable = document.getElementById('inputs-table');
-  const selector = document.getElementById('signal-selector');
-  const signalTable = document.getElementById('signal-series-table');
   if (!chart) return;
 
-  const chosen = selectedSignal(mod);
-  selectedSignalByModule[currentModule] = chosen?.signal_code;
-  const dateOptions = collectDateOptions(mod, chosen, weights);
+  const signals = allSignalSeries(mod);
+  const dateOptions = collectDateOptions(mod, weights);
   const selectedDate = selectedDateForModule(dateOptions);
 
-  if (title) title.textContent = `${currentModule} · S&P 500 y señal seleccionada`;
+  if (title) title.textContent = `${currentModule} · SP500 completo, USREC y señales`;
 
   const draw = () => {
     const selectedMarker = selectedDateByModule[currentModule]
       ? [{ dt: selectedDateByModule[currentModule], color: 'rgba(254, 247, 2, .66)', width: 1.5 }]
       : [];
+    const signalSeries = signals.map((signal, idx) => {
+      const key = signalKey(signal.signal_code);
+      const color = SIGNAL_COLORS[idx % SIGNAL_COLORS.length];
+      return {
+        name: signal.signal_code || `Señal ${idx + 1}`,
+        points: signal.points || [],
+        color: seriesColor(color, key),
+        width: seriesWidth(key),
+        axis: 'left'
+      };
+    });
     const series = [
-      { name: chosen?.signal_code || mod.signal_code || currentModule, points: chosen?.points || mod.chart?.signal || [], color: SIGNAL_COLORS[0], width: 2, axis: 'left' },
-      { name: 'S&P 500', points: mod.chart?.spx || [], color: '#60a5fa', width: 2, axis: 'right' }
+      ...signalSeries,
+      {
+        name: 'SP500 completo',
+        points: mod.chart?.spx || [],
+        color: seriesColor('#60a5fa', SPX_KEY),
+        width: seriesWidth(SPX_KEY),
+        axis: 'right'
+      }
     ];
     drawLineChart(chart, series, {
       view: marketView,
       dualAxis: true,
-      bands: mod.chart?.bands || [],
+      bands: bandsForChart(mod.chart?.bands || []),
       markers: selectedMarker,
       anchoredGrid: true,
-      axisLabels: { left: 'Módulos', right: 'S&P 500' }
+      hideLegend: true,
+      axisLabels: { left: 'Señales M', right: 'SP500' }
     });
   };
 
   draw();
+  renderLegend(mod, draw);
   if (cleanupResize) cleanupResize();
-  cleanupResize = attachResize(chart, draw);
+  cleanupResize = attachResize(chart, () => {
+    draw();
+    renderLegend(mod, draw);
+  });
   if (cleanupChartInteractions) cleanupChartInteractions();
   cleanupChartInteractions = attachTradingChartInteractions(chart, marketView, draw);
 
@@ -308,19 +503,10 @@ async function renderModule() {
     selectedDateByModule[currentModule] = nextDate;
     if (dateLabel) dateLabel.textContent = formatSelectedDate(nextDate);
     renderWeightsForDate(weights, nextDate);
+    renderLegend(mod, draw);
     draw();
   });
 
-  selector.innerHTML = signalButtons(mod);
-  selector.querySelectorAll('.signal-chip').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      selectedSignalByModule[currentModule] = btn.dataset.signal;
-      marketView = {};
-      await renderModule();
-    });
-  });
-
-  renderWeightsForDate(weights, selectedDate);
+  await renderWeightsForDate(weights, selectedDate);
   inputsTable.innerHTML = runInputTable(inputs.items || []);
-  signalTable.innerHTML = signalSeriesTable(allSignalSeries(mod));
 }

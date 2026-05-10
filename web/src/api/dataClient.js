@@ -34,6 +34,10 @@ export async function loadMarketWeights(moduleCode) {
   return loadJson(`market/weights/${moduleCode.toLowerCase()}.json`);
 }
 
+export async function loadMarketWeightChunk(path) {
+  return loadJson(path);
+}
+
 export async function loadMarketInputs(moduleCode) {
   return loadJson(`market/inputs/${moduleCode.toLowerCase()}.json`);
 }

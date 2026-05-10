@@ -13,6 +13,7 @@ cd "$REPO_ROOT"
 ENV_FILE="${ENV_FILE:-exporter/.env.local}"
 OUT_DIR="${OUT_DIR:-web/data}"
 MAX_POINTS="${MAX_POINTS:-8000}"
+MAX_MARKET_POINTS="${MAX_MARKET_POINTS:-0}"
 MAX_INDICATORS="${MAX_INDICATORS:-0}"
 MAX_ASSETS="${MAX_ASSETS:-500}"
 MAX_SERIES="${MAX_SERIES:-0}"
@@ -54,6 +55,7 @@ Opciones principales:
   --out-dir PATH           destino JSON (por defecto web/data)
   --branch NAME            rama Git a publicar (por defecto main)
   --max-points N           puntos máximos por serie (0 = todos)
+  --max-market-points N    puntos máximos para SPX/señales/USREC en market (0 = todos)
   --max-assets N           activos máximos (0 = todos)
   --max-indicators N       indicadores máximos (0 = todos)
   --max-series N           series canónicas máximas (0 = todas)
@@ -84,6 +86,7 @@ while [[ $# -gt 0 ]]; do
     --out-dir) OUT_DIR="$2"; shift 2 ;;
     --branch) BRANCH="$2"; shift 2 ;;
     --max-points) MAX_POINTS="$2"; shift 2 ;;
+    --max-market-points) MAX_MARKET_POINTS="$2"; shift 2 ;;
     --max-indicators) MAX_INDICATORS="$2"; shift 2 ;;
     --max-assets) MAX_ASSETS="$2"; shift 2 ;;
     --max-series) MAX_SERIES="$2"; shift 2 ;;
@@ -173,6 +176,7 @@ EXPORT_ARGS=(
   --env-file "$ENV_FILE"
   --out-dir "$OUT_DIR"
   --max-points "$MAX_POINTS"
+  --max-market-points "$MAX_MARKET_POINTS"
   --max-indicators "$MAX_INDICATORS"
   --max-assets "$MAX_ASSETS"
   --max-series "$MAX_SERIES"
