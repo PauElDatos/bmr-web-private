@@ -39,7 +39,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--fontText);
-  font-size: 17px;
+  font-size: 20px;
   padding: 0;
 }
 
