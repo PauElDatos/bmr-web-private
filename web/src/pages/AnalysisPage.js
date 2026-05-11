@@ -20,6 +20,7 @@ let cleanupChartInteractions = null;
 let catalogs = null;
 let analysisView = {};
 let lastRendered = { loaded: [], chartSeries: [], calcPoints: [] };
+let focusedAnalysisSeries = null;
 
 const slotLabels = { blue: 'Azul', red: 'Rojo', green: 'Verde' };
 const slotColors = { blue: '#60a5fa', red: '#f87171', green: '#34d399' };
@@ -57,7 +58,7 @@ export async function AnalysisPage() {
   return `
     <div class="analysis-page">
       ${pageHeader('Análisis')}
-      ${chartPanel('analysis-chart', 'Comparador de series', 'Slots azul/rojo/verde + overlays + cálculo opcional')}
+      ${chartPanel('analysis-chart', 'Comparador de series')}
       <section class="card control-panel analysis-control-panel">
         <div class="analysis-topbar">
           <label>Plantilla
@@ -93,12 +94,12 @@ export async function AnalysisPage() {
         <div class="card-header">
           <div>
             <h2>Catálogo BMR para análisis</h2>
-            <p>Busca indicadores, activos, series canónicas o cripto y envíalos directamente a un slot.</p>
+            <p>Busca indicadores macro y activos clasificados por tipo para enviarlos directamente a un slot.</p>
           </div>
         </div>
         <div class="catalog-toolbar">
           <input id="catalog-search" class="text-input" placeholder="Buscar código, nombre, fuente, tipo..." />
-          <select id="catalog-kind" class="select-input"><option value="all">Todos</option><option value="indicators">Indicadores macro</option><option value="assets">Activos</option><option value="series">Series canónicas</option><option value="crypto">Cripto</option></select>
+          <select id="catalog-kind" class="select-input"><option value="all">Todos</option><option value="indicators">Indicadores macro</option><option value="equity">Equity</option><option value="crypto">Cripto</option><option value="commodity">Commodity</option><option value="index">Índice</option></select>
           <select id="catalog-source" class="select-input"><option value="all">Todas las fuentes/tipos</option>${catalogs.facets.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(translateDbText(f))}</option>`).join('')}</select>
         </div>
         <div id="analysis-catalog-table" class="analysis-catalog-table"></div>
@@ -136,9 +137,11 @@ function normalizeCatalogOption(kind, code, name, type, source, frequency, item)
   const displayType = translateDbText(rawType);
   const displaySource = translateDbText(rawSource);
   const displayFrequency = translateDbText(rawFrequency);
+  const category = classifyCatalogOption(kind, code, rawName, rawType, rawSource, rawFrequency, item);
   return {
     key: `${kind}:${code}`,
-    label: `${labelKind(kind)} · ${code} · ${displayName}`,
+    label: `${assetCategoryLabel(category)} · ${code} · ${displayName}`,
+    category,
     kind,
     code,
     name: displayName,
@@ -165,6 +168,54 @@ function normalizePresets(items) {
 
 function labelKind(kind) {
   return { indicators: 'Macro', assets: 'Activo', series: 'Serie', crypto: 'Cripto' }[kind] || kind;
+}
+
+function assetCategoryLabel(category) {
+  return {
+    indicators: 'Macro',
+    equity: 'Equity',
+    crypto: 'Cripto',
+    commodity: 'Commodity',
+    index: 'Índice',
+    assets: 'Activo'
+  }[category] || labelKind(category);
+}
+
+function classifyCatalogOption(kind, code, name, type, source, frequency, item = {}) {
+  if (kind === 'indicators') return 'indicators';
+  if (kind === 'crypto') return 'crypto';
+  const haystack = [
+    kind,
+    code,
+    name,
+    type,
+    source,
+    frequency,
+    item.asset_type,
+    item.series_type,
+    item.category,
+    item.type,
+    item.source,
+    item.exchange,
+    item.quote
+  ].filter(Boolean).join(' ').toLowerCase();
+
+  if (/\b(crypto|cryptocurrency|coin|token|btc|bitcoin|eth|ethereum|solana|sol|xrp|ada|bnb)\b/.test(haystack)) return 'crypto';
+  if (/\b(commodity|commodities|materia|materias|gold|silver|copper|oil|brent|wti|gas|xau|xag|oro|plata|crude)\b/.test(haystack)) return 'commodity';
+  if (/\b(index|indices|índice|indice|benchmark|spx|s&p|nasdaq|ndx|dow|dji|russell|iwm|vix|dax|stoxx|ftse|nikkei)\b/.test(haystack)) return 'index';
+  if (/\b(equity|stock|stocks|share|shares|acciones|accion|empresa|company|nyse|nasdaqgs|nasdaqgm|amex)\b/.test(haystack)) return 'equity';
+  if (kind === 'assets') return 'equity';
+  if (kind === 'series') return 'index';
+  return 'assets';
+}
+
+function isSp500Option(opt = {}) {
+  const haystack = [opt.code, opt.name, opt.rawName, opt.type, opt.rawType, opt.source, opt.rawSource].filter(Boolean).join(' ').toUpperCase();
+  return /\b(SPX|SP500|SPX500|S&P\s*500|S\s*&\s*P\s*500|STANDARD\s*&\s*POOR)/.test(haystack);
+}
+
+function safeAxisId(value) {
+  return String(value || 'axis').replace(/[^a-zA-Z0-9_-]+/g, '-');
 }
 
 function renderSlotControl(slot) {
@@ -260,14 +311,22 @@ async function renderAnalysis() {
   const loaded = await Promise.all(slots.map(loadSlotSeries));
   const series = loaded
     .filter(s => s.state.visible)
-    .map(s => ({ name: `${slotLabels[s.slot]} · ${s.opt.code}`, points: s.points, color: slotColors[s.slot], width: 2.2 }));
+    .map((s) => buildAnalysisSeries({
+      id: `slot-${s.slot}`,
+      name: `${slotLabels[s.slot]} · ${s.opt.code}`,
+      shortName: s.opt.code,
+      opt: s.opt,
+      points: isSp500Option(s.opt) ? s.rawPoints : s.points,
+      color: slotColors[s.slot],
+      width: 2.2
+    }));
 
   const op = document.getElementById('calc-op')?.value || 'none';
   let calcPoints = [];
   if (op !== 'none') {
     const align = document.getElementById('align-ffill')?.checked;
     calcPoints = align ? calculateSeriesAligned(loaded[0].points, loaded[1].points, op) : calculateSeries(loaded[0].points, loaded[1].points, op);
-    series.push({ name: `Cálculo · ${labelCalc(op)}`, points: calcPoints, color: '#fbbf24', width: 2.8 });
+    series.push(buildAnalysisSeries({ id: `calc-${op}`, name: `Cálculo · ${labelCalc(op)}`, shortName: 'Cálculo', points: calcPoints, color: '#fbbf24', width: 2.8 }));
   }
 
   const selectedOverlays = Array.from(document.querySelectorAll('.overlay-check:checked')).map(c => c.value);
@@ -280,9 +339,11 @@ async function renderAnalysis() {
       const ts = await loadTimeseries(kind, code);
       let pts = filterByYears(ts.points, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value);
       if (document.getElementById('normalize')?.checked) pts = normalizeTo100(pts);
-      series.push({ name: `Capa ${o}`, points: pts, color: ov.color || '#a78bfa', width: 1.5 });
+      series.push(buildAnalysisSeries({ id: `overlay-${o}`, name: `Capa ${o}`, shortName: o, opt: { code: code, name: o, rawName: o }, points: isSp500Option({ code, name: o, rawName: o }) ? filterByYears(ts.points, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value) : pts, color: ov.color || '#a78bfa', width: 1.5 }));
     } catch (_) {}
   }
+
+  if (focusedAnalysisSeries && !series.some(s => s.id === focusedAnalysisSeries)) focusedAnalysisSeries = null;
 
   let recessionBands = [];
   if (document.getElementById('overlay-recession')?.checked) {
@@ -290,12 +351,21 @@ async function renderAnalysis() {
     recessionBands = recessionBands.filter(b => inYearRange(b.from) || inYearRange(b.to));
   }
 
-  const draw = () => drawLineChart(chart, series, {
-    view: analysisView,
-    bands: recessionBands,
-    anchoredGrid: true,
-    compactAxes: true
-  });
+  const draw = () => {
+    drawLineChart(chart, series, {
+      view: analysisView,
+      bands: recessionBands,
+      anchoredGrid: true,
+      compactAxes: true,
+      dualAxis: true,
+      independentLeftAxes: true,
+      axisLabels: { left: 'Series añadidas', right: 'SP500' },
+      bottomLegendSpace: 92,
+      hideLegend: true,
+      focusedSeriesId: focusedAnalysisSeries
+    });
+    renderAnalysisLegend(chart, series);
+  };
   draw();
   if (cleanupResize) cleanupResize();
   cleanupResize = attachResize(chart, draw);
@@ -304,6 +374,43 @@ async function renderAnalysis() {
 
   lastRendered = { loaded, chartSeries: series, calcPoints };
 
+}
+
+function buildAnalysisSeries({ id, name, shortName, opt = {}, points, color, width }) {
+  const sp500 = isSp500Option(opt) || isSp500Option({ code: shortName, name });
+  const axisId = sp500 ? 'right' : `left:${safeAxisId(id || name)}`;
+  return {
+    id,
+    name,
+    shortName,
+    points,
+    color,
+    width,
+    axis: axisId,
+    axisLabel: sp500 ? 'SP500' : (shortName || name),
+    isSp500: sp500
+  };
+}
+
+function renderAnalysisLegend(container, series) {
+  let legend = container.querySelector('.analysis-chart-legend');
+  if (!legend) {
+    legend = document.createElement('div');
+    legend.className = 'analysis-chart-legend';
+    container.appendChild(legend);
+  }
+  legend.innerHTML = (series || []).map((s) => `
+    <button class="analysis-legend-item ${focusedAnalysisSeries && focusedAnalysisSeries !== s.id ? 'dimmed' : ''} ${focusedAnalysisSeries === s.id ? 'active' : ''}" data-series-id="${escapeHtml(s.id)}" type="button">
+      <span class="legend-swatch" style="background:${escapeHtml(s.color)}"></span>
+      <span>${escapeHtml(s.name)}</span>
+    </button>
+  `).join('');
+  legend.querySelectorAll('.analysis-legend-item').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      focusedAnalysisSeries = focusedAnalysisSeries === btn.dataset.seriesId ? null : btn.dataset.seriesId;
+      renderAnalysis();
+    });
+  });
 }
 
 async function loadRecessionBandsFromUSREC() {
@@ -402,21 +509,19 @@ function renderCatalogTable() {
   const kind = document.getElementById('catalog-kind')?.value || 'all';
   const facet = document.getElementById('catalog-source')?.value || 'all';
   let items = catalogs.options;
-  if (kind !== 'all') items = items.filter(i => i.kind === kind);
+  if (kind !== 'all') items = items.filter(i => i.category === kind);
   if (facet !== 'all') items = items.filter(i => (i.facetValues || [i.source, i.type, i.frequency]).includes(facet));
   if (q) {
-    items = items.filter(i => [i.code, i.name, i.rawName, i.source, i.rawSource, i.type, i.rawType, i.frequency, i.rawFrequency, i.kind].join(' ').toLowerCase().includes(q));
+    items = items.filter(i => [i.code, i.name, i.rawName, i.source, i.rawSource, i.type, i.rawType, i.frequency, i.rawFrequency, i.kind, i.category].join(' ').toLowerCase().includes(q));
   }
   items = items.slice(0, 160);
   el.innerHTML = `
     <div class="table-wrap"><table>
-      <thead><tr><th>Tipo</th><th>Código</th><th>Nombre</th><th>Fuente/tipo</th><th>Slot</th></tr></thead>
+      <thead><tr><th>Nombre</th><th>Fuente/tipo</th><th>Slot</th></tr></thead>
       <tbody>
         ${items.map(i => `
           <tr>
-            <td><span class="pill input">${escapeHtml(labelKind(i.kind))}</span></td>
-            <td><code>${escapeHtml(i.code)}</code></td>
-            <td>${escapeHtml(i.name)}</td>
+            <td><strong>${escapeHtml(i.name)}</strong><small class="catalog-row-meta">${escapeHtml(i.code)} · ${escapeHtml(assetCategoryLabel(i.category))}</small></td>
             <td>${escapeHtml([i.source, i.type, i.frequency].filter(Boolean).join(' · ') || '—')}</td>
             <td class="slot-actions">
               ${slots.map(s => `<button class="btn tiny set-slot" data-slot="${s}" data-key="${escapeHtml(i.key)}">${slotLabels[s]}</button>`).join('')}

@@ -933,3 +933,77 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   width: 100%;
   max-width: none;
 }
+
+/* Ajustes Análisis: leyenda interna, ejes múltiples y catálogo sticky */
+.analysis-page .chart-wrap {
+  overflow: hidden;
+}
+.analysis-chart-legend {
+  position: absolute;
+  left: clamp(14px, 3vw, 38px);
+  right: clamp(14px, 3vw, 38px);
+  bottom: 12px;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 64px;
+  overflow: auto;
+  padding: 8px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  background: rgba(0,0,0,.42);
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+  backdrop-filter: blur(8px);
+}
+.analysis-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 240px;
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.88);
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity .12s ease, border-color .12s ease, background .12s ease;
+}
+.analysis-legend-item span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.analysis-legend-item:hover,
+.analysis-legend-item.active {
+  border-color: rgba(254,247,2,.55);
+  background: rgba(254,247,2,.08);
+  color: #fff;
+}
+.analysis-legend-item.dimmed {
+  opacity: .32;
+}
+.analysis-catalog-table .table-wrap {
+  overflow: visible;
+  border-radius: 0;
+}
+.analysis-catalog-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgba(18,18,18,.96);
+  box-shadow: 0 1px 0 var(--border), 0 8px 18px rgba(0,0,0,.22);
+}
+.catalog-row-meta {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+.analysis-catalog-table td:first-child strong {
+  display: block;
+  color: #fff;
+}
