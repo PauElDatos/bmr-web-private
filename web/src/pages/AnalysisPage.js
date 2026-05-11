@@ -5,9 +5,7 @@ import { drawLineChart, attachResize, attachTradingChartInteractions } from '../
 import {
   transformSeries,
   filterByYears,
-  calculateSeries,
   calculateSeriesAligned,
-  normalizeTo100,
   makeRecessionBands,
   describePoints,
   toCsvRows
@@ -19,8 +17,9 @@ let cleanupResize = null;
 let cleanupChartInteractions = null;
 let catalogs = null;
 let analysisView = {};
-let lastRendered = { loaded: [], chartSeries: [], calcPoints: [] };
+let lastRendered = { loaded: [], chartSeries: [], calcPoints: [], calcResults: [] };
 let focusedAnalysisSeries = null;
+let renderTimer = null;
 
 const slotLabels = { blue: 'Azul', red: 'Rojo', green: 'Verde' };
 const slotColors = { blue: '#60a5fa', red: '#f87171', green: '#34d399' };
@@ -34,22 +33,22 @@ const slotState = {
 const transformOptions = [
   ['NORMAL', 'Normal'],
   ['LOG', 'Log'],
-  ['EXP', 'EXP'],
-  ['DIFF_1', 'Dif. 1 obs.'],
-  ['DIFF_12', 'Dif. 12 obs.'],
-  ['PCT_1', '% 1 obs.'],
-  ['PCT_12', '% 12 obs.'],
-  ['ZSCORE', 'Z-score']
+  ['EXP', 'Exp']
 ];
 
 const calcOptions = [
   ['none', 'Sin cálculo'],
-  ['sum', 'Sumar azul + rojo'],
-  ['subtract', 'Restar azul - rojo'],
-  ['divide', 'Ratio azul / rojo'],
-  ['multiply', 'Multiplicar azul * rojo'],
+  ['sum', 'Sumar'],
+  ['subtract', 'Restar'],
+  ['divide', 'Ratio'],
+  ['multiply', 'Multiplicar'],
   ['spread_z', 'Spread z-score'],
   ['correlation_rolling', 'Correlación rolling 24']
+];
+
+const calcPairs = [
+  { id: 'blue-red', a: 'blue', b: 'red', label: 'Azul/rojo', color: '#fbbf24' },
+  { id: 'red-green', a: 'red', b: 'green', label: 'Rojo/verde', color: '#f472b6' }
 ];
 
 export async function AnalysisPage() {
@@ -69,14 +68,16 @@ export async function AnalysisPage() {
           </label>
           <label>Año inicio<input id="year-start" class="text-input small" value="1995" /></label>
           <label>Año fin<input id="year-end" class="text-input small" value="2026" /></label>
-          <label>Cálculo
-            <select id="calc-op" class="select-input">
+          <label>Cálculo azul/rojo
+            <select id="calc-blue-red" class="select-input">
               ${calcOptions.map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}
             </select>
           </label>
-          <label class="check"><input id="normalize" type="checkbox" checked /> <span>Normalizar a 100</span></label>
-          <label class="check"><input id="align-ffill" type="checkbox" checked /> <span>Relleno hacia delante para cálculo</span></label>
-          <button id="apply-analysis" class="btn primary">Aplicar</button>
+          <label>Cálculo rojo/verde
+            <select id="calc-red-green" class="select-input">
+              ${calcOptions.map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}
+            </select>
+          </label>
           <button id="export-analysis" class="btn ghost">Exportar CSV</button>
           <button id="reset-analysis" class="btn ghost">Borrar</button>
         </div>
@@ -109,20 +110,16 @@ export async function AnalysisPage() {
 }
 
 async function loadAnalysisCatalogs() {
-  const [indicators, assets, series, crypto, overlays, presets, recession] = await Promise.all([
+  const [indicators, series, overlays, presets, recession] = await Promise.all([
     loadCatalog('indicators'),
-    loadCatalog('assets'),
     loadCatalog('series'),
-    loadCatalog('crypto'),
     loadJson('analysis/overlays.json').catch(() => ({ items: [] })),
     loadJson('analysis/presets.json').catch(() => ({ items: [] })),
     loadJson('analysis/recession_bands.json').catch(() => ({ items: [] }))
   ]);
   const options = [
     ...indicators.items.map(i => normalizeCatalogOption('indicators', i.code, i.name, i.source, i.frequency, i.unit, i)),
-    ...assets.items.map(a => normalizeCatalogOption('assets', a.symbol || a.code, a.name, a.asset_type, 'prices', '', a)),
-    ...series.items.map(s => normalizeCatalogOption('series', s.code, s.name, s.series_type, 'series_prices', '', s)),
-    ...crypto.items.map(c => normalizeCatalogOption('crypto', c.symbol || c.code, c.name || c.symbol, 'crypto', c.source || 'coinpaprika', c.quote || 'usd', c))
+    ...series.items.map(s => normalizeCatalogOption('series', s.code, s.name, s.series_type, s.source || 'series_sources', '', s))
   ].filter(o => o.code);
   const facets = [...new Set(options.flatMap(o => [o.rawSource, o.rawType, o.rawFrequency].filter(Boolean)))].sort();
   return { options, overlays: overlays.items || [], presets: normalizePresets(presets.items || []), recessionBands: recession.items || [], facets };
@@ -184,6 +181,13 @@ function assetCategoryLabel(category) {
 function classifyCatalogOption(kind, code, name, type, source, frequency, item = {}) {
   if (kind === 'indicators') return 'indicators';
   if (kind === 'crypto') return 'crypto';
+  if (kind === 'series') {
+    const seriesType = String(item.series_type || type || '').toUpperCase();
+    if (seriesType === 'EQUITY') return 'equity';
+    if (seriesType === 'INDEX') return 'index';
+    if (seriesType === 'CRYPTO') return 'crypto';
+    if (seriesType === 'COMMODITY') return 'commodity';
+  }
   const haystack = [
     kind,
     code,
@@ -205,7 +209,7 @@ function classifyCatalogOption(kind, code, name, type, source, frequency, item =
   if (/\b(index|indices|índice|indice|benchmark|spx|s&p|nasdaq|ndx|dow|dji|russell|iwm|vix|dax|stoxx|ftse|nikkei)\b/.test(haystack)) return 'index';
   if (/\b(equity|stock|stocks|share|shares|acciones|accion|empresa|company|nyse|nasdaqgs|nasdaqgm|amex)\b/.test(haystack)) return 'equity';
   if (kind === 'assets') return 'equity';
-  if (kind === 'series') return 'index';
+  if (kind === 'series') return 'assets';
   return 'assets';
 }
 
@@ -245,27 +249,32 @@ function renderSlotControl(slot) {
 
 async function wireAnalysisPage() {
   for (const slot of slots) {
-    document.getElementById(`slot-${slot}`).addEventListener('change', e => { slotState[slot].key = e.target.value; renderAnalysis(); });
-    document.getElementById(`transform-${slot}`).addEventListener('change', e => { slotState[slot].transform = e.target.value; renderAnalysis(); });
-    document.getElementById(`lag-${slot}`).addEventListener('change', e => { slotState[slot].lag = Number(e.target.value || 0); renderAnalysis(); });
-    document.getElementById(`visible-${slot}`).addEventListener('change', e => { slotState[slot].visible = e.target.checked; renderAnalysis(); });
+    document.getElementById(`slot-${slot}`).addEventListener('change', e => { slotState[slot].key = e.target.value; scheduleRenderAnalysis(); });
+    document.getElementById(`transform-${slot}`).addEventListener('change', e => { slotState[slot].transform = e.target.value; scheduleRenderAnalysis(); });
+    document.getElementById(`lag-${slot}`).addEventListener('input', e => { slotState[slot].lag = Number(e.target.value || 0); scheduleRenderAnalysis(); });
+    document.getElementById(`visible-${slot}`).addEventListener('change', e => { slotState[slot].visible = e.target.checked; scheduleRenderAnalysis(); });
   }
   document.querySelectorAll('.invert-btn').forEach(b => b.addEventListener('click', () => {
     const s = b.dataset.slot;
     slotState[s].invert = !slotState[s].invert;
     b.classList.toggle('active', slotState[s].invert);
-    renderAnalysis();
+    scheduleRenderAnalysis();
   }));
   document.getElementById('analysis-preset').addEventListener('change', applyPreset);
-  document.getElementById('apply-analysis').addEventListener('click', renderAnalysis);
   document.getElementById('export-analysis').addEventListener('click', exportVisibleCsv);
   document.getElementById('reset-analysis').addEventListener('click', resetAnalysis);
-  document.querySelectorAll('.overlay-check').forEach(c => c.addEventListener('change', renderAnalysis));
-  document.getElementById('overlay-recession').addEventListener('change', renderAnalysis);
-  ['year-start', 'year-end', 'calc-op', 'normalize', 'align-ffill'].forEach(id => document.getElementById(id).addEventListener('change', renderAnalysis));
+  document.querySelectorAll('.overlay-check').forEach(c => c.addEventListener('change', scheduleRenderAnalysis));
+  document.getElementById('overlay-recession').addEventListener('change', scheduleRenderAnalysis);
+  ['year-start', 'year-end'].forEach(id => document.getElementById(id).addEventListener('input', scheduleRenderAnalysis));
+  ['calc-blue-red', 'calc-red-green'].forEach(id => document.getElementById(id).addEventListener('change', scheduleRenderAnalysis));
   ['catalog-search', 'catalog-kind', 'catalog-source'].forEach(id => document.getElementById(id).addEventListener('input', renderCatalogTable));
   renderCatalogTable();
   await renderAnalysis();
+}
+
+function scheduleRenderAnalysis() {
+  clearTimeout(renderTimer);
+  renderTimer = setTimeout(() => { renderAnalysis(); }, 80);
 }
 
 function applyPreset(e) {
@@ -280,7 +289,7 @@ function applyPreset(e) {
       if (el) el.value = p[slot];
     }
   }
-  renderAnalysis();
+  scheduleRenderAnalysis();
 }
 
 function resetAnalysis() {
@@ -301,8 +310,7 @@ async function loadSlotSeries(slot) {
   });
   pts = filterByYears(pts, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value);
   const rawStats = describePoints(pts);
-  const visiblePoints = document.getElementById('normalize')?.checked ? normalizeTo100(pts) : pts;
-  return { slot, opt, rawPoints: pts, points: visiblePoints, rawStats, state: { ...slotState[slot] } };
+  return { slot, opt, rawPoints: pts, points: pts, rawStats, state: { ...slotState[slot] } };
 }
 
 async function renderAnalysis() {
@@ -321,12 +329,24 @@ async function renderAnalysis() {
       width: 2.2
     }));
 
-  const op = document.getElementById('calc-op')?.value || 'none';
-  let calcPoints = [];
-  if (op !== 'none') {
-    const align = document.getElementById('align-ffill')?.checked;
-    calcPoints = align ? calculateSeriesAligned(loaded[0].points, loaded[1].points, op) : calculateSeries(loaded[0].points, loaded[1].points, op);
-    series.push(buildAnalysisSeries({ id: `calc-${op}`, name: `Cálculo · ${labelCalc(op)}`, shortName: 'Cálculo', points: calcPoints, color: '#fbbf24', width: 2.8 }));
+  const calcResults = [];
+  const loadedBySlot = Object.fromEntries(loaded.map(item => [item.slot, item]));
+  for (const pair of calcPairs) {
+    const op = document.getElementById(`calc-${pair.id}`)?.value || 'none';
+    if (op === 'none') continue;
+    const first = loadedBySlot[pair.a];
+    const second = loadedBySlot[pair.b];
+    if (!first || !second) continue;
+    const calcPoints = calculateSeriesAligned(first.points, second.points, op);
+    calcResults.push({ pair, op, points: calcPoints });
+    series.push(buildAnalysisSeries({
+      id: `calc-${pair.id}-${op}`,
+      name: `Cálculo ${pair.label} · ${labelCalc(op)}`,
+      shortName: `Calc ${pair.label}`,
+      points: calcPoints,
+      color: pair.color,
+      width: 2.8
+    }));
   }
 
   const selectedOverlays = Array.from(document.querySelectorAll('.overlay-check:checked')).map(c => c.value);
@@ -337,8 +357,7 @@ async function renderAnalysis() {
       const kind = ov.kind;
       const code = ov.target_code || ov.code;
       const ts = await loadTimeseries(kind, code);
-      let pts = filterByYears(ts.points, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value);
-      if (document.getElementById('normalize')?.checked) pts = normalizeTo100(pts);
+      const pts = filterByYears(ts.points, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value);
       series.push(buildAnalysisSeries({ id: `overlay-${o}`, name: `Capa ${o}`, shortName: o, opt: { code: code, name: o, rawName: o }, points: isSp500Option({ code, name: o, rawName: o }) ? filterByYears(ts.points, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value) : pts, color: ov.color || '#a78bfa', width: 1.5 }));
     } catch (_) {}
   }
@@ -372,7 +391,7 @@ async function renderAnalysis() {
   if (cleanupChartInteractions) cleanupChartInteractions();
   cleanupChartInteractions = attachTradingChartInteractions(chart, analysisView, draw);
 
-  lastRendered = { loaded, chartSeries: series, calcPoints };
+  lastRendered = { loaded, chartSeries: series, calcPoints: calcResults.flatMap(r => r.points), calcResults };
 
 }
 
@@ -456,7 +475,7 @@ function renderFacts(loaded) {
   }).join('');
 }
 
-function renderDiagnostics(loaded, calcPoints, op) {
+function renderDiagnostics(loaded, calcResults = []) {
   const el = document.getElementById('analysis-diagnostics');
   if (!el) return;
   const rows = loaded.map(s => {
@@ -471,10 +490,10 @@ function renderDiagnostics(loaded, calcPoints, op) {
       last: formatMaybe(stats.lastValue)
     };
   });
-  if (op !== 'none') {
-    const stats = describePoints(calcPoints);
-    rows.push({ label: `Cálculo · ${labelCalc(op)}`, type: document.getElementById('align-ffill')?.checked ? 'Alineado con forward-fill' : 'Fechas exactas', transform: 'Serie derivada en navegador', points: stats.count, from: stats.firstDt || '—', to: stats.lastDt || '—', last: formatMaybe(stats.lastValue) });
-  }
+  calcResults.forEach(result => {
+    const stats = describePoints(result.points);
+    rows.push({ label: `Cálculo ${result.pair.label} · ${labelCalc(result.op)}`, type: 'Alineado por fecha con forward-fill', transform: 'Serie derivada en navegador', points: stats.count, from: stats.firstDt || '—', to: stats.lastDt || '—', last: formatMaybe(stats.lastValue) });
+  });
   el.innerHTML = rows.map(r => `
     <div class="diagnostic-card">
       <strong>${escapeHtml(r.label)}</strong>
@@ -485,19 +504,19 @@ function renderDiagnostics(loaded, calcPoints, op) {
   `).join('');
 }
 
-function renderReading(loaded, calcPoints, op) {
+function renderReading(loaded, calcResults = []) {
   const el = document.getElementById('analysis-reading');
   if (!el) return;
   const primary = loaded[0];
   const secondary = loaded[1];
   const pStats = describePoints(primary.rawPoints);
   const sStats = describePoints(secondary.rawPoints);
-  const calcStats = describePoints(calcPoints);
+  const calcCount = calcResults.reduce((acc, result) => acc + describePoints(result.points).count, 0);
   const msg = [
     `Serie principal: ${primary.opt.code} (${pStats.count} puntos).`,
     `Comparación: ${secondary.opt.code} (${sStats.count} puntos).`,
-    op !== 'none' ? `Cálculo activo: ${labelCalc(op)} con ${calcStats.count} puntos resultantes.` : 'Sin cálculo derivado activo.',
-    document.getElementById('normalize')?.checked ? 'El gráfico está normalizado a base 100 para comparar direcciones, no niveles absolutos.' : 'El gráfico muestra niveles transformados sin normalización común.'
+    calcResults.length ? `Cálculos activos: ${calcResults.length} con ${calcCount} puntos resultantes.` : 'Sin cálculo derivado activo.',
+    'El gráfico muestra niveles transformados sin normalización común.'
   ];
   el.innerHTML = `<ul>${msg.map(m => `<li>${escapeHtml(m)}</li>`).join('')}</ul>`;
 }
@@ -537,7 +556,7 @@ function renderCatalogTable() {
     slotState[slot].key = key;
     const select = document.getElementById(`slot-${slot}`);
     if (select) select.value = key;
-    renderAnalysis();
+    scheduleRenderAnalysis();
   }));
 }
 

@@ -101,13 +101,15 @@ WEIGHT_HISTORY_FIELDS = [
 ]
 
 DEFAULT_OVERLAYS = [
-    {"code": "BTC", "kind": "series", "target_code": "BTC", "label": "Bitcoin", "color": "#f59e0b"},
+    {"code": "BTC", "kind": "series", "target_code": "BTCUSD", "label": "Bitcoin", "color": "#f59e0b"},
     {"code": "SPX", "kind": "series", "target_code": "SPX", "label": "S&P 500", "color": "#60a5fa"},
     {"code": "NDX", "kind": "series", "target_code": "NDX", "label": "Nasdaq 100", "color": "#a78bfa"},
     {"code": "DJI", "kind": "assets", "target_code": "DJI", "label": "Dow Jones", "color": "#34d399"},
     {"code": "RUT", "kind": "assets", "target_code": "RUT", "label": "Russell 2000", "color": "#fb7185"},
     {"code": "MSCI", "kind": "series", "target_code": "MSCI", "label": "MSCI World", "color": "#e879f9"},
 ]
+
+FULL_RANGE_SERIES_CODES = {"BTCUSD", "SPX", "NDX"}
 
 
 def parse_env_file(path: Optional[str]) -> Dict[str, str]:
@@ -325,18 +327,29 @@ def load_catalogs(conn, args, warnings: List[str]) -> Dict[str, List[Dict[str, A
         warnings.append("Falta tabla assets")
 
     if table_exists(conn, "series"):
-        rows = select_limited(conn, """
-            SELECT series_id, code, name, series_type, notes
-            FROM series
-            ORDER BY code
-        """, (), args.max_series)
+        if table_exists(conn, "series_sources"):
+            rows = select_limited(conn, """
+                SELECT s.series_id, s.code, s.name, s.series_type, s.notes,
+                       COUNT(ss.series_source_id) AS source_count
+                FROM series s
+                JOIN series_sources ss ON ss.series_id = s.series_id
+                GROUP BY s.series_id, s.code, s.name, s.series_type, s.notes
+                ORDER BY s.series_type, s.code
+            """, (), args.max_series)
+        else:
+            rows = select_limited(conn, """
+                SELECT series_id, code, name, series_type, notes, 0 AS source_count
+                FROM series
+                ORDER BY code
+            """, (), args.max_series)
         catalogs["series"] = [{
             "series_id": r.get("series_id"),
             "code": r.get("code"),
             "name": r.get("name") or r.get("code"),
             "series_type": r.get("series_type") or "series",
             "notes": r.get("notes") or "",
-            "source": "series_prices",
+            "source": "series_sources" if int(r.get("source_count") or 0) else "series_prices",
+            "source_count": int(r.get("source_count") or 0),
         } for r in rows]
     else:
         warnings.append("Falta tabla series")
@@ -441,16 +454,122 @@ def export_asset_timeseries(conn, out_dir: Path, item: Dict[str, Any], max_point
     return bool(points)
 
 
+def export_series_from_sources(conn, item: Dict[str, Any], max_points: int) -> List[Dict[str, Any]]:
+    if not table_exists(conn, "series_sources"):
+        return []
+    sources = fetch_all(conn, """
+        SELECT ss.series_source_id, ss.source_kind, ss.source_id, ss.start_time, ss.end_time,
+               ss.adj_mul, ss.adj_add, ss.priority,
+               CASE WHEN ss.source_kind = 'ASSET' THEN a.symbol ELSE i.code END AS source_code
+        FROM series_sources ss
+        LEFT JOIN assets a ON ss.source_kind = 'ASSET' AND a.asset_id = ss.source_id
+        LEFT JOIN indicators i ON ss.source_kind = 'INDICATOR' AND i.id = ss.source_id
+        WHERE ss.series_id = %s
+        ORDER BY ss.priority, ss.start_time, ss.series_source_id
+    """, (item["series_id"],))
+    if not sources:
+        return []
+
+    rows_by_dt: Dict[str, Dict[str, Any]] = {}
+    for src in sources:
+        kind = str(src.get("source_kind") or "").upper()
+        source_id = src.get("source_id")
+        start_time = src.get("start_time")
+        end_time = src.get("end_time")
+        adj_mul = float(src.get("adj_mul") or 1.0)
+        adj_add = float(src.get("adj_add") or 0.0)
+        priority = int(src.get("priority") or 0)
+        source_code = src.get("source_code") or source_id
+
+        if kind == "ASSET" and table_exists(conn, "prices"):
+            raw_rows = fetch_all(conn, """
+                SELECT time AS dt, close_p AS value, open_p, high_p, low_p, volume
+                FROM prices
+                WHERE asset_id = %s AND time >= %s AND time <= %s
+                ORDER BY time ASC
+            """, (source_id, start_time, end_time))
+        elif kind == "INDICATOR" and table_exists(conn, "indicator_values"):
+            raw_rows = fetch_all(conn, """
+                SELECT dt, value, NULL AS open_p, NULL AS high_p, NULL AS low_p, NULL AS volume
+                FROM indicator_values
+                WHERE indicator_id = %s AND dt >= %s AND dt <= %s
+                ORDER BY dt ASC
+            """, (source_id, start_time, end_time))
+        else:
+            continue
+
+        for r in raw_rows:
+            raw_dt = r.get("dt")
+            if raw_dt is None:
+                continue
+            key = raw_dt.date().isoformat() if isinstance(raw_dt, dt.datetime) else str(raw_dt)[:10]
+            try:
+                value = float(r.get("value")) * adj_mul + adj_add
+            except Exception:
+                continue
+            if not math.isfinite(value):
+                continue
+            out = {
+                "dt": key,
+                "value": value,
+                "source_kind": kind,
+                "source_id": source_id,
+                "source_code": source_code,
+                "source_priority": priority,
+            }
+            for k in ("open_p", "high_p", "low_p"):
+                if r.get(k) is not None:
+                    try:
+                        out[k] = float(r.get(k)) * adj_mul + adj_add
+                    except Exception:
+                        pass
+            if r.get("volume") is not None:
+                out["volume"] = r.get("volume")
+            existing = rows_by_dt.get(key)
+            if existing is None or priority >= int(existing.get("source_priority") or 0):
+                rows_by_dt[key] = out
+
+    rows = sorted(rows_by_dt.values(), key=lambda r: r["dt"])
+    if max_points and max_points > 0:
+        rows = rows[-int(max_points):]
+    return rows
+
+
+def row_date_key(row: Dict[str, Any], key: str = "dt") -> str:
+    value = row.get(key)
+    if isinstance(value, dt.datetime):
+        return value.date().isoformat() if value.time() == dt.time() else value.isoformat()[:19]
+    if isinstance(value, dt.date):
+        return value.isoformat()
+    return str(value or "")[:19]
+
+
+def merge_rows_by_date(primary_rows: List[Dict[str, Any]], fallback_rows: List[Dict[str, Any]], max_points: int) -> List[Dict[str, Any]]:
+    rows_by_dt = {row_date_key(r): r for r in fallback_rows if row_date_key(r)}
+    for r in primary_rows:
+        key = row_date_key(r)
+        if key:
+            rows_by_dt[key] = r
+    rows = [rows_by_dt[k] for k in sorted(rows_by_dt.keys())]
+    if max_points and max_points > 0:
+        rows = rows[-int(max_points):]
+    return rows
+
+
 def export_series_timeseries(conn, out_dir: Path, item: Dict[str, Any], max_points: int) -> bool:
-    if not table_exists(conn, "series_prices"):
+    if not table_exists(conn, "series_prices") and not table_exists(conn, "series_sources"):
         return False
-    rows = query_last_points(conn, """
-        SELECT time AS dt, close_p AS value, open_p, high_p, low_p, volume, source_kind, source_id
-        FROM series_prices
-        WHERE series_id = %s
-    """, (item["series_id"],), max_points)
-    points = points_from_rows(rows, extra_keys=("open_p", "high_p", "low_p", "volume", "source_kind", "source_id"))
-    payload = {"kind": "series", "code": item["code"], "series_id": item["series_id"], "points": points}
+    rows = export_series_from_sources(conn, item, max_points)
+    fallback_rows: List[Dict[str, Any]] = []
+    if table_exists(conn, "series_prices"):
+        fallback_rows = query_last_points(conn, """
+            SELECT time AS dt, close_p AS value, open_p, high_p, low_p, volume, source_kind, source_id
+            FROM series_prices
+            WHERE series_id = %s
+        """, (item["series_id"],), max_points)
+    rows = merge_rows_by_date(rows, fallback_rows, max_points) if rows else fallback_rows
+    points = points_from_rows(rows, extra_keys=("open_p", "high_p", "low_p", "volume", "source_kind", "source_id", "source_code", "source_priority"))
+    payload = {"kind": "series", "code": item["code"], "series_id": item["series_id"], "source": item.get("source") or "series_sources", "points": points}
     write_json(out_dir / "timeseries" / "series" / f"{safe_code(item['code'])}.json", payload)
     return bool(points)
 
@@ -484,7 +603,9 @@ def export_timeseries(conn, out_dir: Path, catalogs: Dict[str, List[Dict[str, An
             warnings.append(f"No se pudo exportar activo {item.get('symbol')}: {exc}")
     for item in catalogs.get("series", []):
         try:
-            counts["series"] += int(export_series_timeseries(conn, out_dir, item, args.max_points))
+            code = str(item.get("code") or "").upper()
+            series_max_points = 0 if code in FULL_RANGE_SERIES_CODES else args.max_points
+            counts["series"] += int(export_series_timeseries(conn, out_dir, item, series_max_points))
         except Exception as exc:
             warnings.append(f"No se pudo exportar serie {item.get('code')}: {exc}")
     for item in catalogs.get("crypto", []):
@@ -1052,7 +1173,7 @@ def export_analysis_files(conn, out_dir: Path, catalogs: Dict[str, List[Dict[str
         {"name": "Liquidez vs SPX", "blue": "series:SPX", "red": "indicators:WSHOSHO", "green": "indicators:FEDFUNDS"},
         {"name": "Ciclo macro", "blue": "indicators:UNRATE", "red": "indicators:CPIAUCSL", "green": "indicators:T10Y3M"},
         {"name": "Riesgo recesión", "blue": "series:SPX", "red": "indicators:T10Y3M", "green": "indicators:USREC"},
-        {"name": "Cripto vs riesgo", "blue": "series:SPX", "red": "series:BTC", "green": "indicators:VIXCLS"},
+        {"name": "Cripto vs riesgo", "blue": "series:SPX", "red": "series:BTCUSD", "green": "indicators:VIXCLS"},
     ]})
 
 def clean_output_data(out_dir: Path) -> None:
