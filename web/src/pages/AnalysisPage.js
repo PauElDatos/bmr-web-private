@@ -1,7 +1,7 @@
 import { loadCatalog, loadTimeseries, loadJson } from '../api/dataClient.js';
 import { pageHeader } from '../components/Layout.js';
 import { chartPanel } from '../components/ChartPanel.js';
-import { drawLineChart, attachResize } from '../utils/chart.js';
+import { drawLineChart, attachResize, attachTradingChartInteractions } from '../utils/chart.js';
 import {
   transformSeries,
   filterByYears,
@@ -16,7 +16,9 @@ import { escapeHtml, lastOf, translateDbText } from '../utils/format.js';
 
 const slots = ['blue', 'red', 'green'];
 let cleanupResize = null;
+let cleanupChartInteractions = null;
 let catalogs = null;
+let analysisView = {};
 let lastRendered = { loaded: [], chartSeries: [], calcPoints: [] };
 
 const slotLabels = { blue: 'Azul', red: 'Rojo', green: 'Verde' };
@@ -53,76 +55,54 @@ export async function AnalysisPage() {
   catalogs = await loadAnalysisCatalogs();
   setTimeout(() => wireAnalysisPage(), 0);
   return `
-    ${pageHeader('Análisis')}
-    <section class="card control-panel analysis-control-panel">
-      <div class="analysis-topbar">
-        <label>Plantilla
-          <select id="analysis-preset" class="select-input">
-            <option value="">Manual</option>
-            ${catalogs.presets.map((p, idx) => `<option value="${idx}">${escapeHtml(p.name)}</option>`).join('')}
-          </select>
-        </label>
-        <label>Año inicio<input id="year-start" class="text-input small" value="1995" /></label>
-        <label>Año fin<input id="year-end" class="text-input small" value="2026" /></label>
-        <label>Cálculo
-          <select id="calc-op" class="select-input">
-            ${calcOptions.map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}
-          </select>
-        </label>
-        <label class="check"><input id="normalize" type="checkbox" checked /> <span>Normalizar a 100</span></label>
-        <label class="check"><input id="align-ffill" type="checkbox" checked /> <span>Relleno hacia delante para cálculo</span></label>
-        <button id="apply-analysis" class="btn primary">Aplicar</button>
-        <button id="export-analysis" class="btn ghost">Exportar CSV</button>
-        <button id="reset-analysis" class="btn ghost">Borrar</button>
-      </div>
-      <div class="slot-controls enhanced">
-        ${slots.map(slot => renderSlotControl(slot)).join('')}
-      </div>
-      <div class="overlay-row">
-        <strong>Capas:</strong>
-        ${catalogs.overlays.map((o, idx) => `<label class="check"><input class="overlay-check" type="checkbox" value="${escapeHtml(o.code)}" ${idx === 1 ? 'checked' : ''}/> <span>${escapeHtml(o.code)}</span></label>`).join('')}
-        <label class="check"><input id="overlay-recession" type="checkbox" checked /> <span>Recesión</span></label>
-      </div>
-    </section>
+    <div class="analysis-page">
+      ${pageHeader('Análisis')}
+      ${chartPanel('analysis-chart', 'Comparador de series', 'Slots azul/rojo/verde + overlays + cálculo opcional')}
+      <section class="card control-panel analysis-control-panel">
+        <div class="analysis-topbar">
+          <label>Plantilla
+            <select id="analysis-preset" class="select-input">
+              <option value="">Manual</option>
+              ${catalogs.presets.map((p, idx) => `<option value="${idx}">${escapeHtml(p.name)}</option>`).join('')}
+            </select>
+          </label>
+          <label>Año inicio<input id="year-start" class="text-input small" value="1995" /></label>
+          <label>Año fin<input id="year-end" class="text-input small" value="2026" /></label>
+          <label>Cálculo
+            <select id="calc-op" class="select-input">
+              ${calcOptions.map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}
+            </select>
+          </label>
+          <label class="check"><input id="normalize" type="checkbox" checked /> <span>Normalizar a 100</span></label>
+          <label class="check"><input id="align-ffill" type="checkbox" checked /> <span>Relleno hacia delante para cálculo</span></label>
+          <button id="apply-analysis" class="btn primary">Aplicar</button>
+          <button id="export-analysis" class="btn ghost">Exportar CSV</button>
+          <button id="reset-analysis" class="btn ghost">Borrar</button>
+        </div>
+        <div class="slot-controls enhanced">
+          ${slots.map(slot => renderSlotControl(slot)).join('')}
+        </div>
+        <div class="overlay-row">
+          <strong>Capas:</strong>
+          ${catalogs.overlays.map((o, idx) => `<label class="check"><input class="overlay-check" type="checkbox" value="${escapeHtml(o.code)}" ${idx === 1 ? 'checked' : ''}/> <span>${escapeHtml(o.code)}</span></label>`).join('')}
+          <label class="check"><input id="overlay-recession" type="checkbox" checked /> <span>Recesión</span></label>
+        </div>
+      </section>
 
-    <div class="analysis-layout wide">
-      <main>
-        ${chartPanel('analysis-chart', 'Comparador de series', 'Slots azul/rojo/verde + overlays + cálculo opcional')}
-        <section class="card">
-          <div class="card-header">
-            <div>
-              <h2>Diagnóstico del cálculo</h2>
-              <p>Resumen de las series renderizadas, último punto, rango visible y compatibilidad temporal.</p>
-            </div>
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2>Catálogo BMR para análisis</h2>
+            <p>Busca indicadores, activos, series canónicas o cripto y envíalos directamente a un slot.</p>
           </div>
-          <div id="analysis-diagnostics" class="diagnostic-grid"></div>
-        </section>
-        <section class="card">
-          <div class="card-header">
-            <div>
-              <h2>Catálogo BMR para análisis</h2>
-              <p>Busca indicadores, activos, series canónicas o cripto y envíalos directamente a un slot.</p>
-            </div>
-          </div>
-          <div class="catalog-toolbar">
-            <input id="catalog-search" class="text-input" placeholder="Buscar código, nombre, fuente, tipo..." />
-            <select id="catalog-kind" class="select-input"><option value="all">Todos</option><option value="indicators">Indicadores macro</option><option value="assets">Activos</option><option value="series">Series canónicas</option><option value="crypto">Cripto</option></select>
-            <select id="catalog-source" class="select-input"><option value="all">Todas las fuentes/tipos</option>${catalogs.facets.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(translateDbText(f))}</option>`).join('')}</select>
-          </div>
-          <div id="analysis-catalog-table" class="analysis-catalog-table"></div>
-        </section>
-      </main>
-      <aside>
-        <section class="card sticky-card">
-          <h2>Slots activos</h2>
-          <p>Equivalente web de los tres selectores del comparador local.</p>
-          <div id="analysis-facts" class="analysis-facts"></div>
-        </section>
-        <section class="card">
-          <h2>Lectura rápida</h2>
-          <div id="analysis-reading" class="reading-box"></div>
-        </section>
-      </aside>
+        </div>
+        <div class="catalog-toolbar">
+          <input id="catalog-search" class="text-input" placeholder="Buscar código, nombre, fuente, tipo..." />
+          <select id="catalog-kind" class="select-input"><option value="all">Todos</option><option value="indicators">Indicadores macro</option><option value="assets">Activos</option><option value="series">Series canónicas</option><option value="crypto">Cripto</option></select>
+          <select id="catalog-source" class="select-input"><option value="all">Todas las fuentes/tipos</option>${catalogs.facets.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(translateDbText(f))}</option>`).join('')}</select>
+        </div>
+        <div id="analysis-catalog-table" class="analysis-catalog-table"></div>
+      </section>
     </div>
   `;
 }
@@ -310,15 +290,20 @@ async function renderAnalysis() {
     recessionBands = recessionBands.filter(b => inYearRange(b.from) || inYearRange(b.to));
   }
 
-  const draw = () => drawLineChart(chart, series, { bands: recessionBands });
+  const draw = () => drawLineChart(chart, series, {
+    view: analysisView,
+    bands: recessionBands,
+    anchoredGrid: true,
+    compactAxes: true
+  });
   draw();
   if (cleanupResize) cleanupResize();
   cleanupResize = attachResize(chart, draw);
+  if (cleanupChartInteractions) cleanupChartInteractions();
+  cleanupChartInteractions = attachTradingChartInteractions(chart, analysisView, draw);
 
   lastRendered = { loaded, chartSeries: series, calcPoints };
-  renderFacts(loaded);
-  renderDiagnostics(loaded, calcPoints, op);
-  renderReading(loaded, calcPoints, op);
+
 }
 
 async function loadRecessionBandsFromUSREC() {

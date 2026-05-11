@@ -912,3 +912,24 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
     gap: 5px;
   }
 }
+
+
+/* Página Análisis: gráfica prioritaria e interacciones tipo trading */
+.analysis-page {
+  display: grid;
+  gap: 18px;
+}
+.analysis-page .chart-card {
+  width: 100%;
+  max-width: none;
+  order: 0;
+}
+.analysis-page .chart-wrap {
+  height: clamp(430px, 56dvh, 620px);
+  min-height: 380px;
+}
+.analysis-page .analysis-control-panel,
+.analysis-page > .card:not(.chart-card) {
+  width: 100%;
+  max-width: none;
+}
