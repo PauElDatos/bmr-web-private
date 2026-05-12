@@ -71,7 +71,7 @@ def validate(data_dir: Path, strict: bool = False, sample: int = 25) -> int:
     for path in required:
         exists(path, errors, path.name)
 
-    for m in ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7']:
+    for m in ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10']:
         exists(data_dir / 'market' / f'{m}.json', errors, f'market/{m}.json')
         exists(data_dir / 'market' / 'weights' / f'{m}.json', errors, f'market/weights/{m}.json')
         exists(data_dir / 'market' / 'inputs' / f'{m}.json', errors, f'market/inputs/{m}.json')
@@ -91,7 +91,7 @@ def validate(data_dir: Path, strict: bool = False, sample: int = 25) -> int:
             load_json(path)
         except Exception as exc:
             errors.append(f"JSON inválido {path}: {exc}")
-    for m in ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7']:
+    for m in ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm10']:
         for path in [
             data_dir / 'market' / f'{m}.json',
             data_dir / 'market' / 'weights' / f'{m}.json',
