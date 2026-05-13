@@ -39,6 +39,7 @@ const M6_BLOCKS = [
   { key: 'real_cycle', label: 'Economia real', buy: 'M6_REAL_CYCLE_BUY', sell: 'M6_REAL_CYCLE_SELL', net: 'M6_REAL_CYCLE_NET' }
 ];
 const M5_CHART_SIGNALS = new Set(['M5_DD6M_PROBA']);
+const M10_RISK_OFF_DEFAULT_THRESHOLD = 0.35;
 const COMPACT_WEIGHT_FIELDS = [
   'hypothesis_code',
   'run_id',
@@ -301,6 +302,12 @@ function m5Thresholds(metrics) {
   return { risk, healthy };
 }
 
+function m10RiskOffThreshold(metrics) {
+  if (currentModule !== 'M10') return null;
+  const threshold = metricValue(metrics, 'M10_RISK_OFF_THRESHOLD');
+  return Number.isFinite(threshold) ? threshold : M10_RISK_OFF_DEFAULT_THRESHOLD;
+}
+
 function formatPercent(value) {
   const n = Number(value);
   if (!Number.isFinite(n)) return '-';
@@ -336,20 +343,51 @@ function m5RiskVisuals(metrics) {
   };
 }
 
+function m10RiskVisuals(metrics) {
+  const threshold = m10RiskOffThreshold(metrics);
+  if (!Number.isFinite(threshold)) return { yBands: [], yLines: [] };
+  return {
+    yBands: [],
+    yLines: [
+      {
+        axis: 'left',
+        value: threshold,
+        color: 'rgba(248, 113, 113, 0.94)',
+        dash: [8, 5],
+        width: 1.5,
+        label: `RISK_OFF DD40 >= ${formatPercent(threshold)}`
+      }
+    ]
+  };
+}
+
+function marketRiskVisuals(metrics) {
+  if (currentModule === 'M5') return m5RiskVisuals(metrics);
+  if (currentModule === 'M10') return m10RiskVisuals(metrics);
+  return { yBands: [], yLines: [] };
+}
+
 function renderMarketZoneLegend(metrics) {
   const wrap = document.getElementById('market-zone-legend');
   if (!wrap) return;
   const thresholds = m5Thresholds(metrics);
-  if (!thresholds) {
+  const m10RiskOff = m10RiskOffThreshold(metrics);
+  if (!thresholds && !Number.isFinite(m10RiskOff)) {
     wrap.hidden = true;
     wrap.innerHTML = '';
     return;
   }
   wrap.hidden = false;
+  if (thresholds) {
+    wrap.innerHTML = `
+      <span class="zone-chip healthy"><i></i><strong>HEALTHY</strong><em>&le; ${escapeHtml(formatPercent(thresholds.healthy))}</em></span>
+      <span class="zone-chip watch"><i></i><strong>WATCH</strong><em>${escapeHtml(formatPercent(thresholds.healthy))} - ${escapeHtml(formatPercent(thresholds.risk))}</em></span>
+      <span class="zone-chip risk-off"><i></i><strong>RISK_OFF</strong><em>&ge; ${escapeHtml(formatPercent(thresholds.risk))}</em></span>
+    `;
+    return;
+  }
   wrap.innerHTML = `
-    <span class="zone-chip healthy"><i></i><strong>HEALTHY</strong><em>&le; ${escapeHtml(formatPercent(thresholds.healthy))}</em></span>
-    <span class="zone-chip watch"><i></i><strong>WATCH</strong><em>${escapeHtml(formatPercent(thresholds.healthy))} - ${escapeHtml(formatPercent(thresholds.risk))}</em></span>
-    <span class="zone-chip risk-off"><i></i><strong>RISK_OFF</strong><em>&ge; ${escapeHtml(formatPercent(thresholds.risk))}</em></span>
+    <span class="zone-chip risk-off"><i></i><strong>RISK_OFF</strong><em>DD40 &ge; ${escapeHtml(formatPercent(m10RiskOff))}: riesgo de caida fuerte</em></span>
   `;
 }
 
@@ -746,7 +784,7 @@ async function renderModule() {
   if (!chart) return;
 
   const signals = allSignalSeries(mod);
-  const riskVisuals = m5RiskVisuals(metrics);
+  const riskVisuals = marketRiskVisuals(metrics);
   const dateOptions = collectDateOptions(mod, weights);
   const selectedDate = selectedDateForModule(dateOptions);
   applyYearRangeToView(mod);
