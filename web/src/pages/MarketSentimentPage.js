@@ -38,6 +38,7 @@ const M6_BLOCKS = [
   { key: 'credit_stress', label: 'Credito', buy: 'M6_CREDIT_STRESS_BUY', sell: 'M6_CREDIT_STRESS_SELL', net: 'M6_CREDIT_STRESS_NET' },
   { key: 'real_cycle', label: 'Economia real', buy: 'M6_REAL_CYCLE_BUY', sell: 'M6_REAL_CYCLE_SELL', net: 'M6_REAL_CYCLE_NET' }
 ];
+const M5_CHART_SIGNALS = new Set(['M5_DD6M_PROBA']);
 const COMPACT_WEIGHT_FIELDS = [
   'hypothesis_code',
   'run_id',
@@ -157,6 +158,10 @@ function moduleCodesFromRuns(runs, latest) {
 function allSignalSeries(mod) {
   if (Array.isArray(mod.signals) && mod.signals.length) {
     if (currentModule === 'M6') return [];
+    if (currentModule === 'M5') {
+      const filtered = mod.signals.filter(signal => M5_CHART_SIGNALS.has(signal.signal_code));
+      return filtered.length ? filtered : mod.signals.slice(0, 1);
+    }
     return mod.signals;
   }
   return [{
