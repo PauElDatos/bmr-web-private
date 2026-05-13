@@ -79,15 +79,9 @@ MODULES = {
         "where": "hypothesis_code REGEXP '^M6(_|$)'",
         "preferred_signals": ["M6_MACRO_CONSENSUS", "M6_MACRO_BLOCK_SELL", "M6_MACRO_BLOCK_BUY"],
     },
-    "M7": {
-        "title": "M7_DEEP_SP500_DRAWDOWN",
-        "description": "Probabilidades profundas de drawdown futuro del S&P 500.",
-        "where": "hypothesis_code REGEXP '^M7(_|$)'",
-        "preferred_signals": ["M7_SP500_DD40_PROBA", "M7_SP500_DD25_PROBA", "M7_SP500_DD10_PROBA"],
-    },
     "M10": {
         "title": "M10_DEEP_SP500_DRAWDOWN_H_SIGNALS",
-        "description": "Modelo IA tipo M7 ampliado con las senales H activas.",
+        "description": "Modelo IA de drawdown SP500 ampliado con senales H activas.",
         "where": "hypothesis_code REGEXP '^M10(_|$)'",
         "preferred_signals": ["M10_SP500_DD40_PROBA", "M10_SP500_DD25_PROBA", "M10_SP500_DD10_PROBA"],
     },

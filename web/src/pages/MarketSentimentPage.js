@@ -16,7 +16,7 @@ let currentModule = 'M5';
 let selectedDateByModule = {};
 let highlightedLegendKeyByModule = {};
 let yearRangeByModule = {};
-let availableModules = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M10'];
+let availableModules = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M10'];
 let cleanupResize = null;
 let cleanupChartInteractions = null;
 let marketView = {};
@@ -152,7 +152,7 @@ function moduleCodesFromRuns(runs, latest) {
   visit(runs);
   visit(latest?.modules);
   const sorted = [...codes].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
-  return sorted.length ? sorted : ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M10'];
+  return sorted.length ? sorted : ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M10'];
 }
 
 function allSignalSeries(mod) {
