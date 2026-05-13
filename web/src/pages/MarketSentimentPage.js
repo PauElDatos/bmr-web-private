@@ -15,7 +15,7 @@ let currentModule = 'M5';
 let selectedDateByModule = {};
 let highlightedLegendKeyByModule = {};
 let yearRangeByModule = {};
-let availableModules = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10'];
+let availableModules = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M10'];
 let cleanupResize = null;
 let cleanupChartInteractions = null;
 let marketView = {};
@@ -37,7 +37,6 @@ const M6_BLOCKS = [
   { key: 'credit_stress', label: 'Credito', buy: 'M6_CREDIT_STRESS_BUY', sell: 'M6_CREDIT_STRESS_SELL', net: 'M6_CREDIT_STRESS_NET' },
   { key: 'real_cycle', label: 'Economia real', buy: 'M6_REAL_CYCLE_BUY', sell: 'M6_REAL_CYCLE_SELL', net: 'M6_REAL_CYCLE_NET' }
 ];
-const M6_CHART_SIGNALS = new Set(['M6_MACRO_CONSENSUS', ...M6_BLOCKS.map(block => block.net)]);
 const COMPACT_WEIGHT_FIELDS = [
   'hypothesis_code',
   'run_id',
@@ -81,15 +80,6 @@ export async function MarketSentimentPage() {
         </aside>
       </div>
 
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <h2>Indicadores, H e inputs que explican la senal</h2>
-          </div>
-        </div>
-        <div id="weights-table"></div>
-      </section>
-
       <section id="m6-macro-summary-card" class="card m6-macro-summary-card" hidden>
         <div class="card-header">
           <div>
@@ -97,6 +87,15 @@ export async function MarketSentimentPage() {
           </div>
         </div>
         <div id="m6-macro-summary"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2>Indicadores, H e inputs que explican la senal</h2>
+          </div>
+        </div>
+        <div id="weights-table"></div>
       </section>
     </div>
   `;
@@ -150,15 +149,12 @@ function moduleCodesFromRuns(runs, latest) {
   visit(runs);
   visit(latest?.modules);
   const sorted = [...codes].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
-  return sorted.length ? sorted : ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10'];
+  return sorted.length ? sorted : ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M10'];
 }
 
 function allSignalSeries(mod) {
   if (Array.isArray(mod.signals) && mod.signals.length) {
-    if (currentModule === 'M6') {
-      const filtered = mod.signals.filter(signal => M6_CHART_SIGNALS.has(signal.signal_code));
-      return filtered.length ? filtered : mod.signals;
-    }
+    if (currentModule === 'M6') return [];
     return mod.signals;
   }
   return [{

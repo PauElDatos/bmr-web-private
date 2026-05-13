@@ -85,18 +85,6 @@ MODULES = {
         "where": "hypothesis_code REGEXP '^M7(_|$)'",
         "preferred_signals": ["M7_SP500_DD40_PROBA", "M7_SP500_DD25_PROBA", "M7_SP500_DD10_PROBA"],
     },
-    "M8": {
-        "title": "M8_RISK_ON_MACRO_DIVERGENCE",
-        "description": "Divergencias entre senales risk-on, avisos macro y SP500.",
-        "where": "hypothesis_code REGEXP '^M8(_|$)'",
-        "preferred_signals": ["M8_MACRO_WARNING_DIVERGENCE", "M8_RISK_ON_DIVERGENCE"],
-    },
-    "M9": {
-        "title": "M9_REGIME_PERSISTENCE",
-        "description": "Persistencia de regimenes de riesgo y recuperacion segun senales H.",
-        "where": "hypothesis_code REGEXP '^M9(_|$)'",
-        "preferred_signals": ["M9_REGIME_TURN_SIGNAL", "M9_PERSISTENT_RISK_SCORE", "M9_RECOVERY_PERSISTENCE_SCORE"],
-    },
     "M10": {
         "title": "M10_DEEP_SP500_DRAWDOWN_H_SIGNALS",
         "description": "Modelo IA tipo M7 ampliado con las senales H activas.",
@@ -1253,7 +1241,7 @@ def build_manifest(out_dir: Path, catalogs: Dict[str, List[Dict[str, Any]]], ts_
             {"name": "catalog_indicators", "status": "ok" if len(catalogs.get("indicators", [])) > 0 else "error", "ok": len(catalogs.get("indicators", [])) > 0, "detail": f"count={len(catalogs.get('indicators', []))}"},
             {"name": "catalog_assets", "status": "ok" if len(catalogs.get("assets", [])) > 0 else "error", "ok": len(catalogs.get("assets", [])) > 0, "detail": f"count={len(catalogs.get('assets', []))}"},
             {"name": "catalog_series", "status": "ok" if len(catalogs.get("series", [])) > 0 else "warning", "ok": len(catalogs.get("series", [])) > 0, "detail": f"count={len(catalogs.get('series', []))}"},
-            {"name": "market_modules", "status": "ok" if all((out_dir / "market" / f"{m.lower()}.json").exists() for m in MODULES) else "error", "ok": all((out_dir / "market" / f"{m.lower()}.json").exists() for m in MODULES), "detail": "M1-M10 exportados"},
+            {"name": "market_modules", "status": "ok" if all((out_dir / "market" / f"{m.lower()}.json").exists() for m in MODULES) else "error", "ok": all((out_dir / "market" / f"{m.lower()}.json").exists() for m in MODULES), "detail": f"{', '.join(MODULES.keys())} exportados"},
         ],
         "warnings": warnings[:200],
     }
