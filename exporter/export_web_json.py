@@ -71,7 +71,7 @@ MODULES = {
         "title": "M5_RULES_M2M3M4",
         "description": "Reglas finales que combinan M2, M3 y M4.",
         "where": "hypothesis_code REGEXP '^M5(_|$)'",
-        "preferred_signals": ["M2_S_WEAK", "M3_S_HEALTHY", "M4_S_HEALTHY"],
+        "preferred_signals": ["M2_S_WEAK", "M5_HEALTHY"],
     },
     "M6": {
         "title": "M6_MACRO_BLOCK_CONSENSUS",
