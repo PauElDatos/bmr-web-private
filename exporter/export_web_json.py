@@ -83,7 +83,7 @@ MODULES = {
         "title": "M10_DEEP_SP500_DRAWDOWN_H_SIGNALS",
         "description": "Modelo IA de drawdown SP500 ampliado con senales H activas.",
         "where": "hypothesis_code REGEXP '^M10(_|$)'",
-        "preferred_signals": ["M10_SP500_DD40_PROBA", "M10_SP500_DD25_PROBA", "M10_SP500_DD10_PROBA"],
+        "preferred_signals": ["M10_SP500_DD40_PROBA", "M10_SP500_DD25_PROBA"],
     },
 }
 
