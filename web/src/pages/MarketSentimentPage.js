@@ -39,7 +39,7 @@ const M6_BLOCKS = [
   { key: 'real_cycle', label: 'Economia real', buy: 'M6_REAL_CYCLE_BUY', sell: 'M6_REAL_CYCLE_SELL', net: 'M6_REAL_CYCLE_NET' }
 ];
 const M5_CHART_SIGNALS = new Set(['M5_DD6M_PROBA']);
-const M10_RISK_OFF_DEFAULT_THRESHOLD = 0.35;
+const M10_RISK_OFF_DEFAULT_THRESHOLD = 0.20;
 const COMPACT_WEIGHT_FIELDS = [
   'hypothesis_code',
   'run_id',
