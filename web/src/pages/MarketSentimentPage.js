@@ -30,6 +30,14 @@ const YEAR_MIN = 1875;
 const WEIGHT_CHUNK_PRELOAD_CONCURRENCY = 6;
 const SPX_KEY = 'spx';
 const USREC_KEY = 'usrec';
+const M6_BLOCKS = [
+  { key: 'cycle_macro', label: 'Ciclo macro', buy: 'M6_CYCLE_MACRO_BUY', sell: 'M6_CYCLE_MACRO_SELL', net: 'M6_CYCLE_MACRO_NET' },
+  { key: 'rates_curve', label: 'Tipos y curva', buy: 'M6_RATES_CURVE_BUY', sell: 'M6_RATES_CURVE_SELL', net: 'M6_RATES_CURVE_NET' },
+  { key: 'market_sentiment', label: 'Sentimiento mercado', buy: 'M6_MARKET_SENTIMENT_BUY', sell: 'M6_MARKET_SENTIMENT_SELL', net: 'M6_MARKET_SENTIMENT_NET' },
+  { key: 'credit_stress', label: 'Credito', buy: 'M6_CREDIT_STRESS_BUY', sell: 'M6_CREDIT_STRESS_SELL', net: 'M6_CREDIT_STRESS_NET' },
+  { key: 'real_cycle', label: 'Economia real', buy: 'M6_REAL_CYCLE_BUY', sell: 'M6_REAL_CYCLE_SELL', net: 'M6_REAL_CYCLE_NET' }
+];
+const M6_CHART_SIGNALS = new Set(['M6_MACRO_CONSENSUS', ...M6_BLOCKS.map(block => block.net)]);
 const COMPACT_WEIGHT_FIELDS = [
   'hypothesis_code',
   'run_id',
@@ -80,6 +88,15 @@ export async function MarketSentimentPage() {
           </div>
         </div>
         <div id="weights-table"></div>
+      </section>
+
+      <section id="m6-macro-summary-card" class="card m6-macro-summary-card" hidden>
+        <div class="card-header">
+          <div>
+            <h2>M6 resumen macro</h2>
+          </div>
+        </div>
+        <div id="m6-macro-summary"></div>
       </section>
     </div>
   `;
@@ -137,7 +154,13 @@ function moduleCodesFromRuns(runs, latest) {
 }
 
 function allSignalSeries(mod) {
-  if (Array.isArray(mod.signals) && mod.signals.length) return mod.signals;
+  if (Array.isArray(mod.signals) && mod.signals.length) {
+    if (currentModule === 'M6') {
+      const filtered = mod.signals.filter(signal => M6_CHART_SIGNALS.has(signal.signal_code));
+      return filtered.length ? filtered : mod.signals;
+    }
+    return mod.signals;
+  }
   return [{
     signal_code: mod.signal_code || 'SENAL',
     latest_dt: mod.chart?.signal?.at?.(-1)?.dt || null,
@@ -147,6 +170,87 @@ function allSignalSeries(mod) {
     n_points: (mod.chart?.signal || []).length,
     latest_explanation: mod.description || ''
   }];
+}
+
+function signalSeriesByCode(mod) {
+  const map = new Map();
+  (mod.signals || []).forEach(signal => {
+    if (signal?.signal_code) map.set(signal.signal_code, signal);
+  });
+  return map;
+}
+
+function signalValueAt(signalMap, signalCode, selectedDate) {
+  const signal = signalMap.get(signalCode);
+  const point = pointAtOrBefore(signal?.points || [], selectedDate);
+  const value = Number(point?.value);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function m6BlockState(row) {
+  if (row.net >= 0.15 || (row.buy >= 0.25 && row.buy > row.sell + 0.05)) return 'risk_on';
+  if (row.net <= -0.15 || (row.sell >= 0.25 && row.sell > row.buy + 0.05)) return 'risk_off';
+  return 'neutral';
+}
+
+function m6Conclusion(rows, consensus) {
+  const positives = rows.filter(row => row.state === 'risk_on').length;
+  const negatives = rows.filter(row => row.state === 'risk_off').length;
+  const extreme = consensus <= -0.5 || rows.some(row => (
+    ['rates_curve', 'credit_stress', 'real_cycle'].includes(row.key) && row.sell >= 0.5
+  ));
+  if (extreme) return 'Conclusion: presion macro alta y senal de riesgo extremo.';
+  if (negatives > 0 && positives > 0) return 'Conclusion: mercado mixto, con presion macro pero sin senal de riesgo extremo.';
+  if (negatives >= 2) return 'Conclusion: sesgo macro negativo, con presion en varios bloques.';
+  if (positives >= 2 && negatives === 0) return 'Conclusion: sesgo macro positivo, sin presion macro relevante.';
+  if (negatives === 0 && positives === 0) return 'Conclusion: mercado macro neutral, sin bloques dominantes.';
+  return 'Conclusion: mercado mixto, sin senal dominante.';
+}
+
+function renderM6MacroSummary(mod, selectedDate) {
+  const card = document.getElementById('m6-macro-summary-card');
+  const wrap = document.getElementById('m6-macro-summary');
+  if (!card || !wrap) return;
+  if (currentModule !== 'M6') {
+    card.hidden = true;
+    wrap.innerHTML = '';
+    return;
+  }
+
+  const signalMap = signalSeriesByCode(mod);
+  const rows = M6_BLOCKS.map(block => {
+    const buy = signalValueAt(signalMap, block.buy, selectedDate);
+    const sell = signalValueAt(signalMap, block.sell, selectedDate);
+    const net = signalValueAt(signalMap, block.net, selectedDate);
+    const row = { ...block, buy, sell, net };
+    row.state = m6BlockState(row);
+    return row;
+  });
+  const consensus = signalValueAt(signalMap, 'M6_MACRO_CONSENSUS', selectedDate);
+  const conclusion = m6Conclusion(rows, consensus);
+  card.hidden = false;
+  wrap.innerHTML = `
+    <div class="m6-summary-head">
+      <span>${escapeHtml(formatSelectedDate(selectedDate))}</span>
+      <strong>Consenso neto: ${escapeHtml(fmtNumber(consensus, 3))}</strong>
+    </div>
+    <div class="m6-summary-grid">
+      ${rows.map(row => `
+        <div class="m6-block-card">
+          <div class="m6-block-top">
+            <strong>${escapeHtml(row.label)}</strong>
+            <span class="pill ${classForLevel(row.state)}">${escapeHtml(sentimentLabel(row.state))}</span>
+          </div>
+          <div class="m6-block-values">
+            <span>BUY ${escapeHtml(fmtNumber(row.buy, 3))}</span>
+            <span>SELL ${escapeHtml(fmtNumber(row.sell, 3))}</span>
+            <span>NET ${escapeHtml(fmtNumber(row.net, 3))}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <p class="m6-summary-conclusion">${escapeHtml(conclusion)}</p>
+  `;
 }
 
 function signalKey(code) {
@@ -635,6 +739,7 @@ async function renderModule() {
     selectedDateByModule[currentModule] = nextDate;
     if (dateLabel) dateLabel.textContent = formatSelectedDate(nextDate);
     renderWeightsForDate(weights, nextDate, { preserveScroll: true });
+    renderM6MacroSummary(mod, nextDate);
     renderLegend(mod, draw);
     draw();
     preserveWindowScroll(scrollPos);
@@ -655,4 +760,5 @@ async function renderModule() {
   }
 
   await renderWeightsForDate(weights, selectedDate);
+  renderM6MacroSummary(mod, selectedDate);
 }
