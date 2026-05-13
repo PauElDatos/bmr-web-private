@@ -839,6 +839,42 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   font-size: 12px;
   font-style: normal;
 }
+.market-zone-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.market-zone-legend[hidden] { display: none; }
+.zone-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(0,0,0,.14);
+  color: rgba(255,255,255,.88);
+  font-size: 12px;
+}
+.zone-chip i {
+  width: 18px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.zone-chip strong {
+  font-family: var(--fontTitle);
+  font-size: 12px;
+}
+.zone-chip em {
+  color: var(--muted);
+  font-style: normal;
+}
+.zone-chip.healthy i { background: rgba(52, 211, 153, .35); border: 1px solid rgba(52, 211, 153, .78); }
+.zone-chip.watch i { background: rgba(254, 247, 2, .16); border: 1px solid rgba(254, 247, 2, .54); }
+.zone-chip.risk-off i { background: rgba(248, 113, 113, .30); border: 1px solid rgba(248, 113, 113, .78); }
 .market-date-selector {
   border: 1px solid var(--border);
   border-radius: 16px;

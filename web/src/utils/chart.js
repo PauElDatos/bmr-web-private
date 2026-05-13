@@ -388,6 +388,21 @@ export function drawLineChart(container, series, options = {}) {
   ctx.fillStyle = '#252525';
   ctx.fillRect(0, 0, width, height);
 
+  for (const band of options.yBands || []) {
+    const axisKey = normalizeAxisKey(band.axis || primaryLeftKey);
+    const axis = axes[axisKey] || leftAxis;
+    const scaleY = yScaleForAxis(axisKey);
+    const from = Number.isFinite(Number(band.from)) ? Number(band.from) : axis.minY;
+    const to = Number.isFinite(Number(band.to)) ? Number(band.to) : axis.maxY;
+    const y0 = scaleY(from);
+    const y1 = scaleY(to);
+    const top = Math.max(pad.t, Math.min(y0, y1));
+    const bottom = Math.min(pad.t + plotH, Math.max(y0, y1));
+    if (!Number.isFinite(top) || !Number.isFinite(bottom) || bottom <= top) continue;
+    ctx.fillStyle = band.color || 'rgba(148, 163, 184, 0.10)';
+    ctx.fillRect(pad.l, top, plotW, bottom - top);
+  }
+
   for (const band of options.bands || []) {
     const bx0 = xScale(parseDate(band.from));
     const bx1 = xScale(parseDate(band.to));
@@ -489,6 +504,28 @@ export function drawLineChart(container, series, options = {}) {
       ctx.textAlign = 'center';
       ctx.fillText(String(axis.label).slice(0, 8), x, 18);
     });
+  }
+
+  for (const line of options.yLines || []) {
+    const axisKey = normalizeAxisKey(line.axis || primaryLeftKey);
+    const y = yScaleForAxis(axisKey)(Number(line.value));
+    if (!Number.isFinite(y) || y < pad.t || y > pad.t + plotH) continue;
+    ctx.save();
+    ctx.strokeStyle = line.color || 'rgba(255, 255, 255, 0.45)';
+    ctx.lineWidth = line.width || 1;
+    ctx.setLineDash(line.dash || [6, 4]);
+    ctx.beginPath();
+    ctx.moveTo(pad.l, y);
+    ctx.lineTo(width - pad.r, y);
+    ctx.stroke();
+    if (line.label) {
+      ctx.setLineDash([]);
+      ctx.font = '11px Arial, system-ui, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillStyle = line.color || '#B0B0B0';
+      ctx.fillText(String(line.label), width - pad.r - 8, Math.max(pad.t + 12, y - 6));
+    }
+    ctx.restore();
   }
 
   ctx.textAlign = 'left';

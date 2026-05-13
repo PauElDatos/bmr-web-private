@@ -1,6 +1,7 @@
 import {
   loadJson,
   loadMarketModule,
+  loadMarketMetrics,
   loadMarketWeights,
   loadMarketWeightChunk
 } from '../api/dataClient.js';
@@ -73,6 +74,7 @@ export async function MarketSentimentPage() {
       <div class="market-chart-stack">
         ${chartPanel('market-chart', 'Grafico de mercado y senales', '', yearRangeControls())}
         <div id="market-chart-legend" class="market-chart-legend"></div>
+        <div id="market-zone-legend" class="market-zone-legend" hidden></div>
         <div id="market-date-selector" class="market-date-selector"></div>
         <aside class="card module-panel market-module-panel">
           <h2>Modulos</h2>
@@ -278,6 +280,72 @@ function bandsForChart(bands = []) {
   const active = activeLegendKey();
   const alpha = active && active !== USREC_KEY ? 0.05 : 0.16;
   return bands.map(band => ({ ...band, color: `rgba(148, 163, 184, ${alpha})` }));
+}
+
+function metricValue(metrics, code) {
+  const item = (metrics?.items || []).find(row => row.metric_code === code);
+  const value = Number(item?.metric_value);
+  return Number.isFinite(value) ? value : null;
+}
+
+function m5Thresholds(metrics) {
+  if (currentModule !== 'M5') return null;
+  const risk = metricValue(metrics, 'M5_RISK_THRESHOLD');
+  const healthy = metricValue(metrics, 'M5_HEALTHY_THRESHOLD');
+  if (!Number.isFinite(risk) || !Number.isFinite(healthy)) return null;
+  return { risk, healthy };
+}
+
+function formatPercent(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return '-';
+  return `${(n * 100).toLocaleString('es-ES', { maximumFractionDigits: 1 })}%`;
+}
+
+function m5RiskVisuals(metrics) {
+  const thresholds = m5Thresholds(metrics);
+  if (!thresholds) return { yBands: [], yLines: [] };
+  return {
+    yBands: [
+      { axis: 'left', from: 0, to: thresholds.healthy, color: 'rgba(52, 211, 153, 0.10)' },
+      { axis: 'left', from: thresholds.risk, to: 1, color: 'rgba(248, 113, 113, 0.10)' }
+    ],
+    yLines: [
+      {
+        axis: 'left',
+        value: thresholds.healthy,
+        color: 'rgba(52, 211, 153, 0.86)',
+        dash: [7, 5],
+        width: 1.4,
+        label: `HEALTHY <= ${formatPercent(thresholds.healthy)}`
+      },
+      {
+        axis: 'left',
+        value: thresholds.risk,
+        color: 'rgba(248, 113, 113, 0.86)',
+        dash: [7, 5],
+        width: 1.4,
+        label: `RISK_OFF >= ${formatPercent(thresholds.risk)}`
+      }
+    ]
+  };
+}
+
+function renderMarketZoneLegend(metrics) {
+  const wrap = document.getElementById('market-zone-legend');
+  if (!wrap) return;
+  const thresholds = m5Thresholds(metrics);
+  if (!thresholds) {
+    wrap.hidden = true;
+    wrap.innerHTML = '';
+    return;
+  }
+  wrap.hidden = false;
+  wrap.innerHTML = `
+    <span class="zone-chip healthy"><i></i><strong>HEALTHY</strong><em>&le; ${escapeHtml(formatPercent(thresholds.healthy))}</em></span>
+    <span class="zone-chip watch"><i></i><strong>WATCH</strong><em>${escapeHtml(formatPercent(thresholds.healthy))} - ${escapeHtml(formatPercent(thresholds.risk))}</em></span>
+    <span class="zone-chip risk-off"><i></i><strong>RISK_OFF</strong><em>&ge; ${escapeHtml(formatPercent(thresholds.risk))}</em></span>
+  `;
 }
 
 function dateKey(value) {
@@ -661,9 +729,10 @@ async function renderWeightsForDate(weights, selectedDate, options = {}) {
 async function renderModule() {
   const renderToken = ++moduleRenderToken;
   weightsRenderToken += 1;
-  const [mod, weights] = await Promise.all([
+  const [mod, weights, metrics] = await Promise.all([
     loadMarketModule(currentModule),
-    loadMarketWeights(currentModule).catch(() => ({ items: [] }))
+    loadMarketWeights(currentModule).catch(() => ({ items: [] })),
+    loadMarketMetrics(currentModule).catch(() => ({ items: [] }))
   ]);
   if (renderToken !== moduleRenderToken) return;
 
@@ -672,6 +741,7 @@ async function renderModule() {
   if (!chart) return;
 
   const signals = allSignalSeries(mod);
+  const riskVisuals = m5RiskVisuals(metrics);
   const dateOptions = collectDateOptions(mod, weights);
   const selectedDate = selectedDateForModule(dateOptions);
   applyYearRangeToView(mod);
@@ -708,6 +778,8 @@ async function renderModule() {
       dualAxis: true,
       axisScales: { right: 'log' },
       bands: bandsForChart(mod.chart?.bands || []),
+      yBands: riskVisuals.yBands,
+      yLines: riskVisuals.yLines,
       markers: selectedMarker,
       anchoredGrid: true,
       hideLegend: true,
@@ -717,11 +789,13 @@ async function renderModule() {
 
   draw();
   renderLegend(mod, draw);
+  renderMarketZoneLegend(metrics);
   wireYearInputs(mod, draw);
   if (cleanupResize) cleanupResize();
   cleanupResize = attachResize(chart, () => {
     draw();
     renderLegend(mod, draw);
+    renderMarketZoneLegend(metrics);
   });
   if (cleanupChartInteractions) cleanupChartInteractions();
   cleanupChartInteractions = attachTradingChartInteractions(chart, marketView, draw);
