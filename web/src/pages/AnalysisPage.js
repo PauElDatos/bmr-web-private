@@ -20,6 +20,7 @@ let analysisView = {};
 let lastRendered = { loaded: [], chartSeries: [], calcPoints: [], calcResults: [] };
 let focusedAnalysisSeries = null;
 let renderTimer = null;
+let analysisRenderToken = 0;
 let analysisYearRange = { start: null, end: new Date().getFullYear() };
 let userTouchedAnalysisRange = false;
 
@@ -172,6 +173,16 @@ function applyAnalysisYearRangeToView() {
   });
   analysisView.xMin = Date.UTC(range.start, 0, 1);
   analysisView.xMax = Date.UTC(range.end, 11, 31, 23, 59, 59);
+}
+
+function resetAnalysisAxisView() {
+  delete analysisView.yMin;
+  delete analysisView.yMax;
+  delete analysisView.leftYMin;
+  delete analysisView.leftYMax;
+  delete analysisView.rightYMin;
+  delete analysisView.rightYMax;
+  delete analysisView.axisRanges;
 }
 
 async function loadAnalysisCatalogs() {
@@ -333,33 +344,33 @@ async function wireAnalysisPage() {
     document.getElementById(`slot-${slot}`).addEventListener('change', e => {
       slotState[slot].key = e.target.value;
       if (!userTouchedAnalysisRange) analysisYearRange.start = null;
-      scheduleRenderAnalysis();
+      scheduleRenderAnalysis({ resetAxes: true });
     });
-    document.getElementById(`transform-${slot}`).addEventListener('change', e => { slotState[slot].transform = e.target.value; scheduleRenderAnalysis(); });
-    document.getElementById(`lag-${slot}`).addEventListener('input', e => { slotState[slot].lag = Number(e.target.value || 0); scheduleRenderAnalysis(); });
-    document.getElementById(`visible-${slot}`).addEventListener('change', e => { slotState[slot].visible = e.target.checked; scheduleRenderAnalysis(); });
+    document.getElementById(`transform-${slot}`).addEventListener('change', e => { slotState[slot].transform = e.target.value; scheduleRenderAnalysis({ resetAxes: true }); });
+    document.getElementById(`lag-${slot}`).addEventListener('input', e => { slotState[slot].lag = Number(e.target.value || 0); scheduleRenderAnalysis({ resetAxes: true }); });
+    document.getElementById(`visible-${slot}`).addEventListener('change', e => { slotState[slot].visible = e.target.checked; scheduleRenderAnalysis({ resetAxes: true }); });
   }
   document.querySelectorAll('.invert-btn').forEach(b => b.addEventListener('click', () => {
     const s = b.dataset.slot;
     slotState[s].invert = !slotState[s].invert;
     b.classList.toggle('active', slotState[s].invert);
-    scheduleRenderAnalysis();
+    scheduleRenderAnalysis({ resetAxes: true });
   }));
   controlPanel?.addEventListener('change', (event) => {
     if (event.target.closest('#analysis-preset')) return;
     syncSlotStateFromControls();
-    scheduleRenderAnalysis();
+    scheduleRenderAnalysis({ resetAxes: true });
   });
   controlPanel?.addEventListener('input', (event) => {
     if (event.target.closest('#year-start, #year-end')) return;
     syncSlotStateFromControls();
-    scheduleRenderAnalysis();
+    scheduleRenderAnalysis({ resetAxes: true });
   });
   document.getElementById('analysis-preset').addEventListener('change', applyPreset);
   document.getElementById('export-analysis').addEventListener('click', exportVisibleCsv);
   document.getElementById('reset-analysis').addEventListener('click', resetAnalysis);
-  document.querySelectorAll('.overlay-check').forEach(c => c.addEventListener('change', scheduleRenderAnalysis));
-  document.getElementById('overlay-recession').addEventListener('change', scheduleRenderAnalysis);
+  document.querySelectorAll('.overlay-check').forEach(c => c.addEventListener('change', () => scheduleRenderAnalysis({ resetAxes: true })));
+  document.getElementById('overlay-recession').addEventListener('change', () => scheduleRenderAnalysis({ resetAxes: true }));
   ['year-start', 'year-end'].forEach(id => {
     const input = document.getElementById(id);
     input?.addEventListener('input', () => {
@@ -370,19 +381,21 @@ async function wireAnalysisPage() {
       });
       userTouchedAnalysisRange = true;
       syncAnalysisYearInputs();
-      scheduleRenderAnalysis();
+      scheduleRenderAnalysis({ resetAxes: true });
     });
   });
-  ['calc-blue-red', 'calc-red-green'].forEach(id => document.getElementById(id).addEventListener('change', scheduleRenderAnalysis));
+  ['calc-blue-red', 'calc-red-green'].forEach(id => document.getElementById(id).addEventListener('change', () => scheduleRenderAnalysis({ resetAxes: true })));
   ['catalog-search', 'catalog-kind', 'catalog-source'].forEach(id => document.getElementById(id).addEventListener('input', renderCatalogTable));
   syncAnalysisYearInputs();
   renderCatalogTable();
-  await renderAnalysis();
+  await renderAnalysis(++analysisRenderToken);
 }
 
-function scheduleRenderAnalysis() {
+function scheduleRenderAnalysis(options = {}) {
+  if (options.resetAxes) resetAnalysisAxisView();
+  const renderToken = ++analysisRenderToken;
   clearTimeout(renderTimer);
-  renderTimer = setTimeout(() => { renderAnalysis(); }, 80);
+  renderTimer = setTimeout(() => { renderAnalysis(renderToken); }, 80);
 }
 
 function applyPreset(e) {
@@ -403,7 +416,7 @@ function applyPreset(e) {
   const calcRedGreen = document.getElementById('calc-red-green');
   if (calcBlueRed && p.calc_blue_red) calcBlueRed.value = p.calc_blue_red;
   if (calcRedGreen && p.calc_red_green) calcRedGreen.value = p.calc_red_green;
-  scheduleRenderAnalysis();
+  scheduleRenderAnalysis({ resetAxes: true });
 }
 
 function resetAnalysis() {
@@ -436,10 +449,12 @@ async function loadSlotSeries(slot) {
   return { slot, opt, allPoints: transformed, firstYear: firstYearFromPoints(transformed), rawPoints: pts, points: pts, rawStats, state: { ...slotState[slot] } };
 }
 
-async function renderAnalysis() {
+async function renderAnalysis(renderToken = ++analysisRenderToken) {
   const chart = document.getElementById('analysis-chart');
   if (!chart) return;
+  syncSlotStateFromControls();
   const loaded = await Promise.all(slots.map(loadSlotSeries));
+  if (renderToken !== analysisRenderToken) return;
   if (!userTouchedAnalysisRange) {
     const selectedStarts = loaded
       .filter(item => item.state.visible)
@@ -499,6 +514,7 @@ async function renderAnalysis() {
       const kind = ov.kind;
       const code = ov.target_code || ov.code;
       const ts = await loadTimeseries(kind, code);
+      if (renderToken !== analysisRenderToken) return;
       const range = normalizeAnalysisYearRange(analysisYearRange);
       const pts = filterByYears(ts.points, range.start, range.end);
       series.push(buildAnalysisSeries({ id: `overlay-${o}`, name: o, shortName: o, opt: { code: code, name: o, rawName: o }, points: pts, color: OVERLAY_SERIES_COLORS[o] || ov.color || '#a78bfa', width: 1.5 }));
@@ -510,8 +526,10 @@ async function renderAnalysis() {
   let recessionBands = [];
   if (document.getElementById('overlay-recession')?.checked) {
     recessionBands = catalogs.recessionBands.length ? catalogs.recessionBands : await loadRecessionBandsFromUSREC();
+    if (renderToken !== analysisRenderToken) return;
     recessionBands = recessionBands.filter(b => inYearRange(b.from) || inYearRange(b.to));
   }
+  if (renderToken !== analysisRenderToken) return;
   const axisScales = {};
   series
     .filter(s => String(s.id || '').startsWith('overlay-') && LOG_OVERLAY_CODES.has(String(s.shortName || '').toUpperCase()))
@@ -575,7 +593,7 @@ function renderAnalysisLegend(container, series) {
   legend.querySelectorAll('.analysis-legend-item').forEach((btn) => {
     btn.addEventListener('click', () => {
       focusedAnalysisSeries = focusedAnalysisSeries === btn.dataset.seriesId ? null : btn.dataset.seriesId;
-      renderAnalysis();
+      renderAnalysis(++analysisRenderToken);
     });
   });
 }
@@ -704,7 +722,7 @@ function renderCatalogTable() {
     if (!userTouchedAnalysisRange) analysisYearRange.start = null;
     const select = document.getElementById(`slot-${slot}`);
     if (select) select.value = key;
-    scheduleRenderAnalysis();
+    scheduleRenderAnalysis({ resetAxes: true });
   }));
 }
 
