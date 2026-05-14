@@ -1006,6 +1006,34 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   margin: 14px 0 0;
   color: rgba(255,255,255,.88);
 }
+.module-reading-help-card[hidden] {
+  display: none;
+}
+.module-reading-help {
+  display: grid;
+  gap: 12px;
+  max-width: 980px;
+}
+.module-reading-help h3 {
+  margin: 0;
+  font-family: var(--fontTitle);
+  color: #fff;
+  font-size: 18px;
+}
+.module-reading-help p {
+  margin: 0;
+  color: rgba(255,255,255,.84);
+  line-height: 1.6;
+}
+.module-reading-help ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.module-reading-help li + li {
+  margin-top: 6px;
+}
 
 @media (max-width: 700px) {
   .market-page .metric-grid {

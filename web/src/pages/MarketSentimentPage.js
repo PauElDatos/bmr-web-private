@@ -42,6 +42,44 @@ const M6_BLOCKS = [
 ];
 const M5_CHART_SIGNALS = new Set(['M5_DD6M_PROBA']);
 const M10_RISK_OFF_DEFAULT_THRESHOLD = 0.20;
+const MODULE_READING_HELP = {
+  M1: {
+    title: 'M1 · Radar interno de señales',
+    body: 'M1 muestra si el conjunto de señales H está generando impulsos de compra o de venta. No lo usaría como régimen principal, sino como radar temprano: ayuda a ver si empiezan a acumularse alertas antes de que M5 cambie de lectura.',
+    points: [
+      'Optimista significa que predominan pulsos favorables al mercado.',
+      'Pesimista significa que predominan alertas defensivas o de deterioro.',
+      'El peso efectivo indica qué señales explican más la lectura de la fecha seleccionada.'
+    ]
+  },
+  M5: {
+    title: 'M5 · Sentimiento de mercado y probabilidad de caída a 6 meses',
+    body: 'M5 combina M2, M3 y M4 con un modelo estadístico para estimar la probabilidad de una caída relevante del S&P 500 en los próximos 6 meses. Esta es la lectura principal de sentimiento o régimen de mercado.',
+    points: [
+      'Optimista significa que ese componente reduce la probabilidad estimada de caída.',
+      'Pesimista significa que ese componente aumenta la probabilidad estimada de caída.',
+      'El punto de partida del modelo es el sesgo base; M2, M3 y M4 ajustan esa base según el estado de las alertas, el ciclo macro y el riesgo supervisado.'
+    ]
+  },
+  M6: {
+    title: 'M6 · Explicación macro por bloques',
+    body: 'M6 no intenta ser el indicador principal de mercado. Su función es explicar qué bloques macro están empujando a favor o en contra: ciclo macro, tipos y curva, sentimiento, crédito y economía real.',
+    points: [
+      'El resumen macro muestra la lectura de cada bloque en la fecha seleccionada.',
+      'La tabla inferior muestra solo la contribución neta de cada indicador al consenso, evitando duplicar salidas internas BUY y SELL.',
+      'Optimista suma al consenso macro; pesimista resta al consenso macro.'
+    ]
+  },
+  M10: {
+    title: 'M10 · IA para riesgo de grandes caídas',
+    body: 'M10 usa datos brutos y señales H para estimar la probabilidad de drawdowns fuertes del S&P 500. Está pensado como alerta de cola, no como lectura diaria de tendencia.',
+    points: [
+      'La línea roja discontinua marca la zona de riesgo: si DD25 o DD40 superan ese umbral, el modelo detecta condiciones parecidas a fases previas de caídas fuertes.',
+      'DD25 estima riesgo de caída profunda; DD40 estima riesgo de escenario más extremo.',
+      'La interpretación útil es observar subidas persistentes del riesgo, no un único punto aislado.'
+    ]
+  }
+};
 const COMPACT_WEIGHT_FIELDS = [
   'hypothesis_code',
   'run_id',
@@ -81,21 +119,20 @@ export async function MarketSentimentPage() {
         ${chartPanel('market-chart', 'Grafico de mercado y senales', '', yearRangeControls())}
         <div id="market-chart-legend" class="market-chart-legend"></div>
         <div id="market-zone-legend" class="market-zone-legend" hidden></div>
+        <section id="m6-macro-summary-card" class="card m6-macro-summary-card" hidden>
+          <div class="card-header">
+            <div>
+              <h2>M6 resumen macro</h2>
+            </div>
+          </div>
+          <div id="m6-macro-summary"></div>
+        </section>
         <div id="market-date-selector" class="market-date-selector"></div>
         <aside class="card module-panel market-module-panel">
           <h2>Modulos</h2>
           <div class="module-buttons market-module-buttons">${buttons}</div>
         </aside>
       </div>
-
-      <section id="m6-macro-summary-card" class="card m6-macro-summary-card" hidden>
-        <div class="card-header">
-          <div>
-            <h2>M6 resumen macro</h2>
-          </div>
-        </div>
-        <div id="m6-macro-summary"></div>
-      </section>
 
       <section class="card">
         <div class="card-header">
@@ -104,6 +141,15 @@ export async function MarketSentimentPage() {
           </div>
         </div>
         <div id="weights-table"></div>
+      </section>
+
+      <section id="module-reading-help-card" class="card module-reading-help-card">
+        <div class="card-header">
+          <div>
+            <h2>Cómo interpretar este módulo</h2>
+          </div>
+        </div>
+        <div id="module-reading-help"></div>
       </section>
     </div>
   `;
@@ -258,6 +304,28 @@ function renderM6MacroSummary(mod, selectedDate) {
       `).join('')}
     </div>
     <p class="m6-summary-conclusion">${escapeHtml(conclusion)}</p>
+  `;
+}
+
+function renderModuleReadingHelp() {
+  const card = document.getElementById('module-reading-help-card');
+  const wrap = document.getElementById('module-reading-help');
+  if (!card || !wrap) return;
+  const help = MODULE_READING_HELP[currentModule];
+  if (!help) {
+    card.hidden = true;
+    wrap.innerHTML = '';
+    return;
+  }
+  card.hidden = false;
+  wrap.innerHTML = `
+    <div class="module-reading-help">
+      <h3>${escapeHtml(help.title)}</h3>
+      <p>${escapeHtml(help.body)}</p>
+      <ul>
+        ${help.points.map(point => `<li>${escapeHtml(point)}</li>`).join('')}
+      </ul>
+    </div>
   `;
 }
 
@@ -925,6 +993,7 @@ async function renderModule() {
   const dateOptions = collectDateOptions(mod, weights);
   const selectedDate = selectedDateForModule(dateOptions);
   applyYearRangeToView(mod);
+  renderModuleReadingHelp();
 
   if (title) title.textContent = `${currentModule} · SP500 completo, USREC y señales`;
 
