@@ -254,9 +254,7 @@ h1 {
 .home-card h2 { margin: 0 0 12px; font-family: var(--fontTitle); font-size: 32px; color: #fff; line-height: 1.05; }
 .home-card p { color: rgba(176,176,176,.9); line-height: 1.48; margin: 0; padding-right: 12px; }
 .home-card strong { margin-top: 20px; padding-right: 52px; color: var(--primary); font-size: 23px; font-family: var(--fontTitle); }
-.home-card.danger { border-color: rgba(255,106,0,.35); }
-.home-card.warn { border-color: rgba(254,247,2,.35); }
-.home-card.ok { border-color: rgba(54,195,255,.35); }
+.home-card.danger, .home-card.warn, .home-card.ok { border-color: rgba(254,247,2,.35); }
 
 .chart-wrap { width: 100%; height: 430px; min-height: 280px; }
 .chart-wrap canvas {
@@ -1098,4 +1096,48 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 .analysis-catalog-table td:first-child strong {
   display: block;
   color: #fff;
+}
+
+
+/* Ajustes solicitados: navegación horizontal, selector de fecha y bordes homogéneos */
+.market-page .page-actions {
+  min-width: 0;
+}
+.market-page .header-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
+  justify-content: flex-end;
+  scrollbar-width: thin;
+}
+.market-page .header-nav .nav-link {
+  flex: 0 0 auto;
+  min-width: max-content;
+  white-space: nowrap;
+}
+.market-date-input-label {
+  display: grid;
+  gap: 4px;
+  min-width: 132px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.market-date-input {
+  width: 132px;
+  text-align: center;
+}
+.market-date-input.invalid {
+  border-color: rgba(255,106,0,.78);
+  box-shadow: 0 0 0 3px rgba(255,106,0,.12);
+}
+@media (max-width: 1080px) {
+  .market-page .header-nav { justify-content: flex-start; }
+}
+@media (max-width: 700px) {
+  .market-page .header-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
 }

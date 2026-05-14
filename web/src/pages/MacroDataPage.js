@@ -121,15 +121,8 @@ function seriesExplanationPanel(item) {
 
 function seriesExplanationContent(item) {
   const code = item.code || item.symbol || '';
-  const name = translateDbText(item.name || item.asset_name || '');
   const info = MACRO_SERIES_EXPLANATIONS.get(code) || fallbackMacroSeriesExplanation();
   return `
-    <div class="card-header explanation-header">
-      <div>
-        <h2>Explicaci\u00f3n de ${escapeHtml(code)}</h2>
-        <p>${escapeHtml(name || 'Serie macroecon\u00f3mica')}</p>
-      </div>
-    </div>
     <div class="series-explanation-body">
       <article>
         <span>Qu\u00e9 mide</span>

@@ -435,14 +435,22 @@ function yearRangeForModule(mod) {
   return range;
 }
 
-function applyYearRangeToView(mod) {
+function marketYearXBounds(mod) {
   const range = yearRangeForModule(mod);
   const dataStart = parsePointTime((mod.chart?.spx || [])[0]);
   const dataEnd = parsePointTime((mod.chart?.spx || []).at?.(-1));
   const start = Date.UTC(range.start, 0, 1);
   const end = Date.UTC(range.end, 11, 31, 23, 59, 59);
-  marketView.xMin = Number.isFinite(dataStart) ? Math.max(dataStart, start) : start;
-  marketView.xMax = Number.isFinite(dataEnd) ? Math.min(dataEnd, end) : end;
+  return {
+    minX: Number.isFinite(dataStart) ? Math.max(dataStart, start) : start,
+    maxX: Number.isFinite(dataEnd) ? Math.min(dataEnd, end) : end
+  };
+}
+
+function applyYearRangeToView(mod) {
+  const bounds = marketYearXBounds(mod);
+  marketView.xMin = bounds.minX;
+  marketView.xMax = bounds.maxX;
 }
 
 function syncYearInputs(mod) {
@@ -588,6 +596,44 @@ function formatSelectedDate(dt) {
   return date.toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
 }
 
+function formatDateInputValue(dt) {
+  const key = dateKey(dt);
+  if (!key) return '';
+  const [year, month, day] = key.split('-');
+  return `${day}/${month}/${year}`;
+}
+
+function parseDateInputValue(value) {
+  const match = String(value || '').trim().match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);
+  if (!match) return '';
+  const day = Number(match[1]);
+  const month = Number(match[2]);
+  const year = Number(match[3]);
+  if (!Number.isInteger(day) || !Number.isInteger(month) || !Number.isInteger(year)) return '';
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return '';
+  return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+
+function dateOptionIndexAtOrBefore(dateOptions = [], target = '') {
+  if (!dateOptions.length) return -1;
+  const key = dateKey(target);
+  if (!key) return -1;
+  let lo = 0;
+  let hi = dateOptions.length - 1;
+  let best = 0;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (dateOptions[mid] <= key) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return best;
+}
+
 function timelineOptions(dateOptions) {
   if (!dateOptions.length) return '';
   const options = [];
@@ -614,6 +660,7 @@ function renderDateSelector(dateOptions, selectedDate) {
   wrap.innerHTML = `
     <div class="timeline-head">
       <strong>Fecha seleccionada: <span id="market-selected-date">${escapeHtml(formatSelectedDate(selectedDate))}</span></strong>
+      <label class="market-date-input-label"><span>Ir a fecha</span><input id="market-date-input" class="text-input market-date-input" type="text" inputmode="numeric" autocomplete="off" placeholder="dd/mm/aaaa" value="${escapeHtml(formatDateInputValue(selectedDate))}" aria-label="Seleccionar fecha en formato dd/mm/aaaa"></label>
       <span>${escapeHtml(dateOptions[0].slice(0, 4))} - ${escapeHtml(dateOptions[dateOptions.length - 1].slice(0, 4))}</span>
     </div>
     <input id="market-date-range" class="market-date-range" type="range" min="0" max="${dateOptions.length - 1}" step="1" value="${index}" list="market-year-ticks" aria-label="Fecha del mercado">
@@ -818,6 +865,7 @@ async function renderModule() {
     ];
     drawLineChart(chart, series, {
       view: marketView,
+      xBounds: marketYearXBounds(mod),
       dualAxis: true,
       axisScales: { right: 'log' },
       bands: bandsForChart(mod.chart?.bands || []),
@@ -846,16 +894,42 @@ async function renderModule() {
   renderDateSelector(dateOptions, selectedDate);
   const range = document.getElementById('market-date-range');
   const dateLabel = document.getElementById('market-selected-date');
-  range?.addEventListener('input', () => {
+  const dateInput = document.getElementById('market-date-input');
+  const applySelectedDate = (nextDate) => {
+    if (!nextDate) return;
     const scrollPos = captureWindowScroll();
-    const nextDate = dateOptions[Number(range.value)] || selectedDate;
     selectedDateByModule[currentModule] = nextDate;
+    const nextIndex = dateOptions.indexOf(nextDate);
+    if (range && nextIndex >= 0) range.value = String(nextIndex);
     if (dateLabel) dateLabel.textContent = formatSelectedDate(nextDate);
+    if (dateInput) {
+      dateInput.value = formatDateInputValue(nextDate);
+      dateInput.classList.remove('invalid');
+    }
     renderWeightsForDate(weights, nextDate, { preserveScroll: true });
     renderM6MacroSummary(mod, nextDate);
     renderLegend(mod, draw);
     draw();
     preserveWindowScroll(scrollPos);
+  };
+  range?.addEventListener('input', () => {
+    applySelectedDate(dateOptions[Number(range.value)] || selectedDate);
+  });
+  const applyDateInput = () => {
+    const parsed = parseDateInputValue(dateInput?.value);
+    const idx = dateOptionIndexAtOrBefore(dateOptions, parsed);
+    if (idx < 0) {
+      dateInput?.classList.add('invalid');
+      return;
+    }
+    applySelectedDate(dateOptions[idx]);
+  };
+  dateInput?.addEventListener('change', applyDateInput);
+  dateInput?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      applyDateInput();
+    }
   });
 
   const table = document.getElementById('weights-table');

@@ -12,6 +12,8 @@ function getCanvas(container) {
 const PALETTE = ['#FEF702', '#36C3FF', '#FF6A00', '#B0B0B0', '#9467bd', '#17becf', '#8c564b'];
 const DAY_MS = 24 * 60 * 60 * 1000;
 const LEFT_AXIS_COLUMN_WIDTH = 46;
+const WHEEL_ZOOM_SENSITIVITY = 0.00045;
+const MAX_WHEEL_DELTA_FOR_ZOOM = 240;
 
 function parseDate(d) { return new Date(d).getTime(); }
 
@@ -326,8 +328,16 @@ export function drawLineChart(container, series, options = {}) {
     ? { l: leftPad, r: hasRightAxis ? 72 : 24, t: 30, b: options.bottomLegendSpace || 40 }
     : (options.hideYAxisGutter ? { l: 58, r: 22, t: 24, b: options.bottomLegendSpace || 38 } : { l: 58, r: 22, t: 28, b: options.bottomLegendSpace || 38 });
 
-  const dataMinX = Math.min(...all.map(p => p.x));
-  const dataMaxX = Math.max(...all.map(p => p.x));
+  const rawDataMinX = Math.min(...all.map(p => p.x));
+  const rawDataMaxX = Math.max(...all.map(p => p.x));
+  const requestedMinX = Number(options.xBounds?.minX);
+  const requestedMaxX = Number(options.xBounds?.maxX);
+  let dataMinX = Number.isFinite(requestedMinX) ? Math.max(rawDataMinX, requestedMinX) : rawDataMinX;
+  let dataMaxX = Number.isFinite(requestedMaxX) ? Math.min(rawDataMaxX, requestedMaxX) : rawDataMaxX;
+  if (!Number.isFinite(dataMinX) || !Number.isFinite(dataMaxX) || dataMinX >= dataMaxX) {
+    dataMinX = rawDataMinX;
+    dataMaxX = rawDataMaxX;
+  }
   const axes = {};
   for (const axisKey of axisKeys) {
     const scale = axisScaleKind(options, axisKey);
@@ -351,6 +361,7 @@ export function drawLineChart(container, series, options = {}) {
 
   let minX = Number.isFinite(Number(options.view?.xMin)) ? Number(options.view.xMin) : dataMinX;
   let maxX = Number.isFinite(Number(options.view?.xMax)) ? Number(options.view.xMax) : dataMaxX;
+  [minX, maxX] = clampRange(minX, maxX, dataMinX, dataMaxX);
   if (minX === maxX) { minX -= DAY_MS; maxX += DAY_MS; }
   for (const axis of Object.values(axes)) {
     if (axis.minY === axis.maxY) { axis.minY -= 1; axis.maxY += 1; }
@@ -632,6 +643,11 @@ function axisYScale(state, axisKey) {
   return (py) => yToCanvas(axis, state.pad, state.plotH, py);
 }
 
+function wheelZoomFactor(delta) {
+  const boundedDelta = Math.max(-MAX_WHEEL_DELTA_FOR_ZOOM, Math.min(MAX_WHEEL_DELTA_FOR_ZOOM, delta));
+  return Math.exp(boundedDelta * WHEEL_ZOOM_SENSITIVITY);
+}
+
 function findNearestPoint(state, x, y) {
   const { pad, plotW, minX, maxX, series } = state;
   const xScale = (px) => pad.l + ((px - minX) / Math.max(1, maxX - minX)) * plotW;
@@ -729,7 +745,7 @@ export function attachTradingChartInteractions(container, view, draw) {
       return;
     }
 
-    const factor = verticalDelta > 0 ? 1.16 : 0.86;
+    const factor = wheelZoomFactor(verticalDelta);
 
     if (event.shiftKey || overLeftYAxis || overRightYAxis) {
       const axisKey = overRightYAxis ? 'right' : yAxisFromPointer(state, x);
