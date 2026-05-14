@@ -97,14 +97,60 @@ const H_PUBLIC_INFO = {
   }
 };
 
+const M_PUBLIC_INFO = {
+  M1: {
+    title: 'Radar interno de señales',
+    description: 'Resume el comportamiento agregado de las señales H. Sirve como monitor temprano para ver si muchas alertas empiezan a moverse en la misma dirección antes de que los modelos principales cambien de régimen.'
+  },
+  M2: {
+    title: 'Amplitud de alertas del sistema',
+    description: 'Mide cuántas señales del sistema están activas y con qué intensidad. En M5 se usa como una lectura de amplitud: cuando el conjunto de alertas se vuelve más negativo, aumenta la probabilidad estimada de caída del mercado.'
+  },
+  M3: {
+    title: 'Factor macroeconómico filtrado',
+    description: 'Agrupa información macroeconómica y la suaviza para captar el estado general del ciclo. En M5 ayuda a saber si el entorno macro está apoyando al mercado o si empieza a generar presión de riesgo.'
+  },
+  M4: {
+    title: 'Riesgo supervisado del S&P 500',
+    description: 'Modelo entrenado para estimar riesgo futuro en el S&P 500 usando señales históricas. En M5 actúa como una pieza adicional para detectar si las condiciones se parecen a fases previas de debilidad.'
+  },
+  M5: {
+    title: 'Probabilidad de caída a 6 meses',
+    description: 'Combina M2, M3 y M4 mediante machine learning para estimar la probabilidad de una caída relevante del S&P 500 en los próximos 6 meses. Es la medida principal de sentimiento o régimen de mercado.'
+  },
+  M6: {
+    title: 'Resumen macro por bloques',
+    description: 'Organiza las señales por bloques económicos, como ciclo macro, tipos y curva, sentimiento, crédito y economía real. Su objetivo es explicar qué partes del entorno macro empujan a favor o en contra del mercado.'
+  },
+  M10: {
+    title: 'IA de riesgo de grandes caídas',
+    description: 'Modelo de inteligencia artificial que usa datos brutos y señales H para estimar riesgo de caídas profundas del S&P 500 en los próximos meses. Está pensado como alerta de cola para escenarios de deterioro fuerte.'
+  },
+  M5_LOGIT_BIAS: {
+    title: 'Punto de partida del modelo M5',
+    description: 'Es el sesgo base del modelo antes de sumar los datos de M2, M3 y M4. No es un indicador económico por sí mismo: representa el nivel inicial desde el que M5 ajusta la probabilidad de caída.'
+  }
+};
+
 export function hCodeFromValue(value) {
   const match = String(value || '').trim().toUpperCase().match(/^(H\d+)(?:_|$)/);
   return match ? match[1] : '';
 }
 
+export function mCodeFromValue(value) {
+  const text = String(value || '').trim().toUpperCase();
+  if (M_PUBLIC_INFO[text]) return text;
+  const match = text.match(/^(M\d+)(?:_|$)/);
+  return match ? match[1] : '';
+}
+
 export function hypothesisPublicInfo(value) {
   const hCode = hCodeFromValue(value);
-  return hCode ? H_PUBLIC_INFO[hCode] || null : null;
+  if (hCode) return H_PUBLIC_INFO[hCode] || null;
+  const text = String(value || '').trim().toUpperCase();
+  if (M_PUBLIC_INFO[text]) return M_PUBLIC_INFO[text];
+  const mCode = mCodeFromValue(text);
+  return mCode ? M_PUBLIC_INFO[mCode] || null : null;
 }
 
 export function hypothesisPublicTitle(value, fallback = '') {
@@ -116,5 +162,5 @@ export function hypothesisPublicDescription(value) {
 }
 
 export function replaceHypothesisNamesInText(value) {
-  return String(value || '').replace(/\bH\d+(?:_[A-Z0-9]+)*\b/g, match => hypothesisPublicTitle(match, match));
+  return String(value || '').replace(/\b[HM]\d+(?:_[A-Z0-9]+)*\b/g, match => hypothesisPublicTitle(match, match));
 }
