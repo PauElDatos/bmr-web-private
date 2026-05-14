@@ -794,6 +794,55 @@ function hydrateCompactRows(chunk, dt) {
   });
 }
 
+function aggregateM6ConsensusRows(rows = []) {
+  const grouped = new Map();
+  rows.forEach(row => {
+    const key = row.hypothesis_code || row.input_code || row.signal_code || 'unknown';
+    const current = grouped.get(key) || {
+      ...row,
+      signal_code: row.signal_code || '',
+      weight: 0,
+      contribution: 0,
+      score: 0,
+      raw_value: 0,
+      signed_value: 0,
+      model_weight: null
+    };
+    const contribution = Number(row.contribution ?? row.score ?? 0);
+    const rawValue = Number(row.raw_value ?? 0);
+    const signedValue = Number(row.signed_value ?? contribution);
+    current.contribution += Number.isFinite(contribution) ? contribution : 0;
+    current.score = current.contribution;
+    current.raw_value += Number.isFinite(rawValue) ? rawValue : 0;
+    current.signed_value += Number.isFinite(signedValue) ? signedValue : 0;
+    if (row.signal_code && !String(current.signal_code).includes(row.signal_code)) {
+      current.signal_code = current.signal_code ? `${current.signal_code}, ${row.signal_code}` : row.signal_code;
+    }
+    grouped.set(key, current);
+  });
+  const out = [...grouped.values()].map(row => {
+    const contribution = Number(row.contribution || 0);
+    return {
+      ...row,
+      direction: contribution > 0 ? 'BUY' : (contribution < 0 ? 'SELL' : 'NEUTRAL'),
+      abs_contribution: Math.abs(contribution)
+    };
+  }).sort((a, b) => Number(b.abs_contribution || 0) - Number(a.abs_contribution || 0));
+  const totalAbs = out.reduce((sum, row) => sum + Number(row.abs_contribution || 0), 0);
+  return out.map(row => ({
+    ...row,
+    weight: totalAbs > 0 ? Number(row.abs_contribution || 0) / totalAbs : 0,
+    contribution_pct: totalAbs > 0 ? Number(row.abs_contribution || 0) / totalAbs : 0
+  }));
+}
+
+function rowsForVisibleModuleReading(rows = []) {
+  if (currentModule === 'M6') {
+    return aggregateM6ConsensusRows(rows.filter(row => row.output_signal_code === 'M6_MACRO_CONSENSUS'));
+  }
+  return rows;
+}
+
 async function weightRowsForSelectedDate(weights, selectedDate) {
   const history = weights.history_index;
   if (history?.dates?.length) {
@@ -825,7 +874,7 @@ async function renderWeightsForDate(weights, selectedDate, options = {}) {
   table.innerHTML = `<div class="empty-state">Cargando pesos para la fecha seleccionada...</div>`;
   preserveWindowScroll(scrollPos);
   try {
-    const rows = await weightRowsForSelectedDate(weights, selectedDate);
+    const rows = rowsForVisibleModuleReading(await weightRowsForSelectedDate(weights, selectedDate));
     if (token !== weightsRenderToken) return;
     table.innerHTML = signalWeightTable(rows);
     preserveWindowScroll(scrollPos);
