@@ -134,7 +134,7 @@ export async function MarketSentimentPage() {
         </aside>
       </div>
 
-      <section class="card">
+      <section id="module-reading-table-card" class="card">
         <div class="card-header">
           <div>
             <h2>Lectura de indicadores y señales del modelo</h2>
@@ -934,7 +934,14 @@ function captureWindowScroll() {
 }
 
 async function renderWeightsForDate(weights, selectedDate, options = {}) {
+  const card = document.getElementById('module-reading-table-card');
   const table = document.getElementById('weights-table');
+  if (currentModule === 'M10') {
+    if (card) card.hidden = true;
+    if (table) table.innerHTML = '';
+    return;
+  }
+  if (card) card.hidden = false;
   if (!table) return;
   const preserveScroll = Boolean(options.preserveScroll);
   const scrollPos = preserveScroll ? captureWindowScroll() : null;
