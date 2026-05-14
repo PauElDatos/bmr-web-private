@@ -20,9 +20,11 @@ let analysisView = {};
 let lastRendered = { loaded: [], chartSeries: [], calcPoints: [], calcResults: [] };
 let focusedAnalysisSeries = null;
 let renderTimer = null;
+let analysisYearRange = { start: 1871, end: new Date().getFullYear() };
 
 const slotLabels = { blue: 'Azul', red: 'Rojo', green: 'Verde' };
 const slotColors = { blue: '#60a5fa', red: '#f87171', green: '#34d399' };
+const ANALYSIS_YEAR_MIN = 1871;
 
 const slotState = {
   blue: { key: 'series:SPX', invert: false, transform: 'NORMAL', lag: 0, visible: true },
@@ -57,7 +59,7 @@ export async function AnalysisPage() {
   return `
     <div class="analysis-page">
       ${pageHeader('Análisis')}
-      ${chartPanel('analysis-chart', 'Comparador de series')}
+      ${chartPanel('analysis-chart', 'Comparador de series', '', analysisYearRangeControls())}
       <section class="card control-panel analysis-control-panel">
         <div class="analysis-topbar">
           <label>Plantilla
@@ -66,8 +68,6 @@ export async function AnalysisPage() {
               ${catalogs.presets.map((p, idx) => `<option value="${idx}">${escapeHtml(p.name)}</option>`).join('')}
             </select>
           </label>
-          <label>Año inicio<input id="year-start" class="text-input small" value="1995" /></label>
-          <label>Año fin<input id="year-end" class="text-input small" value="2026" /></label>
           <label>Cálculo azul/rojo
             <select id="calc-blue-red" class="select-input">
               ${calcOptions.map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}
@@ -107,6 +107,41 @@ export async function AnalysisPage() {
       </section>
     </div>
   `;
+}
+
+function analysisYearRangeControls() {
+  return `
+    <div class="market-year-controls" aria-label="Rango de anos del grafico">
+      <label><span>Inicio</span><input id="year-start" class="text-input xsmall" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" value="${analysisYearRange.start}" aria-label="Ano inicial"></label>
+      <label><span>Fin</span><input id="year-end" class="text-input xsmall" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" value="${analysisYearRange.end}" aria-label="Ano final"></label>
+    </div>
+  `;
+}
+
+function normalizeAnalysisYearRange(range = {}) {
+  const maxYear = new Date().getFullYear();
+  let start = Number(range.start);
+  let end = Number(range.end);
+  if (!Number.isFinite(start)) start = ANALYSIS_YEAR_MIN;
+  if (!Number.isFinite(end)) end = maxYear;
+  start = Math.max(ANALYSIS_YEAR_MIN, Math.min(maxYear, Math.trunc(start)));
+  end = Math.max(ANALYSIS_YEAR_MIN, Math.min(maxYear, Math.trunc(end)));
+  if (start > end) start = end;
+  return { start, end };
+}
+
+function syncAnalysisYearInputs() {
+  analysisYearRange = normalizeAnalysisYearRange(analysisYearRange);
+  const start = document.getElementById('year-start');
+  const end = document.getElementById('year-end');
+  if (start) start.value = String(analysisYearRange.start);
+  if (end) end.value = String(analysisYearRange.end);
+}
+
+function applyAnalysisYearRangeToView() {
+  const range = normalizeAnalysisYearRange(analysisYearRange);
+  analysisView.xMin = Date.UTC(range.start, 0, 1);
+  analysisView.xMax = Date.UTC(range.end, 11, 31, 23, 59, 59);
 }
 
 async function loadAnalysisCatalogs() {
@@ -157,9 +192,21 @@ function normalizeCatalogOption(kind, code, name, type, source, frequency, item)
 function normalizePresets(items) {
   return (items || []).map((p) => {
     if (Array.isArray(p.slots)) {
-      return { name: translateDbText(p.name || 'Plantilla'), blue: p.slots[0], red: p.slots[1], green: p.slots[2] };
+      return {
+        name: translateDbText(p.name || 'Plantilla'),
+        blue: p.slots[0],
+        red: p.slots[1],
+        green: p.slots[2],
+        calc_blue_red: p.calc_blue_red || p.calcBlueRed || 'none',
+        calc_red_green: p.calc_red_green || p.calcRedGreen || 'none'
+      };
     }
-    return { ...p, name: translateDbText(p.name || 'Plantilla') };
+    return {
+      ...p,
+      name: translateDbText(p.name || 'Plantilla'),
+      calc_blue_red: p.calc_blue_red || p.calcBlueRed || 'none',
+      calc_red_green: p.calc_red_green || p.calcRedGreen || 'none'
+    };
   });
 }
 
@@ -265,9 +312,21 @@ async function wireAnalysisPage() {
   document.getElementById('reset-analysis').addEventListener('click', resetAnalysis);
   document.querySelectorAll('.overlay-check').forEach(c => c.addEventListener('change', scheduleRenderAnalysis));
   document.getElementById('overlay-recession').addEventListener('change', scheduleRenderAnalysis);
-  ['year-start', 'year-end'].forEach(id => document.getElementById(id).addEventListener('input', scheduleRenderAnalysis));
+  ['year-start', 'year-end'].forEach(id => {
+    const input = document.getElementById(id);
+    input?.addEventListener('input', () => {
+      if (!/^\d{4}$/.test(input.value)) return;
+      analysisYearRange = normalizeAnalysisYearRange({
+        ...analysisYearRange,
+        [id === 'year-start' ? 'start' : 'end']: Number(input.value)
+      });
+      syncAnalysisYearInputs();
+      scheduleRenderAnalysis();
+    });
+  });
   ['calc-blue-red', 'calc-red-green'].forEach(id => document.getElementById(id).addEventListener('change', scheduleRenderAnalysis));
   ['catalog-search', 'catalog-kind', 'catalog-source'].forEach(id => document.getElementById(id).addEventListener('input', renderCatalogTable));
+  syncAnalysisYearInputs();
   renderCatalogTable();
   await renderAnalysis();
 }
@@ -289,6 +348,10 @@ function applyPreset(e) {
       if (el) el.value = p[slot];
     }
   }
+  const calcBlueRed = document.getElementById('calc-blue-red');
+  const calcRedGreen = document.getElementById('calc-red-green');
+  if (calcBlueRed && p.calc_blue_red) calcBlueRed.value = p.calc_blue_red;
+  if (calcRedGreen && p.calc_red_green) calcRedGreen.value = p.calc_red_green;
   scheduleRenderAnalysis();
 }
 
@@ -302,13 +365,14 @@ function resetAnalysis() {
 async function loadSlotSeries(slot) {
   const opt = catalogs.options.find(o => o.key === slotState[slot].key) || catalogs.options[0];
   const ts = await loadTimeseries(opt.kind, opt.code);
+  const range = normalizeAnalysisYearRange(analysisYearRange);
   let pts = transformSeries(ts.points, {
     invert: slotState[slot].invert,
     transform: slotState[slot].transform,
     scale: slotState[slot].transform,
     lagMonths: slotState[slot].lag
   });
-  pts = filterByYears(pts, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value);
+  pts = filterByYears(pts, range.start, range.end);
   const rawStats = describePoints(pts);
   return { slot, opt, rawPoints: pts, points: pts, rawStats, state: { ...slotState[slot] } };
 }
@@ -316,6 +380,8 @@ async function loadSlotSeries(slot) {
 async function renderAnalysis() {
   const chart = document.getElementById('analysis-chart');
   if (!chart) return;
+  analysisYearRange = normalizeAnalysisYearRange(analysisYearRange);
+  applyAnalysisYearRangeToView();
   const loaded = await Promise.all(slots.map(loadSlotSeries));
   const series = loaded
     .filter(s => s.state.visible)
@@ -357,8 +423,9 @@ async function renderAnalysis() {
       const kind = ov.kind;
       const code = ov.target_code || ov.code;
       const ts = await loadTimeseries(kind, code);
-      const pts = filterByYears(ts.points, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value);
-      series.push(buildAnalysisSeries({ id: `overlay-${o}`, name: `Capa ${o}`, shortName: o, opt: { code: code, name: o, rawName: o }, points: isSp500Option({ code, name: o, rawName: o }) ? filterByYears(ts.points, document.getElementById('year-start')?.value, document.getElementById('year-end')?.value) : pts, color: ov.color || '#a78bfa', width: 1.5 }));
+      const range = normalizeAnalysisYearRange(analysisYearRange);
+      const pts = filterByYears(ts.points, range.start, range.end);
+      series.push(buildAnalysisSeries({ id: `overlay-${o}`, name: `Capa ${o}`, shortName: o, opt: { code: code, name: o, rawName: o }, points: pts, color: ov.color || '#a78bfa', width: 1.5 }));
     } catch (_) {}
   }
 
@@ -447,9 +514,8 @@ async function loadRecessionBandsFromUSREC() {
 
 function inYearRange(dt) {
   const y = Number(String(dt || '').slice(0, 4));
-  const s = Number(document.getElementById('year-start')?.value || 0);
-  const e = Number(document.getElementById('year-end')?.value || 9999);
-  return !Number.isFinite(y) || (y >= s && y <= e);
+  const range = normalizeAnalysisYearRange(analysisYearRange);
+  return !Number.isFinite(y) || (y >= range.start && y <= range.end);
 }
 
 function labelCalc(op) {

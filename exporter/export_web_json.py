@@ -1183,6 +1183,14 @@ def export_analysis_files(conn, out_dir: Path, catalogs: Dict[str, List[Dict[str
         {"name": "Ciclo macro", "blue": "indicators:UNRATE", "red": "indicators:CPIAUCSL", "green": "indicators:T10Y3M"},
         {"name": "Riesgo recesión", "blue": "series:SPX", "red": "indicators:T10Y3M", "green": "indicators:USREC"},
         {"name": "Cripto vs riesgo", "blue": "series:SPX", "red": "series:BTCUSD", "green": "indicators:VIXCLS"},
+        {"name": "H8 oro/plata defensivo", "blue": "series:SPX", "red": "indicators:H8_GS_RATIO", "green": "indicators:VIXCLS"},
+        {"name": "H13 Fed frente a 10Y", "blue": "series:SPX", "red": "indicators:FEDFUNDS", "green": "indicators:DGS10", "calc_red_green": "subtract"},
+        {"name": "H15 small caps frente a SPX", "blue": "series:SPX", "red": "series:IWM", "green": "indicators:H15_IWM_SPX_RATIO_W"},
+        {"name": "H14 tendencia SPX y medias", "blue": "series:SPX", "red": "indicators:H14_SPX_EMA50", "green": "indicators:H14_SPX_EMA200"},
+        {"name": "H28 ISM y produccion industrial", "blue": "series:SPX", "red": "indicators:ISM_MANUFACTURING_PMI", "green": "indicators:INDPRO"},
+        {"name": "Credito y estres financiero", "blue": "series:SPX", "red": "indicators:BAMLH0A0HYM2", "green": "indicators:NFCI"},
+        {"name": "Vivienda adelantada", "blue": "series:SPX", "red": "indicators:PERMIT", "green": "indicators:HSN1F"},
+        {"name": "Consumo y confianza", "blue": "series:SPX", "red": "indicators:RSAFS", "green": "indicators:UMCSENT"},
     ]})
 
 def clean_output_data(out_dir: Path) -> None:
