@@ -1141,3 +1141,49 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
     width: 100%;
   }
 }
+
+/* Corrección cabecera Sentimiento: evita que el título o el scroll del nav recorten "Inicio" */
+@media (min-width: 1281px) {
+  .market-page .page-header {
+    display: grid;
+    grid-template-columns: minmax(360px, 1fr) max-content;
+    align-items: center;
+    column-gap: 28px;
+    overflow: visible;
+  }
+  .market-page .page-title-block {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    max-width: 720px;
+  }
+  .market-page .page-actions {
+    position: relative;
+    z-index: 3;
+    flex: 0 0 auto;
+    min-width: max-content;
+    max-width: none;
+    margin-top: 0;
+  }
+  .market-page .header-nav {
+    overflow: visible;
+    max-width: none;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 1280px) {
+  .market-page .page-header {
+    display: block;
+  }
+  .market-page .page-actions {
+    min-width: 0;
+    max-width: 100%;
+    margin-top: 14px;
+  }
+  .market-page .header-nav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}
