@@ -70,10 +70,12 @@ export async function MarketSentimentPage() {
   return `
     <div class="market-page">
       ${pageHeader('Sentimiento del mercado')}
-      ${metricGrid([
-        { label: 'Regimen actual', value: sentimentLabel(latest.regime || '-'), detail: latest.asof_dt || 'sin fecha', level: classForLevel(latest.regime) },
-        { label: 'Confianza', value: `${fmtNumber(latest.confidence, 1)} / 100`, detail: latest.primary_driver || 'driver no disponible', level: 'warn' }
-      ])}
+      <div id="market-summary-metrics">
+        ${metricGrid([
+          { label: 'Regimen actual', value: sentimentLabel(latest.regime || '-'), detail: latest.asof_dt || 'sin fecha', level: classForLevel(latest.regime) },
+          { label: 'Confianza', value: `${fmtNumber(latest.confidence, 1)} / 100`, detail: latest.primary_driver || 'driver no disponible', level: 'warn' }
+        ])}
+      </div>
 
       <div class="market-chart-stack">
         ${chartPanel('market-chart', 'Grafico de mercado y senales', '', yearRangeControls())}
@@ -848,11 +850,16 @@ async function renderModule() {
   const title = document.getElementById('market-chart-title');
   if (!chart) return;
   const chartCard = chart.closest('.chart-card');
+  const summaryMetrics = document.getElementById('market-summary-metrics');
   const legendWrap = document.getElementById('market-chart-legend');
   const zoneLegendWrap = document.getElementById('market-zone-legend');
   const hideChartForModule = currentModule === 'M6';
+  if (summaryMetrics) summaryMetrics.hidden = hideChartForModule;
   if (chartCard) chartCard.hidden = hideChartForModule;
-  if (legendWrap) legendWrap.hidden = hideChartForModule;
+  if (legendWrap) {
+    legendWrap.hidden = hideChartForModule;
+    if (hideChartForModule) legendWrap.innerHTML = '';
+  }
   if (zoneLegendWrap && hideChartForModule) {
     zoneLegendWrap.hidden = true;
     zoneLegendWrap.innerHTML = '';
