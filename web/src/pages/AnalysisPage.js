@@ -34,6 +34,7 @@ const OVERLAY_SERIES_COLORS = {
   RUT: '#fb923c',
   MSCI: '#22d3ee'
 };
+const LOG_OVERLAY_CODES = new Set(['BTC', 'SPX', 'NDX']);
 
 const slotState = {
   blue: { key: 'indicators:H8_GS_RATIO', invert: false, transform: 'NORMAL', lag: 0, visible: true },
@@ -149,6 +150,19 @@ function syncAnalysisYearInputs() {
   const end = document.getElementById('year-end');
   if (start) start.value = String(displayRange.start);
   if (end) end.value = String(displayRange.end);
+}
+
+function syncSlotStateFromControls() {
+  for (const slot of slots) {
+    const select = document.getElementById(`slot-${slot}`);
+    const transform = document.getElementById(`transform-${slot}`);
+    const lag = document.getElementById(`lag-${slot}`);
+    const visible = document.getElementById(`visible-${slot}`);
+    if (select?.value) slotState[slot].key = select.value;
+    if (transform?.value) slotState[slot].transform = transform.value;
+    if (lag) slotState[slot].lag = Number(lag.value || 0);
+    if (visible) slotState[slot].visible = visible.checked;
+  }
 }
 
 function applyAnalysisYearRangeToView() {
@@ -301,7 +315,7 @@ function renderSlotControl(slot) {
         ${catalogs.options.map(o => `<option value="${escapeHtml(o.key)}" ${o.key === state.key ? 'selected' : ''}>${escapeHtml(o.label)}</option>`).join('')}
       </select>
       <div class="mini-row phase4-mini-row">
-        <button class="btn tiny invert-btn ${state.invert ? 'active' : ''}" data-slot="${slot}">Invertir</button>
+        <button type="button" class="btn tiny invert-btn ${state.invert ? 'active' : ''}" data-slot="${slot}">Invertir</button>
         <label>Transformación
           <select id="transform-${slot}" class="select-input tiny-select">
             ${transformOptions.map(([value, label]) => `<option value="${value}" ${value === state.transform ? 'selected' : ''}>${label}</option>`).join('')}
@@ -314,6 +328,7 @@ function renderSlotControl(slot) {
 }
 
 async function wireAnalysisPage() {
+  const controlPanel = document.querySelector('.analysis-control-panel');
   for (const slot of slots) {
     document.getElementById(`slot-${slot}`).addEventListener('change', e => {
       slotState[slot].key = e.target.value;
@@ -330,6 +345,16 @@ async function wireAnalysisPage() {
     b.classList.toggle('active', slotState[s].invert);
     scheduleRenderAnalysis();
   }));
+  controlPanel?.addEventListener('change', (event) => {
+    if (event.target.closest('#analysis-preset')) return;
+    syncSlotStateFromControls();
+    scheduleRenderAnalysis();
+  });
+  controlPanel?.addEventListener('input', (event) => {
+    if (event.target.closest('#year-start, #year-end')) return;
+    syncSlotStateFromControls();
+    scheduleRenderAnalysis();
+  });
   document.getElementById('analysis-preset').addEventListener('change', applyPreset);
   document.getElementById('export-analysis').addEventListener('click', exportVisibleCsv);
   document.getElementById('reset-analysis').addEventListener('click', resetAnalysis);
@@ -366,10 +391,10 @@ function applyPreset(e) {
   const p = catalogs.presets[Number(idx)];
   if (!p) return;
   for (const slot of slots) {
-    if (p[slot] && catalogs.optionMap.has(p[slot])) {
+    if (p[slot] && catalogs.options.some(o => o.key === p[slot])) {
       slotState[slot].key = p[slot];
       const el = document.getElementById(`slot-${slot}`);
-      if (el && catalogs.options.some(o => o.key === p[slot])) el.value = p[slot];
+      if (el) el.value = p[slot];
     }
   }
   userTouchedAnalysisRange = false;
@@ -487,11 +512,16 @@ async function renderAnalysis() {
     recessionBands = catalogs.recessionBands.length ? catalogs.recessionBands : await loadRecessionBandsFromUSREC();
     recessionBands = recessionBands.filter(b => inYearRange(b.from) || inYearRange(b.to));
   }
+  const axisScales = {};
+  series
+    .filter(s => String(s.id || '').startsWith('overlay-') && LOG_OVERLAY_CODES.has(String(s.shortName || '').toUpperCase()))
+    .forEach(s => { axisScales[s.axis] = 'log'; });
 
   const draw = () => {
     drawLineChart(chart, series, {
       view: analysisView,
       bands: recessionBands,
+      axisScales,
       anchoredGrid: true,
       compactAxes: true,
       dualAxis: true,
