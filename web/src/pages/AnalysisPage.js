@@ -20,14 +20,23 @@ let analysisView = {};
 let lastRendered = { loaded: [], chartSeries: [], calcPoints: [], calcResults: [] };
 let focusedAnalysisSeries = null;
 let renderTimer = null;
-let analysisYearRange = { start: 1871, end: new Date().getFullYear() };
+let analysisYearRange = { start: null, end: new Date().getFullYear() };
+let userTouchedAnalysisRange = false;
 
 const slotLabels = { blue: 'Azul', red: 'Rojo', green: 'Verde' };
 const slotColors = { blue: '#60a5fa', red: '#f87171', green: '#34d399' };
 const ANALYSIS_YEAR_MIN = 1871;
+const OVERLAY_SERIES_COLORS = {
+  BTC: '#f59e0b',
+  SPX: '#eab308',
+  NDX: '#c084fc',
+  DJI: '#94a3b8',
+  RUT: '#fb923c',
+  MSCI: '#22d3ee'
+};
 
 const slotState = {
-  blue: { key: 'series:SPX', invert: false, transform: 'NORMAL', lag: 0, visible: true },
+  blue: { key: 'indicators:H8_GS_RATIO', invert: false, transform: 'NORMAL', lag: 0, visible: true },
   red: { key: 'indicators:FEDFUNDS', invert: false, transform: 'NORMAL', lag: 0, visible: true },
   green: { key: 'indicators:UNRATE', invert: false, transform: 'NORMAL', lag: 0, visible: true }
 };
@@ -131,15 +140,22 @@ function normalizeAnalysisYearRange(range = {}) {
 }
 
 function syncAnalysisYearInputs() {
-  analysisYearRange = normalizeAnalysisYearRange(analysisYearRange);
+  const displayRange = normalizeAnalysisYearRange({
+    start: analysisYearRange.start ?? ANALYSIS_YEAR_MIN,
+    end: analysisYearRange.end
+  });
+  analysisYearRange.end = displayRange.end;
   const start = document.getElementById('year-start');
   const end = document.getElementById('year-end');
-  if (start) start.value = String(analysisYearRange.start);
-  if (end) end.value = String(analysisYearRange.end);
+  if (start) start.value = String(displayRange.start);
+  if (end) end.value = String(displayRange.end);
 }
 
 function applyAnalysisYearRangeToView() {
-  const range = normalizeAnalysisYearRange(analysisYearRange);
+  const range = normalizeAnalysisYearRange({
+    start: analysisYearRange.start ?? ANALYSIS_YEAR_MIN,
+    end: analysisYearRange.end
+  });
   analysisView.xMin = Date.UTC(range.start, 0, 1);
   analysisView.xMax = Date.UTC(range.end, 11, 31, 23, 59, 59);
 }
@@ -152,12 +168,15 @@ async function loadAnalysisCatalogs() {
     loadJson('analysis/presets.json').catch(() => ({ items: [] })),
     loadJson('analysis/recession_bands.json').catch(() => ({ items: [] }))
   ]);
-  const options = [
+  const allOptions = [
     ...indicators.items.map(i => normalizeCatalogOption('indicators', i.code, i.name, i.source, i.frequency, i.unit, i)),
     ...series.items.map(s => normalizeCatalogOption('series', s.code, s.name, s.series_type, s.source || 'series_sources', '', s))
   ].filter(o => o.code);
-  const facets = [...new Set(options.flatMap(o => [o.rawSource, o.rawType, o.rawFrequency].filter(Boolean)))].sort();
-  return { options, overlays: overlays.items || [], presets: normalizePresets(presets.items || []), recessionBands: recession.items || [], facets };
+  const overlayTargets = new Set((overlays.items || []).map(o => `${o.kind || 'series'}:${o.target_code || o.code}`));
+  const selectableOptions = allOptions.filter(o => !overlayTargets.has(o.key));
+  const optionMap = new Map(allOptions.map(o => [o.key, o]));
+  const facets = [...new Set(selectableOptions.flatMap(o => [o.rawSource, o.rawType, o.rawFrequency].filter(Boolean)))].sort();
+  return { options: selectableOptions, allOptions, optionMap, overlays: overlays.items || [], presets: normalizePresets(presets.items || []), recessionBands: recession.items || [], facets };
 }
 
 function normalizeCatalogOption(kind, code, name, type, source, frequency, item) {
@@ -296,7 +315,11 @@ function renderSlotControl(slot) {
 
 async function wireAnalysisPage() {
   for (const slot of slots) {
-    document.getElementById(`slot-${slot}`).addEventListener('change', e => { slotState[slot].key = e.target.value; scheduleRenderAnalysis(); });
+    document.getElementById(`slot-${slot}`).addEventListener('change', e => {
+      slotState[slot].key = e.target.value;
+      if (!userTouchedAnalysisRange) analysisYearRange.start = null;
+      scheduleRenderAnalysis();
+    });
     document.getElementById(`transform-${slot}`).addEventListener('change', e => { slotState[slot].transform = e.target.value; scheduleRenderAnalysis(); });
     document.getElementById(`lag-${slot}`).addEventListener('input', e => { slotState[slot].lag = Number(e.target.value || 0); scheduleRenderAnalysis(); });
     document.getElementById(`visible-${slot}`).addEventListener('change', e => { slotState[slot].visible = e.target.checked; scheduleRenderAnalysis(); });
@@ -320,6 +343,7 @@ async function wireAnalysisPage() {
         ...analysisYearRange,
         [id === 'year-start' ? 'start' : 'end']: Number(input.value)
       });
+      userTouchedAnalysisRange = true;
       syncAnalysisYearInputs();
       scheduleRenderAnalysis();
     });
@@ -342,12 +366,14 @@ function applyPreset(e) {
   const p = catalogs.presets[Number(idx)];
   if (!p) return;
   for (const slot of slots) {
-    if (p[slot] && catalogs.options.some(o => o.key === p[slot])) {
+    if (p[slot] && catalogs.optionMap.has(p[slot])) {
       slotState[slot].key = p[slot];
       const el = document.getElementById(`slot-${slot}`);
-      if (el) el.value = p[slot];
+      if (el && catalogs.options.some(o => o.key === p[slot])) el.value = p[slot];
     }
   }
+  userTouchedAnalysisRange = false;
+  analysisYearRange.start = null;
   const calcBlueRed = document.getElementById('calc-blue-red');
   const calcRedGreen = document.getElementById('calc-red-green');
   if (calcBlueRed && p.calc_blue_red) calcBlueRed.value = p.calc_blue_red;
@@ -356,33 +382,58 @@ function applyPreset(e) {
 }
 
 function resetAnalysis() {
-  slotState.blue = { key: 'series:SPX', invert: false, transform: 'NORMAL', lag: 0, visible: true };
+  const fallback = catalogs.options[0]?.key || 'indicators:FEDFUNDS';
+  slotState.blue = { key: fallback, invert: false, transform: 'NORMAL', lag: 0, visible: true };
   slotState.red = { key: 'indicators:FEDFUNDS', invert: false, transform: 'NORMAL', lag: 0, visible: true };
   slotState.green = { key: 'indicators:UNRATE', invert: false, transform: 'NORMAL', lag: 0, visible: true };
   location.reload();
 }
 
+function firstYearFromPoints(points = []) {
+  const point = (points || []).find(p => Number.isFinite(Number(p.value)) && String(p.dt || '').length >= 4);
+  const year = Number(String(point?.dt || '').slice(0, 4));
+  return Number.isFinite(year) ? year : null;
+}
+
 async function loadSlotSeries(slot) {
-  const opt = catalogs.options.find(o => o.key === slotState[slot].key) || catalogs.options[0];
+  const opt = catalogs.optionMap.get(slotState[slot].key) || catalogs.options.find(o => o.key === slotState[slot].key) || catalogs.options[0];
   const ts = await loadTimeseries(opt.kind, opt.code);
   const range = normalizeAnalysisYearRange(analysisYearRange);
-  let pts = transformSeries(ts.points, {
+  const transformed = transformSeries(ts.points, {
     invert: slotState[slot].invert,
     transform: slotState[slot].transform,
     scale: slotState[slot].transform,
     lagMonths: slotState[slot].lag
   });
+  let pts = transformed;
   pts = filterByYears(pts, range.start, range.end);
   const rawStats = describePoints(pts);
-  return { slot, opt, rawPoints: pts, points: pts, rawStats, state: { ...slotState[slot] } };
+  return { slot, opt, allPoints: transformed, firstYear: firstYearFromPoints(transformed), rawPoints: pts, points: pts, rawStats, state: { ...slotState[slot] } };
 }
 
 async function renderAnalysis() {
   const chart = document.getElementById('analysis-chart');
   if (!chart) return;
-  analysisYearRange = normalizeAnalysisYearRange(analysisYearRange);
-  applyAnalysisYearRangeToView();
   const loaded = await Promise.all(slots.map(loadSlotSeries));
+  if (!userTouchedAnalysisRange) {
+    const selectedStarts = loaded
+      .filter(item => item.state.visible)
+      .map(item => item.firstYear)
+      .filter(Number.isFinite);
+    analysisYearRange.start = selectedStarts.length ? Math.min(...selectedStarts) : ANALYSIS_YEAR_MIN;
+    syncAnalysisYearInputs();
+    const range = normalizeAnalysisYearRange(analysisYearRange);
+    loaded.forEach(item => {
+      item.rawPoints = filterByYears(item.allPoints, range.start, range.end);
+      item.points = item.rawPoints;
+      item.rawStats = describePoints(item.rawPoints);
+    });
+  }
+  analysisYearRange = normalizeAnalysisYearRange({
+    start: analysisYearRange.start ?? ANALYSIS_YEAR_MIN,
+    end: analysisYearRange.end
+  });
+  applyAnalysisYearRangeToView();
   const series = loaded
     .filter(s => s.state.visible)
     .map((s) => buildAnalysisSeries({
@@ -425,7 +476,7 @@ async function renderAnalysis() {
       const ts = await loadTimeseries(kind, code);
       const range = normalizeAnalysisYearRange(analysisYearRange);
       const pts = filterByYears(ts.points, range.start, range.end);
-      series.push(buildAnalysisSeries({ id: `overlay-${o}`, name: `Capa ${o}`, shortName: o, opt: { code: code, name: o, rawName: o }, points: pts, color: ov.color || '#a78bfa', width: 1.5 }));
+      series.push(buildAnalysisSeries({ id: `overlay-${o}`, name: o, shortName: o, opt: { code: code, name: o, rawName: o }, points: pts, color: OVERLAY_SERIES_COLORS[o] || ov.color || '#a78bfa', width: 1.5 }));
     } catch (_) {}
   }
 
@@ -488,7 +539,7 @@ function renderAnalysisLegend(container, series) {
   legend.innerHTML = (series || []).map((s) => `
     <button class="analysis-legend-item ${focusedAnalysisSeries && focusedAnalysisSeries !== s.id ? 'dimmed' : ''} ${focusedAnalysisSeries === s.id ? 'active' : ''}" data-series-id="${escapeHtml(s.id)}" type="button">
       <span class="legend-swatch" style="background:${escapeHtml(s.color)}"></span>
-      <span>${escapeHtml(s.name)}</span>
+      <span>${escapeHtml(s.shortName || s.name)}</span>
     </button>
   `).join('');
   legend.querySelectorAll('.analysis-legend-item').forEach((btn) => {
@@ -620,6 +671,7 @@ function renderCatalogTable() {
     const slot = btn.dataset.slot;
     const key = btn.dataset.key;
     slotState[slot].key = key;
+    if (!userTouchedAnalysisRange) analysisYearRange.start = null;
     const select = document.getElementById(`slot-${slot}`);
     if (select) select.value = key;
     scheduleRenderAnalysis();

@@ -102,11 +102,11 @@ WEIGHT_HISTORY_FIELDS = [
 
 DEFAULT_OVERLAYS = [
     {"code": "BTC", "kind": "series", "target_code": "BTCUSD", "label": "Bitcoin", "color": "#f59e0b"},
-    {"code": "SPX", "kind": "series", "target_code": "SPX", "label": "S&P 500", "color": "#60a5fa"},
-    {"code": "NDX", "kind": "series", "target_code": "NDX", "label": "Nasdaq 100", "color": "#a78bfa"},
-    {"code": "DJI", "kind": "assets", "target_code": "DJI", "label": "Dow Jones", "color": "#34d399"},
-    {"code": "RUT", "kind": "assets", "target_code": "RUT", "label": "Russell 2000", "color": "#fb7185"},
-    {"code": "MSCI", "kind": "series", "target_code": "MSCI", "label": "MSCI World", "color": "#e879f9"},
+    {"code": "SPX", "kind": "series", "target_code": "SPX", "label": "S&P 500", "color": "#eab308"},
+    {"code": "NDX", "kind": "series", "target_code": "NDX", "label": "Nasdaq 100", "color": "#c084fc"},
+    {"code": "DJI", "kind": "assets", "target_code": "DJI", "label": "Dow Jones", "color": "#94a3b8"},
+    {"code": "RUT", "kind": "assets", "target_code": "RUT", "label": "Russell 2000", "color": "#fb923c"},
+    {"code": "MSCI", "kind": "series", "target_code": "MSCI", "label": "MSCI World", "color": "#22d3ee"},
 ]
 
 FULL_RANGE_SERIES_CODES = {"BTCUSD", "SPX", "NDX"}

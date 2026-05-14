@@ -850,6 +850,9 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   margin-top: 8px;
   border-radius: 999px;
 }
+.analysis-legend-item .legend-swatch {
+  margin-top: 0;
+}
 .legend-text {
   display: grid;
   gap: 2px;
@@ -1098,6 +1101,8 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   z-index: 4;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
   max-height: 64px;
   overflow: auto;
@@ -1111,6 +1116,7 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
 .analysis-legend-item {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   min-width: 0;
   max-width: 240px;
@@ -1127,6 +1133,7 @@ code { color: var(--primary); background: rgba(254,247,2,.07); border: 1px solid
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.2;
 }
 .analysis-legend-item:hover,
 .analysis-legend-item.active {
