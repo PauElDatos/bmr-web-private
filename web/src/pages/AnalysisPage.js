@@ -435,7 +435,14 @@ function firstYearFromPoints(points = []) {
 
 async function loadSlotSeries(slot) {
   const opt = catalogs.optionMap.get(slotState[slot].key) || catalogs.options.find(o => o.key === slotState[slot].key) || catalogs.options[0];
-  const ts = await loadTimeseries(opt.kind, opt.code);
+  let ts = { points: [] };
+  let error = null;
+  try {
+    ts = await loadTimeseries(opt.kind, opt.code);
+  } catch (err) {
+    error = err;
+    console.warn(`No se pudo cargar la serie de analisis ${opt.kind}:${opt.code}`, err);
+  }
   const range = normalizeAnalysisYearRange(analysisYearRange);
   const transformed = transformSeries(ts.points, {
     invert: slotState[slot].invert,
@@ -446,7 +453,7 @@ async function loadSlotSeries(slot) {
   let pts = transformed;
   pts = filterByYears(pts, range.start, range.end);
   const rawStats = describePoints(pts);
-  return { slot, opt, allPoints: transformed, firstYear: firstYearFromPoints(transformed), rawPoints: pts, points: pts, rawStats, state: { ...slotState[slot] } };
+  return { slot, opt, allPoints: transformed, firstYear: firstYearFromPoints(transformed), rawPoints: pts, points: pts, rawStats, error, state: { ...slotState[slot] } };
 }
 
 async function renderAnalysis(renderToken = ++analysisRenderToken) {

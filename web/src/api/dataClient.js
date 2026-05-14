@@ -4,6 +4,11 @@ const BASE = './data';
 
 const cache = new Map();
 
+function safeTimeseriesCode(code) {
+  const text = String(code || '').trim().replace(/[^A-Za-z0-9_.-]+/g, '_');
+  return text.slice(0, 180) || 'UNKNOWN';
+}
+
 export async function loadJson(path) {
   const normalized = path.startsWith('/') ? path.slice(1) : path;
   const cfg = authConfig();
@@ -55,7 +60,7 @@ export async function loadCatalog(kind) {
 }
 
 export async function loadTimeseries(kind, code) {
-  return loadJson(`timeseries/${kind}/${encodeURIComponent(code)}.json`);
+  return loadJson(`timeseries/${kind}/${encodeURIComponent(safeTimeseriesCode(code))}.json`);
 }
 
 export async function loadStatus() {
