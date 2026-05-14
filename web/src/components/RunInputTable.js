@@ -1,3 +1,4 @@
+import { hypothesisPublicTitle, replaceHypothesisNamesInText } from '../data/hypothesisPublicInfo.js';
 import { escapeHtml } from '../utils/format.js';
 
 export function runInputTable(rows = []) {
@@ -13,13 +14,16 @@ export function runInputTable(rows = []) {
           </tr>
         </thead>
         <tbody>
-          ${rows.map(r => `
+          ${rows.map(r => {
+            const publicTitle = hypothesisPublicTitle(r.input_code, r.input_code || '—');
+            return `
             <tr>
               <td><span class="pill neutral">${escapeHtml(r.input_kind || '—')}</span></td>
-              <td><strong>${escapeHtml(r.input_code || '—')}</strong></td>
+              <td><strong>${escapeHtml(publicTitle)}</strong></td>
               <td>${escapeHtml(r.role || '—')}</td>
-              <td>${escapeHtml(r.notes || '')}</td>
-            </tr>`).join('')}
+              <td>${escapeHtml(replaceHypothesisNamesInText(r.notes || ''))}</td>
+            </tr>`;
+          }).join('')}
         </tbody>
       </table>
     </div>

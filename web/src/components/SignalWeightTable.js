@@ -1,3 +1,4 @@
+import { hypothesisPublicDescription, hypothesisPublicTitle } from '../data/hypothesisPublicInfo.js';
 import { escapeHtml, fmtNumber, fmtPct, sentimentLabel, sentimentPillClass } from '../utils/format.js';
 
 function rowDate(row) {
@@ -14,6 +15,24 @@ function contributionValue(row) {
   return value == null ? '—' : fmtNumber(value, 5);
 }
 
+function hypothesisCell(row) {
+  const rawName = row.hypothesis_code || row.input_code || '—';
+  const publicTitle = hypothesisPublicTitle(rawName, rawName);
+  const description = hypothesisPublicDescription(rawName);
+  return `
+    <div class="public-h-name">
+      <strong>${escapeHtml(publicTitle)}</strong>
+      ${publicTitle !== rawName ? `<span>${escapeHtml(rawName)}</span>` : ''}
+      ${description ? `
+        <details class="h-description-disclosure">
+          <summary>Ver explicación</summary>
+          <p>${escapeHtml(description)}</p>
+        </details>
+      ` : ''}
+    </div>
+  `;
+}
+
 export function signalWeightTable(rows = []) {
   if (!rows.length) return `<div class="empty-state">No hay contribuciones disponibles para la fecha seleccionada.</div>`;
   return `
@@ -22,7 +41,7 @@ export function signalWeightTable(rows = []) {
         <thead>
           <tr>
             <th>Fecha</th>
-            <th>Hipótesis/Input</th>
+            <th>Indicador o input</th>
             <th>Dirección</th>
             <th>Peso efectivo</th>
             <th>Contribución</th>
@@ -35,7 +54,7 @@ export function signalWeightTable(rows = []) {
             return `
             <tr>
               <td>${escapeHtml(rowDate(r) || '—')}</td>
-              <td><strong>${escapeHtml(r.hypothesis_code || r.input_code || '—')}</strong></td>
+              <td>${hypothesisCell(r)}</td>
               <td><span class="pill ${directionClass}">${escapeHtml(sentimentLabel(r.direction || '—'))}</span></td>
               <td>${pctValue(r)}</td>
               <td>${contributionValue(r)}</td>

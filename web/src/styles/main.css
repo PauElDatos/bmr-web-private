@@ -318,6 +318,40 @@ th {
 td { color: rgba(255,255,255,.86); }
 tbody tr:hover td { background: rgba(255,255,255,.035); color: #fff; }
 
+.public-h-name {
+  display: grid;
+  gap: 5px;
+  min-width: 220px;
+}
+.public-h-name strong {
+  color: rgba(255,255,255,.94);
+  line-height: 1.25;
+}
+.public-h-name > span {
+  color: var(--muted);
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+}
+.h-description-disclosure {
+  margin-top: 3px;
+  max-width: 560px;
+}
+.h-description-disclosure summary {
+  color: #b7ecff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+}
+.h-description-disclosure summary::marker {
+  color: #b7ecff;
+}
+.h-description-disclosure p {
+  margin: 8px 0 0;
+  color: rgba(255,255,255,.78);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .pill {
   display: inline-flex;
   align-items: center;

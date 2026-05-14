@@ -1,3 +1,4 @@
+import { hypothesisPublicTitle, replaceHypothesisNamesInText } from '../data/hypothesisPublicInfo.js';
 import { escapeHtml, fmtNumber, sentimentLabel, sentimentPillClass } from '../utils/format.js';
 
 export function signalSeriesTable(rows = []) {
@@ -11,15 +12,18 @@ export function signalSeriesTable(rows = []) {
           </tr>
         </thead>
         <tbody>
-          ${rows.map(r => `
+          ${rows.map(r => {
+            const publicTitle = hypothesisPublicTitle(r.signal_code, r.signal_code || '—');
+            return `
             <tr>
-              <td><strong>${escapeHtml(r.signal_code || '—')}</strong></td>
+              <td><strong>${escapeHtml(publicTitle)}</strong></td>
               <td>${escapeHtml(r.latest_dt || '—')}</td>
               <td>${fmtNumber(r.latest_value, 4)}</td>
               <td><span class="pill ${sentimentPillClass(r.latest_level)}">${escapeHtml(sentimentLabel(r.latest_level || '—'))}</span></td>
               <td>${fmtNumber(r.n_points, 0)}</td>
-              <td>${escapeHtml(r.latest_explanation || '')}</td>
-            </tr>`).join('')}
+              <td>${escapeHtml(replaceHypothesisNamesInText(r.latest_explanation || ''))}</td>
+            </tr>`;
+          }).join('')}
         </tbody>
       </table>
     </div>

@@ -9,6 +9,7 @@ import { pageHeader } from '../components/Layout.js';
 import { chartPanel } from '../components/ChartPanel.js';
 import { metricGrid } from '../components/MetricCard.js';
 import { signalWeightTable } from '../components/SignalWeightTable.js';
+import { hypothesisPublicTitle } from '../data/hypothesisPublicInfo.js';
 import { drawLineChart, attachResize, attachTradingChartInteractions } from '../utils/chart.js';
 import { classForLevel, escapeHtml, fmtNumber, sentimentLabel } from '../utils/format.js';
 
@@ -96,7 +97,7 @@ export async function MarketSentimentPage() {
       <section class="card">
         <div class="card-header">
           <div>
-            <h2>Indicadores, H e inputs que explican la senal</h2>
+            <h2>Lectura de indicadores y señales del modelo</h2>
           </div>
         </div>
         <div id="weights-table"></div>
@@ -530,7 +531,7 @@ function legendItems(mod, selectedDate) {
     },
     ...signals.map((signal, idx) => ({
       key: signalKey(signal.signal_code),
-      label: signal.signal_code || `Senal ${idx + 1}`,
+      label: hypothesisPublicTitle(signal.signal_code, signal.signal_code || `Senal ${idx + 1}`),
       color: SIGNAL_COLORS[idx % SIGNAL_COLORS.length],
       meta: legendPointMeta(pointAtOrBefore(signal.points || [], selectedDate), 4)
     })),
@@ -846,7 +847,7 @@ async function renderModule() {
       const key = signalKey(signal.signal_code);
       const color = SIGNAL_COLORS[idx % SIGNAL_COLORS.length];
       return {
-        name: signal.signal_code || `Senal ${idx + 1}`,
+        name: hypothesisPublicTitle(signal.signal_code, signal.signal_code || `Senal ${idx + 1}`),
         points: signal.points || [],
         color: seriesColor(color, key),
         width: 2,
