@@ -17,7 +17,7 @@ let currentModule = 'M5';
 let selectedDateByModule = {};
 let highlightedLegendKeyByModule = {};
 let yearRangeByModule = {};
-let availableModules = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M10'];
+let availableModules = ['M1', 'M5', 'M6', 'M10'];
 let cleanupResize = null;
 let cleanupChartInteractions = null;
 let marketView = {};
@@ -25,6 +25,7 @@ let weightsRenderToken = 0;
 let moduleRenderToken = 0;
 const weightChunkCache = new Map();
 
+const PUBLIC_MARKET_MODULES = new Set(['M1', 'M5', 'M6', 'M10']);
 const SIGNAL_COLORS = ['#f87171', '#fbbf24', '#34d399', '#a78bfa', '#22d3ee', '#fb7185', '#60a5fa'];
 const MIN_MARKET_DATE = '1875-01-01';
 const DEFAULT_START_YEAR = 1950;
@@ -153,8 +154,8 @@ function moduleCodesFromRuns(runs, latest) {
   };
   visit(runs);
   visit(latest?.modules);
-  const sorted = [...codes].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
-  return sorted.length ? sorted : ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M10'];
+  const sorted = [...codes].filter(code => PUBLIC_MARKET_MODULES.has(code)).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+  return sorted.length ? sorted : ['M1', 'M5', 'M6', 'M10'];
 }
 
 function allSignalSeries(mod) {
@@ -413,14 +414,29 @@ function latestYearFromPoints(points = []) {
   return Number.isFinite(year) ? year : new Date().getFullYear();
 }
 
+function firstYearFromPoints(points = []) {
+  const dt = dateKey(points.find(point => dateKey(point?.dt))?.dt);
+  const year = Number(dt.slice(0, 4));
+  return Number.isFinite(year) ? year : DEFAULT_START_YEAR;
+}
+
+function moduleDefaultStartYear(mod) {
+  const moduleCode = String(mod?.module_code || mod?.module || mod?.code || currentModule || '').toUpperCase();
+  if (moduleCode === 'M5' || moduleCode === 'M10') {
+    const signalStarts = allSignalSeries(mod).map(signal => firstYearFromPoints(signal.points || [])).filter(Number.isFinite);
+    if (signalStarts.length) return Math.max(YEAR_MIN, Math.min(...signalStarts));
+  }
+  return DEFAULT_START_YEAR;
+}
+
 function moduleMaxYear(mod) {
   return Math.max(YEAR_MIN, latestYearFromPoints(mod.chart?.spx || []), new Date().getFullYear());
 }
 
-function normalizeYearRange(range, maxYear) {
+function normalizeYearRange(range, maxYear, defaultStart = DEFAULT_START_YEAR) {
   let start = Number(range?.start);
   let end = Number(range?.end);
-  if (!Number.isFinite(start)) start = DEFAULT_START_YEAR;
+  if (!Number.isFinite(start)) start = defaultStart;
   if (!Number.isFinite(end)) end = maxYear;
   start = Math.max(YEAR_MIN, Math.min(maxYear, Math.trunc(start)));
   end = Math.max(YEAR_MIN, Math.min(maxYear, Math.trunc(end)));
@@ -430,8 +446,9 @@ function normalizeYearRange(range, maxYear) {
 
 function yearRangeForModule(mod) {
   const maxYear = moduleMaxYear(mod);
-  const saved = yearRangeByModule[currentModule] || { start: DEFAULT_START_YEAR, end: maxYear };
-  const range = normalizeYearRange(saved, maxYear);
+  const defaultStart = moduleDefaultStartYear(mod);
+  const saved = yearRangeByModule[currentModule] || { start: defaultStart, end: maxYear };
+  const range = normalizeYearRange(saved, maxYear, defaultStart);
   yearRangeByModule[currentModule] = range;
   return range;
 }
@@ -476,7 +493,7 @@ function wireYearInputs(mod, draw) {
     const apply = () => {
       if (!/^\d{4}$/.test(input.value)) return;
       const current = yearRangeForModule(mod);
-      const next = normalizeYearRange({ ...current, [key]: Number(input.value) }, moduleMaxYear(mod));
+      const next = normalizeYearRange({ ...current, [key]: Number(input.value) }, moduleMaxYear(mod), moduleDefaultStartYear(mod));
       yearRangeByModule[currentModule] = next;
       syncYearInputs(mod);
       applyYearRangeToView(mod);
@@ -830,6 +847,22 @@ async function renderModule() {
   const chart = document.getElementById('market-chart');
   const title = document.getElementById('market-chart-title');
   if (!chart) return;
+  const chartCard = chart.closest('.chart-card');
+  const legendWrap = document.getElementById('market-chart-legend');
+  const zoneLegendWrap = document.getElementById('market-zone-legend');
+  const hideChartForModule = currentModule === 'M6';
+  if (chartCard) chartCard.hidden = hideChartForModule;
+  if (legendWrap) legendWrap.hidden = hideChartForModule;
+  if (zoneLegendWrap && hideChartForModule) {
+    zoneLegendWrap.hidden = true;
+    zoneLegendWrap.innerHTML = '';
+  }
+  if (hideChartForModule) {
+    if (cleanupResize) cleanupResize();
+    cleanupResize = null;
+    if (cleanupChartInteractions) cleanupChartInteractions();
+    cleanupChartInteractions = null;
+  }
 
   const signals = allSignalSeries(mod);
   const riskVisuals = marketRiskVisuals(metrics);
@@ -840,6 +873,7 @@ async function renderModule() {
   if (title) title.textContent = `${currentModule} · SP500 completo, USREC y señales`;
 
   const draw = () => {
+    if (hideChartForModule) return;
     const selectedMarker = selectedDateByModule[currentModule]
       ? [{ dt: selectedDateByModule[currentModule], color: 'rgba(254, 247, 2, .66)', width: 1.5 }]
       : [];
@@ -879,18 +913,20 @@ async function renderModule() {
     });
   };
 
-  draw();
-  renderLegend(mod, draw);
-  renderMarketZoneLegend(metrics);
-  wireYearInputs(mod, draw);
-  if (cleanupResize) cleanupResize();
-  cleanupResize = attachResize(chart, () => {
+  if (!hideChartForModule) {
     draw();
     renderLegend(mod, draw);
     renderMarketZoneLegend(metrics);
-  });
-  if (cleanupChartInteractions) cleanupChartInteractions();
-  cleanupChartInteractions = attachTradingChartInteractions(chart, marketView, draw);
+    wireYearInputs(mod, draw);
+    if (cleanupResize) cleanupResize();
+    cleanupResize = attachResize(chart, () => {
+      draw();
+      renderLegend(mod, draw);
+      renderMarketZoneLegend(metrics);
+    });
+    if (cleanupChartInteractions) cleanupChartInteractions();
+    cleanupChartInteractions = attachTradingChartInteractions(chart, marketView, draw);
+  }
 
   renderDateSelector(dateOptions, selectedDate);
   const range = document.getElementById('market-date-range');
@@ -909,7 +945,7 @@ async function renderModule() {
     }
     renderWeightsForDate(weights, nextDate, { preserveScroll: true });
     renderM6MacroSummary(mod, nextDate);
-    renderLegend(mod, draw);
+    if (!hideChartForModule) renderLegend(mod, draw);
     draw();
     preserveWindowScroll(scrollPos);
   };

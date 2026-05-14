@@ -22,7 +22,6 @@ function hypothesisCell(row) {
   return `
     <div class="public-h-name">
       <strong>${escapeHtml(publicTitle)}</strong>
-      ${publicTitle !== rawName ? `<span>${escapeHtml(rawName)}</span>` : ''}
       ${description ? `
         <details class="h-description-disclosure">
           <summary>Ver explicación</summary>
