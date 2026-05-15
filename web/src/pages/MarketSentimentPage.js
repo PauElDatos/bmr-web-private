@@ -17,7 +17,7 @@ let currentModule = 'M5';
 let selectedDateByModule = {};
 let highlightedLegendKeyByModule = {};
 let yearRangeByModule = {};
-let availableModules = ['M1', 'M5', 'M6', 'M10'];
+let availableModules = ['M1', 'M5', 'M6', 'M7', 'M10'];
 let cleanupResize = null;
 let cleanupChartInteractions = null;
 let marketView = {};
@@ -25,7 +25,7 @@ let weightsRenderToken = 0;
 let moduleRenderToken = 0;
 const weightChunkCache = new Map();
 
-const PUBLIC_MARKET_MODULES = new Set(['M1', 'M5', 'M6', 'M10']);
+const PUBLIC_MARKET_MODULES = new Set(['M1', 'M5', 'M6', 'M7', 'M10']);
 const SIGNAL_COLORS = ['#f87171', '#fbbf24', '#34d399', '#a78bfa', '#22d3ee', '#fb7185', '#60a5fa'];
 const MIN_MARKET_DATE = '1875-01-01';
 const DEFAULT_START_YEAR = 1950;
@@ -41,6 +41,7 @@ const M6_BLOCKS = [
   { key: 'real_cycle', label: 'Economia real', buy: 'M6_REAL_CYCLE_BUY', sell: 'M6_REAL_CYCLE_SELL', net: 'M6_REAL_CYCLE_NET' }
 ];
 const M5_CHART_SIGNALS = new Set(['M5_DD6M_PROBA']);
+const M7_CHART_SIGNALS = new Set(['M7_DD15_6M_PROBA']);
 const M10_RISK_OFF_DEFAULT_THRESHOLD = 0.20;
 const MODULE_READING_HELP = {
   M1: {
@@ -68,6 +69,15 @@ const MODULE_READING_HELP = {
       'El resumen macro muestra la lectura de cada bloque en la fecha seleccionada.',
       'La tabla inferior muestra solo la contribución neta de cada indicador al consenso, evitando duplicar salidas internas BUY y SELL.',
       'Optimista suma al consenso macro; pesimista resta al consenso macro.'
+    ]
+  },
+  M7: {
+    title: 'M7 · Probabilidad de caída del 15% a 6 meses',
+    body: 'M7 observa shocks de tipos, inflación, dólar, materias primas y valoración para estimar de forma independiente la probabilidad de que el S&P 500 caiga al menos un 15% en los próximos 6 meses. Es una señal complementaria: no sustituye a M5 ni a M10.',
+    points: [
+      'La línea muestra solo la probabilidad ML de caída del 15% a 6 meses.',
+      'Lecturas altas indican que el entorno se parece más a fases históricas previas a correcciones relevantes.',
+      'Conviene interpretarlo como alerta de sensibilidad a shocks, no como régimen macro completo.'
     ]
   },
   M10: {
@@ -202,7 +212,7 @@ function moduleCodesFromRuns(runs, latest) {
   visit(runs);
   visit(latest?.modules);
   const sorted = [...codes].filter(code => PUBLIC_MARKET_MODULES.has(code)).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
-  return sorted.length ? sorted : ['M1', 'M5', 'M6', 'M10'];
+  return sorted.length ? sorted : ['M1', 'M5', 'M6', 'M7', 'M10'];
 }
 
 function allSignalSeries(mod) {
@@ -211,6 +221,10 @@ function allSignalSeries(mod) {
     if (currentModule === 'M5') {
       const filtered = mod.signals.filter(signal => M5_CHART_SIGNALS.has(signal.signal_code));
       return filtered.length ? filtered : mod.signals.slice(0, 1);
+    }
+    if (currentModule === 'M7') {
+      const filtered = mod.signals.filter(signal => M7_CHART_SIGNALS.has(signal.signal_code));
+      return filtered.length ? filtered : [];
     }
     return mod.signals;
   }

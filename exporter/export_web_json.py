@@ -79,6 +79,12 @@ MODULES = {
         "where": "hypothesis_code REGEXP '^M6(_|$)'",
         "preferred_signals": ["M6_MACRO_CONSENSUS", "M6_MACRO_BLOCK_SELL", "M6_MACRO_BLOCK_BUY"],
     },
+    "M7": {
+        "title": "M7_DISCOUNT_SHOCK_RATES_INFLATION_VALUATION",
+        "description": "Modelo independiente de shocks de tipos, inflacion y valoracion; estima probabilidad de caida SPX del 15% a 6 meses.",
+        "where": "hypothesis_code REGEXP '^M7(_|$)'",
+        "preferred_signals": ["M7_DD15_6M_PROBA"],
+    },
     "M10": {
         "title": "M10_DEEP_SP500_DRAWDOWN_H_SIGNALS",
         "description": "Modelo IA de drawdown SP500 ampliado con senales H activas.",
