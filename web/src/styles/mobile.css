@@ -1,0 +1,306 @@
+:root.mobile-vertical,
+.mobile-vertical {
+  color-scheme: dark;
+}
+
+body.mobile-vertical {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+body.mobile-vertical .app-shell,
+body.mobile-vertical .mobile-app-shell {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+body.mobile-vertical .main {
+  width: 100%;
+  max-width: none;
+  padding: 12px 10px 78px;
+}
+
+body.mobile-vertical .page-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 14px;
+}
+
+body.mobile-vertical .page-title-block,
+body.mobile-vertical .page-actions {
+  width: 100%;
+  min-width: 0;
+}
+
+body.mobile-vertical .page-actions {
+  justify-content: stretch;
+  margin-top: 0;
+}
+
+body.mobile-vertical .header-nav,
+body.mobile-vertical .market-page .header-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  max-width: none;
+  gap: 8px;
+  overflow: visible;
+  justify-content: stretch;
+}
+
+body.mobile-vertical .header-nav .nav-link,
+body.mobile-vertical .market-page .header-nav .nav-link {
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+  white-space: normal;
+  padding: 12px 14px;
+}
+
+body.mobile-vertical h1,
+body.mobile-vertical .macro-page h1 {
+  font-size: clamp(29px, 10.8vw, 42px);
+  line-height: 1.06;
+}
+
+body.mobile-vertical .eyebrow,
+body.mobile-vertical .macro-page .eyebrow {
+  font-size: 12px;
+  letter-spacing: .14em;
+}
+
+body.mobile-vertical .card,
+body.mobile-vertical .metric-card,
+body.mobile-vertical .home-card,
+body.mobile-vertical .auth-panel {
+  width: 100%;
+  max-width: none;
+  margin-bottom: 12px;
+  border-radius: 14px;
+}
+
+body.mobile-vertical .card {
+  padding: 14px;
+}
+
+body.mobile-vertical .card-header,
+body.mobile-vertical .market-page .chart-card .card-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+body.mobile-vertical .metric-grid,
+body.mobile-vertical .home-grid,
+body.mobile-vertical .slot-controls,
+body.mobile-vertical .slot-controls.enhanced,
+body.mobile-vertical .facts-grid,
+body.mobile-vertical .json-grid,
+body.mobile-vertical .split-grid,
+body.mobile-vertical .diagnostic-grid,
+body.mobile-vertical .m6-summary-grid,
+body.mobile-vertical .market-page .metric-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+body.mobile-vertical .home-card {
+  min-height: 160px;
+  padding: 18px;
+}
+
+body.mobile-vertical .home-card h2 {
+  font-size: 26px;
+}
+
+body.mobile-vertical .home-card strong {
+  font-size: 19px;
+}
+
+body.mobile-vertical .data-browser,
+body.mobile-vertical .market-layout,
+body.mobile-vertical .analysis-layout,
+body.mobile-vertical .analysis-layout.wide,
+body.mobile-vertical .macro-page .data-browser,
+body.mobile-vertical .macro-page .browser-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+body.mobile-vertical .browser-sidebar,
+body.mobile-vertical .module-panel,
+body.mobile-vertical .sticky-card,
+body.mobile-vertical .macro-page .browser-sidebar {
+  position: relative;
+  top: 0;
+  height: auto;
+  max-height: none;
+}
+
+body.mobile-vertical .macro-page,
+body.mobile-vertical .main:has(.macro-page) {
+  min-height: 0;
+}
+
+body.mobile-vertical .macro-page .chart-card,
+body.mobile-vertical .macro-page .series-explanation-card,
+body.mobile-vertical .analysis-page .chart-card,
+body.mobile-vertical .market-page .chart-card {
+  max-width: none;
+}
+
+body.mobile-vertical .chart-wrap,
+body.mobile-vertical .macro-page .chart-wrap,
+body.mobile-vertical .market-page .chart-wrap,
+body.mobile-vertical .analysis-page .chart-wrap {
+  width: 100%;
+  height: min(58dvh, 430px);
+  min-height: 320px;
+}
+
+@supports not (height: 100dvh) {
+  body.mobile-vertical .chart-wrap,
+  body.mobile-vertical .macro-page .chart-wrap,
+  body.mobile-vertical .market-page .chart-wrap,
+  body.mobile-vertical .analysis-page .chart-wrap {
+    height: min(58vh, 430px);
+  }
+}
+
+body.mobile-vertical .chart-wrap canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+body.mobile-vertical .catalog-toolbar,
+body.mobile-vertical .filter-grid,
+body.mobile-vertical .analysis-topbar,
+body.mobile-vertical .analysis-options,
+body.mobile-vertical .overlay-row,
+body.mobile-vertical .mini-row,
+body.mobile-vertical .phase4-mini-row,
+body.mobile-vertical .market-year-controls,
+body.mobile-vertical .chart-card-actions,
+body.mobile-vertical .m6-summary-head,
+body.mobile-vertical .timeline-head,
+body.mobile-vertical .timeline-foot {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+body.mobile-vertical .module-buttons,
+body.mobile-vertical .market-module-buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+body.mobile-vertical .module-btn,
+body.mobile-vertical .btn,
+body.mobile-vertical .primary-button,
+body.mobile-vertical input,
+body.mobile-vertical select,
+body.mobile-vertical textarea {
+  width: 100%;
+  min-height: 44px;
+}
+
+body.mobile-vertical .market-year-controls .text-input,
+body.mobile-vertical .market-date-input,
+body.mobile-vertical .market-date-input-label {
+  width: 100%;
+  min-width: 0;
+}
+
+body.mobile-vertical .catalog-list,
+body.mobile-vertical .macro-page .macro-list-scroll .catalog-list {
+  max-height: min(54dvh, 520px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.mobile-vertical .catalog-item {
+  padding: 11px 12px;
+}
+
+body.mobile-vertical .table-wrap,
+body.mobile-vertical .analysis-catalog-table,
+body.mobile-vertical .analysis-catalog-table .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+
+body.mobile-vertical table {
+  min-width: 720px;
+  font-size: 14px;
+}
+
+body.mobile-vertical th,
+body.mobile-vertical td {
+  padding: 10px 11px;
+}
+
+body.mobile-vertical .public-h-name {
+  min-width: 180px;
+}
+
+body.mobile-vertical .analysis-chart-legend {
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  max-height: 86px;
+  justify-content: flex-start;
+  overflow: auto;
+}
+
+body.mobile-vertical .analysis-legend-item {
+  max-width: 100%;
+  font-size: 12px;
+}
+
+body.mobile-vertical .market-chart-legend {
+  grid-template-columns: 1fr;
+}
+
+body.mobile-vertical .zone-chip,
+body.mobile-vertical .legend-item {
+  width: 100%;
+}
+
+body.mobile-vertical .snapshot-badge,
+body.mobile-vertical .sidebar-footer {
+  position: static;
+  max-width: none;
+  margin: 12px 10px 18px;
+}
+
+body.mobile-vertical .auth-shell {
+  min-height: calc(100dvh - 24px);
+  display: grid;
+  place-items: stretch;
+  align-items: center;
+}
+
+body.mobile-vertical .auth-panel {
+  padding: 20px;
+}

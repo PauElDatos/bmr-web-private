@@ -10,6 +10,22 @@
   <link rel="apple-touch-icon" sizes="192x192" href="./apple-touch-icon.png" />
   <link rel="stylesheet" href="./src/styles/main.css" />
   <script src="./auth-config.js"></script>
+  <script>
+    (function () {
+      function isSmartphoneWebView() {
+        var ua = navigator.userAgent || navigator.vendor || window.opera || '';
+        var uaLooksMobile = /Android.+Mobile|iPhone|iPod|IEMobile|Windows Phone|BlackBerry|webOS|Opera Mini/i.test(ua);
+        var narrowCoarsePointer = window.matchMedia && window.matchMedia('(max-width: 820px) and (pointer: coarse)').matches;
+        return uaLooksMobile || narrowCoarsePointer;
+      }
+      if (isSmartphoneWebView()) {
+        var mobileUrl = new URL('./mobile.html', window.location.href);
+        mobileUrl.search = window.location.search;
+        mobileUrl.hash = window.location.hash || '#/';
+        window.location.replace(mobileUrl.toString());
+      }
+    }());
+  </script>
 </head>
 <body>
   <div id="app" class="app-shell">
