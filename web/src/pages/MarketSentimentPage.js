@@ -387,6 +387,14 @@ function m5Thresholds(metrics) {
   return { risk, healthy };
 }
 
+function m7Thresholds(metrics) {
+  if (currentModule !== 'M7') return null;
+  const risk = metricValue(metrics, 'M7_DD15_6M_RISK_THRESHOLD');
+  const healthy = metricValue(metrics, 'M7_DD15_6M_WATCH_THRESHOLD');
+  if (!Number.isFinite(risk) || !Number.isFinite(healthy)) return null;
+  return { risk, healthy };
+}
+
 function m10RiskOffThreshold(metrics) {
   if (currentModule !== 'M10') return null;
   const threshold = metricValue(metrics, 'M10_RISK_OFF_THRESHOLD');
@@ -428,6 +436,35 @@ function m5RiskVisuals(metrics) {
   };
 }
 
+function m7RiskVisuals(metrics) {
+  const thresholds = m7Thresholds(metrics);
+  if (!thresholds) return { yBands: [], yLines: [] };
+  return {
+    yBands: [
+      { axis: 'left', from: 0, to: thresholds.healthy, color: 'rgba(52, 211, 153, 0.10)' },
+      { axis: 'left', from: thresholds.risk, to: 1, color: 'rgba(248, 113, 113, 0.10)' }
+    ],
+    yLines: [
+      {
+        axis: 'left',
+        value: thresholds.healthy,
+        color: 'rgba(52, 211, 153, 0.86)',
+        dash: [7, 5],
+        width: 1.4,
+        label: `HEALTHY < ${formatPercent(thresholds.healthy)}`
+      },
+      {
+        axis: 'left',
+        value: thresholds.risk,
+        color: 'rgba(248, 113, 113, 0.86)',
+        dash: [7, 5],
+        width: 1.4,
+        label: `RISK_OFF >= ${formatPercent(thresholds.risk)}`
+      }
+    ]
+  };
+}
+
 function m10RiskVisuals(metrics) {
   const threshold = m10RiskOffThreshold(metrics);
   if (!Number.isFinite(threshold)) return { yBands: [], yLines: [] };
@@ -448,6 +485,7 @@ function m10RiskVisuals(metrics) {
 
 function marketRiskVisuals(metrics) {
   if (currentModule === 'M5') return m5RiskVisuals(metrics);
+  if (currentModule === 'M7') return m7RiskVisuals(metrics);
   if (currentModule === 'M10') return m10RiskVisuals(metrics);
   return { yBands: [], yLines: [] };
 }
