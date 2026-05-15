@@ -117,7 +117,6 @@ export async function MarketSentimentPage() {
 
       <div class="market-chart-stack">
         ${chartPanel('market-chart', 'Grafico de mercado y senales', '', yearRangeControls())}
-        <div id="market-chart-legend" class="market-chart-legend"></div>
         <div id="market-zone-legend" class="market-zone-legend" hidden></div>
         <section id="m6-macro-summary-card" class="card m6-macro-summary-card" hidden>
           <div class="card-header">
@@ -632,20 +631,25 @@ function legendItems(mod, selectedDate) {
 }
 
 function renderLegend(mod, draw) {
-  const wrap = document.getElementById('market-chart-legend');
-  if (!wrap) return;
+  const chart = document.getElementById('market-chart');
+  if (!chart) return;
+  let wrap = chart.querySelector('#market-chart-legend');
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = 'market-chart-legend';
+    wrap.className = 'analysis-chart-legend market-chart-legend';
+    chart.appendChild(wrap);
+  }
   const selectedDate = selectedDateByModule[currentModule] || '';
   const active = activeLegendKey();
+  wrap.hidden = false;
   wrap.innerHTML = legendItems(mod, selectedDate).map(item => `
-    <button class="legend-item ${active && item.key !== active ? 'muted' : ''}" data-key="${escapeHtml(item.key)}" type="button">
+    <button class="analysis-legend-item ${active && item.key !== active ? 'dimmed' : ''} ${active === item.key ? 'active' : ''}" data-key="${escapeHtml(item.key)}" title="${escapeHtml(item.label)} · ${escapeHtml(item.meta)}" type="button">
       <span class="legend-swatch" style="background:${escapeHtml(item.color)}"></span>
-      <span class="legend-text">
-        <strong>${escapeHtml(item.label)}</strong>
-        <em>${escapeHtml(item.meta)}</em>
-      </span>
+      <span>${escapeHtml(item.label)}</span>
     </button>
   `).join('');
-  wrap.querySelectorAll('.legend-item').forEach(btn => {
+  wrap.querySelectorAll('.analysis-legend-item').forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.key || '';
       highlightedLegendKeyByModule[currentModule] = activeLegendKey() === key ? '' : key;
@@ -1013,6 +1017,7 @@ async function renderModule() {
       const key = signalKey(signal.signal_code);
       const color = SIGNAL_COLORS[idx % SIGNAL_COLORS.length];
       return {
+        id: key,
         name: hypothesisPublicTitle(signal.signal_code, signal.signal_code || `Senal ${idx + 1}`),
         points: signal.points || [],
         color: seriesColor(color, key),
@@ -1023,6 +1028,7 @@ async function renderModule() {
     const series = [
       ...signalSeries,
       {
+        id: SPX_KEY,
         name: 'SP500 completo',
         points: mod.chart?.spx || [],
         color: seriesColor('#60a5fa', SPX_KEY),
@@ -1040,7 +1046,9 @@ async function renderModule() {
       yLines: riskVisuals.yLines,
       markers: selectedMarker,
       anchoredGrid: true,
+      bottomLegendSpace: 92,
       hideLegend: true,
+      focusedSeriesId: activeLegendKey(),
       axisLabels: { left: 'Señales M', right: 'SP500 log' }
     });
   };
