@@ -554,6 +554,7 @@ async function renderAnalysis(renderToken = ++analysisRenderToken) {
       compactAxes: true,
       dualAxis: true,
       independentLeftAxes: true,
+      hideIndependentAxisLabels: true,
       axisLabels: { left: 'Series añadidas', right: 'SP500' },
       bottomLegendSpace: 92,
       hideLegend: true,

@@ -505,7 +505,7 @@ export function drawLineChart(container, series, options = {}) {
     if (options.axisLabels.right) ctx.fillText(options.axisLabels.right, width - pad.r, 18);
   }
 
-  if (options.independentLeftAxes && leftAxisKeys.length > 1) {
+  if (options.independentLeftAxes && leftAxisKeys.length > 1 && !options.hideIndependentAxisLabels) {
     ctx.font = '11px Arial, system-ui, sans-serif';
     leftAxisKeys.forEach((axisKey, idx) => {
       const axis = axes[axisKey];

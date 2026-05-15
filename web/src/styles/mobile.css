@@ -23,7 +23,17 @@ body.mobile-vertical .mobile-app-shell {
 body.mobile-vertical .main {
   width: 100%;
   max-width: none;
+  min-width: 0;
   padding: 12px 10px 78px;
+}
+
+body.mobile-vertical .main > *,
+body.mobile-vertical .home-page,
+body.mobile-vertical .market-page,
+body.mobile-vertical .macro-page,
+body.mobile-vertical .analysis-page {
+  min-width: 0;
+  max-width: 100%;
 }
 
 body.mobile-vertical .page-header {
@@ -41,6 +51,8 @@ body.mobile-vertical .page-actions {
 }
 
 body.mobile-vertical .page-actions {
+  display: grid;
+  grid-template-columns: 1fr;
   justify-content: stretch;
   margin-top: 0;
 }
@@ -58,6 +70,9 @@ body.mobile-vertical .market-page .header-nav {
 
 body.mobile-vertical .header-nav .nav-link,
 body.mobile-vertical .market-page .header-nav .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   min-width: 0;
   text-align: center;
@@ -83,8 +98,16 @@ body.mobile-vertical .home-card,
 body.mobile-vertical .auth-panel {
   width: 100%;
   max-width: none;
+  min-width: 0;
   margin-bottom: 12px;
   border-radius: 14px;
+}
+
+body.mobile-vertical .chart-card,
+body.mobile-vertical .analysis-control-panel,
+body.mobile-vertical .slot-card {
+  min-width: 0;
+  overflow: hidden;
 }
 
 body.mobile-vertical .card {
@@ -222,6 +245,25 @@ body.mobile-vertical textarea {
   min-height: 44px;
 }
 
+body.mobile-vertical input[type="checkbox"],
+body.mobile-vertical input[type="radio"] {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  min-height: 22px;
+  flex: 0 0 22px;
+}
+
+body.mobile-vertical .check {
+  width: 100%;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+body.mobile-vertical .slot-title-row .check {
+  width: auto;
+}
+
 body.mobile-vertical .market-year-controls .text-input,
 body.mobile-vertical .market-date-input,
 body.mobile-vertical .market-date-input-label {
@@ -268,13 +310,17 @@ body.mobile-vertical .analysis-chart-legend {
   left: 8px;
   right: 8px;
   bottom: 8px;
+  width: auto;
+  max-width: calc(100% - 16px);
   max-height: 86px;
   justify-content: flex-start;
   overflow: auto;
 }
 
 body.mobile-vertical .analysis-legend-item {
-  max-width: 100%;
+  flex: 1 1 100%;
+  max-width: none;
+  min-width: 0;
   font-size: 12px;
 }
 
