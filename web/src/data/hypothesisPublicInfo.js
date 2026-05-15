@@ -122,14 +122,6 @@ const M_PUBLIC_INFO = {
     title: 'Resumen macro por bloques',
     description: 'Organiza las señales por bloques económicos, como ciclo macro, tipos y curva, sentimiento, crédito y economía real. Su objetivo es explicar qué partes del entorno macro empujan a favor o en contra del mercado.'
   },
-  M7: {
-    title: 'Probabilidad de caida del 15% a 6 meses',
-    description: 'Modelo independiente centrado en shocks de tipos, inflacion, dolar, materias primas y valoracion. Estima la probabilidad de que el S&P 500 caiga al menos un 15% en los proximos 6 meses.'
-  },
-  M7_DD15_6M_PROBA: {
-    title: 'Probabilidad de caida del 15% a 6 meses',
-    description: 'Probabilidad estimada por M7 de que el S&P 500 sufra una caida igual o superior al 15% durante los proximos 6 meses.'
-  },
   M10: {
     title: 'IA de riesgo de grandes caídas',
     description: 'Modelo de inteligencia artificial que usa datos brutos y señales H para estimar riesgo de caídas profundas del S&P 500 en los próximos meses. Está pensado como alerta de cola para escenarios de deterioro fuerte.'
