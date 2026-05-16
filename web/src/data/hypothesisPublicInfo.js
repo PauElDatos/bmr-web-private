@@ -126,6 +126,10 @@ const M_PUBLIC_INFO = {
     title: 'IA de riesgo de grandes caídas',
     description: 'Modelo de inteligencia artificial que usa datos brutos y señales H para estimar riesgo de caídas profundas del S&P 500 en los próximos meses. Está pensado como alerta de cola para escenarios de deterioro fuerte.'
   },
+  QE: {
+    title: 'QE/QT de la FED',
+    description: 'Mide la variacion mensual del balance de la Reserva Federal. Valores positivos suelen reflejar expansion de liquidez (QE) y negativos drenaje de liquidez (QT).'
+  },
   M5_LOGIT_BIAS: {
     title: 'Punto de partida del modelo M5',
     description: 'Es el sesgo base del modelo antes de sumar los datos de M2, M3 y M4. No es un indicador económico por sí mismo: representa el nivel inicial desde el que M5 ajusta la probabilidad de caída.'

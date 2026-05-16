@@ -20,7 +20,7 @@ let currentModule = 'M5';
 let selectedDateByModule = {};
 let highlightedLegendKeyByModule = {};
 let yearRangeByModule = {};
-let availableModules = ['M1', 'M5', 'M6', 'M10'];
+let availableModules = ['M1', 'M5', 'M6', 'M10', 'QE'];
 let cleanupResize = null;
 let cleanupChartInteractions = null;
 let marketView = {};
@@ -28,7 +28,8 @@ let weightsRenderToken = 0;
 let moduleRenderToken = 0;
 const weightChunkCache = new Map();
 
-const PUBLIC_MARKET_MODULES = new Set(['M1', 'M5', 'M6', 'M10']);
+const PUBLIC_MARKET_MODULES = new Set(['M1', 'M5', 'M6', 'M10', 'QE']);
+const DEFAULT_MARKET_MODULES = ['M1', 'M5', 'M6', 'M10', 'QE'];
 const SIGNAL_COLORS = ['#f87171', '#fbbf24', '#34d399', '#a78bfa', '#22d3ee', '#fb7185', '#60a5fa'];
 const MIN_MARKET_DATE = '1875-01-01';
 const DEFAULT_START_YEAR = 1950;
@@ -80,6 +81,15 @@ const MODULE_READING_HELP = {
       'La línea roja discontinua marca la zona de riesgo: si DD25 o DD40 superan ese umbral, el modelo detecta condiciones parecidas a fases previas de caídas fuertes.',
       'DD25 estima riesgo de caída profunda; DD40 estima riesgo de escenario más extremo.',
       'La interpretación útil es observar subidas persistentes del riesgo, no un único punto aislado.'
+    ]
+  },
+  QE: {
+    title: 'QE · Liquidez de la Reserva Federal',
+    body: 'QE significa Quantitative Easing. En este panel se muestra la variacion mensual del balance de la FED. Un valor positivo suele implicar expansion de liquidez y un valor negativo drenaje de liquidez (QT).',
+    points: [
+      'Por encima de cero: expansion neta del balance de la FED.',
+      'Por debajo de cero: reduccion neta del balance de la FED.',
+      'Se interpreta como contexto macro de liquidez, no como senal unica de trading.'
     ]
   }
 };
@@ -204,8 +214,11 @@ function moduleCodesFromRuns(runs, latest) {
   };
   visit(runs);
   visit(latest?.modules);
-  const sorted = [...codes].filter(code => PUBLIC_MARKET_MODULES.has(code)).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
-  return sorted.length ? sorted : ['M1', 'M5', 'M6', 'M10'];
+  const sorted = [...codes]
+    .filter(code => PUBLIC_MARKET_MODULES.has(code))
+    .sort((a, b) => DEFAULT_MARKET_MODULES.indexOf(a) - DEFAULT_MARKET_MODULES.indexOf(b));
+  const merged = [...new Set([...sorted, ...DEFAULT_MARKET_MODULES])].filter(code => PUBLIC_MARKET_MODULES.has(code));
+  return merged.length ? merged : DEFAULT_MARKET_MODULES;
 }
 
 function allSignalSeries(mod) {
@@ -943,7 +956,7 @@ function captureWindowScroll() {
 async function renderWeightsForDate(weights, selectedDate, options = {}) {
   const card = document.getElementById('module-reading-table-card');
   const table = document.getElementById('weights-table');
-  if (currentModule === 'M10') {
+  if (currentModule === 'M10' || currentModule === 'QE') {
     if (card) card.hidden = true;
     if (table) table.innerHTML = '';
     return;

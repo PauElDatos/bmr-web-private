@@ -87,6 +87,8 @@ MODULES = {
     },
 }
 
+QE_MODULE_CODE = "QE"
+
 WEIGHT_HISTORY_FIELDS = [
     "hypothesis_code",
     "run_id",
@@ -1120,8 +1122,78 @@ def export_market_modules(conn, out_dir: Path, args, warnings: List[str]) -> Dic
                 "buy_pulse": buy_pulse,
                 "sell_pulse": sell_pulse,
             }
+
+    qe_payload = export_qe_module(conn, out_dir, args)
+    if qe_payload:
+        module_payloads[QE_MODULE_CODE] = qe_payload
     write_json(out_dir / "market" / "latest.json", latest_summary)
     return {"latest": latest_summary, "modules": module_payloads}
+
+
+def export_qe_module(conn, out_dir: Path, args) -> Optional[Dict[str, Any]]:
+    if not table_exists(conn, "fed_qe_qt_monthly"):
+        return None
+    market_max_points = getattr(args, "max_market_points", 0)
+    rows = query_last_points(conn, """
+        SELECT month_end_date AS dt, delta_ma_musd_eom AS value,
+               wshosho_musd_eom, regime_majority, regime_eom
+        FROM fed_qe_qt_monthly
+        WHERE delta_ma_musd_eom IS NOT NULL
+    """, (), market_max_points)
+    points = points_from_rows(rows, extra_keys=("wshosho_musd_eom", "regime_majority", "regime_eom"))
+    latest_p = latest_point(points)
+    latest_value = float(latest_p["value"]) if latest_p else None
+    latest_level = "NEUTRAL"
+    if latest_value is not None:
+        if latest_value > 0:
+            latest_level = "BUY"
+        elif latest_value < 0:
+            latest_level = "SELL"
+
+    payload = {
+        "module_code": QE_MODULE_CODE,
+        "title": "QE_FED_BALANCE_SHEET",
+        "description": "Cambio mensual de balance de la FED (QE/QT). Positivo indica expansion de liquidez; negativo indica drenaje de liquidez.",
+        "run_id": None,
+        "signal_code": "FED_QE_QT_DELTA_MA_MUSD_EOM",
+        "latest_value": latest_value,
+        "latest_level": latest_level,
+        "chart": {
+            "spx": load_reference_spx(conn, market_max_points),
+            "signal": points,
+            "bands": build_recession_bands(conn, market_max_points),
+        },
+        "signals": [{
+            "signal_code": "FED_QE_QT_DELTA_MA_MUSD_EOM",
+            "latest_dt": latest_p["dt"] if latest_p else None,
+            "latest_value": latest_value,
+            "latest_level": latest_level,
+            "latest_explanation": "Variacion mensual del balance de la FED en millones USD.",
+            "points": points,
+            "n_points": len(points),
+        }],
+        "available_signals": ["FED_QE_QT_DELTA_MA_MUSD_EOM"],
+        "detail_files": {
+            "weights": "market/weights/qe.json",
+            "inputs": "market/inputs/qe.json",
+            "metrics": "market/metrics/qe.json",
+            "events": "market/events/qe.json",
+        },
+        "counts": {"signals": 1, "weights": 0, "inputs": 0, "metrics": 0, "events": 0},
+    }
+    write_json(out_dir / "market" / "qe.json", payload)
+    write_json(out_dir / "market" / "weights" / "qe.json", {
+        "module_code": QE_MODULE_CODE,
+        "run_id": None,
+        "asof_dt": latest_p["dt"] if latest_p else None,
+        "weights_available": False,
+        "weights_source": "fed_qe_qt_monthly",
+        "items": [],
+    })
+    write_json(out_dir / "market" / "inputs" / "qe.json", {"module_code": QE_MODULE_CODE, "run_id": None, "items": []})
+    write_json(out_dir / "market" / "metrics" / "qe.json", {"module_code": QE_MODULE_CODE, "run_id": None, "items": []})
+    write_json(out_dir / "market" / "events" / "qe.json", {"module_code": QE_MODULE_CODE, "run_id": None, "items": []})
+    return payload
 
 
 def export_analysis_files(conn, out_dir: Path, catalogs: Dict[str, List[Dict[str, Any]]]) -> None:
