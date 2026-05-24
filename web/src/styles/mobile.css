@@ -147,9 +147,9 @@ body.mobile-vertical .home-card h2 {
 }
 
 body.mobile-vertical .home-card-icon {
-  width: 58px;
-  height: 58px;
-  margin-bottom: 12px;
+  width: 92px;
+  height: 92px;
+  margin: 8px auto 16px;
 }
 
 body.mobile-vertical .home-card strong {

@@ -252,7 +252,7 @@ h1 {
 }
 .home-card span { color: var(--primary); font-family: var(--fontTitle); font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: .16em; }
 .home-card h2 { margin: 0 0 12px; font-family: var(--fontTitle); font-size: 32px; color: #fff; line-height: 1.05; }
-.home-card-icon { width: 72px; height: 72px; object-fit: contain; margin: 0 0 16px; opacity: .95; filter: invert(90%) sepia(98%) saturate(1186%) hue-rotate(2deg) brightness(106%) contrast(105%); }
+.home-card-icon { display: block; width: 118px; height: 118px; object-fit: contain; margin: 8px auto 20px; align-self: center; opacity: .95; filter: invert(90%) sepia(98%) saturate(1186%) hue-rotate(2deg) brightness(106%) contrast(105%); }
 .home-card p { color: rgba(176,176,176,.9); line-height: 1.48; margin: 0; padding-right: 12px; }
 .home-card strong { margin-top: 20px; padding-right: 52px; color: var(--primary); font-size: 23px; font-family: var(--fontTitle); }
 .home-card.danger, .home-card.warn, .home-card.ok { border-color: rgba(254,247,2,.35); }

@@ -7,7 +7,7 @@ export async function HomePage() {
       href: '#/sentimiento',
       title: 'Sentimiento del mercado',
       icon: './noun-graph-5745805.svg',
-      body: 'Consulta el pulso actual del mercado: régimen dominante, señales BUY/SELL, evolución reciente y lectura agregada del apetito por riesgo.',
+      body: 'Consulta el pulso actual del mercado: régimen dominante, evolución reciente, pesos explicativos y lectura agregada del apetito por riesgo.',
       level: 'ok'
     },
     {
