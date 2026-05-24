@@ -65,15 +65,15 @@ const calcPairs = [
 
 const BUILTIN_ANALYSIS_PRESETS = [
   {
-    name: 'Oro - plata',
+    name: 'Ratio oro/plata',
     blue: { key: 'series:GC=F', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
     red: { key: 'series:SI=F', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
     green: { key: 'indicators:FEDFUNDS', visible: false, invert: false, transform: 'NORMAL', lag: 0 },
-    calc_blue_red: 'subtract',
+    calc_blue_red: 'divide',
     calc_red_green: 'none'
   },
   {
-    name: 'Ratio oro/plata vs tipos',
+    name: 'Desfase tipos → paro/recesión',
     blue: { key: 'indicators:H8_GS_RATIO', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
     red: { key: 'indicators:FEDFUNDS', visible: true, invert: false, transform: 'NORMAL', lag: 30 },
     green: { key: 'indicators:FEDFUNDS', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
