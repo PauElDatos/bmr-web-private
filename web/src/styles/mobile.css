@@ -146,6 +146,12 @@ body.mobile-vertical .home-card h2 {
   font-size: 26px;
 }
 
+body.mobile-vertical .home-card-icon {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 12px;
+}
+
 body.mobile-vertical .home-card strong {
   font-size: 19px;
 }

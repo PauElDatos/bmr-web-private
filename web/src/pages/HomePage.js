@@ -6,19 +6,22 @@ export async function HomePage() {
     {
       href: '#/sentimiento',
       title: 'Sentimiento del mercado',
-      body: 'Régimen agregado, pulsos BUY/SELL, últimas señales y pesos explicativos preparados para datos reales.',
+      icon: './noun-graph-5745805.svg',
+      body: 'Consulta el pulso actual del mercado: régimen dominante, señales BUY/SELL, evolución reciente y lectura agregada del apetito por riesgo.',
       level: 'ok'
     },
     {
       href: '#/macro',
       title: 'Macro datos',
-      body: 'Catálogo macro desde indicators/indicator_values: fuente, frecuencia, unidad, último valor y gráfico histórico.',
+      icon: './noun-line-graph-5745821.svg',
+      body: 'Explora indicadores macro y financieros con su fuente, frecuencia, unidad, último dato disponible y evolución histórica en gráfico.',
       level: 'ok'
     },
     {
       href: '#/analisis',
       title: 'Análisis',
-      body: 'Versión web del comparador: slots azul/rojo/verde, overlays, escalas, desfases y cálculos entre series.',
+      icon: './noun-pie-chart-5745822.svg',
+      body: 'Compara series macro, commodities e índices; ajusta transformaciones, inversiones, desfases, overlays y cálculos personalizados en un mismo gráfico.',
       level: 'warn'
     }
   ];
@@ -29,6 +32,7 @@ export async function HomePage() {
       ${cards.map(c => `
         <a class="home-card ${c.level}" href="${c.href}">
           <h2>${escapeHtml(c.title)}</h2>
+          <img class="home-card-icon" src="${c.icon}" alt="" aria-hidden="true" loading="lazy" />
           <p>${escapeHtml(c.body)}</p>
         </a>
       `).join('')}
