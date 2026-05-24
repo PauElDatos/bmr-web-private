@@ -7,8 +7,7 @@ import {
   filterByYears,
   calculateSeriesAligned,
   makeRecessionBands,
-  describePoints,
-  toCsvRows
+  describePoints
 } from '../utils/series.js';
 import { escapeHtml, lastOf, translateDbText } from '../utils/format.js';
 
@@ -60,8 +59,52 @@ const calcOptions = [
 ];
 
 const calcPairs = [
-  { id: 'blue-red', a: 'blue', b: 'red', label: 'Azul/rojo', color: '#fbbf24' },
-  { id: 'red-green', a: 'red', b: 'green', label: 'Rojo/verde', color: '#f472b6' }
+  { id: 'blue-red', a: 'blue', b: 'red', label: 'Azul/rojo', color: '#ec4899' },
+  { id: 'red-green', a: 'red', b: 'green', label: 'Rojo/verde', color: '#06b6d4' }
+];
+
+const BUILTIN_ANALYSIS_PRESETS = [
+  {
+    name: 'Oro - plata',
+    blue: { key: 'series:GC=F', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
+    red: { key: 'series:SI=F', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
+    green: { key: 'indicators:FEDFUNDS', visible: false, invert: false, transform: 'NORMAL', lag: 0 },
+    calc_blue_red: 'subtract',
+    calc_red_green: 'none'
+  },
+  {
+    name: 'Ratio oro/plata vs tipos',
+    blue: { key: 'indicators:H8_GS_RATIO', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
+    red: { key: 'indicators:FEDFUNDS', visible: true, invert: false, transform: 'NORMAL', lag: 30 },
+    green: { key: 'indicators:FEDFUNDS', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
+    calc_blue_red: 'none',
+    calc_red_green: 'none'
+  },
+  {
+    name: 'SP500 medias móviles',
+    blue: { key: 'indicators:H14_SPX_EMA20', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
+    red: { key: 'indicators:H14_SPX_EMA50', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
+    green: { key: 'indicators:H14_SPX_EMA200', visible: true, invert: false, transform: 'NORMAL', lag: 0 },
+    calc_blue_red: 'none',
+    calc_red_green: 'none',
+    range: 'last3years'
+  }
+];
+
+const ANALYSIS_DISTINCT_COLOR_POOL = [
+  '#60a5fa', '#f87171', '#34d399', '#ec4899', '#06b6d4', '#eab308',
+  '#a78bfa', '#fb923c', '#22d3ee', '#c084fc', '#94a3b8', '#14b8a6',
+  '#f43f5e', '#84cc16', '#38bdf8', '#f97316', '#8b5cf6', '#10b981'
+];
+
+const REQUIRED_ANALYSIS_OPTIONS = [
+  { kind: 'series', code: 'GC=F', name: 'Gold Futures Continuous', type: 'COMMODITY', source: 'Yahoo Finance', frequency: '', item: { series_type: 'COMMODITY', source: 'Yahoo Finance' } },
+  { kind: 'series', code: 'SI=F', name: 'Silver Futures Continuous', type: 'COMMODITY', source: 'Yahoo Finance', frequency: '', item: { series_type: 'COMMODITY', source: 'Yahoo Finance' } },
+  { kind: 'indicators', code: 'H8_GS_RATIO', name: 'Ratio oro/plata (GC=F / SI=F)', type: 'Macro', source: 'Macro', frequency: '', item: {} },
+  { kind: 'indicators', code: 'FEDFUNDS', name: 'Tipo efectivo de los fondos federales', type: 'Macro', source: 'FRED', frequency: 'Mensual', item: {} },
+  { kind: 'indicators', code: 'H14_SPX_EMA20', name: 'SPX: media móvil exponencial de 20 sesiones', type: 'Macro', source: 'Macro', frequency: 'Diaria', item: {} },
+  { kind: 'indicators', code: 'H14_SPX_EMA50', name: 'SPX: media móvil exponencial de 50 sesiones', type: 'Macro', source: 'Macro', frequency: 'Diaria', item: {} },
+  { kind: 'indicators', code: 'H14_SPX_EMA200', name: 'SPX: media móvil exponencial de 200 sesiones', type: 'Macro', source: 'Macro', frequency: 'Diaria', item: {} }
 ];
 
 export async function AnalysisPage() {
@@ -89,7 +132,6 @@ export async function AnalysisPage() {
               ${calcOptions.map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}
             </select>
           </label>
-          <button id="export-analysis" class="btn ghost">Exportar CSV</button>
           <button id="reset-analysis" class="btn ghost">Borrar</button>
         </div>
         <div class="slot-controls enhanced">
@@ -186,22 +228,22 @@ function resetAnalysisAxisView() {
 }
 
 async function loadAnalysisCatalogs() {
-  const [indicators, series, overlays, presets, recession] = await Promise.all([
+  const [indicators, series, overlays, _presets, recession] = await Promise.all([
     loadCatalog('indicators'),
     loadCatalog('series'),
     loadJson('analysis/overlays.json').catch(() => ({ items: [] })),
     loadJson('analysis/presets.json').catch(() => ({ items: [] })),
     loadJson('analysis/recession_bands.json').catch(() => ({ items: [] }))
   ]);
-  const allOptions = [
+  const allOptions = appendMissingAnalysisOptions([
     ...indicators.items.map(i => normalizeCatalogOption('indicators', i.code, i.name, i.source, i.frequency, i.unit, i)),
     ...series.items.map(s => normalizeCatalogOption('series', s.code, s.name, s.series_type, s.source || 'series_sources', '', s))
-  ].filter(o => o.code);
+  ].filter(o => o.code));
   const overlayTargets = new Set((overlays.items || []).map(o => `${o.kind || 'series'}:${o.target_code || o.code}`));
   const selectableOptions = allOptions.filter(o => !overlayTargets.has(o.key));
   const optionMap = new Map(allOptions.map(o => [o.key, o]));
   const facets = [...new Set(selectableOptions.flatMap(o => [o.rawSource, o.rawType, o.rawFrequency].filter(Boolean)))].sort();
-  return { options: selectableOptions, allOptions, optionMap, overlays: overlays.items || [], presets: normalizePresets(presets.items || []), recessionBands: recession.items || [], facets };
+  return { options: selectableOptions, allOptions, optionMap, overlays: overlays.items || [], presets: normalizePresets(BUILTIN_ANALYSIS_PRESETS), recessionBands: recession.items || [], facets };
 }
 
 function normalizeCatalogOption(kind, code, name, type, source, frequency, item) {
@@ -233,23 +275,43 @@ function normalizeCatalogOption(kind, code, name, type, source, frequency, item)
   };
 }
 
+
+function appendMissingAnalysisOptions(options = []) {
+  const byKey = new Set(options.map(option => option.key));
+  const required = REQUIRED_ANALYSIS_OPTIONS
+    .filter(item => !byKey.has(`${item.kind}:${item.code}`))
+    .map(item => normalizeCatalogOption(item.kind, item.code, item.name, item.type, item.source, item.frequency, item.item));
+  return [...options, ...required];
+}
+
+function normalizePresetSlot(value) {
+  if (!value) return null;
+  if (typeof value === 'string') {
+    return { key: value, invert: false, transform: 'NORMAL', lag: 0, visible: true };
+  }
+  return {
+    key: value.key || value.code || value.value || '',
+    invert: Boolean(value.invert),
+    transform: value.transform || value.scale || 'NORMAL',
+    lag: Number(value.lag ?? value.lagMonths ?? value.desfase ?? 0) || 0,
+    visible: value.visible !== false
+  };
+}
+
 function normalizePresets(items) {
   return (items || []).map((p) => {
-    if (Array.isArray(p.slots)) {
-      return {
-        name: translateDbText(p.name || 'Plantilla'),
-        blue: p.slots[0],
-        red: p.slots[1],
-        green: p.slots[2],
-        calc_blue_red: p.calc_blue_red || p.calcBlueRed || 'none',
-        calc_red_green: p.calc_red_green || p.calcRedGreen || 'none'
-      };
-    }
+    const source = Array.isArray(p.slots)
+      ? { blue: p.slots[0], red: p.slots[1], green: p.slots[2] }
+      : p;
     return {
       ...p,
       name: translateDbText(p.name || 'Plantilla'),
+      blue: normalizePresetSlot(source.blue),
+      red: normalizePresetSlot(source.red),
+      green: normalizePresetSlot(source.green),
       calc_blue_red: p.calc_blue_red || p.calcBlueRed || 'none',
-      calc_red_green: p.calc_red_green || p.calcRedGreen || 'none'
+      calc_red_green: p.calc_red_green || p.calcRedGreen || 'none',
+      range: p.range || p.dateRange || null
     };
   });
 }
@@ -313,6 +375,82 @@ function safeAxisId(value) {
   return String(value || 'axis').replace(/[^a-zA-Z0-9_-]+/g, '-');
 }
 
+function normalizeColorHex(color) {
+  const value = String(color || '').trim().toLowerCase();
+  if (/^#[0-9a-f]{6}$/i.test(value)) return value;
+  if (/^#[0-9a-f]{3}$/i.test(value)) {
+    return `#${value[1]}${value[1]}${value[2]}${value[2]}${value[3]}${value[3]}`.toLowerCase();
+  }
+  return value;
+}
+
+function colorDistance(a, b) {
+  const parse = (hex) => {
+    const value = normalizeColorHex(hex).replace('#', '');
+    if (!/^[0-9a-f]{6}$/i.test(value)) return null;
+    return [parseInt(value.slice(0, 2), 16), parseInt(value.slice(2, 4), 16), parseInt(value.slice(4, 6), 16)];
+  };
+  const ca = parse(a);
+  const cb = parse(b);
+  if (!ca || !cb) return Infinity;
+  return Math.sqrt(ca.reduce((sum, channel, idx) => sum + Math.pow(channel - cb[idx], 2), 0));
+}
+
+function pickDistinctAnalysisColor(preferred, usedColors) {
+  const normalizedPreferred = normalizeColorHex(preferred);
+  const isAvailable = (color) => {
+    const normalized = normalizeColorHex(color);
+    return normalized && !usedColors.has(normalized) && [...usedColors].every(existing => colorDistance(normalized, existing) >= 34);
+  };
+  if (isAvailable(normalizedPreferred)) return preferred;
+  const fallback = ANALYSIS_DISTINCT_COLOR_POOL.find(isAvailable) || ANALYSIS_DISTINCT_COLOR_POOL.find(color => !usedColors.has(normalizeColorHex(color))) || preferred || '#a78bfa';
+  return fallback;
+}
+
+function ensureUniqueAnalysisColors(series = []) {
+  const usedColors = new Set();
+  return (series || []).map((item) => {
+    const color = pickDistinctAnalysisColor(item.color, usedColors);
+    usedColors.add(normalizeColorHex(color));
+    return { ...item, color };
+  });
+}
+
+function applyPresetSlot(slot, presetSlot) {
+  if (!presetSlot) return;
+  const fallback = catalogs.options[0]?.key || slotState[slot].key;
+  const nextKey = catalogs.options.some(o => o.key === presetSlot.key) ? presetSlot.key : fallback;
+  slotState[slot] = {
+    key: nextKey,
+    invert: Boolean(presetSlot.invert),
+    transform: presetSlot.transform || 'NORMAL',
+    lag: Number(presetSlot.lag || 0),
+    visible: presetSlot.visible !== false
+  };
+  const select = document.getElementById(`slot-${slot}`);
+  const transform = document.getElementById(`transform-${slot}`);
+  const lag = document.getElementById(`lag-${slot}`);
+  const visible = document.getElementById(`visible-${slot}`);
+  const invert = document.querySelector(`.invert-btn[data-slot="${slot}"]`);
+  if (select) select.value = slotState[slot].key;
+  if (transform) transform.value = slotState[slot].transform;
+  if (lag) lag.value = String(slotState[slot].lag);
+  if (visible) visible.checked = slotState[slot].visible;
+  if (invert) invert.classList.toggle('active', slotState[slot].invert);
+}
+
+function applyPresetRange(preset) {
+  if (preset?.range === 'last3years') {
+    const currentYear = new Date().getFullYear();
+    analysisYearRange = { start: currentYear - 3, end: currentYear };
+    userTouchedAnalysisRange = true;
+    syncAnalysisYearInputs();
+    return;
+  }
+  userTouchedAnalysisRange = false;
+  analysisYearRange.start = null;
+}
+
 function renderSlotControl(slot) {
   const colorName = slotLabels[slot];
   const state = slotState[slot];
@@ -367,7 +505,6 @@ async function wireAnalysisPage() {
     scheduleRenderAnalysis({ resetAxes: true });
   });
   document.getElementById('analysis-preset').addEventListener('change', applyPreset);
-  document.getElementById('export-analysis').addEventListener('click', exportVisibleCsv);
   document.getElementById('reset-analysis').addEventListener('click', resetAnalysis);
   document.querySelectorAll('.overlay-check').forEach(c => c.addEventListener('change', () => scheduleRenderAnalysis({ resetAxes: true })));
   document.getElementById('overlay-recession').addEventListener('change', () => scheduleRenderAnalysis({ resetAxes: true }));
@@ -404,18 +541,14 @@ function applyPreset(e) {
   const p = catalogs.presets[Number(idx)];
   if (!p) return;
   for (const slot of slots) {
-    if (p[slot] && catalogs.options.some(o => o.key === p[slot])) {
-      slotState[slot].key = p[slot];
-      const el = document.getElementById(`slot-${slot}`);
-      if (el) el.value = p[slot];
-    }
+    applyPresetSlot(slot, p[slot]);
   }
-  userTouchedAnalysisRange = false;
-  analysisYearRange.start = null;
+  applyPresetRange(p);
   const calcBlueRed = document.getElementById('calc-blue-red');
   const calcRedGreen = document.getElementById('calc-red-green');
-  if (calcBlueRed && p.calc_blue_red) calcBlueRed.value = p.calc_blue_red;
-  if (calcRedGreen && p.calc_red_green) calcRedGreen.value = p.calc_red_green;
+  if (calcBlueRed) calcBlueRed.value = p.calc_blue_red || 'none';
+  if (calcRedGreen) calcRedGreen.value = p.calc_red_green || 'none';
+  syncSlotStateFromControls();
   scheduleRenderAnalysis({ resetAxes: true });
 }
 
@@ -481,7 +614,7 @@ async function renderAnalysis(renderToken = ++analysisRenderToken) {
     end: analysisYearRange.end
   });
   applyAnalysisYearRangeToView();
-  const series = loaded
+  let series = loaded
     .filter(s => s.state.visible)
     .map((s) => buildAnalysisSeries({
       id: `slot-${s.slot}`,
@@ -527,6 +660,8 @@ async function renderAnalysis(renderToken = ++analysisRenderToken) {
       series.push(buildAnalysisSeries({ id: `overlay-${o}`, name: o, shortName: o, opt: { code: code, name: o, rawName: o }, points: pts, color: OVERLAY_SERIES_COLORS[o] || ov.color || '#a78bfa', width: 1.5 }));
     } catch (_) {}
   }
+
+  series = ensureUniqueAnalysisColors(series);
 
   if (focusedAnalysisSeries && !series.some(s => s.id === focusedAnalysisSeries)) focusedAnalysisSeries = null;
 
@@ -733,20 +868,6 @@ function renderCatalogTable() {
   }));
 }
 
-function exportVisibleCsv() {
-  const rows = toCsvRows(lastRendered.chartSeries || []);
-  if (!rows.length) return;
-  const csv = rows.map(row => row.map(v => `"${String(v ?? '').replaceAll('"', '""')}"`).join(',')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `bmr_analysis_${new Date().toISOString().slice(0, 10)}.csv`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
 
 function formatMaybe(value) {
   const n = Number(value);

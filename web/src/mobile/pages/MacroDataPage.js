@@ -1,7 +1,7 @@
 // Versión móvil duplicada de src/pages/MacroDataPage.js.
 // Mantiene la lógica original y carga estilos verticales desde mobile.html.
 
-import { loadCatalog, loadTimeseries } from '../../api/dataClient.js';
+import { loadCatalog, loadTimeseries, loadMarketModule } from '../../api/dataClient.js';
 import { pageHeader } from '../../components/Layout.js';
 import { chartPanel } from '../../components/ChartPanel.js';
 import { catalogList, factsPanel } from '../../components/CatalogTable.js';
@@ -15,8 +15,61 @@ let cleanupResize = null;
 let cleanupChartInteractions = null;
 let macroView = {};
 
+const QE_MACRO_SERIES = {
+  code: 'QE',
+  name: 'QE/QT de la FED: variación mensual del balance',
+  source: 'BMR',
+  frequency: 'Mensual',
+  unit: 'Variación mensual',
+  synthetic: true
+};
+
+function macroCatalogWithQe(catalog = {}) {
+  const items = Array.isArray(catalog.items) ? [...catalog.items] : [];
+  if (!items.some(item => String(item.code || '').toUpperCase() === 'QE')) {
+    items.push(QE_MACRO_SERIES);
+  }
+  return { ...catalog, items };
+}
+
+function normalizeMacroPoints(points = []) {
+  return (points || [])
+    .map(point => ({
+      dt: String(point.dt || point.date || point.timestamp || '').slice(0, 10),
+      value: Number(point.value ?? point.y ?? point.close ?? point.raw_value)
+    }))
+    .filter(point => point.dt && Number.isFinite(point.value));
+}
+
+function qePointsFromMarketModule(mod = {}) {
+  const chartQe = Array.isArray(mod.chart?.qe) ? [{ signal_code: 'QE', points: mod.chart.qe }] : [];
+  const candidates = [
+    ...chartQe,
+    ...(Array.isArray(mod.signals) ? mod.signals : []),
+    ...(Array.isArray(mod.series) ? mod.series : []),
+    ...(Array.isArray(mod.items) ? mod.items : [])
+  ];
+  const preferred = candidates.find(row => {
+    const code = String(row.signal_code || row.code || row.name || row.label || '').toUpperCase();
+    return code === 'QE' || code.includes('QE') || code.includes('QT') || code.includes('BALANCE');
+  }) || candidates.find(row => Array.isArray(row.points)) || null;
+  return normalizeMacroPoints(preferred?.points || preferred?.data || []);
+}
+
+async function loadMacroTimeseries(item) {
+  if (String(item?.code || '').toUpperCase() !== 'QE') {
+    return loadTimeseries('indicators', item.code);
+  }
+  try {
+    return await loadTimeseries('indicators', 'QE');
+  } catch (_) {
+    const mod = await loadMarketModule('QE');
+    return { points: qePointsFromMarketModule(mod) };
+  }
+}
+
 export async function MacroDataPage() {
-  const catalog = await loadCatalog('indicators');
+  const catalog = macroCatalogWithQe(await loadCatalog('indicators'));
   const sources = ['ALL', ...new Set(catalog.items.map(i => i.source).filter(Boolean))];
   const selectedItem = catalog.items.find(i => i.code === selectedCode) || catalog.items[0];
   if (selectedItem) selectedCode = selectedItem.code;
@@ -48,7 +101,7 @@ export async function MacroDataPage() {
 }
 
 async function wireMacroPage() {
-  const catalog = await loadCatalog('indicators');
+  const catalog = macroCatalogWithQe(await loadCatalog('indicators'));
   const list = document.getElementById('macro-list');
   const source = document.getElementById('source-filter');
   const prevBtn = document.getElementById('macro-prev');
@@ -162,7 +215,7 @@ async function renderMacroDetail(catalog) {
   const item = catalog.items.find(i => i.code === selectedCode) || catalog.items[0];
   if (!item) return;
   selectedCode = item.code;
-  const ts = await loadTimeseries('indicators', item.code);
+  const ts = await loadMacroTimeseries(item);
   const chart = document.getElementById('macro-chart');
   const title = document.getElementById('macro-chart-title');
   const facts = document.getElementById('macro-facts');

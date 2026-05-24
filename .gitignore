@@ -16,3 +16,4 @@ automation/logs/*.log
 # Datos exportados reales: van a R2, no a GitHub Pages
 web/data/
 .private-data/
+out/
