@@ -33,7 +33,7 @@ body.mobile-vertical .top-home-bar {
 }
 
 body.mobile-vertical .top-home-button {
-  width: 100%;
+  width: auto;
   min-height: 44px;
 }
 

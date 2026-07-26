@@ -156,6 +156,8 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 
 .top-home-bar {
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
   max-width: 1580px;
   margin: 0 auto;
