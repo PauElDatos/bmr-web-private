@@ -27,6 +27,16 @@ body.mobile-vertical .main {
   padding: 12px 10px 78px;
 }
 
+body.mobile-vertical .top-home-bar {
+  max-width: none;
+  padding: 10px 10px 0;
+}
+
+body.mobile-vertical .top-home-button {
+  width: 100%;
+  min-height: 44px;
+}
+
 body.mobile-vertical .main > *,
 body.mobile-vertical .home-page,
 body.mobile-vertical .market-page,

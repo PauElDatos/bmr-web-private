@@ -155,6 +155,33 @@ button { -webkit-tap-highlight-color: transparent; }
   padding: 34px max(36px, 5vw) 96px;
 }
 
+.top-home-bar {
+  width: 100%;
+  max-width: 1580px;
+  margin: 0 auto;
+  padding: 14px max(36px, 5vw) 0;
+}
+.top-home-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid rgba(254,247,2,.55);
+  border-radius: 12px;
+  background: rgba(254,247,2,.10);
+  color: var(--primary);
+  font-weight: 700;
+  transition: border-color .12s ease, background .12s ease, color .12s ease, transform .04s ease;
+}
+.top-home-button:hover,
+.top-home-button:focus-visible {
+  border-color: rgba(254,247,2,.95);
+  background: rgba(254,247,2,.20);
+  color: #fff;
+}
+.top-home-button:active { transform: translateY(1px); }
+
 .page-header {
   display: flex;
   justify-content: space-between;
