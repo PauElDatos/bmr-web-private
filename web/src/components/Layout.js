@@ -26,7 +26,7 @@ export async function renderLayout(route, content) {
   return `
     ${route === '/' ? '' : `
       <div class="top-home-bar">
-        <a class="top-home-button" href="#/" aria-label="Volver al inicio">Volver al inicio</a>
+        <a class="top-home-button" href="https://ngeolitics.com/" aria-label="Volver al inicio">Volver al inicio</a>
       </div>
     `}
     <main class="main">
