@@ -51,8 +51,8 @@ const MARKET_SIGNAL_LABELS = {
   MI_BUY_PULSE: 'MY BUY PULSE',
   MI_SELL_PULSE: 'MY SELL PULSE',
   M5_DD6M_PROBA: 'Probabilidad de caída a 6 meses',
-  M10_SP500_DD25_PROBA: 'IA de riesgo de caída profunda (DD25)',
-  M10_SP500_DD40_PROBA: 'IA de riesgo de caída extrema (DD40)'
+  M10_SP500_DD25_PROBA: 'Probabilidad de caída del 25%',
+  M10_SP500_DD40_PROBA: 'Probabilidad de caída del 40%'
 };
 const MARKET_SIGNAL_COLORS = {
   MI_BUY_PULSE: '#34d399',
