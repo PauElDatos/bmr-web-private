@@ -46,6 +46,18 @@ const M6_BLOCKS = [
 ];
 const M5_CHART_SIGNALS = new Set(['M5_DD6M_PROBA']);
 const M10_RISK_OFF_DEFAULT_THRESHOLD = 0.20;
+const M1_CHART_SIGNALS = new Set(['MI_BUY_PULSE', 'MI_SELL_PULSE']);
+const MARKET_SIGNAL_LABELS = {
+  MI_BUY_PULSE: 'MY BUY PULSE',
+  MI_SELL_PULSE: 'MY SELL PULSE',
+  M5_DD6M_PROBA: 'Probabilidad de caída a 6 meses',
+  M10_SP500_DD25_PROBA: 'IA de riesgo de caída profunda (DD25)',
+  M10_SP500_DD40_PROBA: 'IA de riesgo de caída extrema (DD40)'
+};
+const MARKET_SIGNAL_COLORS = {
+  MI_BUY_PULSE: '#34d399',
+  MI_SELL_PULSE: '#f87171'
+};
 const MODULE_READING_HELP = {
   M1: {
     title: 'M1 · Radar interno de señales',
@@ -215,6 +227,9 @@ function moduleCodesFromRuns(runs, latest) {
 function allSignalSeries(mod) {
   if (Array.isArray(mod.signals) && mod.signals.length) {
     if (currentModule === 'M6') return [];
+    if (currentModule === 'M1') {
+      return mod.signals.filter(signal => M1_CHART_SIGNALS.has(signal.signal_code));
+    }
     if (currentModule === 'M5') {
       const filtered = mod.signals.filter(signal => M5_CHART_SIGNALS.has(signal.signal_code));
       return filtered.length ? filtered : mod.signals.slice(0, 1);
@@ -624,8 +639,8 @@ function legendItems(mod, selectedDate) {
     },
     ...signals.map((signal, idx) => ({
       key: signalKey(signal.signal_code),
-      label: hypothesisPublicTitle(signal.signal_code, signal.signal_code || `Senal ${idx + 1}`),
-      color: SIGNAL_COLORS[idx % SIGNAL_COLORS.length],
+      label: MARKET_SIGNAL_LABELS[signal.signal_code] || hypothesisPublicTitle(signal.signal_code, signal.signal_code || `Senal ${idx + 1}`),
+      color: MARKET_SIGNAL_COLORS[signal.signal_code] || SIGNAL_COLORS[idx % SIGNAL_COLORS.length],
       meta: legendPointMeta(pointAtOrBefore(signal.points || [], selectedDate), 4)
     })),
     {
@@ -1022,10 +1037,10 @@ async function renderModule() {
       : [];
     const signalSeries = signals.map((signal, idx) => {
       const key = signalKey(signal.signal_code);
-      const color = SIGNAL_COLORS[idx % SIGNAL_COLORS.length];
+      const color = MARKET_SIGNAL_COLORS[signal.signal_code] || SIGNAL_COLORS[idx % SIGNAL_COLORS.length];
       return {
         id: key,
-        name: hypothesisPublicTitle(signal.signal_code, signal.signal_code || `Senal ${idx + 1}`),
+        name: MARKET_SIGNAL_LABELS[signal.signal_code] || hypothesisPublicTitle(signal.signal_code, signal.signal_code || `Senal ${idx + 1}`),
         points: signal.points || [],
         color: seriesColor(color, key),
         width: 2,
