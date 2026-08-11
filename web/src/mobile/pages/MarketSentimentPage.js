@@ -937,6 +937,31 @@ function rowsForVisibleModuleReading(rows = []) {
   return rows;
 }
 
+function renderM5SummaryForDate(mod, selectedDate) {
+  if (currentModule !== 'M5') return;
+  const summary = document.getElementById('market-summary-metrics');
+  if (!summary) return;
+  const signalMap = signalSeriesByCode(mod);
+  const probabilityPoint = pointAtOrBefore(signalMap.get('M5_DD6M_PROBA')?.points || [], selectedDate);
+  const confidencePoint = pointAtOrBefore(signalMap.get('M5_HEALTHY')?.points || [], selectedDate);
+  const regimePoint = confidencePoint || probabilityPoint;
+  const confidence = Number(confidencePoint?.score ?? confidencePoint?.value);
+  summary.innerHTML = metricGrid([
+    {
+      label: 'Regimen actual',
+      value: sentimentLabel(regimePoint?.level || mod.latest_level || '-'),
+      detail: formatSelectedDate(selectedDate),
+      level: classForLevel(regimePoint?.level || mod.latest_level)
+    },
+    {
+      label: 'Confianza',
+      value: Number.isFinite(confidence) ? `${fmtNumber(confidence * 100, 1)} / 100` : 'sin dato',
+      detail: 'M5_HEALTHY',
+      level: 'warn'
+    }
+  ]);
+}
+
 async function weightRowsForSelectedDate(weights, selectedDate) {
   const history = weights.history_index;
   if (history?.dates?.length) {
@@ -1025,6 +1050,7 @@ async function renderModule() {
   const riskVisuals = marketRiskVisuals(metrics);
   const dateOptions = collectDateOptions(mod, weights);
   const selectedDate = selectedDateForModule(dateOptions);
+  renderM5SummaryForDate(mod, selectedDate);
   applyYearRangeToView(mod);
   renderModuleReadingHelp();
 
@@ -1105,6 +1131,7 @@ async function renderModule() {
       dateInput.value = formatDateInputValue(nextDate);
       dateInput.classList.remove('invalid');
     }
+    renderM5SummaryForDate(mod, nextDate);
     renderWeightsForDate(weights, nextDate, { preserveScroll: true });
     renderM6MacroSummary(mod, nextDate);
     if (!hideChartForModule) renderLegend(mod, draw);
